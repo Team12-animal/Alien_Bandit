@@ -7,7 +7,7 @@ public class Node : MonoBehaviour
 {
     public static Node instance;
     private GameObject[] orgArr;
-    public GameObject[] nodes;
+    public static GameObject[] nodes;
 
     private static Node Instance()
     {
@@ -37,18 +37,21 @@ public class Node : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-
-        for (int i = 0; i < nodes.Length; i++)
+        if (nodes != null)
         {
-            if (i + 1 < nodes.Length)
+            Gizmos.color = Color.blue;
+
+            for (int i = 0; i < nodes.Length; i++)
             {
+                if (i + 1 < nodes.Length)
+                {
 
-                Gizmos.DrawLine(nodes[i].transform.position, nodes[i + 1].transform.position);
+                    Gizmos.DrawLine(nodes[i].transform.position, nodes[i + 1].transform.position);
+                }
             }
-        }
 
-        Gizmos.DrawLine(nodes[0].transform.position, nodes[nodes.Length - 1].transform.position);
+            Gizmos.DrawLine(nodes[0].transform.position, nodes[nodes.Length - 1].transform.position);
+        }
     }
 
     public GameObject[] Sort(GameObject[] arr)
