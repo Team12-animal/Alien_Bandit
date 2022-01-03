@@ -94,7 +94,7 @@ public class TerrainRange : MonoBehaviour
             start = nodes[i];
             end = nodes[j];
             wall = tContainer[i];
-            //wall.SetActive(true);
+            wall.SetActive(true);
 
             Vector3 targetLine = end.transform.position - start.transform.position;
 
