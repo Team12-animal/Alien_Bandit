@@ -7,13 +7,20 @@ public class PlayerMovement : MonoBehaviour
     public float maxSpeed;
     public float maxRotate;
 
-    Vector3 pos;
-    Vector3 dir;
+    Vector3 fVec;
 
     // Start is called before the first frame update
     void Start()
     {
-        pos = this.transform.position;
+        if(this.gameObject.name == "player")
+        {
+            Debug.Log("found");
+
+        }
+        else
+        {
+            Debug.Log("not found");
+        }
     }
 
     // Update is called once per frame
@@ -22,20 +29,35 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    public void Move(float transAmt, float rotAmt)
+    public void MoveAndRotate(float transAmt, float rotAmt)
     {
-        Vector3 fVec = transform.forward * maxSpeed * transAmt * Time.deltaTime;
-        Vector3 rVec = transform.right * maxRotate * rotAmt * Time.deltaTime;
-        
-        dir = fVec + rVec;
-        dir.y = 0;
+        Debug.Log("MoveAndRotate");
+        Debug.Log("h2" + transAmt);
+        Debug.Log("v2" + rotAmt);
 
-        this.transform.position += dir;
+        //Rotate
+        Quaternion rot = Quaternion.Euler(0.0f, rotAmt * maxRotate, 0.0f);
+
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rot, Time.deltaTime);
+        Debug.Log("rot" + rot);
+        Debug.Log("prot" + this.transform.rotation);
+
+        //Move
+        Vector3 fVec = this.transform.forward * maxSpeed * transAmt * Time.deltaTime;
+
+        this.transform.position += fVec;
+        Debug.Log("trans" + this.transform.position);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.collider.name);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * 2);
     }
 
 }

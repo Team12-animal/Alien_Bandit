@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -484,10 +484,10 @@ GameObject:
   - component: {fileID: 2094083244}
   - component: {fileID: 2094083243}
   - component: {fileID: 2094083247}
-  - component: {fileID: 2094083242}
   - component: {fileID: 2094083241}
+  - component: {fileID: 2094083242}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -517,8 +517,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39cdb66413ed3144bbdad6ff3832ee1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
-  maxRotate: 10
+  maxSpeed: 50
+  maxRotate: 200
 --- !u!136 &2094083243
 CapsuleCollider:
   m_ObjectHideFlags: 0

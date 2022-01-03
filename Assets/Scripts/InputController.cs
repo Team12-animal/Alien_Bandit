@@ -5,6 +5,8 @@ using UnityEngine;
 public class InputController : MonoBehaviour
 {
     private PlayerMovement pm;
+    private float transAmt;
+    private float rotAmt;
 
     private void Awake()
     {
@@ -19,12 +21,17 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float trans = Input.GetAxis("Vertical");
-        float rot = Input.GetAxis("Horizontal");
+        Debug.Log("Update" + 0);
 
-        if (trans != 0 || rot != 0)
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
-            pm.Move(trans, rot);
-        }        
+            Debug.Log("h" + Input.GetAxis("Horizontal"));
+            Debug.Log("v" + Input.GetAxis("Vertical"));
+
+            transAmt = Input.GetAxis("Vertical");
+            rotAmt = Input.GetAxis("Horizontal");
+
+            pm.MoveAndRotate(transAmt, rotAmt);
+        }
     }
 }
