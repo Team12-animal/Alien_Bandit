@@ -19,7 +19,7 @@ public class InputController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Debug.Log("Update" + 0);
 
