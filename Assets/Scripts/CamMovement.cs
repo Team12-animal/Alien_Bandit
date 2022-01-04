@@ -51,24 +51,27 @@ public class CamMovement : MonoBehaviour
             }
         }
 
-        if (tooClose == "closeF")
+        if (tooClose == "closeR")
         {
             if(camPos.x >= fixedPos)
             {
                 camPos.x = fixedPos;
+                Debug.Log("FixR");
             }
         }
 
-        if (tooClose == "closeR")
+        if (tooClose == "closeL")
         {
-            if(camPos.x <= fixedPos)
+            if (camPos.x <= fixedPos)
             {
                 camPos.x = fixedPos;
+                Debug.Log("FixL");
             }
         }
 
         if (tooClose == "keepGoing" || tooClose == "closeB")
-        { 
+        {
+            Debug.Log("keep going");
         }
 
         this.transform.position = camPos;
@@ -117,5 +120,14 @@ public class CamMovement : MonoBehaviour
 
         Debug.Log("tooclose" + result);
         return result;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * 2);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.right * 2);
     }
 }
