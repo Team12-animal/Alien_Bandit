@@ -100,12 +100,12 @@ public class TerrainRange : MonoBehaviour
 
             //scale adjustment data
             float width = targetLine.magnitude;
-            Vector3 sAdjust = new Vector3(0.0f, 0.0f, -width * 10);
+            Vector3 sAdjust = new Vector3(0.0f, 0.0f, -width * 11);
 
             Debug.Log("width" + i + ":" + sAdjust);
 
-            wall.transform.position = start.transform.position;
-            wall.transform.LookAt(end.transform);
+            wall.transform.position = end.transform.position;
+            wall.transform.LookAt(start.transform);
             wall.transform.localScale += sAdjust;
 
             Vector3 debug = wall.transform.right;
