@@ -36,11 +36,8 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("v2" + rotAmt);
 
         //Rotate
-        Quaternion rot = Quaternion.Euler(0.0f, rotAmt * maxRotate, 0.0f);
-
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rot, Time.deltaTime);
-        Debug.Log("rot" + rot);
-        Debug.Log("prot" + this.transform.rotation);
+        float rot = Input.GetAxis("Horizontal") * maxRotate * Time.deltaTime;
+        this.transform.Rotate(0.0f, rot, 0.0f);
 
         //Move
         Vector3 fVec = this.transform.forward * maxSpeed * transAmt * Time.deltaTime;
