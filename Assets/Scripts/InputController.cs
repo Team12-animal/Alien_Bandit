@@ -7,6 +7,7 @@ public class InputController : MonoBehaviour
     private PlayerMovement pm;
     private float transAmt;
     private float rotAmt;
+    private Animator animator;
 
     private void Awake()
     {
@@ -15,7 +16,7 @@ public class InputController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -32,6 +33,11 @@ public class InputController : MonoBehaviour
             rotAmt = Input.GetAxis("Horizontal");
 
             pm.MoveAndRotate(transAmt, rotAmt);
+            animator.SetInteger("AnimationPar", 1);
+        }
+        else
+        {
+            animator.SetInteger("AnimationPar", 0);
         }
     }
 }
