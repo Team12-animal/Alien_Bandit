@@ -12,15 +12,15 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(this.gameObject.name == "player")
-        {
-            Debug.Log("found");
+        //if(this.gameObject.name == "player")
+        //{
+        //    Debug.Log("found");
 
-        }
-        else
-        {
-            Debug.Log("not found");
-        }
+        //}
+        //else
+        //{
+        //    Debug.Log("not found");
+        //}
     }
 
     // Update is called once per frame
@@ -31,9 +31,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveAndRotate(float transAmt, float rotAmt)
     {
-        Debug.Log("MoveAndRotate");
-        Debug.Log("h2" + transAmt);
-        Debug.Log("v2" + rotAmt);
+        //Debug.Log("MoveAndRotate");
+        //Debug.Log("h2" + transAmt);
+        //Debug.Log("v2" + rotAmt);
 
         //Rotate
         float rot = Input.GetAxis("Horizontal") * maxRotate * Time.deltaTime;
@@ -43,12 +43,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 fVec = this.transform.forward * maxSpeed * transAmt * Time.deltaTime;
 
         this.transform.position += fVec;
-        Debug.Log("trans" + this.transform.position);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision.collider.name);
+        //Debug.Log("trans" + this.transform.position);
     }
 
     private void OnDrawGizmos()

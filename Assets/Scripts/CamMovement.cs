@@ -35,7 +35,9 @@ public class CamMovement : MonoBehaviour
         CamFollowing();
     }
 
-    //Camera跟隨Player
+    //Camera跟隨Player的位置
+
+    private float fixedPos;
     private void CamFollowing()
     {
         string tooClose = FixCamPos();
@@ -77,8 +79,7 @@ public class CamMovement : MonoBehaviour
         this.transform.position = camPos;
     }
 
-    private float fixedPos;
-
+    //限定相機範圍
     private string FixCamPos()
     {
         //Debug.Log("FixCamPos");
