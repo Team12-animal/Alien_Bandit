@@ -16,13 +16,16 @@ public class PlayerDemo: MonoBehaviour {
 			anim = gameObject.GetComponentInChildren<Animator>();
 		}
 
-		void Update (){
-			if (Input.GetKey ("w")) {
+		void Update ()
+     	{
+			if (Input.GetKey ("w") || Input.GetKey("s")) 
+	    	{
 				anim.SetInteger ("AnimationPar", 1);
-			}  else {
+			}  
+	    	else 
+	    	{
 				anim.SetInteger ("AnimationPar", 0);
 			}
-
 			if(controller.isGrounded){
 				moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
 			}
