@@ -16,10 +16,15 @@ public class Movement : MonoBehaviour
     private string currentState;
     int animHorizontalHash;
     int animVerticalHash;
+    int animPickedHash;
+
+
 
     const string Player_RunFaster = "RunFast";
     const string Player_Run = "Run";
     const string Player_Idle = "Idle";
+    const string Player_PickUpOverHead = "PickUpOverHead";
+    const string Player_PutDown = "PutDown";
 
     private void Start()
     {
@@ -27,6 +32,7 @@ public class Movement : MonoBehaviour
         animator = GetComponent<Animator>();
         animHorizontalHash = Animator.StringToHash("Horizontal");
         animVerticalHash = Animator.StringToHash("Vertical");
+        animPickedHash = Animator.StringToHash("Picked");
 
     }
 
@@ -57,23 +63,49 @@ public class Movement : MonoBehaviour
     public void AnimationController()
     {
         bool pressed = horizotalInput != 0 || verticalInput != 0;
-        float pressedShift = Input.GetAxis("LeftShift");
+        bool picked = animator.GetBool(animPickedHash);
+        float pressedShift = Input.GetAxisRaw("LeftShift");
+        bool pressedCtrl = Input.GetButtonDown("LeftCtrl");
 
-        if (pressed && pressedShift == 0)
+
+        if (!picked)
         {
-            ChangeAnimationState(Player_Run);
-            animator.SetFloat(animHorizontalHash, horizotalInput);
-            animator.SetFloat(animVerticalHash, verticalInput);
+            if (pressed && pressedShift == 0)
+            {
+                ChangeAnimationState(Player_Run);
+                animator.SetFloat(animHorizontalHash, horizotalInput);
+                animator.SetFloat(animVerticalHash, verticalInput);
+            }
+            else if (pressedShift != 0)
+                ChangeAnimationState(Player_RunFaster);
+            else
+            {
+                float tempTime = 0;
+                tempTime += Time.deltaTime;
+                if (tempTime > 0.2f)
+                    ChangeAnimationState(Player_Idle);
+            }
+
+            if (pressedCtrl)
+            {
+                ChangeAnimationState(Player_PickUpOverHead);
+                animator.SetBool(animPickedHash, true);
+            }
         }
-        else if (pressedShift != 0)
-            ChangeAnimationState(Player_RunFaster);
-        else
+
+
+        if (picked)
         {
-            float tempTime = 0;
-            tempTime += Time.deltaTime;
-            if (tempTime > 0.2f)
-                ChangeAnimationState(Player_Idle);
+            if (pressedCtrl)
+            {
+                ChangeAnimationState(Player_PutDown);
+                animator.SetBool(animPickedHash, false);
+            }
         }
+
+
+
+
     }
 
     public void ChangeAnimationState(string newState)
