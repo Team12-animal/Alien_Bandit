@@ -6,8 +6,13 @@ public class PlayerMovement : MonoBehaviour
 {
     public float maxSpeed;
     public float maxRotate;
+    public float transAmt;
+    public float rotAmt;
 
-    Vector3 fVec;
+    private Vector3 fVec;
+    private Vector3 rVec;
+    private Vector3 dir;
+    private float dist;
 
     // Start is called before the first frame update
     void Start()
@@ -29,26 +34,41 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    public void MoveAndRotate(float transAmt, float rotAmt)
+    public void Move(float transAmt, float rotAmt)
     {
+        this.transAmt = transAmt;
+        this.rotAmt = rotAmt;
         Debug.Log("MoveAndRotate");
         Debug.Log("h2" + transAmt);
         Debug.Log("v2" + rotAmt);
 
-        //Rotate
-        float rot = Input.GetAxis("Horizontal") * maxRotate * Time.deltaTime;
-        this.transform.Rotate(0.0f, rot, 0.0f);
+        rVec = this.transform.right * rotAmt * maxRotate * Time.deltaTime;
+        fVec = this.transform.forward * transAmt * maxSpeed * Time.deltaTime;
 
-        //Move
-        Vector3 fVec = this.transform.forward * maxSpeed * transAmt * Time.deltaTime;
+        //move
+        dir = rVec + fVec;
+        this.transform.position += dir;
 
-        this.transform.position += fVec;
-        Debug.Log("trans" + this.transform.position);
+        Debug.Log("newPos" + this.transform.position);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void Rotate(float tansAmt, float rotAmt)
     {
-        Debug.Log(collision.collider.name);
+        Vector3 currentR = this.transform.right;
+        Vector3 currentF = this.transform.forward;
+
+        if(transAmt == 0)
+        {
+            if(rotAmt > 0 && currentF != currentR)
+            {
+                this.transform.forward = this.transform.forward;
+            }
+        }
+        else
+        {
+            rVec = this.transform.right * rotAmt * maxRotate * Time.deltaTime;
+            this.transform.forward += rVec;
+        }
     }
 
     private void OnDrawGizmos()

@@ -23,7 +23,7 @@ public class InputController : MonoBehaviour
     {
         Debug.Log("Update" + 0);
 
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
         {
             Debug.Log("h" + Input.GetAxis("Horizontal"));
             Debug.Log("v" + Input.GetAxis("Vertical"));
@@ -31,7 +31,8 @@ public class InputController : MonoBehaviour
             transAmt = Input.GetAxis("Vertical");
             rotAmt = Input.GetAxis("Horizontal");
 
-            pm.MoveAndRotate(transAmt, rotAmt);
+            //pm.Rotate(transAmt, rotAmt);
+            pm.Move(transAmt, rotAmt);
         }
     }
 }
