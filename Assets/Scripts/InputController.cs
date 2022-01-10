@@ -29,7 +29,7 @@ public class InputController : MonoBehaviour
     {
         Debug.Log("Update" + 0);
 
-        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+        if (isDash == false || Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
         {
             Debug.Log("h" + Input.GetAxis("Horizontal"));
             Debug.Log("v" + Input.GetAxis("Vertical"));
