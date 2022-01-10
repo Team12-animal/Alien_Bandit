@@ -600,6 +600,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d74f63a19a698604c86d2ee7f92bcd0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDash: 0
+  setDashTime: 0
 --- !u!114 &2094083242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616,7 +618,8 @@ MonoBehaviour:
   maxRotate: 3
   transAmt: 0
   rotAmt: 0
-  dashDist: 5
+  setDashTime: 0.5
+  dashSpeed: 5
 --- !u!136 &2094083243
 CapsuleCollider:
   m_ObjectHideFlags: 0

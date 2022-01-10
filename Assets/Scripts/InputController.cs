@@ -9,7 +9,9 @@ public class InputController : MonoBehaviour
     private float rotAmt;
     Vector3 currentPos;
     Vector3 targetPos;
-    public bool inDash = false;
+    public bool isDash = false;
+    public float setDashTime;
+    private float remainDashTime;
 
     private void Awake()
     {
@@ -18,7 +20,7 @@ public class InputController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        setDashTime = pm.setDashTime;
     }
 
     // Update is called once per frame
@@ -39,17 +41,26 @@ public class InputController : MonoBehaviour
             pm.Move(transAmt, rotAmt);
         }
 
-        if (Input.GetButtonDown("Dash"))
+        if (Input.GetButtonDown("Dash") && isDash == false)
         {
             Debug.Log("dash");
-            if (inDash == false)
+            if (isDash == false)
             {
-                inDash = true;
-                Debug.Log("dash" + inDash);
-                inDash = pm.Dash();
+                isDash = true;
+                remainDashTime = setDashTime;
+                Debug.Log("dash" + isDash);
             }
-
-            Debug.Log("dash" + inDash);
         }
+
+        if(remainDashTime <= 0)
+        {
+            isDash = false;
+            Debug.Log("dash" + isDash);
+        }
+        else
+        {
+            remainDashTime = pm.Dash(remainDashTime);
+        }
+
     }
 }

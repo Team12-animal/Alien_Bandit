@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float maxRotate;
     public float transAmt;
     public float rotAmt;
-    public float dashDist;
+    public float setDashTime;
     public float dashSpeed;
 
     private Vector3 fVec;
@@ -71,19 +71,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public bool Dash()
+    public float Dash(float dashTime)
     {
-        Vector3 currentPos = this.transform.position;
-        Vector3 targetPos = currentPos + this.transform.forward * dashDist;
-        float cToT = (currentPos - targetPos).magnitude;
-
-        while(cToT < 0.1)
-        {
-            this.transform.position += this.transform.forward * dashSpeed * Time.deltaTime;
-            cToT = (this.transform.position - targetPos).magnitude;
-        }
-
-        return false;
+        this.transform.position += this.transform.forward * dashSpeed * Time.deltaTime;
+        dashTime -= Time.deltaTime;
+        Debug.Log("dash");
+        return dashTime;
     }
 
     private void OnDrawGizmos()
