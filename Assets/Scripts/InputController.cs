@@ -7,6 +7,9 @@ public class InputController : MonoBehaviour
     private PlayerMovement pm;
     private float transAmt;
     private float rotAmt;
+    Vector3 currentPos;
+    Vector3 targetPos;
+    public bool inDash = false;
 
     private void Awake()
     {
@@ -19,7 +22,8 @@ public class InputController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+
+    void Update()
     {
         Debug.Log("Update" + 0);
 
@@ -33,6 +37,19 @@ public class InputController : MonoBehaviour
 
             //pm.Rotate(transAmt, rotAmt);
             pm.Move(transAmt, rotAmt);
+        }
+
+        if (Input.GetButtonDown("Dash"))
+        {
+            Debug.Log("dash");
+            if (inDash == false)
+            {
+                inDash = true;
+                Debug.Log("dash" + inDash);
+                inDash = pm.Dash();
+            }
+
+            Debug.Log("dash" + inDash);
         }
     }
 }

@@ -612,8 +612,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39cdb66413ed3144bbdad6ff3832ee1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 20
-  maxRotate: 200
+  maxSpeed: 3
+  maxRotate: 3
+  transAmt: 0
+  rotAmt: 0
+  dashDist: 5
 --- !u!136 &2094083243
 CapsuleCollider:
   m_ObjectHideFlags: 0
