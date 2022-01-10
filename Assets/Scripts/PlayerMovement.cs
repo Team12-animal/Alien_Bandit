@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public float setDashTime;
     public float dashSpeed;
 
+    public Camera Main;
+
     private Vector3 fVec;
     private Vector3 rVec;
     private Vector3 dir;
@@ -45,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
         rVec = this.transform.right * rotAmt * maxRotate * Time.deltaTime;
         fVec = this.transform.forward * transAmt * maxSpeed * Time.deltaTime;
 
-        //move
         dir = rVec + fVec;
         this.transform.position += dir;
 
@@ -54,21 +55,83 @@ public class PlayerMovement : MonoBehaviour
 
     public void Rotate(float transAmt, float rotAmt)
     {
-        Vector3 currentR = this.transform.right;
-        Vector3 currentF = this.transform.forward;
+        Vector3 target = dir.normalized;
+        Vector3 camF = Main.transform.forward;
+        Vector3 oriF = this.transform.forward;
 
-        if(this.transAmt == 0)
+        Vector3 cCrossO = Vector3.Cross(camF, oriF);
+        Vector3 cCrosst = Vector3.Cross(camF, target);
+        float tDotC = Vector3.Dot(target, camF);
+        float oDotC = Vector3.Dot(oriF, camF);
+
+        float angle = 0.0f;
+        float arc;
+
+        if(cCrossO.y * cCrosst.y > 0)
         {
-            if(rotAmt > 0 && currentF != currentR)
+            //?CamF???????????????
+            arc = Mathf.Abs(tDotC - oDotC);
+            angle = Mathf.Acos(arc) * Mathf.Rad2Deg;
+
+            if(tDotC - oDotC < 0)
             {
-                this.transform.forward = this.transform.forward;
+                angle = -angle;
+            }
+
+            Debug.Log("same side");
+        }
+
+        if(cCrossO.y * cCrosst.y < 0)
+        {
+            //?CamF????????????????
+            arc = Mathf.Abs(tDotC) + Mathf.Abs(oDotC);
+            angle = Mathf.Acos(arc) * Mathf.Rad2Deg;
+
+            if(cCrossO.y > 0)
+            {
+                //?????
+                angle = -angle;
+            }
+            Debug.Log("not same side");
+        }
+
+        if(cCrossO.y * cCrosst.y == 0)
+        {
+            Debug.Log("same dir");
+            //??????CamF??
+            if (oDotC * tDotC == 1)
+            {
+                //???????????
+                angle = 0.0f;
+            }
+
+            if(oDotC * tDotC == -1)
+            {
+                //???????????
+                angle = 180.0f;
+            }
+
+            if(Mathf.Abs(oDotC) != 1)
+            {
+                //?????CamF??
+                this.transform.forward = camF * tDotC;
+            }
+
+            if(Mathf.Abs(tDotC) != 1)
+            {
+                //?????CamF??
+                arc = Mathf.Abs(tDotC);
+                angle = Mathf.Acos(arc) * Mathf.Rad2Deg;
+
+                if (cCrosst.y < 0)
+                {
+                    //???????
+                    angle = -angle;
+                }
             }
         }
-        else
-        {
-            rVec = this.transform.right * rotAmt * maxRotate * Time.deltaTime;
-            this.transform.forward += rVec;
-        }
+        Debug.Log("angle " + angle);
+        this.transform.Rotate(0.0f, angle, 0.0f);
     }
 
     public float Dash(float dashTime)
