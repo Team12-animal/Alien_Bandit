@@ -14,27 +14,19 @@ public class Movement : MonoBehaviour
 
     [Header("Animation")]
     private string currentState;
-    int animRunHash;
     int animHorizontalHash;
     int animVerticalHash;
-    int animPressedShift;
-    int animPressedCrtl;
 
     const string Player_RunFaster = "RunFast";
     const string Player_Run = "Run";
     const string Player_Idle = "Idle";
 
-    bool pressedShift;
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        animRunHash = Animator.StringToHash("IsWalking");
         animHorizontalHash = Animator.StringToHash("Horizontal");
         animVerticalHash = Animator.StringToHash("Vertical");
-        animPressedShift = Animator.StringToHash("PressedShift");
-        animPressedCrtl = Animator.StringToHash("PressedCtrl");
 
     }
 
@@ -51,7 +43,10 @@ public class Movement : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
         Vector3 movementDirection = new Vector3(horizotalInput, 0.0f, verticalInput);
         movementDirection.Normalize();
-        transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
+        float tempTime = 0;
+        tempTime += Time.deltaTime;
+        if (tempTime > 0.2f)
+            transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
 
         if (movementDirection != Vector3.zero)
         {
@@ -64,23 +59,22 @@ public class Movement : MonoBehaviour
         bool pressed = horizotalInput != 0 || verticalInput != 0;
         float pressedShift = Input.GetAxis("LeftShift");
 
-        if (pressed && pressedShift ==0)
+        if (pressed && pressedShift == 0)
         {
             ChangeAnimationState(Player_Run);
             animator.SetFloat(animHorizontalHash, horizotalInput);
             animator.SetFloat(animVerticalHash, verticalInput);
         }
         else if (pressedShift != 0)
-        {
             ChangeAnimationState(Player_RunFaster);
+        else
+        {
+            float tempTime = 0;
+            tempTime += Time.deltaTime;
+            if (tempTime > 0.2f)
+                ChangeAnimationState(Player_Idle);
         }
-        else if (pressedShift == 0 && !pressed)
-            ChangeAnimationState(Player_Idle);
-
-
     }
-
-
 
     public void ChangeAnimationState(string newState)
     {
