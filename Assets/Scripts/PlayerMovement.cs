@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float setDashTime;
     public float dashSpeed;
 
-    public Camera Main;
+    public Camera cam;
 
     private Vector3 fVec;
     private Vector3 rVec;
@@ -44,8 +44,8 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("h2" + transAmt);
         Debug.Log("v2" + rotAmt);
 
-        rVec = this.transform.right * rotAmt * maxRotate * Time.deltaTime;
-        fVec = this.transform.forward * transAmt * maxSpeed * Time.deltaTime;
+        rVec = cam.transform.right * rotAmt * maxRotate * Time.deltaTime;
+        fVec = cam.transform.forward * transAmt * maxSpeed * Time.deltaTime;
 
         dir = rVec + fVec;
         this.transform.position += dir;
@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
     public void Rotate(float transAmt, float rotAmt)
     {
         Vector3 target = dir.normalized;
-        Vector3 camF = Main.transform.forward;
+        Vector3 camF = cam.transform.forward;
         Vector3 oriF = this.transform.forward;
 
         Vector3 cCrossO = Vector3.Cross(camF, oriF);
@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
             arc = Mathf.Abs(tDotC - oDotC);
             angle = Mathf.Acos(arc) * Mathf.Rad2Deg;
 
-            if(tDotC - oDotC < 0)
+            if(tDotC - oDotC > 0)
             {
                 angle = -angle;
             }
@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
             arc = Mathf.Abs(tDotC) + Mathf.Abs(oDotC);
             angle = Mathf.Acos(arc) * Mathf.Rad2Deg;
 
-            if(cCrossO.y > 0)
+            if(cCrossO.y < 0)
             {
                 //?????
                 angle = -angle;
@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(cCrossO.y * cCrosst.y == 0)
         {
-            Debug.Log("same dir");
+            Debug.Log("side: same dir");
             //??????CamF??
             if (oDotC * tDotC == 1)
             {
