@@ -5,42 +5,32 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     private Rigidbody rb;
-    private Animator animator;
+    private AnimatorController animatorController;
     [SerializeField] float speed = 3.0f;
     [SerializeField] float rotateSpeed = 3.0f;
     [SerializeField] float t = 0.06f;
     float horizotalInput;
     float verticalInput;
 
-    [Header("Animation")]
-    private string currentState;
-    int animHorizontalHash;
-    int animVerticalHash;
-    int animPickedHash;
-
-
-
-    const string Player_RunFaster = "RunFast";
-    const string Player_Run = "Run";
-    const string Player_Idle = "Idle";
-    const string Player_PickUpOverHead = "PickUpOverHead";
-    const string Player_PutDown = "PutDown";
+    bool pressedCtrl;
+    bool pressedShift;
+    private void Awake()
+    {
+        animatorController = new AnimatorController();
+        animatorController.animator = GetComponent<Animator>();
+        animatorController.Init();
+    }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
-        animHorizontalHash = Animator.StringToHash("Horizontal");
-        animVerticalHash = Animator.StringToHash("Vertical");
-        animPickedHash = Animator.StringToHash("Picked");
-
     }
 
     private void Update()
     {
         ControlMoveMent();
-
-        AnimationController();
+        pressedCtrl = Input.GetButtonDown("LeftCtrl");
+        pressedShift = Input.GetButtonDown("LeftShift");
     }
 
     public void ControlMoveMent()
@@ -51,67 +41,55 @@ public class Movement : MonoBehaviour
         movementDirection.Normalize();
         float tempTime = 0;
         tempTime += Time.deltaTime;
-        if (tempTime > 0.2f)
+        if (tempTime > 0.03f)
             transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
+        if (!animatorController.animator.GetBool("Picked"))
+            animatorController.PlayerRun(horizotalInput, verticalInput);
 
         if (movementDirection != Vector3.zero)
         {
             transform.forward = Vector3.Slerp(transform.forward, (transform.forward + movementDirection) * rotateSpeed * Time.deltaTime, t);
         }
-    }
 
-    public void AnimationController()
-    {
-        bool pressed = horizotalInput != 0 || verticalInput != 0;
-        bool picked = animator.GetBool(animPickedHash);
-        float pressedShift = Input.GetAxisRaw("LeftShift");
-        bool pressedCtrl = Input.GetButtonDown("LeftCtrl");
-
-
-        if (!picked)
+        if (pressedShift)
         {
-            if (pressed && pressedShift == 0)
-            {
-                ChangeAnimationState(Player_Run);
-                animator.SetFloat(animHorizontalHash, horizotalInput);
-                animator.SetFloat(animVerticalHash, verticalInput);
-            }
-            else if (pressedShift != 0)
-                ChangeAnimationState(Player_RunFaster);
-            else
-            {
-                float tempTime = 0;
-                tempTime += Time.deltaTime;
-                if (tempTime > 0.2f)
-                    ChangeAnimationState(Player_Idle);
-            }
-
-            if (pressedCtrl)
-            {
-                ChangeAnimationState(Player_PickUpOverHead);
-                animator.SetBool(animPickedHash, true);
-            }
+            transform.Translate(movementDirection * speed * 2f * Time.deltaTime, Space.World);
+            animatorController.PlayerSpeedRun(pressedShift);
         }
 
-
-        if (picked)
-        {
-            if (pressedCtrl)
-            {
-                ChangeAnimationState(Player_PutDown);
-                animator.SetBool(animPickedHash, false);
-            }
-        }
-
-
-
-
     }
 
-    public void ChangeAnimationState(string newState)
+    private void OnCollisionStay(Collision collision)
     {
-        if (currentState == newState) return;
-        animator.Play(newState);
-        currentState = newState;
+        if (collision.gameObject.tag == "Rock" && pressedCtrl)
+        {
+            animatorController.PlayerPickUpOverHead(pressedCtrl);
+        }
+        else if (collision.gameObject.tag == "Tree" && pressedCtrl)
+        {
+            animatorController.PlayerCutTree(pressedCtrl);
+        }
+        else if (collision.gameObject.tag == "Leaf" && pressedCtrl)
+        {
+            animatorController.PlayerTakeLeaf(pressedCtrl);
+        }
+        else if (collision.gameObject.tag == "WorkingTable" && pressedCtrl)
+        {
+            animatorController.PlayerUseTable(pressedCtrl);
+        }
+        else if (collision.gameObject.tag == "Tarrain" && !animatorController.animator.GetBool("Picked"))
+        {
+            animatorController.PlayerRun(horizotalInput, verticalInput);
+        }
+        else if (animatorController.animator.GetBool("Picked") && (horizotalInput != 0 || verticalInput != 0))
+        {
+            animatorController.PlayerOverHeadWalk();
+        }
+        else if (animatorController.animator.GetBool("Picked") && pressedCtrl)
+        {
+            animatorController.PlayerPutDown(pressedCtrl);
+        }
     }
+
+
 }

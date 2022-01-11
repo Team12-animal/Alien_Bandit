@@ -2975,8 +2975,8 @@ GameObject:
   - component: {fileID: 458416}
   - component: {fileID: 9550852}
   - component: {fileID: 808422220}
-  - component: {fileID: 808422219}
   - component: {fileID: 808422223}
+  - component: {fileID: 76565241}
   m_Layer: 0
   m_Name: Character_Jock_01
   m_TagString: Untagged
@@ -3053,19 +3053,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!65 &808422219
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171554}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.4844769, y: 1.8592529, z: 0.3802851}
-  m_Center: {x: 0, y: 0.9121399, z: 0}
 --- !u!114 &808422223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3081,6 +3068,20 @@ MonoBehaviour:
   speed: 3
   rotateSpeed: 3
   t: 0.06
+--- !u!136 &76565241
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171554}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.18948996
+  m_Height: 1.7962341
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9219513, z: 0}
 --- !u!1 &173988
 GameObject:
   m_ObjectHideFlags: 0
