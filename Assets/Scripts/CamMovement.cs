@@ -5,122 +5,93 @@ using UnityEngine;
 public class CamMovement : MonoBehaviour
 {
     private static CamMovement instance;
+    private Camera cam;
 
+    public GameObject[] players;
     public GameObject player;
-    public float testDist;
+    public float effectDist;
 
-    Vector3 dirToTarget;//Player指向Camera的向量
-    Vector3 originPPos;
-    Vector3 camPos;
-
-    private static CamMovement Instance()
-    {
-        return instance;
-    }
+    private Vector3 playerPos;
+    private Vector3 pScreenPos;
+    private Vector3 camPos;
 
     // Start is called before the first frame update
     void Awake()
     {
         instance = this;
 
-        originPPos = player.transform.position;
-        camPos = this.transform.position;
-
-        dirToTarget = camPos - originPPos;
+        cam = GetComponent<Camera>();
+        players = GameObject.FindGameObjectsWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        CamFollowing();
+        if(players.Length == 1)
+        {
+            }
+            P1CamMove();
+        }
+        if (tooClose == "closeL")
+        {
+            {
+            P3CamMove();
+        }
+        else
+        {
+            Debug.Log("wrong player amount");
+        }
+        
     }
 
     //Camera跟隨Player
-    private void CamFollowing()
-    {
-        string tooClose = FixCamPos();
-        Vector3 newPlayerPos = player.transform.position;
-        camPos = newPlayerPos + dirToTarget;
+    Vector3 dir;
+    bool startFollow = false;
 
-        if (tooClose == "closeF")
+    private void P1CamMove()
+    {   
+        float h = Screen.height;
+        float w = Screen.width;
+        
+        camPos = this.transform.position;
+        playerPos = player.transform.position;
+        pScreenPos = cam.WorldToScreenPoint(playerPos);
+
+        Debug.Log("screen" + pScreenPos);
+
+        //enter effect zone
+        if (pScreenPos.x < effectDist || pScreenPos.x > (w - effectDist) || pScreenPos.y < effectDist || pScreenPos.y > (h - effectDist))
         {
-            if(camPos.z >= fixedPos)
+            if (!startFollow)
             {
-                camPos.z = fixedPos;
-                Debug.Log("FixF");
+                dir = camPos - playerPos;
+                startFollow = true;
             }
         }
-
-        if (tooClose == "closeR")
+        else
         {
-            if(camPos.x >= fixedPos)
-            {
-                camPos.x = fixedPos;
-                Debug.Log("FixR");
-            }
+            startFollow = false;
         }
 
-        if (tooClose == "closeL")
-        {
-            if (camPos.x <= fixedPos)
-            {
-                camPos.x = fixedPos;
-                Debug.Log("FixL");
-            }
-        }
+        Debug.Log("startFollow" + startFollow);
 
-        if (tooClose == "keepGoing" || tooClose == "closeB")
+        if (startFollow)
         {
-            Debug.Log("keep going");
-        }
+            camPos = playerPos + dir;
+            this.transform.position = camPos;
 
-        this.transform.position = camPos;
+            Debug.Log("playerPos" + playerPos);
+            Debug.Log("dir" + dir);
+            Debug.Log("campos" + camPos);
+
+        }
     }
 
-    private float fixedPos;
-
-    private string FixCamPos()
+    private void P3CamMove()
     {
-        //Debug.Log("FixCamPos");
 
-        Vector3 camPos = this.transform.position;
-        
-        Vector3 front = this.transform.forward;
-        Vector3 back = -front;
-        Vector3 right = this.transform.right;
-        Vector3 left = -right;
-
-        LayerMask mask = LayerMask.GetMask("OutLine");
-
-        string result = "keepGoing";
-
-        if (Physics.Raycast(camPos, front, testDist, mask))
-        {
-            fixedPos = camPos.z;
-            result = "closeF";
-        }
-
-        if(Physics.Raycast(camPos, back, testDist, mask))
-        {
-            fixedPos = camPos.z;
-            result = "closeB";
-        }
-        
-        if(Physics.Raycast(camPos, right, testDist, mask))
-        {
-            fixedPos = camPos.x;
-            result = "closeR";
-        }
-        
-        if(Physics.Raycast(camPos, left, testDist, mask))
-        {
-            fixedPos = camPos.x;
-            result = "closeL";
-        }
-
-        Debug.Log("tooclose" + result);
-        return result;
     }
+
 
     private void OnDrawGizmos()
     {
