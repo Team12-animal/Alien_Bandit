@@ -52,7 +52,9 @@ public class Movement : MonoBehaviour
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_OverHeadWalk) && moved)
             anim.ChangeAnimationState(anim.Player_OverHeadWalk, horizotalInput, verticalInput);
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_OverHeadWalk) && pressedCtrl)
+        {
             anim.ChangeAnimationState(anim.Player_PutDown);
+        }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_TakeLeafWalk) && moved)
             anim.ChangeAnimationState(anim.Player_TakeLeafWalk, horizotalInput, verticalInput);
 

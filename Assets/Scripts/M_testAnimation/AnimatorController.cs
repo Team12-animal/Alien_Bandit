@@ -6,6 +6,9 @@ public class AnimatorController : MonoBehaviour
 {
     [HideInInspector]
     public Animator animator;
+
+    [Header("調整動畫延遲時間")]
+    public float delay = 2.1f;
     private string currentState;
     public int animHorizontalHash { get; private set; }
     public int animVerticalHash { get; private set; }
@@ -24,6 +27,10 @@ public class AnimatorController : MonoBehaviour
     public string Player_TakeLeafWalk { get; private set; } = "TakeWoodWalk";
     public string Player_HandOff { get; private set; } = "WoodHandOff";
     public string Player_UsingTable { get; private set; } = "UsingTable";
+    public string Player_Cheer { get; private set; } = "Cheer";
+    public string Player_Test { get; private set; } = "Test";
+
+
 
 
 
@@ -41,7 +48,9 @@ public class AnimatorController : MonoBehaviour
         if (newState == Player_PickUpOverHead || newState == Player_TakeLeaf || newState == Player_PickUpChop)
             animator.SetBool(animPickedHash, true);
         if (newState == Player_PutDown)
-            animator.SetBool(animPickedHash, false);
+        {
+            StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length * delay));
+        }
     }
 
     /// <summary>
@@ -60,16 +69,31 @@ public class AnimatorController : MonoBehaviour
         ChangeAnimationState(newState);
     }
 
+    public IEnumerator DelayAnim(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        animator.SetBool(animPickedHash, false);
+    }
 
 
+
+    /// <summary>
+    /// animation events
+    /// </summary>
     public void ChangeToOverHeadWalk()
     {
         ChangeAnimationState(Player_OverHeadWalk);
     }
+    /// <summary>
+    /// animation events
+    /// </summary>
     public void ChangeToIdle()
     {
-        ChangeAnimationState(Player_Idle);
+        ChangeAnimationState(Player_Test) ;
     }
+    /// <summary>
+    /// animation events
+    /// </summary>
     public void ChangeToLeafWalk()
     {
         ChangeAnimationState(Player_TakeLeafWalk);
