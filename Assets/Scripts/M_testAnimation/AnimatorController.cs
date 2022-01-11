@@ -2,34 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimatorController
+public class AnimatorController : MonoBehaviour
 {
+    [HideInInspector]
     public Animator animator;
     private string currentState;
-    float horizontal;
-    int animHorizontalHash;
-    float vertical;
-    int animVerticalHash;
-    int animPickedHash;
-    int animFinishedHash;
+    public int animHorizontalHash { get; private set; }
+    public int animVerticalHash { get; private set; }
+    public int animPickedHash { get; private set; }
 
 
-    const string Player_Idle = "Idle";
+    public string Player_Idle { get; private set; } = "Idle";
+    public string Player_Run { get; private set; } = "Run";
+    public string Player_RunFaster { get; private set; } = "RunFast";
+    public string Player_PickUpOverHead { get; private set; } = "PickUpOverHead";
+    public string Player_PutDown { get; private set; } = "PutDown";
+    public string Player_OverHeadWalk { get; private set; } = "OverHeadWalk";
+    public string Player_PickUpChop { get; private set; } = "PickUpChop";
+    public string Player_Chop { get; private set; } = "Chop";
+    public string Player_TakeLeaf { get; private set; } = "TakeWood";
+    public string Player_TakeLeafWalk { get; private set; } = "TakeWoodWalk";
+    public string Player_HandOff { get; private set; } = "WoodHandOff";
+    public string Player_UsingTable { get; private set; } = "UsingTable";
 
-    const string Player_Run = "Run";
-    const string Player_RunFaster = "RunFast";
-
-    const string Player_PickUpOverHead = "PickUpOverHead";
-    const string Player_PutDown = "PutDown";
-    const string Player_OverHeadWalk = "OverHeadWalk";
-
-    public const string Player_Chop = "Chop";
-
-    const string Player_TakeLeaf = "TakeLeaf";
-
-    const string Player_UsingTable = "UsingTable";
-
-    const string Empty = "Empty";
 
 
     public void Init()
@@ -37,98 +32,48 @@ public class AnimatorController
         animHorizontalHash = Animator.StringToHash("Horizontal");
         animVerticalHash = Animator.StringToHash("Vertical");
         animPickedHash = Animator.StringToHash("Picked");
-        animFinishedHash = Animator.StringToHash("Finished");
     }
-
-    public void PlayerIdle()
-    {
-        ChangeAnimationState(Player_Idle);
-    }
-
-    public void PlayerRun(float horizontal, float vertical)
-    {
-        this.horizontal = horizontal;
-        this.vertical = vertical;
-        if (this.horizontal != 0 || this.vertical != 0)
-        {
-            ChangeAnimationState(Player_Run);
-            animator.SetFloat(animHorizontalHash, horizontal);
-            animator.SetFloat(animVerticalHash, vertical);
-        }
-    }
-
-    public void PlayerSpeedRun(bool shiftKeyCode)
-    {
-        if (!shiftKeyCode) return;
-        else
-            ChangeAnimationState(Player_RunFaster);
-    }
-
-    public void PlayerPickUpOverHead(bool crtlKeyCode)
-    {
-        if (!crtlKeyCode) return;
-        else
-        {
-            ChangeAnimationState(Player_PickUpOverHead);
-            animator.SetBool(animPickedHash, true);
-        }
-    }
-
-    public void PlayerPutDown(bool crtlKeyCode)
-    {
-        if (!crtlKeyCode) return;
-        else
-        {
-            ChangeAnimationState(Player_PutDown);
-            animator.SetBool(animPickedHash, false);
-        }
-    }
-
-    public void PlayerOverHeadWalk()
-    {
-            ChangeAnimationState(Player_OverHeadWalk);
-    }
-
-    public void PlayerCutTree(bool crtlKeyCode)
-    {
-        if (!crtlKeyCode) return;
-        else
-            ChangeAnimationState(Player_Chop);
-    }
-
-    public void PlayerTakeLeaf(bool crtlKeyCode)
-    {
-        if (!crtlKeyCode) return;
-        else
-            ChangeAnimationState(Player_TakeLeaf);
-    }
-
-    public void PlayerUseTable(bool crtlKeyCode)
-    {
-        if (!crtlKeyCode) return;
-        else
-            ChangeAnimationState(Player_UsingTable);
-    }
-
-    public void DoEmpty()
-    {
-        ChangeAnimationState(Empty);
-    }
-
-    public bool CheckFinish()
-    {
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-        {
-            return false;
-        }
-        return true;
-    }
-
-
     public void ChangeAnimationState(string newState)
     {
         if (currentState == newState) return;
         animator.Play(newState);
         currentState = newState;
+        if (newState == Player_PickUpOverHead || newState == Player_TakeLeaf || newState == Player_PickUpChop)
+            animator.SetBool(animPickedHash, true);
+        if (newState == Player_PutDown)
+            animator.SetBool(animPickedHash, false);
     }
+
+    /// <summary>
+    /// 只要跟移動相關需要多輸入兩個Input
+    /// </summary>
+    /// <param name="newState"></param>
+    /// <param name="horizontal"></param>
+    /// <param name="vertical"></param>
+    public void ChangeAnimationState(string newState, float horizontal, float vertical)
+    {
+        if (newState == Player_Run || newState == Player_OverHeadWalk || newState == Player_TakeLeafWalk)
+        {
+            animator.SetFloat(animHorizontalHash, horizontal);
+            animator.SetFloat(animVerticalHash, vertical);
+        }
+        ChangeAnimationState(newState);
+    }
+
+
+
+    public void ChangeToOverHeadWalk()
+    {
+        ChangeAnimationState(Player_OverHeadWalk);
+    }
+    public void ChangeToIdle()
+    {
+        ChangeAnimationState(Player_Idle);
+    }
+    public void ChangeToLeafWalk()
+    {
+        ChangeAnimationState(Player_TakeLeafWalk);
+    }
+
+
 }

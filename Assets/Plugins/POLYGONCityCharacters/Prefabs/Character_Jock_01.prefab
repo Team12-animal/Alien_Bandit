@@ -2977,6 +2977,7 @@ GameObject:
   - component: {fileID: 808422220}
   - component: {fileID: 808422223}
   - component: {fileID: 76565241}
+  - component: {fileID: 62720793}
   m_Layer: 0
   m_Name: Character_Jock_01
   m_TagString: Untagged
@@ -3028,9 +3029,9 @@ Animator:
   m_GameObject: {fileID: 171554}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4a5a8c8ff5d6d2e48ab8d2b27100cf57, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9e22852b9da8d834bab164ef1034a932, type: 2}
+  m_Controller: {fileID: 9100000, guid: c62616dfdbbb7b0448983436cab6fa50, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 1
+  m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -3045,7 +3046,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171554}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 30
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -3082,6 +3083,19 @@ CapsuleCollider:
   m_Height: 1.7962341
   m_Direction: 1
   m_Center: {x: 0, y: 0.9219513, z: 0}
+--- !u!114 &62720793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6554064aff1efbd48986bdfc7ac6892a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &173988
 GameObject:
   m_ObjectHideFlags: 0

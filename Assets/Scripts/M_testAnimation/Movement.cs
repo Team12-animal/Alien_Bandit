@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     private Rigidbody rb;
-    private AnimatorController animatorController;
+    private AnimatorController anim;
     [SerializeField] float speed = 3.0f;
     [SerializeField] float rotateSpeed = 3.0f;
     [SerializeField] float t = 0.06f;
@@ -14,11 +15,12 @@ public class Movement : MonoBehaviour
 
     bool pressedCtrl;
     bool pressedShift;
+
     private void Awake()
     {
-        animatorController = new AnimatorController();
-        animatorController.animator = GetComponent<Animator>();
-        animatorController.Init();
+        anim = GetComponent<AnimatorController>();
+        anim.animator = GetComponent<Animator>();
+        anim.Init();
     }
 
     private void Start()
@@ -30,21 +32,30 @@ public class Movement : MonoBehaviour
     {
         ControlMoveMent();
         pressedCtrl = Input.GetButtonDown("LeftCtrl");
-        pressedShift = Input.GetButtonDown("LeftShift");
+        pressedShift = Input.GetButton("LeftShift");
     }
 
     public void ControlMoveMent()
     {
         horizotalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
+        bool moved = (horizotalInput != 0 || verticalInput != 0);
         Vector3 movementDirection = new Vector3(horizotalInput, 0.0f, verticalInput);
         movementDirection.Normalize();
         float tempTime = 0;
         tempTime += Time.deltaTime;
         if (tempTime > 0.03f)
             transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
-        if (!animatorController.animator.GetBool("Picked"))
-            animatorController.PlayerRun(horizotalInput, verticalInput);
+        if (!anim.animator.GetBool(anim.animPickedHash) && moved)
+            anim.ChangeAnimationState(anim.Player_Run, horizotalInput, verticalInput);
+
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_OverHeadWalk) && moved)
+            anim.ChangeAnimationState(anim.Player_OverHeadWalk, horizotalInput, verticalInput);
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_OverHeadWalk) && pressedCtrl)
+            anim.ChangeAnimationState(anim.Player_PutDown);
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_TakeLeafWalk) && moved)
+            anim.ChangeAnimationState(anim.Player_TakeLeafWalk, horizotalInput, verticalInput);
+
 
         if (movementDirection != Vector3.zero)
         {
@@ -54,7 +65,7 @@ public class Movement : MonoBehaviour
         if (pressedShift)
         {
             transform.Translate(movementDirection * speed * 2f * Time.deltaTime, Space.World);
-            animatorController.PlayerSpeedRun(pressedShift);
+            anim.ChangeAnimationState(anim.Player_RunFaster);
         }
 
     }
@@ -63,33 +74,23 @@ public class Movement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Rock" && pressedCtrl)
         {
-            animatorController.PlayerPickUpOverHead(pressedCtrl);
+            anim.ChangeAnimationState(anim.Player_PickUpOverHead);
         }
         else if (collision.gameObject.tag == "Tree" && pressedCtrl)
         {
-            animatorController.PlayerCutTree(pressedCtrl);
+            anim.ChangeAnimationState(anim.Player_Chop);
         }
         else if (collision.gameObject.tag == "Leaf" && pressedCtrl)
         {
-            animatorController.PlayerTakeLeaf(pressedCtrl);
+            anim.ChangeAnimationState(anim.Player_TakeLeaf);
         }
         else if (collision.gameObject.tag == "WorkingTable" && pressedCtrl)
         {
-            animatorController.PlayerUseTable(pressedCtrl);
+            anim.ChangeAnimationState(anim.Player_UsingTable);
         }
-        else if (collision.gameObject.tag == "Tarrain" && !animatorController.animator.GetBool("Picked"))
+        else if (collision.gameObject.tag == "Chop" && pressedCtrl)
         {
-            animatorController.PlayerRun(horizotalInput, verticalInput);
-        }
-        else if (animatorController.animator.GetBool("Picked") && (horizotalInput != 0 || verticalInput != 0))
-        {
-            animatorController.PlayerOverHeadWalk();
-        }
-        else if (animatorController.animator.GetBool("Picked") && pressedCtrl)
-        {
-            animatorController.PlayerPutDown(pressedCtrl);
+            anim.ChangeAnimationState(anim.Player_PickUpChop);
         }
     }
-
-
 }
