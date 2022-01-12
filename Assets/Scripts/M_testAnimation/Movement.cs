@@ -13,6 +13,9 @@ public class Movement : MonoBehaviour
     float horizotalInput;
     float verticalInput;
 
+
+    [Header("動畫設定")]
+    [SerializeField] float speedRunDistance = 100.0f;
     bool crtlPressed;
     bool shiftPressed;
     bool spacePressed;
@@ -66,41 +69,42 @@ public class Movement : MonoBehaviour
 
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && moved)
             anim.ChangeAnimationState(anim.Player_HoldChopWalk, horizotalInput, verticalInput);
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && crtlPressed)
+            anim.ChangeAnimationState(anim.Player_PutDownChop);
 
         if (movementDirection != Vector3.zero)
             transform.forward = Vector3.Slerp(transform.forward, (transform.forward + movementDirection) * rotateSpeed * Time.deltaTime, t);
 
-
-
         if (shiftPressed)
         {
+            transform.Translate(transform.forward * speed  * Time.deltaTime, Space.World);
             anim.ChangeAnimationState(anim.Player_SpeedRun, horizotalInput, verticalInput);
         }
 
         if (spacePressed)
             anim.ChangeAnimationState(anim.Player_ThrowRock);
-
     }
 
-    private void OnCollisionStay(Collision collision)
+
+    private void OnTriggerStay(Collider other)
     {
-        if (collision.gameObject.tag == "Rock" && crtlPressed)
+        if (other.gameObject.tag == "Rock" && crtlPressed)
         {
             anim.ChangeAnimationState(anim.Player_PickUpRock);
         }
-        else if (collision.gameObject.tag == "Tree" && crtlPressed)
+        else if (other.gameObject.tag == "Tree" && crtlPressed)
         {
             anim.ChangeAnimationState(anim.Player_Chopping);
         }
-        else if (collision.gameObject.tag == "Wood" && crtlPressed)
+        else if (other.gameObject.tag == "Wood" && crtlPressed)
         {
             anim.ChangeAnimationState(anim.Player_PickWood);
         }
-        else if (collision.gameObject.tag == "WorkingTable" && crtlPressed)
+        else if (other.gameObject.tag == "WorkingTable" && crtlPressed)
         {
             anim.ChangeAnimationState(anim.Player_UsingTable);
         }
-        else if (collision.gameObject.tag == "Chop" && crtlPressed)
+        else if (other.gameObject.tag == "Chop" && crtlPressed)
         {
             anim.ChangeAnimationState(anim.Player_PickUpChop);
         }

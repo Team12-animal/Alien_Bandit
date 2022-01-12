@@ -28,12 +28,15 @@ public class AnimatorController : MonoBehaviour
     public string Player_HoldChopWalk { get; private set; } = "HoldChopWalk";
     public string Player_Chopping { get; private set; } = "Chopping";
     public string Player_ChopIdle { get; private set; } = "ChopIdle";
+    public string Player_PutDownChop { get; private set; } = "PutDownChop";
     public string Player_PickWood { get; private set; } = "PickWood";
     public string Player_HoldWoodWalk { get; private set; } = "HoldWoodWalk";
     public string Player_PutDownWood { get; private set; } = "PutDownWood";
     public string Player_UsingTable { get; private set; } = "UsingTable";
     public string Player_Cheer { get; private set; } = "Cheer";
     public string Player_StandUp { get; private set; } = "StandUp";
+    public string Player_Fear { get; private set; } = "Fear";
+
 
     public string Player_Test { get; private set; } = "Test";
 
@@ -57,7 +60,7 @@ public class AnimatorController : MonoBehaviour
         currentState = newState;
         if (newState == Player_PickUpRock || newState == Player_PickWood || newState == Player_PickUpChop)
             animator.SetBool(animPickedHash, true);
-        if (newState == Player_PutDownRock || newState == Player_PutDownWood || newState == Player_ThrowRock)
+        if (newState == Player_PutDownRock || newState == Player_PutDownWood || newState == Player_ThrowRock || newState == Player_PutDownChop)
         {
             if (horizotalInput != 0 || verticalInput != 0)
                 StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length * delay));
@@ -114,6 +117,12 @@ public class AnimatorController : MonoBehaviour
         ChangeAnimationState(Player_ChopIdle);
     }
 
+
+    public void AnimaEventPutDownChopToRun()
+    {
+        animator.SetBool(animPickedHash, false);
+    }
+
     public void AnimaEventIdle()
     {
         Test();
@@ -135,4 +144,5 @@ public class AnimatorController : MonoBehaviour
         }
         ChangeAnimationState(Player_Idle);
     }
+
 }
