@@ -35,7 +35,7 @@ public class Movement : MonoBehaviour
         ControlMoveMent();
         crtlPressed = Input.GetButtonDown("LeftCtrl");
         crtlCancel = Input.GetButtonUp("LeftCtrl");
-        shiftPressed = Input.GetButton("LeftShift");
+        shiftPressed = Input.GetButtonDown("LeftShift");
         spacePressed = Input.GetKeyDown(KeyCode.Space);
     }
 
@@ -74,8 +74,7 @@ public class Movement : MonoBehaviour
 
         if (shiftPressed)
         {
-            transform.Translate(movementDirection * speed * 2f * Time.deltaTime, Space.World);
-            anim.ChangeAnimationState(anim.Player_SpeedRun);
+            anim.ChangeAnimationState(anim.Player_SpeedRun, horizotalInput, verticalInput);
         }
 
         if (spacePressed)
