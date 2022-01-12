@@ -180,7 +180,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 62720793, guid: edc13eb972d2a704db06565103473e80, type: 3}
       propertyPath: delay
-      value: 2.1
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 808422223, guid: edc13eb972d2a704db06565103473e80, type: 3}
+      propertyPath: speed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edc13eb972d2a704db06565103473e80, type: 3}
@@ -298,8 +302,8 @@ GameObject:
   - component: {fileID: 315400094}
   - component: {fileID: 315400093}
   m_Layer: 0
-  m_Name: Leaf
-  m_TagString: Leaf
+  m_Name: Wood
+  m_TagString: Wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -315,8 +319,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.2113038, z: 1}
-  m_Center: {x: 0, y: 0.105651855, z: 0}
+  m_Size: {x: 1, y: 1.7401147, z: 1.4816427}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &315400094
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -374,7 +378,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315400092}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 277.62515, y: -310.44, z: 388.95}
+  m_LocalPosition: {x: 277.62515, y: -310.3, z: 389.13}
   m_LocalScale: {x: 2.5127, y: 0.16711, z: 0.25694}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1158,8 +1162,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.0822172, y: 1.0766063, z: 1.0748281}
+  m_Center: {x: 0, y: 0.036525965, z: 0}
 --- !u!23 &1095285918
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1433,7 +1437,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.9158914
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -1655,8 +1659,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505341280}
-  m_LocalRotation: {x: 0.4118645, y: -0.00191808, z: 0.000860309, w: 0.9112427}
-  m_LocalPosition: {x: 277.65402, y: -302.41843, z: 386.40173}
+  m_LocalRotation: {x: 0.34524208, y: 0.0033802306, z: -0.0012434436, w: 0.9385068}
+  m_LocalPosition: {x: 277.65384, y: -298.2341, z: 379.99307}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1691,10 +1695,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.64080715
+  m_Height: 2.258432
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: -1.5419689e-10, y: -0.01105522, z: 0.29846543}
 --- !u!23 &1770654755
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1751,13 +1755,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1770654753}
-  m_LocalRotation: {x: -0, y: -0, z: 0.659265, w: 0.75191075}
-  m_LocalPosition: {x: 282.08, y: -310.2, z: 397.33}
+  m_LocalRotation: {x: -0, y: -0, z: 0.69799614, w: 0.7161016}
+  m_LocalPosition: {x: 282.08, y: -310.20056, z: 397.33}
   m_LocalScale: {x: 0.41244, y: 0.60678, z: 0.066994}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 82.488}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 88.533}
 --- !u!1 &1894971620
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,8 +13,10 @@ public class Movement : MonoBehaviour
     float horizotalInput;
     float verticalInput;
 
-    bool pressedCtrl;
-    bool pressedShift;
+    bool crtlPressed;
+    bool shiftPressed;
+    bool spacePressed;
+    bool crtlCancel;
 
     private void Awake()
     {
@@ -31,8 +33,10 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         ControlMoveMent();
-        pressedCtrl = Input.GetButtonDown("LeftCtrl");
-        pressedShift = Input.GetButton("LeftShift");
+        crtlPressed = Input.GetButtonDown("LeftCtrl");
+        crtlCancel = Input.GetButtonUp("LeftCtrl");
+        shiftPressed = Input.GetButton("LeftShift");
+        spacePressed = Input.GetKeyDown(KeyCode.Space);
     }
 
     public void ControlMoveMent()
@@ -46,51 +50,58 @@ public class Movement : MonoBehaviour
         tempTime += Time.deltaTime;
         if (tempTime > 0.03f)
             transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
+
         if (!anim.animator.GetBool(anim.animPickedHash) && moved)
             anim.ChangeAnimationState(anim.Player_Run, horizotalInput, verticalInput);
 
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_OverHeadWalk) && moved)
-            anim.ChangeAnimationState(anim.Player_OverHeadWalk, horizotalInput, verticalInput);
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_OverHeadWalk) && pressedCtrl)
-        {
-            anim.ChangeAnimationState(anim.Player_PutDown);
-        }
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_TakeLeafWalk) && moved)
-            anim.ChangeAnimationState(anim.Player_TakeLeafWalk, horizotalInput, verticalInput);
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && moved)
+            anim.ChangeAnimationState(anim.Player_HoldRockWalk, horizotalInput, verticalInput);
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && crtlPressed)
+            anim.ChangeAnimationState(anim.Player_PutDownRock);
 
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && moved)
+            anim.ChangeAnimationState(anim.Player_HoldWoodWalk, horizotalInput, verticalInput);
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && crtlPressed)
+            anim.ChangeAnimationState(anim.Player_PutDownWood);
+
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && moved)
+            anim.ChangeAnimationState(anim.Player_HoldChopWalk, horizotalInput, verticalInput);
 
         if (movementDirection != Vector3.zero)
-        {
             transform.forward = Vector3.Slerp(transform.forward, (transform.forward + movementDirection) * rotateSpeed * Time.deltaTime, t);
-        }
 
-        if (pressedShift)
+
+
+        if (shiftPressed)
         {
             transform.Translate(movementDirection * speed * 2f * Time.deltaTime, Space.World);
-            anim.ChangeAnimationState(anim.Player_RunFaster);
+            anim.ChangeAnimationState(anim.Player_SpeedRun);
         }
+
+        if (spacePressed)
+            anim.ChangeAnimationState(anim.Player_ThrowRock);
 
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == "Rock" && pressedCtrl)
+        if (collision.gameObject.tag == "Rock" && crtlPressed)
         {
-            anim.ChangeAnimationState(anim.Player_PickUpOverHead);
+            anim.ChangeAnimationState(anim.Player_PickUpRock);
         }
-        else if (collision.gameObject.tag == "Tree" && pressedCtrl)
+        else if (collision.gameObject.tag == "Tree" && crtlPressed)
         {
-            anim.ChangeAnimationState(anim.Player_Chop);
+            anim.ChangeAnimationState(anim.Player_Chopping);
         }
-        else if (collision.gameObject.tag == "Leaf" && pressedCtrl)
+        else if (collision.gameObject.tag == "Wood" && crtlPressed)
         {
-            anim.ChangeAnimationState(anim.Player_TakeLeaf);
+            anim.ChangeAnimationState(anim.Player_PickWood);
         }
-        else if (collision.gameObject.tag == "WorkingTable" && pressedCtrl)
+        else if (collision.gameObject.tag == "WorkingTable" && crtlPressed)
         {
             anim.ChangeAnimationState(anim.Player_UsingTable);
         }
-        else if (collision.gameObject.tag == "Chop" && pressedCtrl)
+        else if (collision.gameObject.tag == "Chop" && crtlPressed)
         {
             anim.ChangeAnimationState(anim.Player_PickUpChop);
         }
