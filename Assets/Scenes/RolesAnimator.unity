@@ -795,7 +795,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Attack
+  m_Text: Attack Player
 --- !u!222 &550974244
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1090,6 +1090,7 @@ GameObject:
   - component: {fileID: 778319079}
   - component: {fileID: 778319078}
   - component: {fileID: 778319077}
+  - component: {fileID: 778319080}
   m_Layer: 0
   m_Name: Attack
   m_TagString: Attack
@@ -1173,6 +1174,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778319075}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &778319080
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778319075}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0176392, y: 1.2864871, z: 1.9237952}
+  m_Center: {x: 0, y: 0.03882432, z: 0}
 --- !u!1 &828477037
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,7 +1606,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2391062, y: 1.7590499, z: 2.2871704}
+  m_Size: {x: 2.64381, y: 1.7590499, z: 2.2871704}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1095285918
 MeshRenderer:
