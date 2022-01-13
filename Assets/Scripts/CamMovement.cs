@@ -21,7 +21,14 @@ public class CamMovement : MonoBehaviour
         instance = this;
 
         cam = GetComponent<Camera>();
+        camPos = this.transform.position;
         players = GameObject.FindGameObjectsWithTag("Player");
+    }
+
+    void Start()
+    {
+        nodes = Node.nodes;
+        FindSafeArea();
     }
 
     // Update is called once per frame
@@ -29,12 +36,10 @@ public class CamMovement : MonoBehaviour
     {
         if(players.Length == 1)
         {
-            }
             P1CamMove();
         }
-        if (tooClose == "closeL")
+        else if(players.Length > 1 || players.Length < 4)
         {
-            {
             P3CamMove();
         }
         else
@@ -89,9 +94,41 @@ public class CamMovement : MonoBehaviour
 
     private void P3CamMove()
     {
-
+        
     }
 
+    private GameObject[] nodes;
+
+    public void FindSafeArea()
+    {
+        float h = Screen.height;
+        float w = Screen.width;
+
+        List<Vector3> points = new List<Vector3>();
+
+        Vector3 LDpoint = new Vector3(effectDist, effectDist, cam.nearClipPlane);
+        points.Add(LDpoint);
+        Vector3 LUpoint = new Vector3(effectDist, h - effectDist, cam.nearClipPlane);
+        points.Add(LUpoint);
+        Vector3 RUpoint = new Vector3(w - effectDist, h - effectDist, cam.nearClipPlane);
+        points.Add(RUpoint);
+        Vector3 RDpoint = new Vector3(w - effectDist, effectDist, cam.nearClipPlane);
+        points.Add(RDpoint);
+        
+        for(int i = 0; i < points.Count; i++)
+        {
+            RaycastHit hit;
+            var ray = Camera.main.ScreenPointToRay(points[i]);
+
+            //7 = terrain Layermask
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, 1<<7))
+            {
+                nodes[i].transform.position = hit.point;
+            }
+        }
+
+        Debug.Log("safe area found");
+    }
 
     private void OnDrawGizmos()
     {

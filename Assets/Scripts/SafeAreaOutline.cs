@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TerrainRange : MonoBehaviour
+public class SafeAreaOutline : MonoBehaviour
 {
 
     private GameObject[] nodes;
 
-    public static TerrainRange instance;
-    private static TerrainRange Instance()
+    public static SafeAreaOutline instance;
+    private static SafeAreaOutline Instance()
     {
         return instance;
     }
 
-    public TerrainRange()
+    public SafeAreaOutline()
     {
         instance = this;
     }
