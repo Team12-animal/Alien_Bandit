@@ -100,7 +100,7 @@ public class SafeAreaOutline : MonoBehaviour
 
             //scale adjustment data
             float width = targetLine.magnitude;
-            Vector3 sAdjust = new Vector3(0.0f, 0.0f, -width * 11);
+            Vector3 sAdjust = new Vector3(0.0f, 0.0f, -width * 10f);
 
             Debug.Log("width" + i + ":" + sAdjust);
 

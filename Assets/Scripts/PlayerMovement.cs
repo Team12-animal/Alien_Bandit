@@ -44,11 +44,11 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("h2" + transAmt);
         Debug.Log("v2" + rotAmt);
 
-        rVec = cam.transform.right * rotAmt * maxRotate * Time.deltaTime;
-        fVec = cam.transform.forward * transAmt * maxSpeed * Time.deltaTime;
+        rVec = this.transform.right * rotAmt;
+        fVec = this.transform.forward * transAmt;
 
         dir = rVec + fVec;
-        this.transform.position += dir;
+        this.transform.position += dir * maxSpeed * Time.deltaTime;
 
         Debug.Log("newPos" + this.transform.position);
     }
@@ -56,9 +56,8 @@ public class PlayerMovement : MonoBehaviour
     public void Rotate(float transAmt, float rotAmt)
     {
         Vector3 target = dir.normalized;
-        Vector3 camF = cam.transform.forward;
 
-        this.transform.forward = target;
+        this.transform.forward = Vector3.Lerp(this.transform.forward, (this.transform.forward + dir) * maxRotate * Time.deltaTime, 1);
 
         //Vector3 cCrossO = Vector3.Cross(camF, oriF);
         //Vector3 cCrosst = Vector3.Cross(camF, target);

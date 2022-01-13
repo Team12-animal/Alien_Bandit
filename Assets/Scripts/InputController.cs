@@ -38,7 +38,7 @@ public class InputController : MonoBehaviour
             rotAmt = Input.GetAxis("Horizontal");
 
             pm.Move(transAmt, rotAmt);
-            pm.Rotate(transAmt, rotAmt);
+            //pm.Rotate(transAmt, rotAmt);
         }
 
         if (Input.GetButtonDown("Dash") && isDash == false)
@@ -62,5 +62,11 @@ public class InputController : MonoBehaviour
             remainDashTime = pm.Dash(remainDashTime);
         }
 
+        if (Input.GetButtonDown("Pick"))
+        {
+            
+        }
+
+        
     }
 }
