@@ -33,7 +33,6 @@ public class SimpleMovement : MonoBehaviour
         //Rotate
         float rotAmt = Input.GetAxis("Horizontal") * maxRotate;
         Quaternion rot = Quaternion.Euler(0.0f, rotAmt, 0.0f);
-
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rot, Time.deltaTime);
 
         //Move
