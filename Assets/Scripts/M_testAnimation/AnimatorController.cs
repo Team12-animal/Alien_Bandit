@@ -29,7 +29,7 @@ public class AnimatorController : MonoBehaviour
     public string Player_Chopping { get; private set; } = "Chopping";
     public string Player_ChopIdle { get; private set; } = "ChopIdle";
     public string Player_PutDownChop { get; private set; } = "PutDownChop";
-    public string Player_PickWood { get; private set; } = "PickWood";
+    public string Player_PickUpWood { get; private set; } = "PickWood";
     public string Player_HoldWoodWalk { get; private set; } = "HoldWoodWalk";
     public string Player_PutDownWood { get; private set; } = "PutDownWood";
     public string Player_UsingTable { get; private set; } = "UsingTable";
@@ -40,12 +40,6 @@ public class AnimatorController : MonoBehaviour
 
     public string Player_Test { get; private set; } = "Test";
 
-
-    private void Update()
-    {
-         horizotalInput = Input.GetAxis("Horizontal");
-         verticalInput = Input.GetAxis("Vertical");
-    }
 
     public void Init()
     {
@@ -58,7 +52,7 @@ public class AnimatorController : MonoBehaviour
         if (currentState == newState) return;
         animator.Play(newState);
         currentState = newState;
-        if (newState == Player_PickUpRock || newState == Player_PickWood || newState == Player_PickUpChop)
+        if (newState == Player_PickUpRock || newState == Player_PickUpWood || newState == Player_PickUpChop)
             animator.SetBool(animPickedHash, true);
         if (newState == Player_PutDownRock || newState == Player_PutDownWood || newState == Player_ThrowRock || newState == Player_PutDownChop)
         {
@@ -66,7 +60,6 @@ public class AnimatorController : MonoBehaviour
                 StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length * delay));
             else
                 StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length));
-               
         }
     }
 
@@ -91,7 +84,7 @@ public class AnimatorController : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
         animator.SetBool(animPickedHash, false);
     }
-
+    #region Unity AnimationEvent
     public void AnimaEvent_PickUpOverHeadToOverHeadWalk()
     {
         ChangeAnimationState(Player_HoldRockWalk);
@@ -106,37 +99,31 @@ public class AnimatorController : MonoBehaviour
     {
         ChangeAnimationState(Player_HoldWoodWalk);
     }
-
     public void AnimaEventPickUpToRun()
     {
         ChangeAnimationState(Player_HoldChopWalk);
     }
-
     public void AnimaEventChoppingToChopIdle()
     {
         ChangeAnimationState(Player_ChopIdle);
     }
-
-
     public void AnimaEventPutDownChopToRun()
     {
         animator.SetBool(animPickedHash, false);
     }
-
     public void AnimaEventIdle()
     {
         Test();
     }
-
     public void Test()
     {
-        if(horizotalInput != 0 || verticalInput != 0)
+        if (horizotalInput != 0 || verticalInput != 0)
         {
             animator.SetFloat(animHorizontalHash, horizotalInput);
             animator.SetFloat(animVerticalHash, verticalInput);
             ChangeAnimationState(Player_Test);
         }
-        else if(horizotalInput == 0 && verticalInput == 0)
+        else if (horizotalInput == 0 && verticalInput == 0)
         {
             animator.SetFloat(animHorizontalHash, 0);
             animator.SetFloat(animVerticalHash, 0);
@@ -144,5 +131,5 @@ public class AnimatorController : MonoBehaviour
         }
         ChangeAnimationState(Player_Idle);
     }
-
+    #endregion
 }
