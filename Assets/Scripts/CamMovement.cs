@@ -8,12 +8,14 @@ public class CamMovement : MonoBehaviour
     private Camera cam;
 
     public GameObject[] players;
-    public GameObject player;
+    public GameObject p1;
     public float effectDist;
 
     private Vector3 playerPos;
     private Vector3 pScreenPos;
     private Vector3 camPos;
+
+    private bool leaveSafeArea;
 
     // Start is called before the first frame update
     void Awake()
@@ -22,13 +24,14 @@ public class CamMovement : MonoBehaviour
 
         cam = GetComponent<Camera>();
         camPos = this.transform.position;
+        oriCamPos = camPos;
         players = GameObject.FindGameObjectsWithTag("Player");
+        p1 = players[0];
+        
     }
 
     void Start()
     {
-        nodes = Node.nodes;
-        FindSafeArea();
     }
 
     // Update is called once per frame
@@ -51,21 +54,15 @@ public class CamMovement : MonoBehaviour
 
     //Camera跟隨Player
     Vector3 dir;
+    Vector3 oriCamPos;
     bool startFollow = false;
 
     private void P1CamMove()
-    {   
-        float h = Screen.height;
-        float w = Screen.width;
-        
-        camPos = this.transform.position;
-        playerPos = player.transform.position;
-        pScreenPos = cam.WorldToScreenPoint(playerPos);
+    {
+        playerPos = p1.transform.position;
 
-        Debug.Log("screen" + pScreenPos);
-
-        //enter effect zone
-        if (pScreenPos.x < effectDist || pScreenPos.x > (w - effectDist) || pScreenPos.y < effectDist || pScreenPos.y > (h - effectDist))
+        //離開安全區
+        if (leaveSafeArea)
         {
             if (!startFollow)
             {
@@ -75,11 +72,15 @@ public class CamMovement : MonoBehaviour
         }
         else
         {
+            //camPos = oriCamPos;
+            //this.transform.position = camPos;
+            SeekOriPos(this.gameObject, oriCamPos);
             startFollow = false;
         }
 
         Debug.Log("startFollow" + startFollow);
 
+        //鏡頭跟隨
         if (startFollow)
         {
             camPos = playerPos + dir;
@@ -92,42 +93,42 @@ public class CamMovement : MonoBehaviour
         }
     }
 
+    private void SeekOriPos(GameObject go, Vector3 target)
+    {
+        float speed = p1.GetComponent<PlayerMovement>().maxSpeed;
+
+        Vector3 seekerPos = go.transform.position;
+        Vector3 dir = target - seekerPos;
+
+        if (dir.magnitude > 0.5f)
+        {
+            Debug.Log("seeking" + dir.magnitude);
+            dir.Normalize();
+            go.transform.position += dir * speed * Time.deltaTime;
+        }
+        
+    }
+
+
     private void P3CamMove()
     {
         
     }
 
-    private GameObject[] nodes;
-
-    public void FindSafeArea()
+    public GameObject GetSABumper(GameObject go)
     {
-        float h = Screen.height;
-        float w = Screen.width;
-
-        List<Vector3> points = new List<Vector3>();
-
-        Vector3 LDpoint = new Vector3(effectDist, effectDist, cam.nearClipPlane);
-        points.Add(LDpoint);
-        Vector3 LUpoint = new Vector3(effectDist, h - effectDist, cam.nearClipPlane);
-        points.Add(LUpoint);
-        Vector3 RUpoint = new Vector3(w - effectDist, h - effectDist, cam.nearClipPlane);
-        points.Add(RUpoint);
-        Vector3 RDpoint = new Vector3(w - effectDist, effectDist, cam.nearClipPlane);
-        points.Add(RDpoint);
-        
-        for(int i = 0; i < points.Count; i++)
+        if(leaveSafeArea == true)
         {
-            RaycastHit hit;
-            var ray = Camera.main.ScreenPointToRay(points[i]);
-
-            //7 = terrain Layermask
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity, 1<<7))
-            {
-                nodes[i].transform.position = hit.point;
-            }
+            leaveSafeArea = false;
+        }
+        else
+        {
+            leaveSafeArea = true;
         }
 
-        Debug.Log("safe area found");
+        Debug.Log("bump recived" + go.name);
+
+        return go;
     }
 
     private void OnDrawGizmos()

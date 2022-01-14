@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float rotAmt;
     public float setDashTime;
     public float dashSpeed;
+    public float lerpAmt;
 
     public Camera cam;
 
@@ -20,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(this.gameObject.name == "player")
+        if(this.gameObject.name == "Player1")
         {
             Debug.Log("found");
 
@@ -29,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("not found");
         }
+
+        rVec  = cam.transform.right;
+        fVec = GenNewForward();
     }
 
     // Update is called once per frame
@@ -44,10 +48,10 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("h2" + transAmt);
         Debug.Log("v2" + rotAmt);
 
-        rVec = this.transform.right * rotAmt;
-        fVec = this.transform.forward * transAmt;
+        Vector3 vMoveR = rVec * rotAmt;
+        Vector3 vMoveF = fVec * transAmt;
 
-        dir = rVec + fVec;
+        dir = vMoveR + vMoveF;
         this.transform.position += dir * maxSpeed * Time.deltaTime;
 
         Debug.Log("newPos" + this.transform.position);
@@ -55,83 +59,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void Rotate(float transAmt, float rotAmt)
     {
-        Vector3 target = dir.normalized;
+        Vector3 target = (rVec * rotAmt) + (fVec * transAmt);
+        this.transform.forward = Vector3.Lerp(this.transform.forward, (this.transform.forward + target) * maxRotate * Time.deltaTime, lerpAmt);
+    }
 
-        this.transform.forward = Vector3.Lerp(this.transform.forward, (this.transform.forward + dir) * maxRotate * Time.deltaTime, 1);
-
-        //Vector3 cCrossO = Vector3.Cross(camF, oriF);
-        //Vector3 cCrosst = Vector3.Cross(camF, target);
-        //float tDotC = Vector3.Dot(target, camF);
-        //float oDotC = Vector3.Dot(oriF, camF);
-
-        //float angle = 0.0f;
-        //float arc;
-
-        //if(cCrossO.y * cCrosst.y > 0)
-        //{
-        //    //?CamF???????????????
-        //    arc = Mathf.Abs(tDotC - oDotC);
-        //    angle = Mathf.Acos(arc) * Mathf.Rad2Deg;
-
-        //    if(tDotC - oDotC > 0)
-        //    {
-        //        angle = -angle;
-        //    }
-
-        //    Debug.Log("same side");
-        //}
-
-        //if(cCrossO.y * cCrosst.y < 0)
-        //{
-        //    //?CamF????????????????
-        //    arc = Mathf.Abs(tDotC) + Mathf.Abs(oDotC);
-        //    angle = Mathf.Acos(arc) * Mathf.Rad2Deg;
-
-        //    if(cCrossO.y < 0)
-        //    {
-        //        //?????
-        //        angle = -angle;
-        //    }
-        //    Debug.Log("not same side");
-        //}
-
-        //if(cCrossO.y * cCrosst.y == 0)
-        //{
-        //    Debug.Log("side: same dir");
-        //    //??????CamF??
-        //    if (oDotC * tDotC == 1)
-        //    {
-        //        //???????????
-        //        angle = 0.0f;
-        //    }
-
-        //    if(oDotC * tDotC == -1)
-        //    {
-        //        //???????????
-        //        angle = 180.0f;
-        //    }
-
-        //    if(Mathf.Abs(oDotC) != 1)
-        //    {
-        //        //?????CamF??
-        //        this.transform.forward = camF * tDotC;
-        //    }
-
-        //    if(Mathf.Abs(tDotC) != 1)
-        //    {
-        //        //?????CamF??
-        //        arc = Mathf.Abs(tDotC);
-        //        angle = Mathf.Acos(arc) * Mathf.Rad2Deg;
-
-        //        if (cCrosst.y < 0)
-        //        {
-        //            //???????
-        //            angle = -angle;
-        //        }
-        //    }
-        //}
-        //Debug.Log("angle " + angle);
-        //this.transform.Rotate(0.0f, angle, 0.0f);
+    public Vector3 GenNewForward()
+    {
+        Vector3 tempV = cam.transform.forward;
+        tempV.y = 0;
+        tempV.Normalize();
+    
+        return tempV;
     }
 
     public float Dash(float dashTime)
@@ -147,5 +85,4 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * 2);
     }
-
 }

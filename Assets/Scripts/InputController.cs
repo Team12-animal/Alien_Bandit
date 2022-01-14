@@ -9,8 +9,8 @@ public class InputController : MonoBehaviour
     private float rotAmt;
     Vector3 currentPos;
     Vector3 targetPos;
-    public bool isDash = false;
-    public float setDashTime;
+    private bool isDash = false;
+    private float setDashTime;
     private float remainDashTime;
 
     private void Awake()
@@ -38,7 +38,7 @@ public class InputController : MonoBehaviour
             rotAmt = Input.GetAxis("Horizontal");
 
             pm.Move(transAmt, rotAmt);
-            //pm.Rotate(transAmt, rotAmt);
+            pm.Rotate(transAmt, rotAmt);
         }
 
         if (Input.GetButtonDown("Dash") && isDash == false)
@@ -60,11 +60,6 @@ public class InputController : MonoBehaviour
         else
         {
             remainDashTime = pm.Dash(remainDashTime);
-        }
-
-        if (Input.GetButtonDown("Pick"))
-        {
-            
         }
 
         
