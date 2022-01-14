@@ -39,7 +39,8 @@ public class CamMovement : MonoBehaviour
     {
         if(players.Length == 1)
         {
-            P1CamMove();
+            //P1CamMove();
+            P1CamMove2();
         }
         else if(players.Length > 1 || players.Length < 4)
         {
@@ -52,7 +53,7 @@ public class CamMovement : MonoBehaviour
         
     }
 
-    //Camera跟隨Player
+    //Camera跟隨Player(world space safe area)
     Vector3 dir;
     Vector3 oriCamPos;
     bool startFollow = false;
@@ -107,6 +108,46 @@ public class CamMovement : MonoBehaviour
             go.transform.position += dir * speed * Time.deltaTime;
         }
         
+    }
+
+    //screen save area
+    private void P1CamMove2()
+    {
+        float h = Screen.height;
+        float w = Screen.width;
+
+        camPos = this.transform.position;
+        playerPos = players[0].transform.position;
+        pScreenPos = cam.WorldToScreenPoint(playerPos);
+
+        Debug.Log("screen" + pScreenPos);
+
+        //enter effect zone
+        if (pScreenPos.x < effectDist || pScreenPos.x > (w - effectDist) || pScreenPos.y < effectDist || pScreenPos.y > (h - effectDist))
+        {
+            if (!startFollow)
+            {
+                dir = camPos - playerPos;
+                startFollow = true;
+            }
+        }
+        else
+        {
+            startFollow = false;
+        }
+
+        Debug.Log("startFollow" + startFollow);
+
+        if (startFollow)
+        {
+            camPos = playerPos + dir;
+            this.transform.position = camPos;
+
+            Debug.Log("playerPos" + playerPos);
+            Debug.Log("dir" + dir);
+            Debug.Log("campos" + camPos);
+
+        }
     }
 
 
