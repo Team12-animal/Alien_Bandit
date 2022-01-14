@@ -38,6 +38,7 @@ public class SafeAreaMarker : MonoBehaviour
         if(cam != null)
         {
             Debug.Log("safe area: cam found");
+            Debug.Log("node" + nodes.Length);
         }
         else
         {
@@ -145,16 +146,22 @@ public class SafeAreaMarker : MonoBehaviour
         Vector3 RDpoint = new Vector3(w - effectDist, effectDist, cam.nearClipPlane);
         points.Add(RDpoint);
 
+        Debug.Log("node point" + points[0] + points[1] + points[2] + points[3]);
+
         for (int i = 0; i < points.Count; i++)
         {
             RaycastHit hit;
             var ray = Camera.main.ScreenPointToRay(points[i]);
+
+            Debug.Log("node ray" + Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 7));
 
             //7 = terrain Layermask
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 7))
             {
                 nodes[i].transform.position = hit.point;
             }
+
+            Debug.Log("find node" + nodes[i].transform.position + "/ hip point" + hit.point);
         }
 
         Debug.Log("safe area found");

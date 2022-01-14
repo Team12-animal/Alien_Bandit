@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3504239400440209340}
   - component: {fileID: 6222826196025063225}
   - component: {fileID: 7383750247023554405}
-  - component: {fileID: 8641680197118326513}
+  - component: {fileID: 7530066933098286994}
   m_Layer: 6
   m_Name: wall
   m_TagString: Untagged
@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8315813147016772145}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -94,9 +94,9 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.02, y: -0.07, z: 10.08}
+  m_Size: {x: 9.61, y: 1, z: 9.9}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8641680197118326513
+--- !u!114 &7530066933098286994
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,5 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473e0f6e1f50d45d680c131933ff04dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  senseCam: {fileID: 0}
   go: {fileID: 0}

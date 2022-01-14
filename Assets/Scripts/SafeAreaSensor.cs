@@ -15,7 +15,6 @@ public class SafeAreaSensor : MonoBehaviour
         senseCam = GameObject.Find("Main Camera");
         cam = senseCam.GetComponent<Camera>();
         cm = cam.GetComponent<CamMovement>();
-        
     }
 
     // Update is called once per frame

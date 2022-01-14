@@ -21,6 +21,10 @@ public class Node : MonoBehaviour
         orgArr = GameObject.FindGameObjectsWithTag("node");
         nodes = Sort(orgArr);
 
+        if(nodes.Length > 0)
+        {
+            Debug.Log("node found");
+        }
     }
 
     // Start is called before the first frame update
