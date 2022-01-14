@@ -7,7 +7,11 @@ public class InputController : MonoBehaviour
     private PlayerMovement pm;
     private float transAmt;
     private float rotAmt;
-    private Animator animator;
+    Vector3 currentPos;
+    Vector3 targetPos;
+    private bool isDash = false;
+    private float setDashTime;
+    private float remainDashTime;
 
     private void Awake()
     {
@@ -16,15 +20,16 @@ public class InputController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+        setDashTime = pm.setDashTime;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+
+    void Update()
     {
         Debug.Log("Update" + 0);
 
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        if (isDash == false && (Input.GetButton("Horizontal") || Input.GetButton("Vertical")))
         {
             Debug.Log("h" + Input.GetAxis("Horizontal"));
             Debug.Log("v" + Input.GetAxis("Vertical"));
@@ -32,12 +37,31 @@ public class InputController : MonoBehaviour
             transAmt = Input.GetAxis("Vertical");
             rotAmt = Input.GetAxis("Horizontal");
 
-            pm.MoveAndRotate(transAmt, rotAmt);
-            animator.SetInteger("AnimationPar", 1);
+            pm.Move(transAmt, rotAmt);
+            pm.Rotate(transAmt, rotAmt);
+        }
+
+        if (Input.GetButtonDown("Dash") && isDash == false)
+        {
+            Debug.Log("dash");
+            if (isDash == false)
+            {
+                isDash = true;
+                remainDashTime = setDashTime;
+                Debug.Log("dash" + isDash);
+            }
+        }
+
+        if(remainDashTime <= 0)
+        {
+            isDash = false;
+            Debug.Log("dash" + isDash);
         }
         else
         {
-            animator.SetInteger("AnimationPar", 0);
+            remainDashTime = pm.Dash(remainDashTime);
         }
+
+        
     }
 }

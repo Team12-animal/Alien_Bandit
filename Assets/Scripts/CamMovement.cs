@@ -5,121 +5,171 @@ using UnityEngine;
 public class CamMovement : MonoBehaviour
 {
     private static CamMovement instance;
+    private Camera cam;
 
-    public GameObject player;
-    public float testDist;
+    public GameObject[] players;
+    public GameObject p1;
+    public float effectDist;
 
-    Vector3 dirToTarget;//Player指向Camera的向量
-    Vector3 originPPos;
-    Vector3 camPos;
+    private Vector3 playerPos;
+    private Vector3 pScreenPos;
+    private Vector3 camPos;
 
-    private static CamMovement Instance()
-    {
-        return instance;
-    }
+    private bool leaveSafeArea;
 
     // Start is called before the first frame update
     void Awake()
     {
         instance = this;
 
-        originPPos = player.transform.position;
+        cam = GetComponent<Camera>();
         camPos = this.transform.position;
+        oriCamPos = camPos;
+        players = GameObject.FindGameObjectsWithTag("Player");
+        p1 = players[0];
+        
+    }
 
-        dirToTarget = camPos - originPPos;
+    void Start()
+    {
     }
 
     // Update is called once per frame
     void Update()
     {
-        CamFollowing();
+        if(players.Length == 1)
+        {
+            //P1CamMove();
+            P1CamMove2();
+        }
+        else if(players.Length > 1 || players.Length < 4)
+        {
+            P3CamMove();
+        }
+        else
+        {
+            Debug.Log("wrong player amount");
+        }
+        
     }
 
-    //Camera跟隨Player
-    private void CamFollowing()
+    //Camera跟隨Player(world space safe area)
+    Vector3 dir;
+    Vector3 oriCamPos;
+    bool startFollow = false;
+
+    private void P1CamMove()
     {
-        string tooClose = FixCamPos();
-        Vector3 newPlayerPos = player.transform.position;
-        camPos = newPlayerPos + dirToTarget;
+        playerPos = p1.transform.position;
 
-        if (tooClose == "closeF")
+        //離開安全區
+        if (leaveSafeArea)
         {
-            if(camPos.z >= fixedPos)
+            if (!startFollow)
             {
-                camPos.z = fixedPos;
-                Debug.Log("FixF");
+                dir = camPos - playerPos;
+                startFollow = true;
             }
         }
-
-        if (tooClose == "closeR")
+        else
         {
-            if(camPos.x >= fixedPos)
-            {
-                camPos.x = fixedPos;
-                Debug.Log("FixR");
-            }
+            //camPos = oriCamPos;
+            //this.transform.position = camPos;
+            SeekOriPos(this.gameObject, oriCamPos);
+            startFollow = false;
         }
 
-        if (tooClose == "closeL")
-        {
-            if (camPos.x <= fixedPos)
-            {
-                camPos.x = fixedPos;
-                Debug.Log("FixL");
-            }
-        }
+        Debug.Log("startFollow" + startFollow);
 
-        if (tooClose == "keepGoing" || tooClose == "closeB")
+        //鏡頭跟隨
+        if (startFollow)
         {
-            Debug.Log("keep going");
-        }
+            camPos = playerPos + dir;
+            this.transform.position = camPos;
 
-        this.transform.position = camPos;
+            Debug.Log("playerPos" + playerPos);
+            Debug.Log("dir" + dir);
+            Debug.Log("campos" + camPos);
+
+        }
     }
 
-    private float fixedPos;
-
-    private string FixCamPos()
+    private void SeekOriPos(GameObject go, Vector3 target)
     {
-        //Debug.Log("FixCamPos");
+        float speed = p1.GetComponent<PlayerMovement>().maxSpeed;
 
-        Vector3 camPos = this.transform.position;
-        
-        Vector3 front = this.transform.forward;
-        Vector3 back = -front;
-        Vector3 right = this.transform.right;
-        Vector3 left = -right;
+        Vector3 seekerPos = go.transform.position;
+        Vector3 dir = target - seekerPos;
 
-        LayerMask mask = LayerMask.GetMask("OutLine");
-
-        string result = "keepGoing";
-
-        if (Physics.Raycast(camPos, front, testDist, mask))
+        if (dir.magnitude > 0.5f)
         {
-            fixedPos = camPos.z;
-            result = "closeF";
-        }
-
-        if(Physics.Raycast(camPos, back, testDist, mask))
-        {
-            fixedPos = camPos.z;
-            result = "closeB";
+            Debug.Log("seeking" + dir.magnitude);
+            dir.Normalize();
+            go.transform.position += dir * speed * Time.deltaTime;
         }
         
-        if(Physics.Raycast(camPos, right, testDist, mask))
+    }
+
+    //screen save area
+    private void P1CamMove2()
+    {
+        float h = Screen.height;
+        float w = Screen.width;
+
+        camPos = this.transform.position;
+        playerPos = players[0].transform.position;
+        pScreenPos = cam.WorldToScreenPoint(playerPos);
+
+        Debug.Log("screen" + pScreenPos);
+
+        //enter effect zone
+        if (pScreenPos.x < effectDist || pScreenPos.x > (w - effectDist) || pScreenPos.y < effectDist || pScreenPos.y > (h - effectDist))
         {
-            fixedPos = camPos.x;
-            result = "closeR";
+            if (!startFollow)
+            {
+                dir = camPos - playerPos;
+                startFollow = true;
+            }
         }
-        
-        if(Physics.Raycast(camPos, left, testDist, mask))
+        else
         {
-            fixedPos = camPos.x;
-            result = "closeL";
+            startFollow = false;
         }
 
-        Debug.Log("tooclose" + result);
-        return result;
+        Debug.Log("startFollow" + startFollow);
+
+        if (startFollow)
+        {
+            camPos = playerPos + dir;
+            this.transform.position = camPos;
+
+            Debug.Log("playerPos" + playerPos);
+            Debug.Log("dir" + dir);
+            Debug.Log("campos" + camPos);
+
+        }
+    }
+
+
+    private void P3CamMove()
+    {
+        
+    }
+
+    public GameObject GetSABumper(GameObject go)
+    {
+        if(leaveSafeArea == true)
+        {
+            leaveSafeArea = false;
+        }
+        else
+        {
+            leaveSafeArea = true;
+        }
+
+        Debug.Log("bump recived" + go.name);
+
+        return go;
     }
 
     private void OnDrawGizmos()
