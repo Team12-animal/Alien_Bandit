@@ -3292,10 +3292,10 @@ GameObject:
   m_Component:
   - component: {fileID: 486310}
   - component: {fileID: 9558652}
+  - component: {fileID: 1510620503}
   - component: {fileID: 1510620506}
   - component: {fileID: 1510620505}
   - component: {fileID: 1510620504}
-  - component: {fileID: 1510620503}
   m_Layer: 0
   m_Name: Character_HipsterGirl_01
   m_TagString: Untagged
@@ -3356,6 +3356,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &1510620503
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178284}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.2239232
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.0627089, z: 0}
 --- !u!54 &1510620506
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3369,9 +3383,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Interpolate: 2
+  m_Constraints: 112
+  m_CollisionDetection: 3
 --- !u!114 &1510620505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3387,6 +3401,8 @@ MonoBehaviour:
   speed: 3
   rotateSpeed: 3
   t: 0.06
+  speedRunDistance: 100
+  pressedTime: 1
 --- !u!114 &1510620504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3401,20 +3417,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   delay: 2.1
---- !u!136 &1510620503
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178284}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &178844
 GameObject:
   m_ObjectHideFlags: 0

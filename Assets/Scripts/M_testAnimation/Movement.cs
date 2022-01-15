@@ -51,10 +51,10 @@ public class Movement : MonoBehaviour
         movementDirection.Normalize();
         float tempTime = 0;
         tempTime += Time.deltaTime;
-        if (tempTime > 0.03f)
-            transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
-        if (movementDirection != Vector3.zero)
-            transform.forward = Vector3.Slerp(transform.forward, (transform.forward + movementDirection) * rotateSpeed * Time.deltaTime, t);
+        //if (tempTime > 0.03f)
+        //    transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
+        //if (movementDirection != Vector3.zero)
+        //    transform.forward = Vector3.Slerp(transform.forward, (transform.forward + movementDirection) * rotateSpeed * Time.deltaTime, t);
 
         ChangeAnimationState(moved, movementDirection);
     }
