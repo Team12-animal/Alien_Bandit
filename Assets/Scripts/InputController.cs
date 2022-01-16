@@ -18,6 +18,7 @@ public class InputController : MonoBehaviour
     bool crtlPressUp;
     float holdDownStartTime = 0f;
     [SerializeField] float pressedTime = 1.0f;
+    [SerializeField] bool inTreeArea = false;
 
     private void Awake()
     {
@@ -41,7 +42,7 @@ public class InputController : MonoBehaviour
         Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         movementDirection.Normalize();
 
-        bool canMOved = !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Chopping) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpChop) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpRock) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Fear);
+        bool canMOved = !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Chopping) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpChop) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpRock) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Fear) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ChopFinished) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ChopIdle);
         if (isDash == false && moved)
         {
             transAmt = Input.GetAxis("Vertical");
@@ -95,7 +96,7 @@ public class InputController : MonoBehaviour
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && crtlPressUp)
         {
             float temp = pressedTime;
-            float holdDownTime = Time.time - transAmt;
+            float holdDownTime = Time.time - holdDownStartTime;
             if (holdDownTime >= pressedTime)
                 anim.ChangeAnimationState(anim.Player_ThrowRock);
             else if (holdDownTime > 0.03f)
@@ -109,10 +110,10 @@ public class InputController : MonoBehaviour
 
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && moved)
             anim.ChangeAnimationState(anim.Player_HoldChopWalk, rotAmt, transAmt);
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && crtlPressed)
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && crtlPressed && !inTreeArea)
             anim.ChangeAnimationState(anim.Player_PutDownChop);
 
-        if (!anim.animator.GetBool(anim.animPickedHash) && isDash)
+        if (!anim.animator.GetBool(anim.animPickedHash) && isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk))
             anim.ChangeAnimationState(anim.Player_SpeedRun, rotAmt, transAmt);
     }
 
@@ -123,21 +124,27 @@ public class InputController : MonoBehaviour
         {
             anim.ChangeAnimationState(anim.Player_PickUpRock);
         }
-        else if (other.gameObject.tag == "Tree" && crtlPressed)
+        else if (other.gameObject.tag == "Tree")
         {
-            anim.ChangeAnimationState(anim.Player_Chopping);
+            inTreeArea = true;
+            if (anim.animator.GetBool(anim.animHoldChop) & crtlPressed)
+                anim.ChangeAnimationState(anim.Player_Chopping);
         }
-        else if (other.gameObject.tag == "Wood" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash))
+        else if(other.gameObject.tag != "Tree")
         {
-            anim.ChangeAnimationState(anim.Player_PickUpWood);
-        }
-        else if (other.gameObject.tag == "WorkingTable" && crtlPressed)
-        {
-            anim.ChangeAnimationState(anim.Player_UsingTable);
-        }
-        else if (other.gameObject.tag == "Chop" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash))
-        {
-            anim.ChangeAnimationState(anim.Player_PickUpChop);
+            inTreeArea = false;
+            if (other.gameObject.tag == "Wood" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash))
+            {
+                anim.ChangeAnimationState(anim.Player_PickUpWood);
+            }
+            else if (other.gameObject.tag == "WorkingTable" && crtlPressed)
+            {
+                anim.ChangeAnimationState(anim.Player_UsingTable);
+            }
+            else if (other.gameObject.tag == "Chop" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash))
+            {
+                anim.ChangeAnimationState(anim.Player_PickUpChop);
+            }
         }
     }
 
