@@ -10,11 +10,20 @@ public class SafeAreaSensor : MonoBehaviour
     public GameObject go;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         senseCam = GameObject.Find("Main Camera");
         cam = senseCam.GetComponent<Camera>();
-        cm = cam.GetComponent<CamMovement>();
+        cm = senseCam.GetComponent<CamMovement>();
+
+        if(cm == null)
+        {
+            Debug.Log("cm not found");
+        }
+        else
+        {
+            Debug.Log("cm found");
+        }
     }
 
     // Update is called once per frame
@@ -26,7 +35,11 @@ public class SafeAreaSensor : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         go = other.gameObject;
-        cm.GetSABumper(go);
-        Debug.Log("bump");
+
+        if (go != null)
+        {
+            cm.GetSABumper(go);
+            Debug.Log("bump");
+        }
     }
 }

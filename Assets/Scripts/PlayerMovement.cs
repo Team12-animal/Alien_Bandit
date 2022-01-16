@@ -24,23 +24,26 @@ public class PlayerMovement : MonoBehaviour
         fVec = GenNewForward();
     }
 
-    public void Move(float transAmt, float rotAmt)
+    public void MoveAndRotate(float transAmt, float rotAmt)
     {
         this.transAmt = transAmt;
         this.rotAmt = rotAmt;
-        Vector3 vMoveR = rVec * rotAmt;
-        Vector3 vMoveF = fVec * transAmt;
-        dir = vMoveR + vMoveF;
-        this.transform.position += dir * maxSpeed * Time.deltaTime;
+
+        Vector3 dir = (rVec * rotAmt) + (fVec * transAmt);
+
+        this.transform.forward = Vector3.Slerp(this.transform.forward, dir * maxRotate * Time.deltaTime, lerpAmt);
+        
+        float moveAmt = dir.magnitude;
+
+        this.transform.position += this.transform.forward * moveAmt * maxSpeed * Time.deltaTime;
     }
 
-    public void Rotate(float transAmt, float rotAmt)
-    {
-        Vector3 target = (rVec * rotAmt) + (fVec * transAmt);
-        this.transform.forward = Vector3.Lerp(this.transform.forward, (this.transform.forward + target) * maxRotate * Time.deltaTime, lerpAmt);
-        //this.transform.forward += target * maxRotate * Time.deltaTime;
-        Debug.Log("this" + (target* maxRotate) + this.transform.forward);
-    }
+    //public void Rotate(float transAmt, float rotAmt)
+    //{
+      
+    //    //this.transform.forward += target * maxRotate * Time.deltaTime;
+    //    Debug.Log("this" + (target* maxRotate) + this.transform.forward);
+    //}
 
     public Vector3 GenNewForward()
     {

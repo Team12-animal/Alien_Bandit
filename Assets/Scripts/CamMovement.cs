@@ -17,6 +17,11 @@ public class CamMovement : MonoBehaviour
 
     private bool leaveSafeArea;
 
+    public CamMovement()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Awake()
     {
