@@ -41,6 +41,8 @@ public class AnimatorController : MonoBehaviour
 
     public string Player_Test { get; private set; } = "Test";
 
+
+
     private void Update()
     {
         horizotalInput = Input.GetAxis("Horizontal");
@@ -121,6 +123,12 @@ public class AnimatorController : MonoBehaviour
     {
         ChangeAnimationState(Player_MixUsingTableToWlak);
     }
+
+    public void AnimaEventSpeedRunToRun()
+    {
+        ChangeAnimationState(Player_Run);
+    }
+
     public void AnimaEventIdle()
     {
         Test();

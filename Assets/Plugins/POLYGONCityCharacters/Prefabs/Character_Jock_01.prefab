@@ -2982,7 +2982,7 @@ GameObject:
   - component: {fileID: 3147289192168746663}
   m_Layer: 0
   m_Name: Character_Jock_01
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2996,7 +2996,7 @@ Transform:
   m_GameObject: {fileID: 171554}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2461, y: 1.2461, z: 1.2461}
   m_Children:
   - {fileID: 434216}
   - {fileID: 406370}
@@ -3048,8 +3048,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171554}
   serializedVersion: 2
-  m_Mass: 30
-  m_Drag: 0
+  m_Mass: 70
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -3082,9 +3082,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a227899c526b44b8854afb7592b831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  rotateSpeed: 10
-  t: 0.6
+  speed: 1
+  rotateSpeed: 1
+  t: 0
   speedRunDistance: 100
   pressedTime: 1
 --- !u!114 &62720793
@@ -3094,7 +3094,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171554}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6554064aff1efbd48986bdfc7ac6892a, type: 3}
   m_Name: 
@@ -3113,13 +3113,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39cdb66413ed3144bbdad6ff3832ee1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
-  maxRotate: 10
+  maxSpeed: 0.05
+  maxRotate: 2
   transAmt: 0
   rotAmt: 0
   setDashTime: 0.5
-  dashSpeed: 12
-  lerpAmt: 0.6
+  dashSpeed: 3
+  lerpAmt: 1
   cam: {fileID: 0}
 --- !u!114 &3147289192168746663
 MonoBehaviour:
