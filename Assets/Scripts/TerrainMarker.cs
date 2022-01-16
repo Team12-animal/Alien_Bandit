@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SafeAreaMarker : MonoBehaviour
+public class TerrainMarker : MonoBehaviour
 {
     private Camera cam;
 
     private GameObject[] nodes;
     private float effectDist;
 
-    public static SafeAreaMarker instance;
-    private static SafeAreaMarker Instance()
+    public static TerrainMarker instance;
+    private static TerrainMarker Instance()
     {
         return instance;
     }
 
-    public SafeAreaMarker()
+    public TerrainMarker()
     {
         instance = this;
     }
@@ -44,7 +44,6 @@ public class SafeAreaMarker : MonoBehaviour
             Debug.Log("safe area: cam not found");
         }
 
-        FindSafeArea();
         LoadWallPrefab(nodes.Length);
         SpawnWallCollider();
 
@@ -65,7 +64,7 @@ public class SafeAreaMarker : MonoBehaviour
         for(int i = 0; i < amt; i++)
         {
             Debug.Log("enter" + i);
-            var prefab = Resources.Load<GameObject>("safeAreaOutline");
+            var prefab = Resources.Load<GameObject>("terrainOutline");
             GameObject wall = GameObject.Instantiate(prefab) as GameObject;
             wall.SetActive(false);
             tContainer.Add(wall);
@@ -127,36 +126,5 @@ public class SafeAreaMarker : MonoBehaviour
             debug.Normalize();
             Debug.Log("wall rot" + i + ":" + debug + "/" + targetLine);
         }
-    }
-
-    public void FindSafeArea()
-    {
-        float h = Screen.height;
-        float w = Screen.width;
-
-        List<Vector3> points = new List<Vector3>();
-
-        Vector3 LDpoint = new Vector3(effectDist, effectDist, cam.nearClipPlane);
-        points.Add(LDpoint);
-        Vector3 LUpoint = new Vector3(effectDist, h - effectDist, cam.nearClipPlane);
-        points.Add(LUpoint);
-        Vector3 RUpoint = new Vector3(w - effectDist, h - effectDist, cam.nearClipPlane);
-        points.Add(RUpoint);
-        Vector3 RDpoint = new Vector3(w - effectDist, effectDist, cam.nearClipPlane);
-        points.Add(RDpoint);
-
-        for (int i = 0; i < points.Count; i++)
-        {
-            RaycastHit hit;
-            var ray = Camera.main.ScreenPointToRay(points[i]);
-
-            //7 = terrain Layermask
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 7))
-            {
-                nodes[i].transform.position = hit.point;
-            }
-        }
-
-        Debug.Log("safe area found");
     }
 }

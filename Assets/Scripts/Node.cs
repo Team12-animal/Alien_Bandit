@@ -5,22 +5,16 @@ using UnityEditor;
 
 public class Node : MonoBehaviour
 {
-    public static Node instance;
-    private GameObject[] orgArr;
-    public static GameObject[] nodes;
+    public GameObject[] orgArr;
+    public GameObject[] nodes;
 
-    private static Node Instance()
-    {
-        return instance;
-    }
+    string tagName;
 
     private void Awake()
     {
-        instance = this;
-
-        orgArr = GameObject.FindGameObjectsWithTag("node");
+        tagName = this.gameObject.tag;
+        orgArr = GameObject.FindGameObjectsWithTag(tagName);
         nodes = Sort(orgArr);
-
     }
 
     // Start is called before the first frame update
@@ -37,12 +31,13 @@ public class Node : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (nodes != null)
+        if (orgArr.Length >0 && nodes.Length == orgArr.Length)
         {
             Gizmos.color = Color.blue;
 
             for (int i = 0; i < nodes.Length; i++)
             {
+                Debug.Log("gizmo" + tagName + i);
                 if (i + 1 < nodes.Length)
                 {
 
@@ -52,6 +47,10 @@ public class Node : MonoBehaviour
 
             Gizmos.DrawLine(nodes[0].transform.position, nodes[nodes.Length - 1].transform.position);
         }
+        else
+        {
+            Debug.Log("gen nodes error");
+        }
     }
 
     public GameObject[] Sort(GameObject[] arr)
@@ -59,7 +58,7 @@ public class Node : MonoBehaviour
         GameObject[] result = new GameObject[arr.Length];
         for (int i = 0; i < arr.Length; i++)
         {
-            string name = "node_" + i;
+            string name = tagName + "_" + i;
 
             for (int j = 0; j < arr.Length; j++)
             {
