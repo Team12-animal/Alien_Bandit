@@ -46,8 +46,8 @@ public class InputController : MonoBehaviour
             transAmt = Input.GetAxis("Vertical");
             rotAmt = Input.GetAxis("Horizontal");
 
-            pm.Move(transAmt, rotAmt);
             pm.Rotate(transAmt, rotAmt);
+            pm.Move(transAmt, rotAmt);
         }
 
         if (Input.GetButtonDown("Dash") && isDash == false)
