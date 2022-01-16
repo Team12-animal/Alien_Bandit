@@ -1281,6 +1281,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree(6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5023827496289606453, guid: a79279818571b6848a9ccb8dcb36dd2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8392042334364062367, guid: a79279818571b6848a9ccb8dcb36dd2c, type: 3}
+      propertyPath: m_Height
+      value: 8.059068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8392042334364062367, guid: a79279818571b6848a9ccb8dcb36dd2c, type: 3}
+      propertyPath: m_Radius
+      value: 2.009082
+      objectReference: {fileID: 0}
+    - target: {fileID: 8392042334364062367, guid: a79279818571b6848a9ccb8dcb36dd2c, type: 3}
+      propertyPath: m_Center.x
+      value: 0.2190288
+      objectReference: {fileID: 0}
+    - target: {fileID: 8392042334364062367, guid: a79279818571b6848a9ccb8dcb36dd2c, type: 3}
+      propertyPath: m_Center.y
+      value: 1.584492
+      objectReference: {fileID: 0}
+    - target: {fileID: 8392042334364062367, guid: a79279818571b6848a9ccb8dcb36dd2c, type: 3}
+      propertyPath: m_Center.z
+      value: 0.11109922
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a79279818571b6848a9ccb8dcb36dd2c, type: 3}
 --- !u!4 &164632411 stripped
@@ -8358,15 +8382,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4961758087781970123, guid: c2cb5e8a081a26c4a94df01eb6c4e44c, type: 3}
       propertyPath: m_Radius
-      value: 2.7370157
+      value: 0.97383463
       objectReference: {fileID: 0}
     - target: {fileID: 4961758087781970123, guid: c2cb5e8a081a26c4a94df01eb6c4e44c, type: 3}
       propertyPath: m_Center.x
-      value: -1.5280834
+      value: 0.23509517
       objectReference: {fileID: 0}
     - target: {fileID: 4961758087781970123, guid: c2cb5e8a081a26c4a94df01eb6c4e44c, type: 3}
       propertyPath: m_Center.y
-      value: -0.022691486
+      value: -0.022691485
       objectReference: {fileID: 0}
     - target: {fileID: 4961758087781970123, guid: c2cb5e8a081a26c4a94df01eb6c4e44c, type: 3}
       propertyPath: m_Center.z
@@ -8632,6 +8656,25 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.18
   m_Center: {x: 6.9999995, y: 1.6826363, z: -3.3460155}
+--- !u!1 &880757694 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5023827496289606453, guid: a79279818571b6848a9ccb8dcb36dd2c, type: 3}
+  m_PrefabInstance: {fileID: 162344848}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &880757699
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880757694}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.9989116
+  m_Height: 6.08516
+  m_Direction: 1
+  m_Center: {x: 0.2273858, y: 3.04258, z: 0.109365664}
 --- !u!1 &885469172
 GameObject:
   m_ObjectHideFlags: 0
@@ -13674,7 +13717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6359112800851457702, guid: c0695e50372965840badd7b84ed57617, type: 3}
       propertyPath: m_TagString
-      value: Attack
+      value: Rock
       objectReference: {fileID: 0}
     - target: {fileID: 6359112800851487366, guid: c0695e50372965840badd7b84ed57617, type: 3}
       propertyPath: m_RootOrder

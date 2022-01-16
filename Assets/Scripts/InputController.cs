@@ -35,18 +35,22 @@ public class InputController : MonoBehaviour
     {
         rotAmt = Input.GetAxis("Horizontal");
         transAmt = Input.GetAxis("Vertical");
+        crtlPressed = Input.GetButtonDown("LeftCtrl");
+        crtlPressUp = Input.GetButtonUp("LeftCtrl");
         bool moved = (rotAmt != 0 || transAmt != 0);
         Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         movementDirection.Normalize();
 
-
+        bool canMOved = !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Chopping) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpChop) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpRock);
         if (isDash == false && moved)
         {
             transAmt = Input.GetAxis("Vertical");
             rotAmt = Input.GetAxis("Horizontal");
-
-            pm.Move(transAmt, rotAmt);
-            pm.Rotate(transAmt, rotAmt);
+            if (canMOved)
+            {
+                pm.Move(transAmt, rotAmt);
+                pm.Rotate(transAmt, rotAmt);
+            }
         }
 
         if (Input.GetButtonDown("Dash") && isDash == false)
@@ -77,7 +81,7 @@ public class InputController : MonoBehaviour
         {
             if (isDash)
                 anim.ChangeAnimationState(anim.Player_SpeedRun, rotAmt, transAmt);
-            else if(!isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun))
+            else if (!isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun))
                 anim.ChangeAnimationState(anim.Player_Run, rotAmt, transAmt);
         }
 
