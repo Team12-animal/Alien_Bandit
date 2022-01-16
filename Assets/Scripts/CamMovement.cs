@@ -54,7 +54,7 @@ public class CamMovement : MonoBehaviour
     }
 
     //Camera跟隨Player(world space safe area)
-    Vector3 dir;
+    Vector3 dir = new Vector3(10000f, 10000f, 10000f);
     Vector3 oriCamPos;
     bool startFollow = false;
 
@@ -110,6 +110,7 @@ public class CamMovement : MonoBehaviour
         
     }
 
+    //Vector3 oriPPos;
     //screen save area
     private void P1CamMove2()
     {
@@ -136,11 +137,19 @@ public class CamMovement : MonoBehaviour
             startFollow = false;
         }
 
+        //if(playerPos != oriPPos)
+        //{
+        //    dir = oriCamPos - oriPPos;
+        //    startFollow = true;
+        //}
+
         Debug.Log("startFollow" + startFollow);
 
         if (startFollow)
         {
             camPos = playerPos + dir;
+            camPos = FixCamPos(camPos);
+            
             this.transform.position = camPos;
 
             Debug.Log("playerPos" + playerPos);
@@ -156,6 +165,7 @@ public class CamMovement : MonoBehaviour
         
     }
 
+    //leave safe arrive or not: check from wall's trigger
     public GameObject GetSABumper(GameObject go)
     {
         if(leaveSafeArea == true)
@@ -167,17 +177,85 @@ public class CamMovement : MonoBehaviour
             leaveSafeArea = true;
         }
 
-        Debug.Log("bump recived" + go.name);
-
         return go;
+    }
+
+    //how far should cam stop
+    public float rayProbe;
+    private Vector3 fixedPos;
+    private List<int> CheckTerrainEnd()
+    {   
+        List<int> results = new List<int>();
+        //gen rays from cam to the 4 forwords
+        List<Vector3> camRays = new List<Vector3>();
+        
+        Vector3 tempF = this.transform.forward;
+        tempF.y = 0;
+        tempF.Normalize();
+
+        Vector3 bR = -tempF;
+        camRays.Add(bR);
+        Vector3 rR = this.transform.right;
+        camRays.Add(rR);
+        Vector3 lR = -this.transform.right;
+        camRays.Add(lR);
+
+        for(int i = 0; i < camRays.Count; i++)
+        {
+            if(Physics.Raycast(this.transform.position, camRays[i], rayProbe, 1 << 6))
+            {
+                fixedPos = this.transform.position;
+                results.Add(i);
+            }
+        }
+
+        return results;
+    }
+
+    enum Results
+    {
+         keepgoing = -1,
+         hitB,
+         hitR,
+         hitL
+    }
+
+    private Vector3 FixCamPos(Vector3 dirPos)
+    {
+        List<int> results = CheckTerrainEnd();
+
+        if (results.Exists(x => x == (int)Results.keepgoing))
+        {
+            //do noting
+        }
+
+        //stop moving backward
+        if (results.Exists(x => x == (int)Results.hitB))
+        {
+            dirPos.z = Mathf.Max(dirPos.z, fixedPos.z);
+        }
+
+        //stop moving right
+        if (results.Exists(x => x == (int)Results.hitR))
+        {
+            dirPos.x = Mathf.Min(dirPos.x, fixedPos.x);
+        }
+
+        //stop moving left
+        if (results.Exists(x => x == (int)Results.hitL))
+        {
+            dirPos.x = Mathf.Max(dirPos.x, fixedPos.x);
+        }
+
+        return dirPos;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * 2);
+        Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * rayProbe);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.right * 2);
+        Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.right * rayProbe);
     }
 }
