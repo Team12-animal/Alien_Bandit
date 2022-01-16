@@ -9,14 +9,14 @@ public class Movement : MonoBehaviour
     private AnimatorController anim;
     [SerializeField] float speed = 3.0f;
     [SerializeField] float rotateSpeed = 3.0f;
-    [Tooltip("???V?????t??")] [SerializeField] float t = 0.06f;
+    [Tooltip("面向旋轉速度")] [SerializeField] float t = 0.06f;
     float horizotalInput;
     float verticalInput;
 
 
-    [Header("???e?]?w")]
-    [Tooltip("?|???]?w???????e")] [SerializeField] float speedRunDistance = 100.0f;
-    [Tooltip("?o?????????????a???Ucrtl?h?[???~?????X?h?????e")] [SerializeField] float pressedTime = 1.0f;
+    [Header("動畫設定")]
+    [Tooltip("尚未設定相關內容")] [SerializeField] float speedRunDistance = 100.0f;
+    [Tooltip("這個數值控制玩家按下crtl多久後才撥丟出去的動畫")] [SerializeField] float pressedTime = 1.0f;
     bool crtlPressed;
     bool shiftPressed;
     bool crtlPressUp;
@@ -51,10 +51,10 @@ public class Movement : MonoBehaviour
         movementDirection.Normalize();
         float tempTime = 0;
         tempTime += Time.deltaTime;
-        //if (tempTime > 0.03f)
-        //    transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
-        //if (movementDirection != Vector3.zero)
-        //    transform.forward = Vector3.Slerp(transform.forward, (transform.forward + movementDirection) * rotateSpeed * Time.deltaTime, t);
+        if (tempTime > 0.03f)
+            transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
+        if (movementDirection != Vector3.zero)
+            transform.forward = Vector3.Slerp(transform.forward, (transform.forward + movementDirection) * rotateSpeed * Time.deltaTime, t);
 
         ChangeAnimationState(moved, movementDirection);
     }
@@ -88,8 +88,8 @@ public class Movement : MonoBehaviour
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && crtlPressed)
             anim.ChangeAnimationState(anim.Player_PutDownChop);
 
-        //???@?????????Z??
-        if (!anim.animator.GetBool(anim.animPickedHash) && shiftPressed )
+        //缺一個移動的距離
+        if (!anim.animator.GetBool(anim.animPickedHash) && shiftPressed)
         {
             anim.ChangeAnimationState(anim.Player_SpeedRun, horizotalInput, verticalInput);
         }

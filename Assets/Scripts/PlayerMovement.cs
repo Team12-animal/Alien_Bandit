@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float maxRotate;
     public float transAmt;
     public float rotAmt;
-    public float setDashTime;
+    public float setDashTime = 0.24f;
     public float dashSpeed;
     public float lerpAmt;
 
@@ -18,43 +18,20 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 rVec;
     private Vector3 dir;
 
-    // Start is called before the first frame update
     void Start()
     {
-        if(this.gameObject.name == "Player1")
-        {
-            Debug.Log("found");
-
-        }
-        else
-        {
-            Debug.Log("not found");
-        }
-
-        rVec  = cam.transform.right;
+        rVec = cam.transform.right;
         fVec = GenNewForward();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     public void Move(float transAmt, float rotAmt)
     {
         this.transAmt = transAmt;
         this.rotAmt = rotAmt;
-        Debug.Log("MoveAndRotate");
-        Debug.Log("h2" + transAmt);
-        Debug.Log("v2" + rotAmt);
-
         Vector3 vMoveR = rVec * rotAmt;
         Vector3 vMoveF = fVec * transAmt;
-
         dir = vMoveR + vMoveF;
         this.transform.position += dir * maxSpeed * Time.deltaTime;
-
-        Debug.Log("newPos" + this.transform.position);
     }
 
     public void Rotate(float transAmt, float rotAmt)
@@ -68,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 tempV = cam.transform.forward;
         tempV.y = 0;
         tempV.Normalize();
-    
         return tempV;
     }
 
@@ -76,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
     {
         this.transform.position += this.transform.forward * dashSpeed * Time.deltaTime;
         dashTime -= Time.deltaTime;
-        Debug.Log("dash");
         return dashTime;
     }
 
