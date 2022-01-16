@@ -81,11 +81,14 @@ public class InputController : MonoBehaviour
         if (!anim.animator.GetBool(anim.animPickedHash) && moved)
         {
             if (isDash)
+            {
                 anim.ChangeAnimationState(anim.Player_SpeedRun, rotAmt, transAmt);
+            }
             else if (!isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun))
+            {
                 anim.ChangeAnimationState(anim.Player_Run, rotAmt, transAmt);
+            }
         }
-
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && moved)
         {
             anim.ChangeAnimationState(anim.Player_HoldRockWalk, rotAmt, transAmt);
@@ -101,20 +104,34 @@ public class InputController : MonoBehaviour
                 anim.ChangeAnimationState(anim.Player_ThrowRock);
             else if (holdDownTime > 0.03f)
                 anim.ChangeAnimationState(anim.Player_PutDownRock);
+            GetComponent<PlayerMovement>().maxSpeed = 8;
         }
-
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && moved)
+        {
             anim.ChangeAnimationState(anim.Player_HoldWoodWalk, rotAmt, transAmt);
+            GetComponent<PlayerMovement>().maxSpeed = 3;
+        }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && crtlPressed)
+        {
             anim.ChangeAnimationState(anim.Player_PutDownWood);
-
+            GetComponent<PlayerMovement>().maxSpeed = 8;
+        }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && moved)
+        {
             anim.ChangeAnimationState(anim.Player_HoldChopWalk, rotAmt, transAmt);
+            GetComponent<PlayerMovement>().maxSpeed = 6;
+        }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && crtlPressed && !inTreeArea)
+        {
             anim.ChangeAnimationState(anim.Player_PutDownChop);
-
+            GetComponent<PlayerMovement>().maxSpeed = 8;
+        }
         if (!anim.animator.GetBool(anim.animPickedHash) && isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk))
+        {
             anim.ChangeAnimationState(anim.Player_SpeedRun, rotAmt, transAmt);
+            anim.animator.applyRootMotion = true;
+            GetComponent<PlayerMovement>().maxSpeed = 10;
+        }
     }
 
 
