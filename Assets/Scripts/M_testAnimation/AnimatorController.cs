@@ -17,7 +17,6 @@ public class AnimatorController : MonoBehaviour
     public int animPickedHash { get; private set; }
     public int animHoldChop { get; private set; }
 
-
     public string Player_Idle { get; private set; } = "Idle";
     public string Player_Run { get; private set; } = "Run";
     public string Player_SpeedRun { get; private set; } = "SpeedRun";
@@ -36,15 +35,11 @@ public class AnimatorController : MonoBehaviour
     public string Player_HoldWoodWalk { get; private set; } = "HoldWoodWalk";
     public string Player_PutDownWood { get; private set; } = "PutDownWood";
     public string Player_UsingTable { get; private set; } = "UsingTable";
-    public string Player_MixUsingTableToWlak { get; private set; } = "MixTabletoWalk";
+    public string Player_MixUsingTableToWalk { get; private set; } = "MixTabletoWalk";
     public string Player_Cheer { get; private set; } = "Cheer";
     public string Player_StandUp { get; private set; } = "StandUp";
     public string Player_Fear { get; private set; } = "Fear";
-
-
     public string Player_Test { get; private set; } = "Test";
-
-
 
     private void Update()
     {
@@ -74,24 +69,26 @@ public class AnimatorController : MonoBehaviour
             animator.SetBool(animPickedHash, true);
         if (newState == Player_PutDownRock || newState == Player_PutDownWood || newState == Player_ThrowRock)
         {
-            if (horizotalInput != 0 || verticalInput != 0)
-                StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length * delay));
-            else
-                StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length));
+            CheckPlayerInput();
         }
-        if(newState == Player_PutDownChop)
+        if (newState == Player_PutDownChop)
         {
             animator.SetBool(animHoldChop, false);
-            if (horizotalInput != 0 || verticalInput != 0)
-                StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length * delay));
-            else
-                StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length));
+            CheckPlayerInput();
         }
         if (newState == Player_Chopping || newState == Player_UsingTable)
         {
             animator.SetFloat(animHorizontalHash, 0);
             animator.SetFloat(animVerticalHash, 0);
         }
+    }
+
+    private void CheckPlayerInput()
+    {
+        if (horizotalInput != 0 || verticalInput != 0)
+            StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length * delay));
+        else
+            StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length));
     }
 
     /// <summary>
@@ -102,7 +99,7 @@ public class AnimatorController : MonoBehaviour
     /// <param name="vertical"></param>
     public void ChangeAnimationState(string newState, float horizontal, float vertical)
     {
-        if (newState == Player_Run || newState == Player_HoldRockWalk || newState == Player_HoldWoodWalk || newState == Player_HoldChopWalk || newState == Player_SpeedRun)
+        if (newState == Player_Run || newState == Player_HoldRockWalk || newState == Player_HoldWoodWalk || newState == Player_HoldChopWalk)
         {
             animator.SetFloat(animHorizontalHash, horizontal);
             animator.SetFloat(animVerticalHash, vertical);
@@ -115,6 +112,7 @@ public class AnimatorController : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
         animator.SetBool(animPickedHash, false);
     }
+
     #region Unity AnimationEvent
     public void AnimaEvent_PickUpOverHeadToOverHeadWalk()
     {
@@ -142,9 +140,21 @@ public class AnimatorController : MonoBehaviour
     {
         animator.SetBool(animPickedHash, false);
     }
+    public void AnimaEventPutDownRockToRun()
+    {
+        int random = Random.Range(0, 6);
+        if (random > 0)
+            animator.SetBool(animPickedHash, false);
+        else
+            ChangeAnimationState(Player_Idle);
+    }
     public void AnimaEventMixUsingTableToWalk()
     {
-        ChangeAnimationState(Player_MixUsingTableToWlak);
+        int random = Random.Range(0, 6);
+        if (random > 1)
+            ChangeAnimationState(Player_MixUsingTableToWalk);
+        else
+            ChangeAnimationState(Player_Cheer);
     }
 
     public void AnimaEventChopFinished()
@@ -154,29 +164,22 @@ public class AnimatorController : MonoBehaviour
 
     public void AnimaEventSpeedRunToRun()
     {
+        animator.SetFloat(animHorizontalHash, 0.0f);
+        animator.SetFloat(animVerticalHash, 0.0f);
         ChangeAnimationState(Player_Run);
-        animator.applyRootMotion = false;
     }
 
-    public void AnimaEventIdle()
+    public void AnimaEventEndThrow()
     {
-        Test();
+        animator.SetBool(animPickedHash, false);
     }
+
+    /// <summary>
+    /// ´ú¸Õ¥Î
+    /// </summary>
     public void Test()
     {
-        if (horizotalInput != 0 || verticalInput != 0)
-        {
-            animator.SetFloat(animHorizontalHash, horizotalInput);
-            animator.SetFloat(animVerticalHash, verticalInput);
-            ChangeAnimationState(Player_Test);
-        }
-        else if (horizotalInput == 0 && verticalInput == 0)
-        {
-            animator.SetFloat(animHorizontalHash, 0);
-            animator.SetFloat(animVerticalHash, 0);
-            ChangeAnimationState(Player_Idle);
-        }
-        ChangeAnimationState(Player_Idle);
+        ChangeAnimationState(Player_Cheer);
     }
     #endregion
 }

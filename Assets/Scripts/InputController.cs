@@ -42,13 +42,31 @@ public class InputController : MonoBehaviour
         Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         movementDirection.Normalize();
 
-        bool canMOved = !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Chopping) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpChop) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpRock) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Fear) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ChopFinished) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ChopIdle);
+        bool allowMove =
+               !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Chopping)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpChop)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpRock)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpWood)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Fear)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ChopFinished)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ChopIdle)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PutDownChop)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PutDownRock)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PutDownWood)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ThrowRock)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Idle)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Cheer)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun);
+
         if (isDash == false && moved)
         {
-            transAmt = Input.GetAxis("Vertical");
-            rotAmt = Input.GetAxis("Horizontal");
-            if (canMOved)
+            if (allowMove)
             {
+                anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
+                anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
+                transAmt = Input.GetAxis("Vertical");
+                rotAmt = Input.GetAxis("Horizontal");
                 pm.Move(transAmt, rotAmt);
                 pm.Rotate(transAmt, rotAmt);
             }
@@ -69,16 +87,25 @@ public class InputController : MonoBehaviour
         }
         else
         {
-            remainDashTime = pm.Dash(remainDashTime);
+            bool allowSpeedRun = 
+                !anim.animator.GetBool(anim.animPickedHash) && isDash 
+                && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) 
+                && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Cheer);
+            if (allowSpeedRun)
+                remainDashTime = pm.Dash(remainDashTime);
+            else
+                isDash = false;
         }
 
-        ChangeAnimationState(moved, movementDirection);
+        ChangeAnimationState(moved);
     }
 
-    private void ChangeAnimationState(bool moved, Vector3 movementDirection)
+    private void ChangeAnimationState(bool moved)
     {
-
-        if (!anim.animator.GetBool(anim.animPickedHash) && moved)
+        bool allowExitTable = !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Cheer);
+        if (crtlPressed)
+            holdDownStartTime = Time.time;
+        if (!anim.animator.GetBool(anim.animPickedHash) && moved && allowExitTable)
         {
             if (isDash)
             {
@@ -94,8 +121,6 @@ public class InputController : MonoBehaviour
             anim.ChangeAnimationState(anim.Player_HoldRockWalk, rotAmt, transAmt);
             GetComponent<PlayerMovement>().maxSpeed = 2;
         }
-        if (crtlPressed)
-            transAmt = Time.time;
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && crtlPressUp)
         {
             float temp = pressedTime;
@@ -126,43 +151,57 @@ public class InputController : MonoBehaviour
             anim.ChangeAnimationState(anim.Player_PutDownChop);
             GetComponent<PlayerMovement>().maxSpeed = 8;
         }
-        if (!anim.animator.GetBool(anim.animPickedHash) && isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk))
+        bool allowSpeedRun =
+            !anim.animator.GetBool(anim.animPickedHash) && isDash
+            && (!anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk)
+            || !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk)
+            || !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk));
+        if (allowSpeedRun)
         {
             anim.ChangeAnimationState(anim.Player_SpeedRun, rotAmt, transAmt);
+            anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
+            anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
             anim.animator.applyRootMotion = true;
             GetComponent<PlayerMovement>().maxSpeed = 10;
         }
     }
 
-
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Rock" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash))
+        bool allowUsingTable = other.gameObject.tag == "WorkingTable" && crtlPressed && !anim.animator.GetBool(anim.animHoldChop) && !anim.animator.GetBool(anim.animPickedHash);
+        bool allowChopping = other.gameObject.tag == "Tree";
+        bool allowPickUpRock = other.gameObject.tag == "Rock" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash);
+        bool allowPickUpWood = other.gameObject.tag == "Wood" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash);
+        bool allowPickUpChop = other.gameObject.tag == "Chop" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash);
+
+        if (allowPickUpRock)
         {
             anim.ChangeAnimationState(anim.Player_PickUpRock);
         }
-        else if (other.gameObject.tag == "Tree")
+        else if (allowChopping)
         {
             inTreeArea = true;
             if (anim.animator.GetBool(anim.animHoldChop) & crtlPressed)
                 anim.ChangeAnimationState(anim.Player_Chopping);
         }
-        else if(other.gameObject.tag != "Tree")
+        else if (allowPickUpWood)
         {
-            inTreeArea = false;
-            if (other.gameObject.tag == "Wood" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash))
-            {
-                anim.ChangeAnimationState(anim.Player_PickUpWood);
-            }
-            else if (other.gameObject.tag == "WorkingTable" && crtlPressed)
-            {
-                anim.ChangeAnimationState(anim.Player_UsingTable);
-            }
-            else if (other.gameObject.tag == "Chop" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash))
-            {
-                anim.ChangeAnimationState(anim.Player_PickUpChop);
-            }
+            anim.ChangeAnimationState(anim.Player_PickUpWood);
         }
+        else if (allowUsingTable)
+        {
+            anim.ChangeAnimationState(anim.Player_UsingTable);
+        }
+        else if (allowPickUpChop)
+        {
+            anim.ChangeAnimationState(anim.Player_PickUpChop);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Tree")
+            inTreeArea = false;
     }
 
     private void OnTriggerEnter(Collider other)
