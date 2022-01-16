@@ -54,7 +54,7 @@ public class CamMovement : MonoBehaviour
     }
 
     //Camera跟隨Player(world space safe area)
-    Vector3 dir;
+    Vector3 dir = new Vector3(10000f, 10000f, 10000f);
     Vector3 oriCamPos;
     bool startFollow = false;
 
@@ -110,6 +110,7 @@ public class CamMovement : MonoBehaviour
         
     }
 
+    //Vector3 oriPPos;
     //screen save area
     private void P1CamMove2()
     {
@@ -135,6 +136,12 @@ public class CamMovement : MonoBehaviour
         {
             startFollow = false;
         }
+
+        //if(playerPos != oriPPos)
+        //{
+        //    dir = oriCamPos - oriPPos;
+        //    startFollow = true;
+        //}
 
         Debug.Log("startFollow" + startFollow);
 
@@ -176,37 +183,38 @@ public class CamMovement : MonoBehaviour
     //how far should cam stop
     public float rayProbe;
     private Vector3 fixedPos;
-    private int CheckTerrainEnd()
+    private List<int> CheckTerrainEnd()
     {   
-        int result;
+        List<int> results = new List<int>();
         //gen rays from cam to the 4 forwords
-        List<Ray> camRays = new List<Ray>();
+        List<Vector3> camRays = new List<Vector3>();
         
-        Ray fR = new Ray(this.transform.position, this.transform.forward);
-        camRays.Add(fR);
-        Ray bR = new Ray(this.transform.position, -this.transform.forward);
+        Vector3 tempF = this.transform.forward;
+        tempF.y = 0;
+        tempF.Normalize();
+
+        Vector3 bR = -tempF;
         camRays.Add(bR);
-        Ray rR = new Ray(this.transform.position, this.transform.right);
+        Vector3 rR = this.transform.right;
         camRays.Add(rR);
-        Ray lR = new Ray(this.transform.position, -this.transform.right);
+        Vector3 lR = -this.transform.right;
         camRays.Add(lR);
 
         for(int i = 0; i < camRays.Count; i++)
         {
-            if(Physics.Raycast(camRays[i], rayProbe, 1 << 6))
+            if(Physics.Raycast(this.transform.position, camRays[i], rayProbe, 1 << 6))
             {
                 fixedPos = this.transform.position;
-                return result = i;
+                results.Add(i);
             }
         }
 
-        return result = -1;
+        return results;
     }
 
     enum Results
     {
          keepgoing = -1,
-         hitF,
          hitB,
          hitR,
          hitL
@@ -214,33 +222,27 @@ public class CamMovement : MonoBehaviour
 
     private Vector3 FixCamPos(Vector3 dirPos)
     {
-        int result = CheckTerrainEnd();
-        
-        if(result == (int)Results.keepgoing)
+        List<int> results = CheckTerrainEnd();
+
+        if (results.Exists(x => x == (int)Results.keepgoing))
         {
             //do noting
         }
 
-        //stop moving forward
-        if(result == (int)Results.hitF)
-        {
-            dirPos.z = Mathf.Min(dirPos.z, fixedPos.z);
-        }
-
         //stop moving backward
-        if (result == (int)Results.hitB)
+        if (results.Exists(x => x == (int)Results.hitB))
         {
             dirPos.z = Mathf.Max(dirPos.z, fixedPos.z);
         }
 
         //stop moving right
-        if (result == (int)Results.hitR)
+        if (results.Exists(x => x == (int)Results.hitR))
         {
             dirPos.x = Mathf.Min(dirPos.x, fixedPos.x);
         }
 
         //stop moving left
-        if (result == (int)Results.hitL)
+        if (results.Exists(x => x == (int)Results.hitL))
         {
             dirPos.x = Mathf.Max(dirPos.x, fixedPos.x);
         }

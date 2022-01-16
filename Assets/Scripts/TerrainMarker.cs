@@ -61,7 +61,7 @@ public class TerrainMarker : MonoBehaviour
 
         tContainer = new List<GameObject>();
 
-        for(int i = 0; i < amt; i++)
+        for(int i = 1; i < amt; i++)
         {
             Debug.Log("enter" + i);
             var prefab = Resources.Load<GameObject>("terrainOutline");
@@ -89,23 +89,13 @@ public class TerrainMarker : MonoBehaviour
 
         for (int i = 0; i < nodeAmt; i++)
         {
-            int j;
-
-            if (i + 1 == nodeAmt)
-            {
-                j = 0;
-            }
-            else if (i + 1 < nodeAmt)
-            {
-                j = i + 1;
-            }
-            else
+            if((i + 1) >= nodeAmt)
             {
                 break;
             }
 
             start = nodes[i];
-            end = nodes[j];
+            end = nodes[i + 1];
             wall = tContainer[i];
             wall.SetActive(true);
 
