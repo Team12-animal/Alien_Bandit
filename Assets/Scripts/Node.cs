@@ -20,11 +20,6 @@ public class Node : MonoBehaviour
 
         orgArr = GameObject.FindGameObjectsWithTag("node");
         nodes = Sort(orgArr);
-
-        if(nodes.Length > 0)
-        {
-            Debug.Log("node found");
-        }
     }
 
     // Start is called before the first frame update
@@ -39,27 +34,32 @@ public class Node : MonoBehaviour
         
     }
 
-    private void OnDrawGizmos()
-    {
-        if (nodes != null)
-        {
-            Gizmos.color = Color.blue;
+    //private void OnDrawGizmos()
+    //{
+    //    if (orgArr.Length > 0 && nodes != null)
+    //    {
+    //        Gizmos.color = Color.blue;
 
-            for (int i = 0; i < nodes.Length; i++)
-            {
-                if (i + 1 < nodes.Length)
-                {
+    //        for (int i = 0; i < nodes.Length; i++)
+    //        {
+    //            if (i + 1 < nodes.Length)
+    //            {
 
-                    Gizmos.DrawLine(nodes[i].transform.position, nodes[i + 1].transform.position);
-                }
-            }
+    //                Gizmos.DrawLine(nodes[i].transform.position, nodes[i + 1].transform.position);
+    //            }
+    //        }
 
-            Gizmos.DrawLine(nodes[0].transform.position, nodes[nodes.Length - 1].transform.position);
-        }
-    }
+    //        Gizmos.DrawLine(nodes[0].transform.position, nodes[nodes.Length - 1].transform.position);
+    //    }
+    //}
 
     public GameObject[] Sort(GameObject[] arr)
     {
+        if(arr.Length <= 0)
+        {
+            return arr;
+        }
+
         GameObject[] result = new GameObject[arr.Length];
         for (int i = 0; i < arr.Length; i++)
         {
