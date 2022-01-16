@@ -41,7 +41,7 @@ public class InputController : MonoBehaviour
         Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         movementDirection.Normalize();
 
-        bool canMOved = !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Chopping) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpChop) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpRock);
+        bool canMOved = !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Chopping) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpChop) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpRock) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Fear);
         if (isDash == false && moved)
         {
             transAmt = Input.GetAxis("Vertical");
