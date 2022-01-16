@@ -86,7 +86,10 @@ public class InputController : MonoBehaviour
         }
 
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && moved)
+        {
             anim.ChangeAnimationState(anim.Player_HoldRockWalk, rotAmt, transAmt);
+            GetComponent<PlayerMovement>().maxSpeed = 2;
+        }
         if (crtlPressed)
             transAmt = Time.time;
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && crtlPressUp)
@@ -116,7 +119,7 @@ public class InputController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Rock" && crtlPressed)
+        if (other.gameObject.tag == "Rock" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash))
         {
             anim.ChangeAnimationState(anim.Player_PickUpRock);
         }
@@ -124,7 +127,7 @@ public class InputController : MonoBehaviour
         {
             anim.ChangeAnimationState(anim.Player_Chopping);
         }
-        else if (other.gameObject.tag == "Wood" && crtlPressed)
+        else if (other.gameObject.tag == "Wood" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash))
         {
             anim.ChangeAnimationState(anim.Player_PickUpWood);
         }
@@ -132,7 +135,7 @@ public class InputController : MonoBehaviour
         {
             anim.ChangeAnimationState(anim.Player_UsingTable);
         }
-        else if (other.gameObject.tag == "Chop" && crtlPressed)
+        else if (other.gameObject.tag == "Chop" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash))
         {
             anim.ChangeAnimationState(anim.Player_PickUpChop);
         }
