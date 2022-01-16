@@ -12,14 +12,15 @@ public class AnimatorController : MonoBehaviour
     [Header("調整動畫延遲時間")]
     public float delay = 2.1f;
     private string currentState;
-    public int animHorizontalHash { get; private set; }
-    public int animVerticalHash { get; private set; }
+    public int animHorizontalHash { get;  set; }
+    public int animVerticalHash { get;  set; }
     public int animPickedHash { get; private set; }
 
 
     public string Player_Idle { get; private set; } = "Idle";
     public string Player_Run { get; private set; } = "Run";
     public string Player_SpeedRun { get; private set; } = "SpeedRun";
+    public string Player_EndSpeedRun { get; private set; } = "SpeedRunToRun";
     public string Player_PickUpRock { get; private set; } = "PickUpRock";
     public string Player_PutDownRock { get; private set; } = "PutDownRock";
     public string Player_HoldRockWalk { get; private set; } = "HoldRockWalk";
@@ -62,7 +63,7 @@ public class AnimatorController : MonoBehaviour
         currentState = newState;
         if (newState == Player_PickUpRock || newState == Player_PickUpWood || newState == Player_PickUpChop)
             animator.SetBool(animPickedHash, true);
-        if (newState == Player_PutDownRock || newState == Player_PutDownWood || newState == Player_ThrowRock || newState == Player_PutDownChop)
+        if (newState == Player_PutDownRock || newState == Player_PutDownWood || newState == Player_ThrowRock || newState == Player_PutDownChop || newState == Player_EndSpeedRun)
         {
             if (horizotalInput != 0 || verticalInput != 0)
                 StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length * delay));
@@ -126,7 +127,7 @@ public class AnimatorController : MonoBehaviour
 
     public void AnimaEventSpeedRunToRun()
     {
-        ChangeAnimationState(Player_Run);
+        ChangeAnimationState(Player_EndSpeedRun);
     }
 
     public void AnimaEventIdle()

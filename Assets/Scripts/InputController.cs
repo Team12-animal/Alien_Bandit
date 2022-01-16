@@ -18,12 +18,11 @@ public class InputController : MonoBehaviour
     bool crtlPressUp;
     float holdDownStartTime = 0f;
     [SerializeField] float pressedTime = 1.0f;
-    bool runed = false;
 
     private void Awake()
     {
-        anim =GetComponent<AnimatorController>();
-        anim.animator =GetComponent<Animator>();
+        anim = GetComponent<AnimatorController>();
+        anim.animator = GetComponent<Animator>();
         anim.Init();
         pm = GetComponent<PlayerMovement>();
     }
@@ -39,7 +38,7 @@ public class InputController : MonoBehaviour
         bool moved = (rotAmt != 0 || transAmt != 0);
         Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         movementDirection.Normalize();
-        
+
 
         if (isDash == false && moved)
         {
@@ -73,8 +72,14 @@ public class InputController : MonoBehaviour
 
     private void ChangeAnimationState(bool moved, Vector3 movementDirection)
     {
+
         if (!anim.animator.GetBool(anim.animPickedHash) && moved)
-            anim.ChangeAnimationState(anim.Player_Run, rotAmt, transAmt);
+        {
+            if (isDash)
+                anim.ChangeAnimationState(anim.Player_SpeedRun, rotAmt, transAmt);
+            else if(!isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun))
+                anim.ChangeAnimationState(anim.Player_Run, rotAmt, transAmt);
+        }
 
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && moved)
             anim.ChangeAnimationState(anim.Player_HoldRockWalk, rotAmt, transAmt);
