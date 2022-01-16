@@ -85,7 +85,6 @@ public class InputController : MonoBehaviour
             }
             else if (!isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun))
             {
-                anim.animator.applyRootMotion = false;
                 anim.ChangeAnimationState(anim.Player_Run, rotAmt, transAmt);
             }
 
@@ -134,8 +133,8 @@ public class InputController : MonoBehaviour
         if (!anim.animator.GetBool(anim.animPickedHash) && isDash)
         {
             anim.ChangeAnimationState(anim.Player_SpeedRun, rotAmt, transAmt);
-            GetComponent<PlayerMovement>().maxSpeed = 10;
-            anim.animator.applyRootMotion = true;
+            //GetComponent<PlayerMovement>().maxSpeed = 10;
+            //anim.animator.applyRootMotion = true;
         }
     }
 

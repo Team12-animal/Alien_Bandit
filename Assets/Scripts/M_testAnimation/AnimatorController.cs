@@ -127,8 +127,8 @@ public class AnimatorController : MonoBehaviour
 
     public void AnimaEventSpeedRunToRun()
     {
-        ChangeAnimationState(Player_EndSpeedRun);
-        animator.applyRootMotion = false;
+        ChangeAnimationState(Player_Run);
+        //animator.applyRootMotion = false;
     }
 
     public void AnimaEventIdle()
