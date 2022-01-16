@@ -63,7 +63,7 @@ public class AnimatorController : MonoBehaviour
         currentState = newState;
         if (newState == Player_PickUpRock || newState == Player_PickUpWood || newState == Player_PickUpChop)
             animator.SetBool(animPickedHash, true);
-        if (newState == Player_PutDownRock || newState == Player_PutDownWood || newState == Player_ThrowRock || newState == Player_PutDownChop || newState == Player_EndSpeedRun)
+        if (newState == Player_PutDownRock || newState == Player_PutDownWood || newState == Player_ThrowRock || newState == Player_PutDownChop )
         {
             if (horizotalInput != 0 || verticalInput != 0)
                 StartCoroutine(DelayAnim(animator.GetCurrentAnimatorStateInfo(0).length * delay));
@@ -128,6 +128,7 @@ public class AnimatorController : MonoBehaviour
     public void AnimaEventSpeedRunToRun()
     {
         ChangeAnimationState(Player_EndSpeedRun);
+        animator.applyRootMotion = false;
     }
 
     public void AnimaEventIdle()
