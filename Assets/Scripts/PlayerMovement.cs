@@ -61,6 +61,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 target = (rVec * rotAmt) + (fVec * transAmt);
         this.transform.forward = Vector3.Lerp(this.transform.forward, (this.transform.forward + target) * maxRotate * Time.deltaTime, lerpAmt);
+        //this.transform.forward += target * maxRotate * Time.deltaTime;
+        Debug.Log("this" + (target* maxRotate) + this.transform.forward);
     }
 
     public Vector3 GenNewForward()
