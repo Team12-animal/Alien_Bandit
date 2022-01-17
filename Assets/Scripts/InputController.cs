@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
+
     private PlayerMovement pm;
     private float transAmt;
     private float rotAmt;
