@@ -14231,6 +14231,11 @@ Transform:
   m_Father: {fileID: 666568527}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.109, y: 2.481, z: 0.014}
+--- !u!1 &1685770098 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8647354602301450138, guid: fe631d66d91635d4db4b17b1c3da562a, type: 3}
+  m_PrefabInstance: {fileID: 1755700532}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1691679434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14772,10 +14777,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9558652, guid: fe631d66d91635d4db4b17b1c3da562a, type: 3}
-      propertyPath: m_Controller
+    - target: {fileID: 672364386, guid: fe631d66d91635d4db4b17b1c3da562a, type: 3}
+      propertyPath: roleSkins.Array.size
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 672364386, guid: fe631d66d91635d4db4b17b1c3da562a, type: 3}
+      propertyPath: roleSkins.Array.data[19]
       value: 
-      objectReference: {fileID: 9100000, guid: c62616dfdbbb7b0448983436cab6fa50, type: 2}
+      objectReference: {fileID: 1685770098}
     - target: {fileID: 3180645362809099866, guid: fe631d66d91635d4db4b17b1c3da562a, type: 3}
       propertyPath: cam
       value: 
