@@ -86,6 +86,8 @@ public class InputController : MonoBehaviour
             else if (!isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun))
             {
                 anim.ChangeAnimationState(anim.Player_Run, rotAmt, transAmt);
+                GetComponent<PlayerMovement>().maxSpeed =6;
+                anim.animator.applyRootMotion = false;
             }
 
             GetComponent<PlayerMovement>().maxSpeed = 8;
@@ -94,7 +96,7 @@ public class InputController : MonoBehaviour
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && moved)
         {
             anim.ChangeAnimationState(anim.Player_HoldRockWalk, rotAmt, transAmt);
-            GetComponent<PlayerMovement>().maxSpeed = 2;
+            GetComponent<PlayerMovement>().maxSpeed = 1;
         }
         if (crtlPressed)
             transAmt = Time.time;
@@ -106,35 +108,42 @@ public class InputController : MonoBehaviour
                 anim.ChangeAnimationState(anim.Player_ThrowRock);
             else if (holdDownTime > 0.03f)
                 anim.ChangeAnimationState(anim.Player_PutDownRock);
-            GetComponent<PlayerMovement>().maxSpeed = 8;
+            GetComponent<PlayerMovement>().maxSpeed = 6;
         }
 
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && moved)
         {
             anim.ChangeAnimationState(anim.Player_HoldWoodWalk, rotAmt, transAmt);
-            GetComponent<PlayerMovement>().maxSpeed = 3;
+            GetComponent<PlayerMovement>().maxSpeed = 2;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && crtlPressed)
         {
             anim.ChangeAnimationState(anim.Player_PutDownWood);
-            GetComponent<PlayerMovement>().maxSpeed = 8;
+            GetComponent<PlayerMovement>().maxSpeed = 6;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && moved)
         {
             anim.ChangeAnimationState(anim.Player_HoldChopWalk, rotAmt, transAmt);
-            GetComponent<PlayerMovement>().maxSpeed = 6;
+            GetComponent<PlayerMovement>().maxSpeed = 4;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && crtlPressed)
         {
             anim.ChangeAnimationState(anim.Player_PutDownChop);
-            GetComponent<PlayerMovement>().maxSpeed = 8;
+            GetComponent<PlayerMovement>().maxSpeed = 6;
         }
 
         if (!anim.animator.GetBool(anim.animPickedHash) && isDash)
         {
             anim.ChangeAnimationState(anim.Player_SpeedRun, rotAmt, transAmt);
+<<<<<<< Updated upstream
             //GetComponent<PlayerMovement>().maxSpeed = 10;
             //anim.animator.applyRootMotion = true;
+=======
+            anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
+            anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
+            anim.animator.applyRootMotion = true;
+            GetComponent<PlayerMovement>().maxSpeed = 8;
+>>>>>>> Stashed changes
         }
     }
 

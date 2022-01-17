@@ -135,6 +135,12 @@ public class AnimatorController : MonoBehaviour
     {
         Test();
     }
+<<<<<<< Updated upstream
+=======
+    /// <summary>
+    /// ´ú¸Õ¥Î
+    /// </summary>
+>>>>>>> Stashed changes
     public void Test()
     {
         if (horizotalInput != 0 || verticalInput != 0)
