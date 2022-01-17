@@ -38,13 +38,6 @@ public class PlayerMovement : MonoBehaviour
         this.transform.position += this.transform.forward * moveAmt * maxSpeed * Time.deltaTime;
     }
 
-    //public void Rotate(float transAmt, float rotAmt)
-    //{
-      
-    //    //this.transform.forward += target * maxRotate * Time.deltaTime;
-    //    Debug.Log("this" + (target* maxRotate) + this.transform.forward);
-    //}
-
     public Vector3 GenNewForward()
     {
         Vector3 tempV = cam.transform.forward;

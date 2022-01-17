@@ -23,6 +23,7 @@ public class InputController : MonoBehaviour
 
     private void Awake()
     {
+        //init animation
         anim = GetComponent<AnimatorController>();
         anim.animator = GetComponent<Animator>();
         anim.Init();
@@ -35,14 +36,18 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
+        //get input
         rotAmt = Input.GetAxis("Horizontal");
         transAmt = Input.GetAxis("Vertical");
         crtlPressed = Input.GetButtonDown("LeftCtrl");
         crtlPressUp = Input.GetButtonUp("LeftCtrl");
+
+        //able to move or not: if true, can move
         bool moved = (rotAmt != 0 || transAmt != 0);
         Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         movementDirection.Normalize();
 
+        //aim to be removed
         bool allowMove =
                !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable)
             && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Chopping)
@@ -69,6 +74,7 @@ public class InputController : MonoBehaviour
                 transAmt = Input.GetAxis("Vertical");
                 rotAmt = Input.GetAxis("Horizontal");
                 pm.MoveAndRotate(transAmt, rotAmt);
+                //anim.ChangeAnimationState(anim.Player_Run);
             }
         }
 
@@ -100,6 +106,7 @@ public class InputController : MonoBehaviour
         ChangeAnimationState(moved);
     }
 
+    //play animaiton(animatorController call)
     private void ChangeAnimationState(bool moved)
     {
         bool allowExitTable = !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Cheer);
