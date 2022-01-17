@@ -3294,8 +3294,9 @@ GameObject:
   - component: {fileID: 9558652}
   - component: {fileID: 1510620503}
   - component: {fileID: 1510620506}
-  - component: {fileID: 1510620505}
   - component: {fileID: 1510620504}
+  - component: {fileID: 7741128314773490582}
+  - component: {fileID: 3180645362809099866}
   m_Layer: 0
   m_Name: Character_HipsterGirl_01
   m_TagString: Untagged
@@ -3312,7 +3313,7 @@ Transform:
   m_GameObject: {fileID: 178284}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 455022}
   - {fileID: 440736}
@@ -3347,7 +3348,7 @@ Animator:
   m_GameObject: {fileID: 178284}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4a5a8c8ff5d6d2e48ab8d2b27100cf57, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 751c11a695a58014d932f705c399dbc3, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -3386,23 +3387,6 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 112
   m_CollisionDetection: 3
---- !u!114 &1510620505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4a227899c526b44b8854afb7592b831, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  rotateSpeed: 3
-  t: 0.06
-  speedRunDistance: 100
-  pressedTime: 1
 --- !u!114 &1510620504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3417,6 +3401,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   delay: 2.1
+--- !u!114 &7741128314773490582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d74f63a19a698604c86d2ee7f92bcd0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDash: 0
+  setDashTime: 0.24
+  remainDashTime: 0
+  pressedTime: 1
+  inTreeArea: 0
+--- !u!114 &3180645362809099866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39cdb66413ed3144bbdad6ff3832ee1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 6
+  maxRotate: 20
+  transAmt: 0
+  rotAmt: 0
+  setDashTime: 0.24
+  dashSpeed: 12
+  lerpAmt: 0.8
+  cam: {fileID: 0}
 --- !u!1 &178844
 GameObject:
   m_ObjectHideFlags: 0
