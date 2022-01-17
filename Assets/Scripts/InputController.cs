@@ -11,6 +11,7 @@ public class InputController : MonoBehaviour
     Vector3 currentPos;
     Vector3 targetPos;
     [SerializeField] private bool isDash = false;
+    [SerializeField] private bool holdingThing = false;
     [SerializeField] private float setDashTime;
     [SerializeField] private float remainDashTime;
 
@@ -43,6 +44,7 @@ public class InputController : MonoBehaviour
         Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         movementDirection.Normalize();
 
+        //aim to be removed
         bool allowMove =
                !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable)
             && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Chopping)
@@ -69,6 +71,24 @@ public class InputController : MonoBehaviour
                 transAmt = Input.GetAxis("Vertical");
                 rotAmt = Input.GetAxis("Horizontal");
                 pm.MoveAndRotate(transAmt, rotAmt);
+                
+                //expect code
+                //anim.ChangeAnimationState(anim.Player_Run);
+            }
+        }
+
+        if(Input.GetButtonDown("Use") && isDash == false)
+        {
+            if(holdingThing == false)
+            {
+                pm.Pick();
+                holdingThing = true;
+                anim.ChangeAnimationState(anim.Player_Run);
+            }
+            else
+            {
+                pm.Drop();
+                holdingThing = false;
             }
         }
 
@@ -97,10 +117,11 @@ public class InputController : MonoBehaviour
                 isDash = false;
         }
 
-        ChangeAnimationState(moved);
+        CheckAndPlayAnimation(moved);
     }
 
-    private void ChangeAnimationState(bool moved)
+    //play the animation(for AnimatorController call)
+    private void CheckAndPlayAnimation(bool moved)
     {
         bool allowExitTable = !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Cheer);
         if (crtlPressed)

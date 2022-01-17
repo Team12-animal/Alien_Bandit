@@ -54,6 +54,8 @@ public class AnimatorController : MonoBehaviour
         animPickedHash = Animator.StringToHash("Picked");
         animHoldChop = Animator.StringToHash("HoldChop");
     }
+
+    //change stay but didn't play( play => InputController.ChangeAnimationState)
     public void ChangeAnimationState(string newState)
     {
         if (currentState == newState) return;
