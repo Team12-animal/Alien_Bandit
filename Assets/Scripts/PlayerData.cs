@@ -13,6 +13,5 @@ public class PlayerData : MonoBehaviour
 
     //use item
     public GameObject item;
-    public int itemInhand = -1;
-    public GameObject animalCatched;
+    public GameObject animal;
 }

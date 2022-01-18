@@ -101,7 +101,7 @@ public class CamMovement : MonoBehaviour
 
     private void SeekOriPos(GameObject go, Vector3 target)
     {
-        float speed = p1.GetComponent<PlayerMovement>().maxSpeed;
+        float speed = p1.GetComponent<PlayerData>().maxSpeed;
 
         Vector3 seekerPos = go.transform.position;
         Vector3 dir = target - seekerPos;

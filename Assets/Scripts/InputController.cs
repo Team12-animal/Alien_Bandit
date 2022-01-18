@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-
     private PlayerMovement pm;
+    private PlayerData data;
+
     private float transAmt;
     private float rotAmt;
     Vector3 currentPos;
     Vector3 targetPos;
     [SerializeField] private bool isDash = false;
-    [SerializeField] private bool holdingThing = false;
+    [SerializeField] public bool holdingThing = false;
     [SerializeField] private float setDashTime;
     [SerializeField] private float remainDashTime;
 
@@ -28,6 +29,7 @@ public class InputController : MonoBehaviour
         anim.animator = GetComponent<Animator>();
         anim.Init();
         pm = GetComponent<PlayerMovement>();
+        data = GetComponent<PlayerData>();
     }
     void Start()
     {
@@ -38,8 +40,8 @@ public class InputController : MonoBehaviour
     {
         rotAmt = Input.GetAxis("Horizontal");
         transAmt = Input.GetAxis("Vertical");
-        crtlPressed = Input.GetButtonDown("LeftCtrl");
-        crtlPressUp = Input.GetButtonUp("LeftCtrl");
+        crtlPressed = Input.GetButtonDown("Use");
+        crtlPressUp = Input.GetButtonUp("Use");
         bool moved = (rotAmt != 0 || transAmt != 0);
         Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         movementDirection.Normalize();
@@ -71,25 +73,44 @@ public class InputController : MonoBehaviour
                 transAmt = Input.GetAxis("Vertical");
                 rotAmt = Input.GetAxis("Horizontal");
                 pm.MoveAndRotate(transAmt, rotAmt);
-                
-                //expect code
-                //anim.ChangeAnimationState(anim.Player_Run);
+                anim.ChangeAnimationState(anim.Player_Run);
             }
         }
 
         if(Input.GetButtonDown("Use") && isDash == false)
         {
+            string aniName = "none";
+
             if(holdingThing == false)
             {
-                pm.Pick();
+                aniName = pm.Pick();
                 holdingThing = true;
-                anim.ChangeAnimationState(anim.Player_Run);
             }
             else
             {
-                pm.Drop();
-                holdingThing = false;
+                string itemInhand = data.item.gameObject.tag;
+
+                if(itemInhand == "Chop")
+                {
+                    aniName = pm.ChopTree();
+                }
+                else if (itemInhand == "Bucket")
+                {
+                    aniName = pm.UseBucket();
+                }
+                else
+                {
+                    aniName = pm.Drop();
+                    holdingThing = false;
+                }
             }
+
+            if (aniName == "none")
+            {
+                return;
+            }
+
+            anim.ChangeAnimationState(aniName);
         }
 
         if (Input.GetButtonDown("Dash") && isDash == false)
@@ -135,14 +156,14 @@ public class InputController : MonoBehaviour
             else if (!isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun))
             {
                 anim.ChangeAnimationState(anim.Player_Run, rotAmt, transAmt);
-                GetComponent<PlayerMovement>().maxSpeed = 6;
+                GetComponent<PlayerData>().maxSpeed = 6;
                 anim.animator.applyRootMotion = false;
             }
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && moved)
         {
             anim.ChangeAnimationState(anim.Player_HoldRockWalk, rotAmt, transAmt);
-            GetComponent<PlayerMovement>().maxSpeed = 1;
+            GetComponent<PlayerData>().maxSpeed = 1;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && crtlPressUp)
         {
@@ -152,27 +173,27 @@ public class InputController : MonoBehaviour
                 anim.ChangeAnimationState(anim.Player_ThrowRock);
             else if (holdDownTime > 0.03f)
                 anim.ChangeAnimationState(anim.Player_PutDownRock);
-            GetComponent<PlayerMovement>().maxSpeed = 6;
+            GetComponent<PlayerData>().maxSpeed = 6;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && moved)
         {
             anim.ChangeAnimationState(anim.Player_HoldWoodWalk, rotAmt, transAmt);
-            GetComponent<PlayerMovement>().maxSpeed = 2;
+            GetComponent<PlayerData>().maxSpeed = 2;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && crtlPressed)
         {
             anim.ChangeAnimationState(anim.Player_PutDownWood);
-            GetComponent<PlayerMovement>().maxSpeed = 6;
+            GetComponent<PlayerData>().maxSpeed = 6;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && moved)
         {
             anim.ChangeAnimationState(anim.Player_HoldChopWalk, rotAmt, transAmt);
-            GetComponent<PlayerMovement>().maxSpeed = 4;
+            GetComponent<PlayerData>().maxSpeed = 4;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && crtlPressed && !inTreeArea)
         {
             anim.ChangeAnimationState(anim.Player_PutDownChop);
-            GetComponent<PlayerMovement>().maxSpeed = 6;
+            GetComponent<PlayerData>().maxSpeed = 6;
         }
         bool allowSpeedRun =
             !anim.animator.GetBool(anim.animPickedHash) && isDash
@@ -185,7 +206,7 @@ public class InputController : MonoBehaviour
             anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
             anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
             anim.animator.applyRootMotion = true;
-            GetComponent<PlayerMovement>().maxSpeed = 8;
+            GetComponent<PlayerData>().maxSpeed = 8;
         }
     }
 
