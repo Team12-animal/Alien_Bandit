@@ -17,6 +17,8 @@ public class AnimatorController : MonoBehaviour
     public int animPickedHash { get; private set; }
     public int animHoldChop { get; private set; }
 
+
+    //animation clip
     public string Player_Idle { get; private set; } = "Idle";
     public string Player_Run { get; private set; } = "Run";
     public string Player_SpeedRun { get; private set; } = "SpeedRun";
@@ -54,6 +56,8 @@ public class AnimatorController : MonoBehaviour
         animPickedHash = Animator.StringToHash("Picked");
         animHoldChop = Animator.StringToHash("HoldChop");
     }
+
+    //update state or not(only change state, doesn't play the animation => call InputController.ChangeAnimationState)
     public void ChangeAnimationState(string newState)
     {
         if (currentState == newState) return;
