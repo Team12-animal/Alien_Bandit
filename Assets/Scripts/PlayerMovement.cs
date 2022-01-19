@@ -208,18 +208,26 @@ public class PlayerMovement : MonoBehaviour
         return aniName;
     }
 
-    public string ChopTree()
+    public string UseChop()
     {
-        GameObject tree;
-
-        if (targetItem.tag != "Tree")
+        if (targetItem != null && targetItem.tag == "Tree")
         {
-            return "none";
+            aniClip = ChopTree();
         }
         else
         {
-            tree = targetItem;
+            aniClip = Drop();
         }
+
+        return aniClip;
+    }
+
+    private string ChopTree()
+    {
+        string aniName;
+
+        GameObject tree;
+        tree = targetItem;
 
         Vector3 spawnPos;
         Vector3 treePos = tree.transform.position;
@@ -241,24 +249,93 @@ public class PlayerMovement : MonoBehaviour
 
             //spawn log
             GameObject log = (GameObject)Resources.Load("Log");
-            log.SetActive(false);
+            log.SetActive(true);
             log.transform.position = spawnPos + (-spawnDir) * 4.0f;
         }
 
-        aniClip = "Chopping";
+        aniName = "Chopping";
+        UpdatePlayerData();
+        targetItem = null;
+
+        return aniName;
+    }
+
+    bool bucketFilled = false;
+    public string UseBucket()
+    {
+        if (bucketFilled == false)
+        {
+            if(targetItem != null && targetItem.tag == "Water")
+            {
+                aniClip = GetWater();
+            }
+            else
+            {
+                aniClip = Drop();
+            }
+        }
+        
+        if(bucketFilled == true)
+        {
+            aniClip = PourWater();
+        }
+
         return aniClip;
     }
 
-    public string UseBucket()
+    private string GetWater()
     {
-        return aniClip;
+        string aniName = "GetWater";
+        bucketFilled = true;
+
+        //add put out fire function
+
+        return aniName;
+    }
+
+    private string PourWater()
+    {
+        string aniName = "PourWater";
+        bucketFilled = false;
+        return aniName;
     }
 
     public string Drop()
     {
+
         return aniClip;
     }
 
+    public string Throw()
+    {
+        return aniClip;
+    }
+    private string GetDropAniName(string tagName)
+    {
+        string aniName = "none";
+
+        if (tagName == "Rock")
+        {
+            aniName = "PickUpRock";
+        }
+
+        if (tagName == "Wood")
+        {
+            aniName = "PickWood";
+        }
+
+        if (tagName == "Chop")
+        {
+            aniName = "PickUpChop";
+        }
+
+        if (tagName == "Bucket")
+        {
+            aniName = "PickUpBucket";
+        }
+
+        return aniName;
+    }
     //look at targetItem
     private void FaceTarget(GameObject target)
     {

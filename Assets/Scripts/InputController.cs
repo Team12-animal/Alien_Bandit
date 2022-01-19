@@ -90,19 +90,38 @@ public class InputController : MonoBehaviour
             {
                 string itemInhand = data.item.gameObject.tag;
 
-                if(itemInhand == "Chop")
+                if (itemInhand == "Chop")
                 {
-                    aniName = pm.ChopTree();
+                    aniName = pm.UseChop();
                 }
                 else if (itemInhand == "Bucket")
                 {
                     aniName = pm.UseBucket();
                 }
+                else if (itemInhand == "Rock")
+                {
+                    float endPress;
+                    float startPress = Time.time;
+                    if (Input.GetButtonUp("Use"))
+                    {
+                        endPress = Time.time;
+
+                        if (endPress - startPress >= 1.0f)
+                        {
+                            aniName = pm.Throw();
+                        }
+                        else
+                        {
+                            aniName = pm.Drop();
+                        }
+                    }
+                }
                 else
                 {
-                    aniName = pm.Drop();
-                    holdingThing = false;
+
                 }
+
+                    holdingThing = false;
             }
 
             if (aniName == "none")
