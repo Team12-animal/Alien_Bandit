@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 999b8ec5ec868f94683d4f4570e011d7, type: 3}
-  m_Name: Wood
+  m_Name: Box
   m_EditorClassIdentifier: 
-  gm: {fileID: 522459008932986039, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
-  id: 0
-  canMix: 1
+  gm:
+  - {fileID: 1083941557583290, guid: 0b054356ce925634183cb5e92cceb9fc, type: 3}
+  itemName: "\u7BB1\u5B50"
+  id: 3
+  canMix: 0
   canDestroy: 1
+  durability: 10
