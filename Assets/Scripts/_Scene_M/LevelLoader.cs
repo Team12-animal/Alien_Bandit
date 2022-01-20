@@ -12,11 +12,6 @@ public class LevelLoader : MonoBehaviour
             SceneController.instance.LoadLevel(sceneIndex);
     }
 
-    public void LoadMainMenu()
-    {
-        SceneController.instance.LoadMainMenu();
-    }
-
     public void ExitGame()
     {
         Application.Quit();
