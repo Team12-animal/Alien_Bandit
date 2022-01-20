@@ -5,9 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
+
     public void LoadLevel(int sceneIndex)
     {
-        SceneController.instance.LoadLevel(sceneIndex);
+            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+            SceneController.instance.LoadLevel(sceneIndex);
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneController.instance.LoadMainMenu();
     }
 
     public void ExitGame()
