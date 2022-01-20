@@ -23,11 +23,12 @@ public class ChangeRoleSkin : MonoBehaviour
                 roleSkins[currentSkin+1].SetActive(true);
                 currentSkin++;
             }
-            else
-           // if (currentSkin == 18)
+            else if (currentSkin == 18)
             {
                 currentSkin = 0;
+                roleSkins[currentSkin].SetActive(true);
             }
+
         }
     }
 }
