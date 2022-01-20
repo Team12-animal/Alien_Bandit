@@ -7,11 +7,16 @@ using UnityEngine.UI;
 public class SceneController : MonoBehaviour
 {
     public static SceneController instance;
+
+    [Header("如果有要使用LoadingBar的設定")]
     [SerializeField] GameObject canvasScreen;
     [SerializeField] Slider slider;
 
+    [Header("使用轉場動畫的設定")]
     public Animator transition;
+    [SerializeField] GameObject canvas;
     [SerializeField] float transitionTime = 1f;
+
     public int animStartHash { get; private set; }
     public int animEndHash { get; private set; }
 
@@ -26,6 +31,7 @@ public class SceneController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        canvas.SetActive(true);
     }
 
     private void Start()
@@ -38,7 +44,10 @@ public class SceneController : MonoBehaviour
     {
         if(sceneIndex != 0)
         {
-            StartCoroutine(LoadAsynchronously(sceneIndex));
+            //視載入情況決定要加入哪一種效果
+            //StartCoroutine(LoadAsynchronously(sceneIndex));
+            StartCoroutine(LoadTransition());
+            SceneManager.LoadScene(sceneIndex);
         }
         else if (sceneIndex == 0)
         {
