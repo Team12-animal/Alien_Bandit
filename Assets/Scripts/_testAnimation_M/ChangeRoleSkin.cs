@@ -34,12 +34,10 @@ public class ChangeRoleSkin : MonoBehaviour
     public void LoadCharacter()
     {
         PlayerPrefs.GetInt(selector, currentSkin);
-        Debug.LogWarning("LoadCharacter");
     }
 
     public void SaveCharacter()
     {
-        PlayerPrefs.SetInt(selector, currentSkin); 
-        Debug.LogWarning("SaveCharacter");
+        PlayerPrefs.SetInt(selector, currentSkin);
     }
 }

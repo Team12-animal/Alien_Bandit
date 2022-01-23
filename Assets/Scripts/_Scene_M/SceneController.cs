@@ -25,7 +25,6 @@ public class SceneController : MonoBehaviour
     public bool selected01 = false;
     public bool selected02 = false;
 
-
     public int animStartHash { get; private set; }
     public int animEndHash { get; private set; }
 
@@ -51,7 +50,6 @@ public class SceneController : MonoBehaviour
         MainPlayer(player02);
     }
 
-
     public void LoadLevel(int sceneIndex)
     {
         if (sceneIndex != 0)
@@ -73,6 +71,8 @@ public class SceneController : MonoBehaviour
         {
             StartCoroutine(LoadTransition());
             SceneManager.LoadScene(0);
+            selected01 = false;
+            selected02 = false;
             MainPlayer(player01);
             MainPlayer(player02);
         }
@@ -120,10 +120,11 @@ public class SceneController : MonoBehaviour
         }
         tempRigibody = player.GetComponent<Rigidbody>();
         tempRigibody.useGravity = true;
-        tempRoleSkin = player.GetComponent<ChangeRoleSkin>();
-        tempRoleSkin.enabled = false;
         tempInput = player.GetComponent<InputController>();
         tempInput.enabled = true;
+
+        tempRoleSkin = player.GetComponent<ChangeRoleSkin>();
+        tempRoleSkin.enabled = false;
     }
 
     public void MainPlayer(GameObject player)
@@ -139,11 +140,13 @@ public class SceneController : MonoBehaviour
         {
             player.transform.localPosition = mainPosition01;
             player.transform.localRotation = new Quaternion(0, 180, 0, 0);
+            player01.SetActive(false);
         }
         else if (player == player02)
         {
             player.transform.localPosition = mainPosition02;
             player.transform.localRotation = new Quaternion(0, 180, 0, 0);
+            player02.SetActive(false);
         }
     }
 }

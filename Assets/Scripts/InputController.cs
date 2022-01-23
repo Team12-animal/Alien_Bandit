@@ -77,6 +77,11 @@ public class InputController : MonoBehaviour
                 //anim.ChangeAnimationState(anim.Player_Run);
             }
         }
+        else if (!moved)
+        {
+            anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
+            anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
+        }
 
         if (Input.GetButtonDown("Dash") && isDash == false)
         {

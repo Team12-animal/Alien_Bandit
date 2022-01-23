@@ -9,15 +9,11 @@ public class LevelLoader : MonoBehaviour
     [Header("UI¤¶­±¶}±Ò»P§_")]
     [SerializeField] GameObject chooseRoleUI;
     [SerializeField] GameObject chooseLevelUI;
-    ChangeRoleSkin changeRole;
+    ChangeRoleSkin changeRole = new ChangeRoleSkin();
 
     [SerializeField]GameObject temp01;
     [SerializeField]GameObject temp02;
 
-    private void Start()
-    {
-        changeRole = new ChangeRoleSkin();
-    }
 
     public void LoadLevel(int sceneIndex)
     {
@@ -41,20 +37,20 @@ public class LevelLoader : MonoBehaviour
         Application.Quit();
     }
 
-    public void CloseSelect(GameObject number)
+    public void CloseSelect(GameObject target)
     {
-        if (number == temp01)
+        if (target == temp01)
         {
             SceneController.instance.selected01 = false;
         }
-        else if (number == temp02)
+        else if (target == temp02)
         {
             SceneController.instance.selected02 = false;
         }
-        number.SetActive(false);
+        target.SetActive(false);
     }
-    public void OpenSelect(GameObject number)
+    public void OpenSelect(GameObject target)
     {
-        number.SetActive(true);
+        target.SetActive(true);
     }
 }
