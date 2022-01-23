@@ -271,8 +271,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chooseRoleUI: {fileID: 0}
   chooseLevelUI: {fileID: 0}
-  temp01: {fileID: 0}
-  temp02: {fileID: 0}
+  playerRawImagePanel01: {fileID: 0}
+  playerRawImagePanel02: {fileID: 0}
 --- !u!1 &84183372
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,8 +519,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chooseRoleUI: {fileID: 397888009}
   chooseLevelUI: {fileID: 1606039432}
-  temp01: {fileID: 0}
-  temp02: {fileID: 0}
+  playerRawImagePanel01: {fileID: 0}
+  playerRawImagePanel02: {fileID: 0}
 --- !u!114 &165932558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,8 +1397,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chooseRoleUI: {fileID: 0}
   chooseLevelUI: {fileID: 0}
-  temp01: {fileID: 0}
-  temp02: {fileID: 0}
+  playerRawImagePanel01: {fileID: 0}
+  playerRawImagePanel02: {fileID: 0}
 --- !u!1 &442377269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,8 +1891,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chooseRoleUI: {fileID: 397888009}
   chooseLevelUI: {fileID: 1606039432}
-  temp01: {fileID: 2110209181}
-  temp02: {fileID: 1935764154}
+  playerRawImagePanel01: {fileID: 2110209181}
+  playerRawImagePanel02: {fileID: 1935764154}
 --- !u!1 &625091425
 GameObject:
   m_ObjectHideFlags: 0
@@ -2337,8 +2337,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chooseRoleUI: {fileID: 0}
   chooseLevelUI: {fileID: 0}
-  temp01: {fileID: 0}
-  temp02: {fileID: 0}
+  playerRawImagePanel01: {fileID: 0}
+  playerRawImagePanel02: {fileID: 0}
 --- !u!1 &1054474851
 GameObject:
   m_ObjectHideFlags: 0
@@ -3855,8 +3855,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chooseRoleUI: {fileID: 397888009}
   chooseLevelUI: {fileID: 0}
-  temp01: {fileID: 0}
-  temp02: {fileID: 0}
+  playerRawImagePanel01: {fileID: 0}
+  playerRawImagePanel02: {fileID: 0}
 --- !u!1 &2044353136
 GameObject:
   m_ObjectHideFlags: 0
@@ -4377,6 +4377,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 98746775}
+    - target: {fileID: 1409486099454248361, guid: 862eb7fc80d63624b810f690ba7798fc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1492718962127157548, guid: 862eb7fc80d63624b810f690ba7798fc, type: 3}
       propertyPath: cam
       value: 

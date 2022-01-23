@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        cam = Camera.main;
         rVec = cam.transform.right;
         fVec = GenNewForward();
     }

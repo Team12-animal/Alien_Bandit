@@ -41,6 +41,7 @@ public class AnimatorController : MonoBehaviour
     public string Player_Cheer { get; private set; } = "Cheer";
     public string Player_StandUp { get; private set; } = "StandUp";
     public string Player_Fear { get; private set; } = "Fear";
+    public string Player_DanceType18 { get; private set; } = "Dance18";
     public string Player_Test { get; private set; } = "Test";
 
     private void Update()

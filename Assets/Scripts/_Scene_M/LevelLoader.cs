@@ -11,15 +11,14 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] GameObject chooseLevelUI;
     ChangeRoleSkin changeRole = new ChangeRoleSkin();
 
-    [SerializeField]GameObject temp01;
-    [SerializeField]GameObject temp02;
+    [SerializeField]GameObject playerRawImagePanel01;
+    [SerializeField]GameObject playerRawImagePanel02;
 
 
     public void LoadLevel(int sceneIndex)
     {
         SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
         SceneController.instance.LoadLevel(sceneIndex);
-        changeRole.LoadCharacter();
     }
 
     public void OpenChooseRoleUI(bool open)
@@ -29,7 +28,6 @@ public class LevelLoader : MonoBehaviour
     public void OpenChooseLevelUI(bool open)
     {
         chooseLevelUI.SetActive(open);
-        changeRole.SaveCharacter();
     }
 
     public void ExitGame()
@@ -39,11 +37,11 @@ public class LevelLoader : MonoBehaviour
 
     public void CloseSelect(GameObject target)
     {
-        if (target == temp01)
+        if (target == playerRawImagePanel01)
         {
             SceneController.instance.selected01 = false;
         }
-        else if (target == temp02)
+        else if (target == playerRawImagePanel02)
         {
             SceneController.instance.selected02 = false;
         }

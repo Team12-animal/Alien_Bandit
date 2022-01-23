@@ -13,6 +13,11 @@ public class AddSelectCharacterButton : MonoBehaviour
     string player01 = "Player01";
     string player02 = "Player02";
 
+    string menuDance01 = "CharacterControllerTest_Male_MainMenu01";
+    string menuDance02 = "CharacterControllerTest_Male_MainMenu02";
+
+    AnimatorController anim;
+
     public void SelectChanel(int number)
     {
         if (number == 1)
@@ -38,13 +43,23 @@ public class AddSelectCharacterButton : MonoBehaviour
                 {
                     GameObject temp01 = temp.transform.Find(player01).gameObject;
                     objects[i] = temp01;
-                    temp01.SetActive(true);
+                    objects[i].SetActive(true);
+
+                    AnimatorController anim = objects[i].GetComponent<AnimatorController>();
+                    anim.animator = objects[i].GetComponent<Animator>();
+                    anim.Init();
+                    anim.animator.runtimeAnimatorController = Resources.Load(menuDance01) as RuntimeAnimatorController;
                 }
                 else if (player == playerBox02)
                 {
                     GameObject temp01 = temp.transform.Find(player02).gameObject;
                     objects[i] = temp01;
-                    temp01.SetActive(true);
+                    objects[i].SetActive(true);
+
+                    AnimatorController anim = objects[i].GetComponent<AnimatorController>();
+                    anim.animator = objects[i].GetComponent<Animator>();
+                    anim.Init();
+                    anim.animator.runtimeAnimatorController = Resources.Load(menuDance02) as RuntimeAnimatorController;
                 }
             }
             objects[i].SetActive(true);
