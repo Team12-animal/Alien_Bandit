@@ -5,6 +5,7 @@ using UnityEngine;
 public class MixManager : MonoBehaviour
 {
     public List<Item> mixitems;
+    public Transform instantiate;
     // Start is called before the first frame update
     void Start()
     {        
@@ -46,34 +47,35 @@ public class MixManager : MonoBehaviour
         if (mix1 == 0 && mix2 == 1)
         {
             mixitems.Clear();
-            Instantiate(ItemManager.Instance.items[2].gm[0] ,transform);
+            Instantiate(ItemManager.Instance.items[3].gm[0], instantiate);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Wood" || other.tag=="Leaf")
+        foreach (var v in ItemManager.Instance.items)
         {
-            CheckItemAndAdd(other.tag);
+            if (other.tag == v.itemName)
+            {
+                CheckItemAndAdd(other.tag);
+            }
         }
-
     }
     private void OnTriggerStay(Collider other)
     {
-
-        if (other.tag == "Player")
+        if (Input.GetKeyDown(KeyCode.LeftControl) && mixitems!=null)
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                MixItem();
-            }
+            MixItem();
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Wood" || other.tag == "Leaf")
+        foreach (var v in ItemManager.Instance.items)
         {
-            CheckItemAndRemove(other.tag);
+            if (other.tag == v.itemName)
+            {
+                CheckItemAndRemove(other.tag);
+            }
         }
     }
 }
