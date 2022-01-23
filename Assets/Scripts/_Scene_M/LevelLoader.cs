@@ -6,13 +6,17 @@ using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour
 {
+    [Header("UI¤¶­±¶}±Ò»P§_")]
     [SerializeField] GameObject chooseRoleUI;
     [SerializeField] GameObject chooseLevelUI;
     ChangeRoleSkin changeRole;
 
+    [SerializeField]GameObject temp01;
+    [SerializeField]GameObject temp02;
+
     private void Start()
     {
-        changeRole= new ChangeRoleSkin();
+        changeRole = new ChangeRoleSkin();
     }
 
     public void LoadLevel(int sceneIndex)
@@ -37,5 +41,20 @@ public class LevelLoader : MonoBehaviour
         Application.Quit();
     }
 
-
+    public void CloseSelect(GameObject number)
+    {
+        if (number == temp01)
+        {
+            SceneController.instance.selected01 = false;
+        }
+        else if (number == temp02)
+        {
+            SceneController.instance.selected02 = false;
+        }
+        number.SetActive(false);
+    }
+    public void OpenSelect(GameObject number)
+    {
+        number.SetActive(true);
+    }
 }
