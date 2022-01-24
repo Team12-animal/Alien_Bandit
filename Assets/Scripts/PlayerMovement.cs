@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
     private GameObject itemInhand;
     private GameObject animalCatched;
 
+    //animation
+    private Transform holdingPos;
+
     void Start()
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -35,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
         rVec = cam.transform.right;
         fVec = GenNewBaseForward();
+
+        holdingPos = FindChildT(this.gameObject, "HoldingPos");
     }
 
     private void InitPlayerData(PlayerData data)
@@ -50,6 +55,23 @@ public class PlayerMovement : MonoBehaviour
     {
         data.item = itemInhand;
         data.animal = animalCatched;
+    }
+
+    private Transform FindChildT(GameObject go, string cName)
+    {
+        Transform trans = go.transform;
+        Transform childT = trans.Find("cName");
+
+        if(childT != null)
+        {
+            return childT;
+        }
+        else
+        {
+            Debug.Log("find child error");
+            return null;
+        }
+
     }
 
     public string MoveAndRotate(float transAmt, float rotAmt)
@@ -155,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (tagName == "WorkingTable")
             {
-                //Wait for ??
+                //Wait for Pei
                 //UseTable();
             }
             else
@@ -302,14 +324,31 @@ public class PlayerMovement : MonoBehaviour
 
     public string Drop()
     {
-
+        if(itemInhand != null)
+        {
+            GetDropAniName(itemInhand.tag);
+            itemInhand = null;
+            UpdatePlayerData();
+        }
+        //check animation status
+        //remove child
         return aniClip;
     }
 
     public string Throw()
     {
+        //check animation status
+        //remove child
+        if (itemInhand != null)
+        {
+            GetDropAniName(itemInhand.tag);
+            itemInhand = null;
+            UpdatePlayerData();
+        }
+
         return aniClip;
     }
+
     private string GetDropAniName(string tagName)
     {
         string aniName = "none";
@@ -346,5 +385,17 @@ public class PlayerMovement : MonoBehaviour
         {
             this.transform.forward = Vector3.Slerp(this.transform.forward, dirToItem, 0.8f);
         }
+    }
+
+    //set item to HoldingPos
+    private void HoldItem(GameObject targetItem)
+    {
+        if(targetItem = null)
+        {
+            return;
+        }
+
+        targetItem.transform.position = holdingPos.position;
+        targetItem.transform.SetParent(holdingPos);
     }
 }
