@@ -3012,18 +3012,6 @@ PrefabInstance:
       value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 401926, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.6741002
-      objectReference: {fileID: 0}
-    - target: {fileID: 401926, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.6741002
-      objectReference: {fileID: 0}
-    - target: {fileID: 401926, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.6741
-      objectReference: {fileID: 0}
-    - target: {fileID: 401926, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21.7894
       objectReference: {fileID: 0}
@@ -3063,46 +3051,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 3.878
       objectReference: {fileID: 0}
-    - target: {fileID: 11430402, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
-      propertyPath: InitialState
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 523668885, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
+      propertyPath: levelOne
+      value: 
+      objectReference: {fileID: 1115090080}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
---- !u!1 &523668884 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 179570, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
-  m_PrefabInstance: {fileID: 523668883}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &523668885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523668884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8155df07117c5f4fa780d2d2bf3b301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  players: []
-  originDoor: {fileID: 523668884}
-  breakDoor: {fileID: 3383326581816041101, guid: 86f083389ef919d45a34ff67cb3c0886, type: 3}
-  setPosition: {x: 18.98, y: -0.36, z: 17.7}
---- !u!65 &523668886
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523668884}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.95, y: 1.34, z: 1}
-  m_Center: {x: -1.66, y: 0, z: 0}
 --- !u!1001 &526982116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7317,6 +7271,7 @@ MonoBehaviour:
   gamingTime: 9
   gamingTimeText: {fileID: 1884617702}
   gameoverUI: {fileID: 257617092}
+  doorDestroied: 0
   player: []
 --- !u!4 &1116168447 stripped
 Transform:
