@@ -78,7 +78,7 @@ public class SceneController : MonoBehaviour
     }
     IEnumerator LoadAsynchronously(int sceneIndex)
     {
-        if(sceneIndex <0)throw new Exception(" < 0 not correct");
+        if (sceneIndex < 0) throw new Exception(" < 0 not correct");
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
         while (!operation.isDone)
         {
@@ -114,7 +114,6 @@ public class SceneController : MonoBehaviour
         if (player == null) throw new Exception("No player");
 
         GetPlayerState(player);
-        tempInput.enabled = true;
         tempRigibody.useGravity = true;
         tempRoleSkin.enabled = false;
 
@@ -163,8 +162,21 @@ public class SceneController : MonoBehaviour
     }
     private void GetPlayerState(GameObject player)
     {
+        tempInput = player.GetComponent<InputController>();
         tempRigibody = player.GetComponent<Rigidbody>();
         tempRoleSkin = player.GetComponent<ChangeRoleSkin>();
+    }
+
+    public void StartMove(GameObject player)
+    {
         tempInput = player.GetComponent<InputController>();
+        tempInput.enabled = true;
+    }
+
+    public List<GameObject> GetPlayer(List<GameObject> player)
+    {
+        player.Add(player01);
+        player.Add(player02);
+        return player;
     }
 }

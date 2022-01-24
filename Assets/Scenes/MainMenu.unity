@@ -990,6 +990,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305046675}
   m_CullTransparentMesh: 1
+--- !u!1 &349158361 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1321880221651414810, guid: 862eb7fc80d63624b810f690ba7798fc, type: 3}
+  m_PrefabInstance: {fileID: 2925361060720731399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &351264751
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,6 +1536,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 442377269}
   m_CullTransparentMesh: 1
+--- !u!1 &458391475 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1540495855849821087, guid: 862eb7fc80d63624b810f690ba7798fc, type: 3}
+  m_PrefabInstance: {fileID: 2925361060720731399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &510207350
 GameObject:
   m_ObjectHideFlags: 0
@@ -4441,6 +4451,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3581281542651856210, guid: 862eb7fc80d63624b810f690ba7798fc, type: 3}
+      propertyPath: players.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3581281542651856210, guid: 862eb7fc80d63624b810f690ba7798fc, type: 3}
+      propertyPath: players.Array.data[0]
+      value: 
+      objectReference: {fileID: 349158361}
+    - target: {fileID: 3581281542651856210, guid: 862eb7fc80d63624b810f690ba7798fc, type: 3}
+      propertyPath: players.Array.data[1]
+      value: 
+      objectReference: {fileID: 458391475}
     - target: {fileID: 4831689753487682071, guid: 862eb7fc80d63624b810f690ba7798fc, type: 3}
       propertyPath: m_Name
       value: Canvas_LoadingBar
