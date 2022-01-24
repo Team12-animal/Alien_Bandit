@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
 {
     private PlayerData data;
     public Camera cam;
-    private string aniClip;
 
     //movement
     [HideInInspector]
@@ -39,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         rVec = cam.transform.right;
         fVec = GenNewBaseForward();
 
-        holdingPos = FindChildT(this.gameObject, "HoldingPos");
+        holdingPos = FindChildT("HoldingPos");
     }
 
     private void InitPlayerData(PlayerData data)
@@ -57,13 +56,14 @@ public class PlayerMovement : MonoBehaviour
         data.animal = animalCatched;
     }
 
-    private Transform FindChildT(GameObject go, string cName)
+    private Transform FindChildT(string cName)
     {
-        Transform trans = go.transform;
+        Transform trans = this.gameObject.transform;
         Transform childT = trans.Find("cName");
 
         if(childT != null)
         {
+            Debug.Log(childT.position);
             return childT;
         }
         else
@@ -76,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
 
     public string MoveAndRotate(float transAmt, float rotAmt)
     {
+        string aniClip;
+
         Vector3 dir = (rVec * rotAmt) + (fVec * transAmt);
 
         this.transform.forward = Vector3.Slerp(this.transform.forward, dir * maxRotate * Time.deltaTime, lerpAmt);
@@ -146,18 +148,7 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * 2);
     }
 
-    public static class ItemId
-    {
-        public static int workingTable = 0;
-        public static int tree = 1;
-        public static int rock = 2;
-        public static int wood = 3;
-        public static int chop = 4;
-        public static int bucket = 5;
-    }
-
-
-    private GameObject targetItem;
+    public GameObject targetItem;
 
     //check what to pick
     private GameObject OnTriggerStay(Collider other)
@@ -168,6 +159,8 @@ public class PlayerMovement : MonoBehaviour
     
     public string Pick()
     {
+        string aniClip;
+
         //update what item in hand
         if (targetItem != null)
         {
@@ -179,9 +172,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 //Wait for Pei
                 //UseTable();
+                
+                //if using Table success
+                aniClip = "UsingTable";
             }
             else
             {
+                //HoldItem(targetItem);
                 itemInhand = targetItem;
             }
 
@@ -192,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             Debug.Log("unable to use");
-            aniClip = "none";
+            aniClip = "Idle";
         }
 
         return aniClip;
@@ -200,12 +197,7 @@ public class PlayerMovement : MonoBehaviour
 
     private string GetUseAniName(string tagName)
     {
-        string aniName = "none";
-
-        if (tagName == "WorkingTable")
-        {
-            aniName = "UsingTable";
-        }
+        string aniName = "Idle";
 
         if (tagName == "Rock")
         {
@@ -232,6 +224,8 @@ public class PlayerMovement : MonoBehaviour
 
     public string UseChop()
     {
+        string aniClip;
+
         if (targetItem != null && targetItem.tag == "Tree")
         {
             aniClip = ChopTree();
@@ -282,61 +276,69 @@ public class PlayerMovement : MonoBehaviour
         return aniName;
     }
 
-    bool bucketFilled = false;
-    public string UseBucket()
-    {
-        if (bucketFilled == false)
-        {
-            if(targetItem != null && targetItem.tag == "Water")
-            {
-                aniClip = GetWater();
-            }
-            else
-            {
-                aniClip = Drop();
-            }
-        }
-        
-        if(bucketFilled == true)
-        {
-            aniClip = PourWater();
-        }
 
-        return aniClip;
-    }
+    //holding bucket > ctrl press1: get water; press2: pourwater; press3: drop 
+    //bool bucketFilled = false;
+    //public string UseBucket()
+    //{
+    //    string aniClip;
 
-    private string GetWater()
-    {
-        string aniName = "GetWater";
-        bucketFilled = true;
+    //    if (bucketFilled == false)
+    //    {
+    //        if(targetItem != null && targetItem.tag == "Water")
+    //        {
+    //            aniClip = GetWater();
+    //        }
+    //        else
+    //        {
+    //            aniClip = Drop();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        aniClip = PourWater();
+    //    }
 
-        //add put out fire function
+    //    return aniClip;
+    //}
 
-        return aniName;
-    }
+    //private string GetWater()
+    //{
+    //    string aniName = "GetWater";
+    //    bucketFilled = true;
 
-    private string PourWater()
-    {
-        string aniName = "PourWater";
-        bucketFilled = false;
-        return aniName;
-    }
+    //    //add put out fire function
+
+    //    return aniName;
+    //}
+
+    //private string PourWater()
+    //{
+    //    string aniName = "PourWater";
+    //    bucketFilled = false;
+    //    return aniName;
+    //}
 
     public string Drop()
     {
-        if(itemInhand != null)
+        string aniClip = "Idle";
+
+        if (itemInhand != null)
         {
             GetDropAniName(itemInhand.tag);
             itemInhand = null;
             UpdatePlayerData();
         }
+
         //check animation status
         //remove child
         return aniClip;
     }
 
-    public string Throw()
+    public string Throw(float strength)
     {
+        string aniClip = "Idle";
+
         //check animation status
         //remove child
         if (itemInhand != null)
@@ -351,7 +353,7 @@ public class PlayerMovement : MonoBehaviour
 
     private string GetDropAniName(string tagName)
     {
-        string aniName = "none";
+        string aniName = "Idle";
 
         if (tagName == "Rock")
         {
@@ -385,6 +387,8 @@ public class PlayerMovement : MonoBehaviour
         {
             this.transform.forward = Vector3.Slerp(this.transform.forward, dirToItem, 0.8f);
         }
+
+        float dist = dirToItem.magnitude;
     }
 
     //set item to HoldingPos
@@ -397,5 +401,15 @@ public class PlayerMovement : MonoBehaviour
 
         targetItem.transform.position = holdingPos.position;
         targetItem.transform.SetParent(holdingPos);
+    }
+
+    private void RemoveItem(GameObject targetItem)
+    {
+        if (targetItem = null)
+        {
+            return;
+        }
+
+        targetItem.transform.parent = null;
     }
 }
