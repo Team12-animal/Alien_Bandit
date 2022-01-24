@@ -5,18 +5,34 @@ using UnityEngine.UI;
 
 public class LevelOneControl : MonoBehaviour
 {
+    [Header("遊戲開始時間倒數")]
     [SerializeField] float waittingTime = 6.0f;
     [SerializeField] Text waittingTimeText;
     [SerializeField] Canvas timeUI;
+
+    [Header("遊戲進行期間")]
+    [SerializeField] float gamingTime = 30.0f;
+    [SerializeField] Text gamingTimeText;
+
+    [Header("遊戲結束")]
+    [SerializeField] Canvas gameoverUI;
+
 
     [SerializeField] List<GameObject> player = new List<GameObject>();
 
     private void Start()
     {
         SceneController.instance.GetPlayer(player);
+        gameoverUI.gameObject.SetActive(false);
     }
 
     private void Update()
+    {
+        TimeSetting();
+        GameOver();
+    }
+
+    private void TimeSetting()
     {
         if (waittingTime <= 0f)
         {
@@ -29,10 +45,30 @@ public class LevelOneControl : MonoBehaviour
                 SceneController.instance.StartMove(player[1]);
             }
             timeUI.gameObject.SetActive(false);
+            gamingTime = SetTime(gamingTime, gamingTimeText);
         }
+        waittingTime = SetTime(waittingTime, waittingTimeText);
+    }
 
-        waittingTime -= Time.deltaTime;
-        waittingTime = Mathf.Clamp(waittingTime, 0f, Mathf.Infinity);
-        waittingTimeText.text = string.Format("{0:00}", waittingTime);
+    public float SetTime(float time, Text text)
+    {
+        time -= Time.deltaTime;
+        time = Mathf.Clamp(time, 0f, Mathf.Infinity);
+        text.text = string.Format("{0:00}", time);
+        return time;
+    }
+
+    public void GameOver()
+    {
+        InputController input01 = new InputController();
+        InputController input02 = new InputController();
+        input01 = player[0].GetComponent<InputController>();
+        input02 = player[1].GetComponent<InputController>();
+        if (gamingTime <= 0.0f)
+        {
+            input01.enabled = false;
+            input02.enabled = false;
+            gameoverUI.gameObject.SetActive(true);
+        }
     }
 }
