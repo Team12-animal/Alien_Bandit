@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 rVec;
 
     //use
-    private GameObject itemInhand;
+    public GameObject itemInhand;
     private GameObject animalCatched;
 
     //animation
@@ -59,19 +59,9 @@ public class PlayerMovement : MonoBehaviour
     private Transform FindChildT(string cName)
     {
         Transform trans = this.gameObject.transform;
-        Transform childT = trans.Find("cName");
+        Transform childT = trans.Find(cName);
 
-        if(childT != null)
-        {
-            Debug.Log(childT.position);
-            return childT;
-        }
-        else
-        {
-            Debug.Log("find child error");
-            return null;
-        }
-
+        return childT;
     }
 
     public string MoveAndRotate(float transAmt, float rotAmt)
@@ -149,16 +139,17 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public GameObject targetItem;
-
+    public GameObject triggerItem;
     //check what to pick
-    private GameObject OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        targetItem = other.gameObject;
-        return targetItem;
+        triggerItem = other.gameObject;
     }
     
     public string Pick()
     {
+        targetItem = triggerItem;
+        
         string aniClip;
 
         //update what item in hand
@@ -178,13 +169,15 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                //HoldItem(targetItem);
+                HoldItem(targetItem);
                 itemInhand = targetItem;
             }
 
             aniClip = GetUseAniName(tagName);
             UpdatePlayerData();
             targetItem = null;
+
+            Debug.Log("pick end");
         }
         else
         {
@@ -197,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
 
     private string GetUseAniName(string tagName)
     {
-        string aniName = "Idle";
+        string aniName = "None";
 
         if (tagName == "Rock")
         {
@@ -224,6 +217,11 @@ public class PlayerMovement : MonoBehaviour
 
     public string UseChop()
     {
+        if (triggerItem != null)
+        {
+            targetItem = triggerItem;
+        }            
+
         string aniClip;
 
         if (targetItem != null && targetItem.tag == "Tree")
@@ -281,69 +279,73 @@ public class PlayerMovement : MonoBehaviour
     //bool bucketFilled = false;
     //public string UseBucket()
     //{
-    //    string aniClip;
+     //if (triggerItem != null)
+     //   {
+     //       targetItem = triggerItem;
+     //   }
 
-    //    if (bucketFilled == false)
-    //    {
-    //        if(targetItem != null && targetItem.tag == "Water")
-    //        {
-    //            aniClip = GetWater();
-    //        }
-    //        else
-    //        {
-    //            aniClip = Drop();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        aniClip = PourWater();
-    //    }
+//    string aniClip;
 
-    //    return aniClip;
-    //}
+//    if (bucketFilled == false)
+//    {
+//        if(targetItem != null && targetItem.tag == "Water")
+//        {
+//            aniClip = GetWater();
+//        }
+//        else
+//        {
+//            aniClip = Drop();
+//        }
+//    }
+//    else
+//    {
+//        aniClip = PourWater();
+//    }
 
-    //private string GetWater()
-    //{
-    //    string aniName = "GetWater";
-    //    bucketFilled = true;
+//    return aniClip;
+//}
 
-    //    //add put out fire function
+//private string GetWater()
+//{
+//    string aniName = "GetWater";
+//    bucketFilled = true;
 
-    //    return aniName;
-    //}
+//    //add put out fire function
 
-    //private string PourWater()
-    //{
-    //    string aniName = "PourWater";
-    //    bucketFilled = false;
-    //    return aniName;
-    //}
+//    return aniName;
+//}
 
-    public string Drop()
+//private string PourWater()
+//{
+//    string aniName = "PourWater";
+//    bucketFilled = false;
+//    return aniName;
+//}
+
+public string Drop()
     {
-        string aniClip = "Idle";
+        string aniClip = "none";
 
-        if (itemInhand != null)
-        {
-            GetDropAniName(itemInhand.tag);
-            itemInhand = null;
-            UpdatePlayerData();
-        }
+        aniClip = GetDropAniName(itemInhand.tag);
+
+        itemInhand = null;
+        UpdatePlayerData();
 
         //check animation status
         //remove child
+        Debug.Log("Drop");
         return aniClip;
     }
 
     public string Throw(float strength)
     {
-        string aniClip = "Idle";
+        string aniClip = "none";
 
         //check animation status
         //remove child
         if (itemInhand != null)
         {
-            GetDropAniName(itemInhand.tag);
+            aniClip = "ThrowRock";
             itemInhand = null;
             UpdatePlayerData();
         }
@@ -357,23 +359,25 @@ public class PlayerMovement : MonoBehaviour
 
         if (tagName == "Rock")
         {
-            aniName = "PickUpRock";
+            aniName = "PutDownRock";
         }
 
         if (tagName == "Wood")
         {
-            aniName = "PickWood";
+            aniName = "PutDownWood";
         }
 
         if (tagName == "Chop")
         {
-            aniName = "PickUpChop";
+            aniName = "PutDownChop";
         }
 
         if (tagName == "Bucket")
         {
-            aniName = "PickUpBucket";
+            aniName = "PutDownBucket";
         }
+
+        Debug.Log("Drop" + tagName + aniName);
 
         return aniName;
     }
@@ -394,13 +398,15 @@ public class PlayerMovement : MonoBehaviour
     //set item to HoldingPos
     private void HoldItem(GameObject targetItem)
     {
-        if(targetItem = null)
+        if(targetItem == null)
         {
             return;
         }
 
         targetItem.transform.position = holdingPos.position;
         targetItem.transform.SetParent(holdingPos);
+        Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
+        targetRG.isKinematic = true;
     }
 
     private void RemoveItem(GameObject targetItem)
@@ -411,5 +417,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         targetItem.transform.parent = null;
+        Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
+        targetRG.isKinematic = false;
     }
 }

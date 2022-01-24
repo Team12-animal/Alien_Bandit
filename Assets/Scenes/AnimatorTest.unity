@@ -1235,13 +1235,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488204477}
-  m_LocalRotation: {x: -0, y: -0.9982721, z: -0, w: -0.05876101}
-  m_LocalPosition: {x: -6.472862, y: -4.5727744, z: 1.8814287}
+  m_LocalRotation: {x: 0.13824768, y: -0.988653, z: 0.008137635, w: -0.058194786}
+  m_LocalPosition: {x: -6.472862, y: -1.53, z: 1.8814287}
   m_LocalScale: {x: 0.49999982, y: 0.5, z: 0.49999982}
   m_Children: []
   m_Father: {fileID: 1716532024}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 173.263, z: -15.921}
 --- !u!1 &497053899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2258,7 +2258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 522459008932552855, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.56
+      value: 14.76
       objectReference: {fileID: 0}
     - target: {fileID: 522459008932552855, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2266,7 +2266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 522459008932552855, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 23.5
+      value: 17.38
       objectReference: {fileID: 0}
     - target: {fileID: 522459008932552855, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2800,13 +2800,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018494843}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 48
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &1039758972
 GameObject:
@@ -3399,6 +3399,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree(7)
       objectReference: {fileID: 0}
+    - target: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -3442,6 +3446,10 @@ PrefabInstance:
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582168971709726199, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
@@ -3672,7 +3680,7 @@ MonoBehaviour:
   transAmt: 0
   rotAmt: 0
   isDash: 0
-  holdingThing: 0
+  holdingItem: 0
   setDashTime: 0.24
   remainDashTime: 0
   pressedTime: 1
@@ -3708,7 +3716,9 @@ MonoBehaviour:
   setDashTime: 0.24
   dashSpeed: 12
   lerpAmt: 0.8
+  itemInhand: {fileID: 0}
   targetItem: {fileID: 0}
+  triggerItem: {fileID: 0}
 --- !u!136 &1716532021
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4635,6 +4645,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6201417577865796235, guid: 936441e8ad7465e409c2285b778dfd8f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7375297995757436974, guid: 936441e8ad7465e409c2285b778dfd8f, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 7375297995757436974, guid: 936441e8ad7465e409c2285b778dfd8f, type: 3}
+      propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
