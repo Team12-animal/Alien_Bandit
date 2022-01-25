@@ -17,6 +17,8 @@ public class LevelOneControl : MonoBehaviour
     [Header("¹CÀ¸µ²§ô")]
     [SerializeField] Canvas gameoverUI;
     public bool doorDestroied = false;
+    InputController input01 = new InputController();
+    InputController input02 = new InputController();
 
     [SerializeField] List<GameObject> player = new List<GameObject>();
 
@@ -61,8 +63,6 @@ public class LevelOneControl : MonoBehaviour
 
     public void GameOver()
     {
-        InputController input01 = new InputController();
-        InputController input02 = new InputController();
         input01 = player[0].GetComponent<InputController>();
         input02 = player[1].GetComponent<InputController>();
         if (gamingTime <= 0.0f || doorDestroied)
