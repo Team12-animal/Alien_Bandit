@@ -15,7 +15,7 @@ public class LevelOneControl : MonoBehaviour
     [SerializeField] Text gamingTimeText;
 
     [Header("¹CÀ¸µ²§ô")]
-    [SerializeField] Canvas gameoverUI;
+    [SerializeField] GameObject[] gameoverUIText;
     public bool doorDestroied = false;
     InputController input01 = new InputController();
     InputController input02 = new InputController();
@@ -25,7 +25,10 @@ public class LevelOneControl : MonoBehaviour
     private void Start()
     {
         SceneController.instance.GetPlayer(player);
-        gameoverUI.gameObject.SetActive(false);
+        for (int i = 0; i < gameoverUIText.Length; i++)
+        {
+            gameoverUIText[i].gameObject.SetActive(false);
+        }
         doorDestroied = false;
     }
 
@@ -75,6 +78,9 @@ public class LevelOneControl : MonoBehaviour
     {
         input01.enabled = false;
         input02.enabled = false;
-        gameoverUI.gameObject.SetActive(true);
+        for (int i = 0; i < gameoverUIText.Length; i++)
+        {
+            gameoverUIText[i].gameObject.SetActive(true);
+        }
     }
 }
