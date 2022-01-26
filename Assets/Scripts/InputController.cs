@@ -17,8 +17,8 @@ public class InputController : MonoBehaviour
     [SerializeField] private float remainDashTime;
 
     AnimatorController anim;
-    bool usePressed;
-    bool usePressUp;
+    bool takePressed;
+    bool takePressUp;
     float holdDownStartTime = 0f;
     [SerializeField] float pressedTime = 1.0f;
     [SerializeField] bool inTreeArea = false;
@@ -42,8 +42,8 @@ public class InputController : MonoBehaviour
 
         //rotAmt = Input.GetAxis("Horizontal");
         //transAmt = Input.GetAxis("Vertical");
-        usePressed = Input.GetButtonDown("Use");
-        usePressUp = Input.GetButtonUp("Use");
+        takePressed = Input.GetButtonDown("Take");
+        takePressUp = Input.GetButtonUp("Take");
         //bool moved = (rotAmt != 0 || transAmt != 0);
         //Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         //movementDirection.Normalize();
@@ -87,7 +87,7 @@ public class InputController : MonoBehaviour
             anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
         }
 
-        if (Input.GetButtonDown("Use") && isDash == false)
+        if (Input.GetButtonDown("Take") && isDash == false)
         {
             if (holdingItem == false)
             {
@@ -121,12 +121,12 @@ public class InputController : MonoBehaviour
                     float endPress = 0.0f;
                     float startPress = 0.0f;
 
-                    if (usePressed)
+                    if (takePressed)
                     {
                         startPress = Time.time;
                     }
 
-                    if (usePressUp)
+                    if (takePressUp)
                     {
                         endPress = Time.time;
                     }
@@ -207,7 +207,7 @@ public class InputController : MonoBehaviour
         bool allowExitTable = !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Cheer);
         
 
-        if (usePressed)
+        if (takePressed)
         {
             holdDownStartTime = Time.time;
         }
@@ -230,7 +230,7 @@ public class InputController : MonoBehaviour
             anim.ChangeAnimationState(anim.Player_HoldRockWalk, rotAmt, transAmt);
             //GetComponent<PlayerData>().maxSpeed = 1;
         }
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && usePressUp)
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && takePressUp)
         {
             float temp = pressedTime;
             float holdDownTime = Time.time - holdDownStartTime;
@@ -245,7 +245,7 @@ public class InputController : MonoBehaviour
             anim.ChangeAnimationState(anim.Player_HoldWoodWalk, rotAmt, transAmt);
             //GetComponent<PlayerData>().maxSpeed = 2;
         }
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && usePressed)
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && takePressed)
         {
             anim.ChangeAnimaEventState(anim.Player_PutDownWood);
            //GetComponent<PlayerData>().maxSpeed = 6;
@@ -255,7 +255,7 @@ public class InputController : MonoBehaviour
             anim.ChangeAnimationState(anim.Player_HoldChopWalk, rotAmt, transAmt);
             //GetComponent<PlayerData>().maxSpeed = 4;
         }
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && usePressed && !inTreeArea)
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && takePressed && !inTreeArea)
         {
             anim.ChangeAnimaEventState(anim.Player_PutDownChop);
             //GetComponent<PlayerData>().maxSpeed = 6;
@@ -279,11 +279,11 @@ public class InputController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        bool allowUsingTable = other.gameObject.tag == "WorkingTable" && usePressed && !anim.animator.GetBool(anim.animHoldChop) && !anim.animator.GetBool(anim.animPickedHash);
+        bool allowUsingTable = other.gameObject.tag == "WorkingTable" && takePressed && !anim.animator.GetBool(anim.animHoldChop) && !anim.animator.GetBool(anim.animPickedHash);
         bool allowChopping = other.gameObject.tag == "Tree";
-        bool allowPickUpRock = other.gameObject.tag == "Rock" && usePressed && !anim.animator.GetBool(anim.animPickedHash);
-        bool allowPickUpWood = other.gameObject.tag == "Wood" && usePressed && !anim.animator.GetBool(anim.animPickedHash);
-        bool allowPickUpChop = other.gameObject.tag == "Chop" && usePressed && !anim.animator.GetBool(anim.animPickedHash);
+        bool allowPickUpRock = other.gameObject.tag == "Rock" && takePressed && !anim.animator.GetBool(anim.animPickedHash);
+        bool allowPickUpWood = other.gameObject.tag == "Wood" && takePressed && !anim.animator.GetBool(anim.animPickedHash);
+        bool allowPickUpChop = other.gameObject.tag == "Chop" && takePressed && !anim.animator.GetBool(anim.animPickedHash);
 
         if (allowPickUpRock)
         {
@@ -292,7 +292,7 @@ public class InputController : MonoBehaviour
         else if (allowChopping)
         {
             inTreeArea = true;
-            if (anim.animator.GetBool(anim.animHoldChop) & usePressed)
+            if (anim.animator.GetBool(anim.animHoldChop) & takePressed)
                 anim.ChangeAnimaEventState(anim.Player_Chopping);
         }
         else if (allowPickUpWood)
