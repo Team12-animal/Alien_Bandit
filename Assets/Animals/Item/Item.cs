@@ -10,9 +10,11 @@ public class Item : ScriptableObject
     [Header("道具Name：")]
     public string itemName;
     [Header("道具ID：")]
-    public int id;
+    public string id;
     [Header("可合成？")]
     public bool canMix;
+    [Header("合成ID")]
+    public  List<string> mixId = new List<string>();
     [Header("會消耗？")]
     public bool canDestroy;
     [Header("耐久度？")][SerializeField]
