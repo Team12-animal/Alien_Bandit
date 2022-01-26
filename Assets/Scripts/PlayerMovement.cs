@@ -161,28 +161,28 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 oriV;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Rock")
-        {
-            oriV = rb.velocity;
-            Vector3 v = oriV;
-            if (v.y > 0)
-            {
-                v.y = 0;
-            }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Rock")
+    //    {
+    //        oriV = rb.velocity;
+    //        Vector3 v = oriV;
+    //        if (v.y > 0)
+    //        {
+    //            v.y = 0;
+    //        }
 
-            rb.velocity = v;
-        }
-    }
+    //        rb.velocity = v;
+    //    }
+    //}
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Rock")
-        {
-            rb.velocity = oriV;
-        }
-    }
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Rock")
+    //    {
+    //        rb.velocity = oriV;
+    //    }
+    //}
 
 
 
