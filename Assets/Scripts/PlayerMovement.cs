@@ -7,6 +7,9 @@ public class PlayerMovement : MonoBehaviour
     private PlayerData data;
     public Camera cam;
 
+    private Rigidbody rb;
+    public Vector3 velocity;
+
     //movement
     [HideInInspector]
     float maxSpeed;
@@ -39,6 +42,9 @@ public class PlayerMovement : MonoBehaviour
         fVec = GenNewBaseForward();
 
         holdingPos = FindChildT("HoldingPos");
+
+        rb = this.gameObject.GetComponent<Rigidbody>();
+        velocity = rb.velocity;
     }
 
     private void InitPlayerData(PlayerData data)
@@ -153,7 +159,33 @@ public class PlayerMovement : MonoBehaviour
         return aniName;
     }
 
-    bool enterCollision = false;
+    Vector3 oriV;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Rock")
+        {
+            oriV = rb.velocity;
+            Vector3 v = oriV;
+            if (v.y > 0)
+            {
+                v.y = 0;
+            }
+
+            rb.velocity = v;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Rock")
+        {
+            rb.velocity = oriV;
+        }
+    }
+
+
+
     public float Dash(float dashTime)
     {
         Debug.Log("dash");
@@ -177,6 +209,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Fix collider dash");
         }
 
+        //修正人物站立高度
         Vector3 toGround = from + (-this.transform.up * 10f);
 
         RaycastHit ground;
