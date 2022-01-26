@@ -18,8 +18,8 @@ using UnityEngine.Rendering;
 [System.Serializable]
 public class VTextLayout
 {
-		//! alignment
-		public enum align
+	//! alignment
+	public enum align
 		{
 				Base,    //! baseline
 				Start,   //! bounding box start
@@ -406,7 +406,7 @@ public class VTextLayout
 public class VTextParameter
 {
 	#region parameter
-
+	    
 		/// <summary>
 		/// The depth of the glyphs.
 		/// </summary>
@@ -482,6 +482,7 @@ public class VTextParameter
 				}
 		}
 
+
 		/// <summary>
 		/// The crease angle to generate sides and bevel
 		/// 
@@ -534,6 +535,7 @@ public class VTextParameter
 			}
 		}
 	}
+
 	/// <summary>
 	/// Flag generate tangents
 	/// 
@@ -587,10 +589,12 @@ public class VTextInterface : MonoBehaviour
 		[SerializeField]
 		public string
 				RenderText = "Hello world";
+
 		/// <summary>
 		/// Check change on update
 		/// </summary>
 		private string m_oldText;
+
 
 
 		/// <summary>

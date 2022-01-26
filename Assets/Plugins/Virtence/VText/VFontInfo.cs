@@ -16,6 +16,7 @@ using System.Collections;
 using System.Configuration;
 using System.IO;
 using System.Runtime.InteropServices;
+using UnityEditor;
 
 namespace Virtence.VText {
 		/// <summary>
@@ -43,12 +44,13 @@ namespace Virtence.VText {
 			public float maxY;
 		}
 
-/// <summary>
-/// Virtence font info.
-///
-/// holds all font related information.
-/// </summary>
-		public class VFontInfo {
+
+	/// <summary>
+	/// Virtence font info.
+	///
+	/// holds all font related information.
+	/// </summary>
+	public class VFontInfo {
 			private Hashtable     m_glyphs=null;
 			private System.IntPtr m_fontHandle;
 			private FontBounds    m_bounds;
@@ -389,7 +391,6 @@ namespace Virtence.VText {
 			public void LayoutText3D(VTextInterface vtext, string str) {
 				CreateText(vtext, str, true);
 			}
-
 			/// <summary>
 			/// Creates the text
 			///
@@ -398,7 +399,7 @@ namespace Virtence.VText {
 			/// <param name="vtext">Vtext.</param>
 			/// <param name="str">String.</param>
 			public void CreateText3D(VTextInterface vtext, string str) {
-				CreateText(vtext, str, false);
+			CreateText(vtext, str, false);
 			}
 			/// <summary>
 			/// Creates the text
