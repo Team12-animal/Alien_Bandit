@@ -72,9 +72,37 @@ public class PlayerMovement : MonoBehaviour
 
         this.transform.forward = Vector3.Slerp(this.transform.forward, dir * maxRotate * Time.deltaTime, lerpAmt);
         
-        float moveAmt = dir.magnitude;
+        float moveDist = dir.magnitude;
+        Vector3 moveAmt = this.transform.forward * moveDist * maxSpeed;
 
-        this.transform.position += this.transform.forward * moveAmt * maxSpeed * Time.deltaTime;
+        //修正人物碰撞抖動問題
+        Vector3 from = this.transform.position;
+        from.y += 0.5f;
+        Vector3 to = from + moveAmt;
+        to.z += 0.8f;
+
+        Debug.DrawLine(from, to, Color.black);
+
+        RaycastHit hit;
+        if(Physics.Linecast(from, to, out hit, 1 << 8))
+        {
+            moveAmt = hit.point - from;
+            moveAmt.y += 0.5f;
+            moveAmt.z -= 0.5f;
+
+            Debug.Log("Fix collider");
+        }
+
+        //修正人物站立高度
+        Vector3 toGround = from + (-this.transform.up * 10f);
+
+        RaycastHit ground;
+        if(Physics.Linecast(from, toGround, out ground, 1 << 7))
+        {
+            moveAmt.y = ground.point.y;
+        }
+
+        this.transform.position += moveAmt * Time.deltaTime;
 
         //Get Animator Name
         if(data.item != null)
@@ -125,12 +153,47 @@ public class PlayerMovement : MonoBehaviour
         return aniName;
     }
 
+    bool enterCollision = false;
     public float Dash(float dashTime)
     {
-        this.transform.position += this.transform.forward * dashSpeed * Time.deltaTime;
+        Debug.Log("dash");
+
+        //修正人物碰撞抖動問題
+        Vector3 from = this.transform.position;
+        from.y += 0.5f;
+        Vector3 moveAmt = this.transform.forward * dashSpeed;
+        Vector3 to = from + moveAmt;
+        to.z += 0.8f;
+
+        Debug.DrawLine(from, to, Color.black);
+
+        RaycastHit hit;
+        if (Physics.Linecast(from, to, out hit, 1 << 8))
+        {
+            moveAmt = hit.point - from;
+            moveAmt.y += 0.5f;
+            moveAmt.z -= 0.5f;
+
+            Debug.Log("Fix collider dash");
+        }
+
+        Vector3 toGround = from + (-this.transform.up * 10f);
+
+        RaycastHit ground;
+        if (Physics.Linecast(from, toGround, out ground, 1 << 7))
+        {
+            moveAmt.y = ground.point.y;
+        }
+
+        
+        this.transform.position += moveAmt * Time.deltaTime;
+        
+
         dashTime -= Time.deltaTime;
         return dashTime;
     }
+
+    
 
     private void OnDrawGizmos()
     {

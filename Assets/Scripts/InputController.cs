@@ -58,8 +58,24 @@ public class InputController : MonoBehaviour
                 anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
                 transAmt = Input.GetAxis("Vertical");
                 rotAmt = Input.GetAxis("Horizontal");
-                aniClip = pm.MoveAndRotate(transAmt, rotAmt);
 
+                if (transAmt <= 0.2f && transAmt >= -0.2f)
+                {
+                    transAmt = 0.0f;
+                    anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
+                }
+
+                if (rotAmt <= 0.2f && rotAmt >= -0.2f)
+                {
+                    rotAmt = 0.0f;
+                    anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
+                }
+
+                if(transAmt != 0 || rotAmt != 0)
+                {
+                    aniClip = pm.MoveAndRotate(transAmt, rotAmt);
+                }
+                
                 Debug.Log(aniClip);
                 anim.ChangeAnimationState(aniClip, transAmt, rotAmt);
             }
@@ -205,14 +221,14 @@ public class InputController : MonoBehaviour
             else if (!isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun))
             {
                 anim.ChangeAnimationState(anim.Player_Run, rotAmt, transAmt);
-                GetComponent<PlayerData>().maxSpeed = 6;
+                //GetComponent<PlayerData>().maxSpeed = 6;
                 anim.animator.applyRootMotion = false;
             }
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && moving)
         {
             anim.ChangeAnimationState(anim.Player_HoldRockWalk, rotAmt, transAmt);
-            GetComponent<PlayerData>().maxSpeed = 1;
+            //GetComponent<PlayerData>().maxSpeed = 1;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && usePressUp)
         {
@@ -222,27 +238,27 @@ public class InputController : MonoBehaviour
                 anim.ChangeAnimaEventState(anim.Player_ThrowRock);
             else if (holdDownTime > 0.03f)
                 anim.ChangeAnimaEventState(anim.Player_PutDownRock);
-            GetComponent<PlayerData>().maxSpeed = 6;
+            //GetComponent<PlayerData>().maxSpeed = 6;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && moving)
         {
             anim.ChangeAnimationState(anim.Player_HoldWoodWalk, rotAmt, transAmt);
-            GetComponent<PlayerData>().maxSpeed = 2;
+            //GetComponent<PlayerData>().maxSpeed = 2;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && usePressed)
         {
             anim.ChangeAnimaEventState(anim.Player_PutDownWood);
-            GetComponent<PlayerData>().maxSpeed = 6;
+           //GetComponent<PlayerData>().maxSpeed = 6;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && moving)
         {
             anim.ChangeAnimationState(anim.Player_HoldChopWalk, rotAmt, transAmt);
-            GetComponent<PlayerData>().maxSpeed = 4;
+            //GetComponent<PlayerData>().maxSpeed = 4;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && usePressed && !inTreeArea)
         {
             anim.ChangeAnimaEventState(anim.Player_PutDownChop);
-            GetComponent<PlayerData>().maxSpeed = 6;
+            //GetComponent<PlayerData>().maxSpeed = 6;
         }
 
         bool allowSpeedRun =
