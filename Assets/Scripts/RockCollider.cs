@@ -14,4 +14,5 @@ public class RockCollider : MonoBehaviour
     {
         this.transform.position = target.transform.position;
     }
+
 }
