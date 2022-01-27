@@ -8,6 +8,7 @@ public class AnimatorController : MonoBehaviour
     public Animator animator;
     float horizotalInput;
     float verticalInput;
+    bool Roling;
 
     [Header("�վ�ʵe����ɶ�")]
     public float delay = 2.1f;
@@ -16,6 +17,8 @@ public class AnimatorController : MonoBehaviour
     public int animVerticalHash { get; set; }
     public int animPickedHash { get; private set; }
     public int animHoldChop { get; private set; }
+
+    public int animRoling { get; private set; }
 
     public string Player_Idle { get; private set; } = "Idle";
     public string Player_Run { get; private set; } = "Run";
@@ -53,6 +56,7 @@ public class AnimatorController : MonoBehaviour
         animVerticalHash = Animator.StringToHash("Vertical");
         animPickedHash = Animator.StringToHash("Picked");
         animHoldChop = Animator.StringToHash("HoldChop");
+        animRoling = Animator.StringToHash("Roling");
     }
 
     //change stay but didn't play( play => InputController.ChangeAnimationState)
@@ -173,7 +177,7 @@ public class AnimatorController : MonoBehaviour
     {
         ChangeAnimaEventState(Player_ChopFinished);
     }
-
+    
     public void AnimaEventSpeedRunToRun()
     {
         animator.SetFloat(animHorizontalHash, 0.0f);
@@ -193,5 +197,17 @@ public class AnimatorController : MonoBehaviour
     {
         ChangeAnimaEventState(Player_Cheer);
     }
+
+    public void AnimaEventStartAsTrue()
+    {
+        animator.SetBool(animRoling, true);
+    }
+
+    public void AnimaEventEndAsFalse()
+    {
+        animator.SetBool(animRoling, false);
+    }
+
     #endregion
+
 }

@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     public Vector3 velocity;
 
+    public bool raydect;
+
     //movement
     [HideInInspector]
     float maxSpeed;
@@ -206,7 +208,13 @@ public class PlayerMovement : MonoBehaviour
             moveAmt.y += 0.5f;
             moveAmt.z -= 0.5f;
 
+            raydect = true;
+
             Debug.Log("Fix collider dash");
+        }
+        else
+        {
+            raydect = false;
         }
 
         //修正人物站立高度
@@ -218,7 +226,7 @@ public class PlayerMovement : MonoBehaviour
             moveAmt.y = ground.point.y;
         }
 
-        
+
         this.transform.position += moveAmt * Time.deltaTime;
         
 

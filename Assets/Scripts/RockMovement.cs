@@ -5,7 +5,7 @@ using UnityEngine;
 public class RockMovement : MonoBehaviour
 {
     private Rigidbody rb;
-    public float force;
+    public float force = 4.0f;
 
     private void Start()
     {

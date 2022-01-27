@@ -6,9 +6,12 @@ public class RockSensor : MonoBehaviour
 {
     public GameObject targetRock;
     private RockMovement rm;
+    private GameObject parent;
 
     private void Start()
     {
+        parent = this.transform.parent.gameObject;
+        targetRock = parent.GetComponent<RockCollider>().targetRock;
         rm = targetRock.GetComponent<RockMovement>();
     }
 

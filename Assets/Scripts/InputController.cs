@@ -71,7 +71,7 @@ public class InputController : MonoBehaviour
                     anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
                 }
 
-                if(transAmt != 0 || rotAmt != 0)
+                if (transAmt != 0 || rotAmt != 0)
                 {
                     aniClip = pm.MoveAndRotate(transAmt, rotAmt);
                 }
@@ -167,7 +167,7 @@ public class InputController : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Dash") && isDash == false)
+        if (Input.GetButtonDown("Dash") && isDash == false && anim.animator.GetBool(anim.animRoling) == false)
         {
             if (isDash == false)
             {
@@ -266,13 +266,21 @@ public class InputController : MonoBehaviour
             && (!anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk)
             || !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk)
             || !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk));
+            
         
         if (allowSpeedRun)
         {
             anim.ChangeAnimationState(anim.Player_SpeedRun, rotAmt, transAmt);
             anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
             anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
+
             anim.animator.applyRootMotion = true;
+
+            //if(!pm.raydect)
+            //{
+            //    anim.animator.applyRootMotion = true;
+            //}
+
             GetComponent<PlayerData>().maxSpeed = 8;
         }
     }
