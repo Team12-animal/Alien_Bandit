@@ -4,30 +4,32 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-
     private PlayerMovement pm;
-    private float transAmt;
-    private float rotAmt;
+    private PlayerData data;
+
+    public float transAmt;
+    public float rotAmt;
     Vector3 currentPos;
     Vector3 targetPos;
     [SerializeField] private bool isDash = false;
+    [SerializeField] public bool holdingItem = false;
     [SerializeField] private float setDashTime;
     [SerializeField] private float remainDashTime;
 
     AnimatorController anim;
-    bool crtlPressed;
-    bool crtlPressUp;
+    bool takePressed;
+    bool takePressUp;
     float holdDownStartTime = 0f;
     [SerializeField] float pressedTime = 1.0f;
     [SerializeField] bool inTreeArea = false;
 
     private void Awake()
     {
-        //init animation
         anim = GetComponent<AnimatorController>();
         anim.animator = GetComponent<Animator>();
         anim.Init();
         pm = GetComponent<PlayerMovement>();
+        data = GetComponent<PlayerData>();
     }
     void Start()
     {
@@ -36,36 +38,19 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
-        //get input
-        rotAmt = Input.GetAxis("Horizontal");
-        transAmt = Input.GetAxis("Vertical");
-        crtlPressed = Input.GetButtonDown("LeftCtrl");
-        crtlPressUp = Input.GetButtonUp("LeftCtrl");
+        string aniClip = "none";
 
-        //able to move or not: if true, can move
-        bool moved = (rotAmt != 0 || transAmt != 0);
-        Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
-        movementDirection.Normalize();
+        //rotAmt = Input.GetAxis("Horizontal");
+        //transAmt = Input.GetAxis("Vertical");
+        takePressed = Input.GetButtonDown("Take");
+        takePressUp = Input.GetButtonUp("Take");
+        //bool moved = (rotAmt != 0 || transAmt != 0);
+        //Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
+        //movementDirection.Normalize();
 
-        //aim to be removed
-        bool allowMove =
-               !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Chopping)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpChop)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpRock)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpWood)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Fear)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ChopFinished)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ChopIdle)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PutDownChop)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PutDownRock)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PutDownWood)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ThrowRock)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Idle)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Cheer)
-            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun);
+        bool allowMove = CheckAniPlayingOrNot();
 
-        if (isDash == false && moved)
+        if (isDash == false && (Input.GetButton("Vertical") || Input.GetButton("Horizontal")))
         {
             if (allowMove)
             {
@@ -73,12 +58,116 @@ public class InputController : MonoBehaviour
                 anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
                 transAmt = Input.GetAxis("Vertical");
                 rotAmt = Input.GetAxis("Horizontal");
-                pm.MoveAndRotate(transAmt, rotAmt);
-                //anim.ChangeAnimationState(anim.Player_Run);
+
+                if (transAmt <= 0.2f && transAmt >= -0.2f)
+                {
+                    transAmt = 0.0f;
+                    anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
+                }
+
+                if (rotAmt <= 0.2f && rotAmt >= -0.2f)
+                {
+                    rotAmt = 0.0f;
+                    anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
+                }
+
+                if (transAmt != 0 || rotAmt != 0)
+                {
+                    aniClip = pm.MoveAndRotate(transAmt, rotAmt);
+                }
+                
+                Debug.Log(aniClip);
+                anim.ChangeAnimationState(aniClip, transAmt, rotAmt);
             }
         }
 
-        if (Input.GetButtonDown("Dash") && isDash == false)
+        if(!Input.GetButton("Vertical") && !Input.GetButton("Horizontal"))
+        {
+            anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
+            anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
+        }
+
+        if (Input.GetButtonDown("Take") && isDash == false)
+        {
+            if (holdingItem == false)
+            {
+                aniClip = pm.Pick();
+
+                if (aniClip == "None")
+                {
+                    return;
+                }
+
+                holdingItem = true;
+                Debug.Log(aniClip);
+                anim.ChangeAnimationState(aniClip, 0, 0);
+            }
+            else
+            {
+                string itemInhand = data.item.gameObject.tag;
+
+                if (itemInhand == "Chop")
+                {
+                    aniClip = pm.UseChop();
+                }
+
+                if (itemInhand == "Bucket")
+                {
+                    //aniName = pm.UseBucket();
+                }
+
+                if (itemInhand == "Rock")
+                {
+                    float endPress = 0.0f;
+                    float startPress = 0.0f;
+
+                    if (takePressed)
+                    {
+                        startPress = Time.time;
+                    }
+
+                    if (takePressUp)
+                    {
+                        endPress = Time.time;
+                    }
+
+                    float pressTime = endPress - startPress;
+
+                    if (pressedTime >= 3.0f)
+                    {
+                        aniClip = pm.Throw(pressTime);
+                    }
+                    else
+                    {
+                        aniClip = pm.Drop();
+                    }
+
+
+                    //if (Input.GetButtonUp("Use"))
+                    //{
+                    //    endPress = Time.time;
+                    //    float pressedTime = endPress - startPress;
+
+                    //    if (pressedTime >= 1.0f)
+                    //    {
+                    //        aniClip = pm.Drop();
+                    //        //aniClip = pm.Throw(pressedTime);
+                    //    }
+                    //    else
+                    //    {
+                    //        aniClip = pm.Drop();
+                    //    }
+                    //}
+                    //}
+
+                    Debug.Log(aniClip);
+                    anim.ChangeAnimationState(aniClip, 0, 0);
+                    holdingItem = false;
+                }
+            }
+        }
+
+        if (Input.GetButtonDown("Dash") && isDash == false && anim.animator.GetBool(anim.animRoling) == false)
         {
             if (isDash == false)
             {
@@ -97,22 +186,33 @@ public class InputController : MonoBehaviour
                 !anim.animator.GetBool(anim.animPickedHash) && isDash
                 && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable)
                 && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Cheer);
+
             if (allowSpeedRun)
+            {
                 remainDashTime = pm.Dash(remainDashTime);
+            }
             else
+            {
                 isDash = false;
+            }
+                
         }
 
-        ChangeAnimationState(moved);
+        CheckAndPlayAnimation(Input.GetButton("Vertical") || Input.GetButton("Horizontal"));
     }
 
-    //play animaiton(animatorController call)
-    private void ChangeAnimationState(bool moved)
+    //play the animation(for AnimatorController call)
+    private void CheckAndPlayAnimation(bool moving)
     {
         bool allowExitTable = !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable) && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Cheer);
-        if (crtlPressed)
+        
+
+        if (takePressed)
+        {
             holdDownStartTime = Time.time;
-        if (!anim.animator.GetBool(anim.animPickedHash) && moved && allowExitTable)
+        }
+            
+        if (!anim.animator.GetBool(anim.animPickedHash) && moving && allowExitTable)
         {
             if (isDash)
             {
@@ -121,89 +221,99 @@ public class InputController : MonoBehaviour
             else if (!isDash && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun))
             {
                 anim.ChangeAnimationState(anim.Player_Run, rotAmt, transAmt);
-                GetComponent<PlayerMovement>().maxSpeed = 6;
+                //GetComponent<PlayerData>().maxSpeed = 6;
                 anim.animator.applyRootMotion = false;
             }
         }
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && moved)
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && moving)
         {
             anim.ChangeAnimationState(anim.Player_HoldRockWalk, rotAmt, transAmt);
-            GetComponent<PlayerMovement>().maxSpeed = 1;
+            //GetComponent<PlayerData>().maxSpeed = 1;
         }
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && crtlPressUp)
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && takePressUp)
         {
             float temp = pressedTime;
             float holdDownTime = Time.time - holdDownStartTime;
             if (holdDownTime >= pressedTime)
-                anim.ChangeAnimationState(anim.Player_ThrowRock);
+                anim.ChangeAnimaEventState(anim.Player_ThrowRock);
             else if (holdDownTime > 0.03f)
-                anim.ChangeAnimationState(anim.Player_PutDownRock);
-            GetComponent<PlayerMovement>().maxSpeed = 6;
+                anim.ChangeAnimaEventState(anim.Player_PutDownRock);
+            //GetComponent<PlayerData>().maxSpeed = 6;
         }
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && moved)
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && moving)
         {
             anim.ChangeAnimationState(anim.Player_HoldWoodWalk, rotAmt, transAmt);
-            GetComponent<PlayerMovement>().maxSpeed = 2;
+            //GetComponent<PlayerData>().maxSpeed = 2;
         }
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && crtlPressed)
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && takePressed)
         {
-            anim.ChangeAnimationState(anim.Player_PutDownWood);
-            GetComponent<PlayerMovement>().maxSpeed = 6;
+            anim.ChangeAnimaEventState(anim.Player_PutDownWood);
+           //GetComponent<PlayerData>().maxSpeed = 6;
         }
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && moved)
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && moving)
         {
             anim.ChangeAnimationState(anim.Player_HoldChopWalk, rotAmt, transAmt);
-            GetComponent<PlayerMovement>().maxSpeed = 4;
+            //GetComponent<PlayerData>().maxSpeed = 4;
         }
-        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && crtlPressed && !inTreeArea)
+        if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk) && takePressed && !inTreeArea)
         {
-            anim.ChangeAnimationState(anim.Player_PutDownChop);
-            GetComponent<PlayerMovement>().maxSpeed = 6;
+            anim.ChangeAnimaEventState(anim.Player_PutDownChop);
+            //GetComponent<PlayerData>().maxSpeed = 6;
         }
+
         bool allowSpeedRun =
             !anim.animator.GetBool(anim.animPickedHash) && isDash
             && (!anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldChopWalk)
             || !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk)
             || !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk));
+            
+        
         if (allowSpeedRun)
         {
             anim.ChangeAnimationState(anim.Player_SpeedRun, rotAmt, transAmt);
             anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
             anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
+
             anim.animator.applyRootMotion = true;
-            GetComponent<PlayerMovement>().maxSpeed = 8;
+
+            //if(!pm.raydect)
+            //{
+            //    anim.animator.applyRootMotion = true;
+            //}
+
+            GetComponent<PlayerData>().maxSpeed = 8;
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        bool allowUsingTable = other.gameObject.tag == "WorkingTable" && crtlPressed && !anim.animator.GetBool(anim.animHoldChop) && !anim.animator.GetBool(anim.animPickedHash);
+        bool allowUsingTable = other.gameObject.tag == "WorkingTable" && takePressed && !anim.animator.GetBool(anim.animHoldChop) && !anim.animator.GetBool(anim.animPickedHash);
         bool allowChopping = other.gameObject.tag == "Tree";
-        bool allowPickUpRock = other.gameObject.tag == "Rock" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash);
-        bool allowPickUpWood = other.gameObject.tag == "Wood" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash);
-        bool allowPickUpChop = other.gameObject.tag == "Chop" && crtlPressed && !anim.animator.GetBool(anim.animPickedHash);
+        bool allowPickUpRock = other.gameObject.tag == "Rock" && takePressed && !anim.animator.GetBool(anim.animPickedHash);
+        bool allowPickUpWood = other.gameObject.tag == "Wood" && takePressed && !anim.animator.GetBool(anim.animPickedHash);
+        bool allowPickUpChop = other.gameObject.tag == "Chop" && takePressed && !anim.animator.GetBool(anim.animPickedHash);
 
         if (allowPickUpRock)
         {
-            anim.ChangeAnimationState(anim.Player_PickUpRock);
+            anim.ChangeAnimaEventState(anim.Player_PickUpRock);
         }
         else if (allowChopping)
         {
             inTreeArea = true;
-            if (anim.animator.GetBool(anim.animHoldChop) & crtlPressed)
-                anim.ChangeAnimationState(anim.Player_Chopping);
+            if (anim.animator.GetBool(anim.animHoldChop) & takePressed)
+                anim.ChangeAnimaEventState(anim.Player_Chopping);
         }
         else if (allowPickUpWood)
         {
-            anim.ChangeAnimationState(anim.Player_PickUpWood);
+            anim.ChangeAnimaEventState(anim.Player_PickUpWood);
         }
         else if (allowUsingTable)
         {
-            anim.ChangeAnimationState(anim.Player_UsingTable);
+            anim.ChangeAnimaEventState(anim.Player_UsingTable);
         }
         else if (allowPickUpChop)
         {
-            anim.ChangeAnimationState(anim.Player_PickUpChop);
+            anim.ChangeAnimaEventState(anim.Player_PickUpChop);
         }
     }
 
@@ -217,7 +327,29 @@ public class InputController : MonoBehaviour
     {
         if (other.gameObject.tag == "Attack")
         {
-            anim.ChangeAnimationState(anim.Player_Fear);
+            anim.ChangeAnimaEventState(anim.Player_Fear);
         }
+    }
+
+    private bool CheckAniPlayingOrNot()
+    {
+        bool allowMove =
+               !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_UsingTable)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Chopping)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpChop)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpRock)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PickUpWood)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Fear)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ChopFinished)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ChopIdle)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PutDownChop)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PutDownRock)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_PutDownWood)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_ThrowRock)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Idle)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_Cheer)
+            && !anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_SpeedRun);
+
+        return allowMove;
     }
 }
