@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Grey
-  m_Shader: {fileID: 4800000, guid: 39863a74ba34d9a47a33d8789651486d, type: 3}
+  m_Shader: {fileID: 4800000, guid: e899b23ecc36c4548b63ba4d4da86f80, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -41,7 +41,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 631c1a6e38334d246a15c2f49d105a9d, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 1, y: 0.15}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -61,47 +61,47 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
-    - _Cutoff: 0.5
+    - _Cutoff: 0.518
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnableConstSizeOutline: 0
     - _EnableTexturedOutline: 0
     - _EnableZSmooth: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.179
+    - _Glossiness: 0.419
     - _GlossyReflections: 1
-    - _HSV_H: 0
-    - _HSV_S: 0
-    - _HSV_V: 0.04
-    - _Metallic: 0.638
+    - _HSV_H: -24
+    - _HSV_S: -0.273
+    - _HSV_V: 0.54
+    - _Metallic: 0.6
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Offset1: 0
     - _Offset2: 0
     - _Outline: 1
     - _Parallax: 0.02
-    - _RampSmooth: 0.474
-    - _RampSmoothAdd: 0.75
+    - _RampSmooth: 0.365
+    - _RampSmoothAdd: 0.61
     - _RampSmoothOtherLights: 0.495
-    - _RampThreshold: 0.483
+    - _RampThreshold: 0.478
     - _RampThresholdOtherLights: 0.472
     - _RimAmount: 0.9
-    - _RimMax: 2
-    - _RimMin: 1.59
-    - _RimStrength: 0.5
+    - _RimMax: 0.438
+    - _RimMin: 0.324
+    - _RimStrength: 0.469
     - _RimThreshold: 0.12
     - _Shadow_HSV_H: 0
     - _Shadow_HSV_S: 0
     - _Shadow_HSV_V: -0.12
     - _SketchHalftoneMax: 1
-    - _SketchHalftoneMin: 0.2
+    - _SketchHalftoneMin: 0.244
     - _Smoothness: 0.2
     - _SmoothnessTextureChannel: 0
-    - _SpecBlend: 0
-    - _SpecSmooth: 0
+    - _SpecBlend: 0.528
+    - _SpecSmooth: 0.425
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TexLod: 5
+    - _TexLod: 4.78
     - _UVSec: 0
     - _ZSmooth: -0.5
     - _ZWrite: 1
@@ -111,11 +111,11 @@ Material:
     - _AmbientColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HColor: {r: 0.785, g: 0.785, b: 0.785, a: 1}
-    - _OutlineColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - _HColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
+    - _OutlineColor: {r: 0.3962264, g: 0.38314345, b: 0.38314345, a: 1}
     - _RimColor: {r: 0.9811321, g: 0.5322179, b: 0.5322179, a: 1}
-    - _SColor: {r: 0.195, g: 0.195, b: 0.195, a: 1}
-    - _SketchColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
+    - _SketchColor: {r: 0.6226415, g: 0.6079566, b: 0.6079566, a: 1}
     - _SpecColor: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
     - _SpecularColor: {r: 0.38679248, g: 0.1903249, b: 0.12589, a: 1}
   m_BuildTextureStacks: []
