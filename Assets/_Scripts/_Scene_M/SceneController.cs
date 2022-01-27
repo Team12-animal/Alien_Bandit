@@ -102,6 +102,7 @@ public class SceneController : MonoBehaviour
 
     [Header("MainMenu³]©w")]
     InputController tempInput;
+    PlayerData tempPlayerData;
     Rigidbody tempRigibody;
     ChangeRoleSkin tempRoleSkin;
     AnimatorController tempAnim;
@@ -165,6 +166,7 @@ public class SceneController : MonoBehaviour
         tempInput = player.GetComponent<InputController>();
         tempRigibody = player.GetComponent<Rigidbody>();
         tempRoleSkin = player.GetComponent<ChangeRoleSkin>();
+        tempPlayerData = player.GetComponent<PlayerData>();
     }
 
     public void StartMove(GameObject player)

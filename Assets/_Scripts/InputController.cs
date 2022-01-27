@@ -80,11 +80,11 @@ public class InputController : MonoBehaviour
                 anim.ChangeAnimationState(aniClip, transAmt, rotAmt);
             }
         }
-        else if (!moved)
-        {
-            anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
-            anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
-        }
+        //else if (!moved)
+        //{
+        //    anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
+        //    anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
+        //}
 
         if(!Input.GetButton("Vertical") && !Input.GetButton("Horizontal"))
         {

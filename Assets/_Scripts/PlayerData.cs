@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerData : MonoBehaviour
 {
     //movement
-    public float maxSpeed;
+    public float maxSpeed = 6f;
     public float maxRotate;
     public float setDashTime = 0.24f;
     public float dashSpeed;

@@ -34,10 +34,20 @@ public class PlayerMovement : MonoBehaviour
     //animation
     private Transform holdingPos;
 
+
     void Start()
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        data = this.gameObject.GetComponent<PlayerData>();
+        data = GetComponent<PlayerData>();
+
+        if (data == null)
+        {
+            Debug.Log("data null");
+        }
+        else
+        {
+            Debug.Log("data found");
+        }
         InitPlayerData(data);
 
         rVec = cam.transform.right;

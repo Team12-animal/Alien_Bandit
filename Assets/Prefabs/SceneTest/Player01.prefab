@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 513731444419000857}
   - component: {fileID: 501842583731638443}
   - component: {fileID: 501842583731638441}
+  - component: {fileID: 3649517288209110195}
   m_Layer: 0
   m_Name: Player01
   m_TagString: Player
@@ -372,14 +373,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39cdb66413ed3144bbdad6ff3832ee1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 6
+  cam: {fileID: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  raydect: 0
   maxRotate: 20
-  transAmt: 0
-  rotAmt: 0
   setDashTime: 0.24
   dashSpeed: 12
   lerpAmt: 0.8
-  cam: {fileID: 0}
+  itemInhand: {fileID: 0}
+  targetItem: {fileID: 0}
+  triggerItem: {fileID: 0}
 --- !u!114 &501842583731638443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,11 +409,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d74f63a19a698604c86d2ee7f92bcd0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transAmt: 0
+  rotAmt: 0
   isDash: 0
+  holdingItem: 0
   setDashTime: 0.24
   remainDashTime: 0
   pressedTime: 1
   inTreeArea: 0
+--- !u!114 &3649517288209110195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501842583731638442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aba7de638316a6d4b9a654a9688f8517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 8
+  maxRotate: 15
+  setDashTime: 0.24
+  dashSpeed: 15
+  lerpAmt: 0.8
+  item: {fileID: 0}
+  animal: {fileID: 0}
 --- !u!1 &501842583731639404
 GameObject:
   m_ObjectHideFlags: 0
