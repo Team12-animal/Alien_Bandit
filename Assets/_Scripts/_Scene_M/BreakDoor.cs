@@ -12,7 +12,7 @@ public class BreakDoor : MonoBehaviour
 
     private void Start()
     {
-        SceneController.instance.GetPlayer(players);
+        //SceneController.instance.GetPlayer(players);
     }
 
     private void OnTriggerEnter(Collider other)
