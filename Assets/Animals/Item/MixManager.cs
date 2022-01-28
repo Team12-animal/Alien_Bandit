@@ -18,7 +18,7 @@ public class MixManager : MonoBehaviour
     //可合成的道具
     public Item mixItem;
     //現在玩家是否在桌子右邊
-    public bool isRight=true;
+    public bool isRight = true;
     //存放桌子上的儲存格
     public GameObject[] slotimage;
     //變化是否選取到的儲存格
@@ -115,7 +115,7 @@ public class MixManager : MonoBehaviour
     /// 選擇儲存格位置
     /// </summary>
     /// <param name="go">玩家目前位置</param>
-    void  SlotSelet(GameObject go)
+    void SlotSelet(GameObject go)
     {
         Vector3 left = transform.TransformDirection(Vector3.up);
         Vector3 toOther = go.transform.position - transform.position;
@@ -123,13 +123,13 @@ public class MixManager : MonoBehaviour
         {
             slotimage[1].GetComponent<Image>().sprite = slotsprite[1];
             slotimage[0].GetComponent<Image>().sprite = slotsprite[0];
-            isRight= true;
+            isRight = true;
         }
         else
         {
             slotimage[0].GetComponent<Image>().sprite = slotsprite[1];
             slotimage[1].GetComponent<Image>().sprite = slotsprite[0];
-            isRight= false;
+            isRight = false;
         }
     }
     /// <summary>
@@ -154,11 +154,13 @@ public class MixManager : MonoBehaviour
                 isfull[0] = true;
             }
         }
-    }    
+    }
     /// <summary>
-    /// 
+    /// 查找是否有物件碰撞到桌子，
+    /// 1.若是可合成物件時，便觸發AddItem
+    /// 2.若isMix=true，且玩家按下Ctrl便合成
     /// </summary>
-    /// <param name="other"></param>
+    /// <param name="other">碰撞到的物件</param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -170,27 +172,39 @@ public class MixManager : MonoBehaviour
         {
             if (v.canMix && other.tag == v.itemName)
             {
-                CheckItemAndAdd(other.tag);        
+                CheckItemAndAdd(other.tag);
                 mixGameObject.Add(other.gameObject);
-                SetObjectPosition(mixGameObject.Count-1);
+                SetObjectPosition(mixGameObject.Count - 1);
             }
         }
-        if (other.tag=="Player" && mixitems.Count>0)
+        if (other.tag == "Player" && mixitems.Count > 0)
         {
             CanMixItem();
         }
     }
+    /// <summary>
+    /// 查找是否有物件持續碰撞到桌子
+    /// 若是玩家時，且按下LeftCtrl且isMix=true時會執行MixItem();
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")
         {
             SlotSelet(other.gameObject);
+            if (Input.GetKey(KeyCode.LeftControl) && isMix)
+            {
+                MixItem();
+            }
         }
-        if (Input.GetKey(KeyCode.LeftControl) && isMix)
-        {
-            MixItem();
-        }
+
     }
+    /// <summary>
+    /// 查找是否有物件離開桌子碰撞
+    /// 1.若是玩家時，Slot會歸零
+    /// 2.若是物件時，會執行Remove
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
