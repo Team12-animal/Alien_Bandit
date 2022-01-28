@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43660975, g: 0.5012919, b: 0.5851545, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.44841242, g: 0.520067, b: 0.5830893, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3372,6 +3372,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorToEscape
       objectReference: {fileID: 0}
+    - target: {fileID: 179570, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 401926, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
       propertyPath: m_RootOrder
       value: 31
@@ -3432,6 +3436,14 @@ PrefabInstance:
       propertyPath: breakDoor
       value: 
       objectReference: {fileID: 5493586321287175217, guid: a61d9ba6bf39dbc48a1d1a8208736b17, type: 3}
+    - target: {fileID: 523668885, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
+      propertyPath: players.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 523668885, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
+      propertyPath: players.Array.data[0]
+      value: 
+      objectReference: {fileID: 972621103}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
 --- !u!1001 &526982116
@@ -5962,6 +5974,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8442565403710165264, guid: 3590804b6f109dc47b564770d529d6a9, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 1278580635}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3590804b6f109dc47b564770d529d6a9, type: 3}
 --- !u!1001 &898566098
@@ -6230,6 +6246,10 @@ PrefabInstance:
     - target: {fileID: 141020, guid: c3db2cebc8fb0e54ab37bf47bacb4b4a, type: 3}
       propertyPath: m_Name
       value: DoorToGoal
+      objectReference: {fileID: 0}
+    - target: {fileID: 141020, guid: c3db2cebc8fb0e54ab37bf47bacb4b4a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 472700, guid: c3db2cebc8fb0e54ab37bf47bacb4b4a, type: 3}
       propertyPath: m_RootOrder
@@ -6697,6 +6717,11 @@ SphereCollider:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2470915096720291200, guid: 194e9111af0c33840a49d573f2b26952, type: 3}
   m_PrefabInstance: {fileID: 1766922024}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &972621103 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8430113619589626787, guid: 3590804b6f109dc47b564770d529d6a9, type: 3}
+  m_PrefabInstance: {fileID: 896146771}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &981086729
 GameObject:
@@ -11043,15 +11068,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 522459008932552855, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.12
+      value: 17.12
       objectReference: {fileID: 0}
     - target: {fileID: 522459008932552855, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.74000007
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 522459008932552855, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.15
+      value: 19.07
       objectReference: {fileID: 0}
     - target: {fileID: 522459008932552855, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
       propertyPath: m_LocalRotation.w
