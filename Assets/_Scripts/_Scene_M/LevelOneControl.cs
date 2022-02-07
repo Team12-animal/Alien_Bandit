@@ -11,7 +11,7 @@ public class LevelOneControl : MonoBehaviour
     [SerializeField] Canvas timeUI;
 
     [Header("遊戲進行期間")]
-    [SerializeField] float gamingTime = 30.0f;
+    [SerializeField] float gamingTime = 180.0f;
     [SerializeField] Text gamingTimeText;
 
     [Header("遊戲結束")]
@@ -22,6 +22,9 @@ public class LevelOneControl : MonoBehaviour
 
     [SerializeField] List<GameObject> player = new List<GameObject>();
 
+    public bool isWin;//is player win the game?
+    int stars = 0;
+
     private void Start()
     {
         SceneController.instance.GetPlayer(player);
@@ -29,13 +32,17 @@ public class LevelOneControl : MonoBehaviour
         {
             gameoverUIText[i].gameObject.SetActive(false);
         }
+        gamingTime = 180.0f;
         doorDestroied = false;
+        isWin = false;
+        stars = 0;
     }
 
     private void Update()
     {
         TimeSetting();
         GameOver();
+        WinGame();
     }
 
     private void TimeSetting()
@@ -51,7 +58,10 @@ public class LevelOneControl : MonoBehaviour
                 SceneController.instance.StartMove(player[1]);
             }
             timeUI.gameObject.SetActive(false);
-            gamingTime = SetTime(gamingTime, gamingTimeText);
+            if (!isWin)
+            {
+                gamingTime = SetTime(gamingTime, gamingTimeText);
+            }
         }
         waittingTime = SetTime(waittingTime, waittingTimeText);
     }
@@ -70,10 +80,19 @@ public class LevelOneControl : MonoBehaviour
         input02 = player[1].GetComponent<InputController>();
         if (gamingTime <= 0.0f || doorDestroied)
         {
-            GameOverSetting(input01, input02);
+            GameOverSetting(input01, input02);// can't control players;
+        }
+        else if (isWin)
+        {
+            //need to creat win UI;
+            GameOverSetting(input01, input02);// can't control players;
         }
     }
-
+    /// <summary>
+    /// Get players InputManager and set them not enable;
+    /// </summary>
+    /// <param name="input01"></param>
+    /// <param name="input02"></param>
     private void GameOverSetting(InputController input01, InputController input02)
     {
         input01.enabled = false;
@@ -81,6 +100,33 @@ public class LevelOneControl : MonoBehaviour
         for (int i = 0; i < gameoverUIText.Length; i++)
         {
             gameoverUIText[i].gameObject.SetActive(true);
+        }
+    }
+    /// <summary>
+    /// finish mession on time to win stars; 
+    /// </summary>
+    public void WinGame()
+    {
+        if (isWin == true && gamingTime > 90.0f)
+        {
+            stars = 3;
+            SceneController.instance.levelOneStarsCounts = stars;//set stars count to manager;
+            SceneController.instance.GetStars();//change star color;
+            GameOver();
+        }
+        else if (isWin == true && gamingTime >= 60.0f)
+        {
+            stars = 2;
+            SceneController.instance.levelOneStarsCounts = stars;
+            SceneController.instance.GetStars();
+            GameOver();
+        }
+        else if (isWin == true && gamingTime > 0.0f)
+        {
+            stars = 1;
+            SceneController.instance.levelOneStarsCounts = stars;
+            SceneController.instance.GetStars();
+            GameOver();
         }
     }
 }

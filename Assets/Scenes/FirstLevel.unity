@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.39486533, g: 0.49233073, b: 0.6263278, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.39723042, g: 0.4958442, b: 0.62596774, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4111,6 +4111,25 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 329c450e6934a6a468fe8a919825ff5d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20a2edbb5aaf6bf4a932566240f09151, type: 3}
+--- !u!1 &399994806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1219242409985248, guid: 20a2edbb5aaf6bf4a932566240f09151, type: 3}
+  m_PrefabInstance: {fileID: 399994805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &399994807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399994806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11fb7cd4b441dd146b04735cb399d80a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelOneControl: {fileID: 1600234633}
+  collectTargets: 0
 --- !u!1001 &408075634
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7030,6 +7049,7 @@ GameObject:
   - component: {fileID: 745821073}
   - component: {fileID: 745821072}
   - component: {fileID: 745821071}
+  - component: {fileID: 745821074}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -7118,6 +7138,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &745821074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745821069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b4a6c928640b0347b54ae007c7e809a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &749357088
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15935,7 +15967,6 @@ GameObject:
   - component: {fileID: 1690112267}
   - component: {fileID: 1690112266}
   - component: {fileID: 1690112265}
-  - component: {fileID: 1690112264}
   m_Layer: 5
   m_Name: Button_MainMenu
   m_TagString: Untagged
@@ -15963,22 +15994,6 @@ RectTransform:
   m_AnchoredPosition: {x: -826, y: 391}
   m_SizeDelta: {x: 151.2837, y: 60.71}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1690112264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1690112262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6344632314949a8478c5fde97327d22a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chooseRoleUI: {fileID: 0}
-  chooseLevelUI: {fileID: 0}
-  playerRawImagePanel01: {fileID: 0}
-  playerRawImagePanel02: {fileID: 0}
 --- !u!114 &1690112265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16023,8 +16038,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1690112264}
-        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
+      - m_Target: {fileID: 745821074}
+        m_TargetAssemblyTypeName: BackToMain, Assembly-CSharp
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -20789,7 +20804,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 30
+  m_Text: 180
 --- !u!224 &2602731918233974870
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20807,7 +20822,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 197.0232, y: 161.4398}
+  m_SizeDelta: {x: 289.7476, y: 161.4398}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2602731918233974871
 GameObject:

@@ -47,6 +47,7 @@ public class SceneController : MonoBehaviour
         animEndHash = Animator.StringToHash("End");
         MainPlayer(player01);
         MainPlayer(player02);
+        levelOneStarsCounts = 0;
     }
     public void LoadLevel(int sceneIndex)
     {
@@ -180,5 +181,33 @@ public class SceneController : MonoBehaviour
         player.Add(player01);
         player.Add(player02);
         return player;
+    }
+
+    [Header("關卡獲得星星")]
+    [SerializeField] List<RawImage> imagesLevelOne;
+    [SerializeField] List<RawImage> imagesLevelTwo;
+    public int levelOneStarsCounts = 0;//how many stars gets when player win the game;
+
+    /// <summary>
+    /// Change stars color;
+    /// </summary>
+    public void GetStars()
+    {
+        Color yellowStar = new Color(1, 1, 1);
+        switch (levelOneStarsCounts)
+        {
+            case 1:
+                imagesLevelOne[0].color = yellowStar;
+                break;
+            case 2:
+                imagesLevelOne[0].color = yellowStar;
+                imagesLevelOne[1].color = yellowStar;
+                break;
+            case 3:
+                imagesLevelOne[0].color = yellowStar;
+                imagesLevelOne[1].color = yellowStar;
+                imagesLevelOne[2].color = yellowStar;
+                break;
+        }
     }
 }
