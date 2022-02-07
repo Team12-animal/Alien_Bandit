@@ -91,9 +91,9 @@ public class InputController : MonoBehaviour
         {
             if (holdingItem == false)
             {
-                aniClip = pm.Pick();
+                aniClip = pm.Take();
 
-                if (aniClip == "None")
+                if (aniClip == "none")
                 {
                     return;
                 }

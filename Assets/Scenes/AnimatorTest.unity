@@ -1236,7 +1236,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488204477}
   m_LocalRotation: {x: 0.13824768, y: -0.988653, z: 0.008137635, w: -0.058194786}
-  m_LocalPosition: {x: -6.472862, y: -1.53, z: 1.8814287}
+  m_LocalPosition: {x: 0.256, y: 0.629, z: 0.093}
   m_LocalScale: {x: 0.49999982, y: 0.5, z: 0.49999982}
   m_Children: []
   m_Father: {fileID: 1716532024}
@@ -2258,11 +2258,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 522459008932552855, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.76
+      value: 11.57
       objectReference: {fileID: 0}
     - target: {fileID: 522459008932552855, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.45
+      value: 2.86
       objectReference: {fileID: 0}
     - target: {fileID: 522459008932552855, guid: 23bd600a3424d9e44ac451d447977c93, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3401,7 +3401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_RootOrder
@@ -3409,15 +3409,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.25
+      value: 3.49
       objectReference: {fileID: 0}
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.33
+      value: 5.35
       objectReference: {fileID: 0}
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.17
+      value: 31.74
       objectReference: {fileID: 0}
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3712,6 +3712,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1766138066}
+  velocity: {x: 0, y: 0, z: 0}
+  raydect: 0
   maxRotate: 20
   setDashTime: 0.24
   dashSpeed: 12
@@ -3815,11 +3817,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba7de638316a6d4b9a654a9688f8517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
-  maxRotate: 10
+  maxSpeed: 8
+  maxRotate: 15
   setDashTime: 0.24
-  dashSpeed: 12
-  lerpAmt: 1
+  dashSpeed: 15
+  lerpAmt: 0.8
   item: {fileID: 0}
   animal: {fileID: 0}
 --- !u!1 &1740858932
