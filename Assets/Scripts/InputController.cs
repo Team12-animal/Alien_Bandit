@@ -76,7 +76,7 @@ public class InputController : MonoBehaviour
                     aniClip = pm.MoveAndRotate(transAmt, rotAmt);
                 }
                 
-                Debug.Log(aniClip);
+                Debug.Log("Move1" + aniClip);
                 anim.ChangeAnimationState(aniClip, transAmt, rotAmt);
             }
         }
@@ -89,6 +89,15 @@ public class InputController : MonoBehaviour
 
         if (Input.GetButtonDown("Take") && isDash == false)
         {
+            if(data.item != null)
+            {
+                holdingItem = true;
+            }
+            else
+            {
+                holdingItem = false;
+            }
+
             if (holdingItem == false)
             {
                 aniClip = pm.Take();
@@ -98,7 +107,6 @@ public class InputController : MonoBehaviour
                     return;
                 }
 
-                holdingItem = true;
                 Debug.Log(aniClip);
                 anim.ChangeAnimationState(aniClip, 0, 0);
             }
@@ -110,13 +118,11 @@ public class InputController : MonoBehaviour
                 {
                     aniClip = pm.UseChop();
                 }
-
-                if (itemInhand == "Bucket")
+                else if (itemInhand == "Bucket")
                 {
                     //aniName = pm.UseBucket();
                 }
-
-                if (itemInhand == "Rock")
+                else if (itemInhand == "RockModel")
                 {
                     float endPress = 0.0f;
                     float startPress = 0.0f;
@@ -141,30 +147,15 @@ public class InputController : MonoBehaviour
                     {
                         aniClip = pm.Drop();
                     }
-
-
-                    //if (Input.GetButtonUp("Use"))
-                    //{
-                    //    endPress = Time.time;
-                    //    float pressedTime = endPress - startPress;
-
-                    //    if (pressedTime >= 1.0f)
-                    //    {
-                    //        aniClip = pm.Drop();
-                    //        //aniClip = pm.Throw(pressedTime);
-                    //    }
-                    //    else
-                    //    {
-                    //        aniClip = pm.Drop();
-                    //    }
-                    //}
-                    //}
-
-                    Debug.Log(aniClip);
-                    anim.ChangeAnimationState(aniClip, 0, 0);
-                    holdingItem = false;
+                }
+                else
+                {
+                    aniClip = pm.Drop();
                 }
             }
+
+            Debug.Log(aniClip);
+            anim.ChangeAnimationState(aniClip, 0, 0);
         }
 
         if (Input.GetButtonDown("Dash") && isDash == false && anim.animator.GetBool(anim.animRoling) == false)

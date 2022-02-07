@@ -14,4 +14,6 @@ public class PlayerData : MonoBehaviour
     //use item
     public GameObject item;
     public GameObject animal;
+
+    public bool inTree;
 }

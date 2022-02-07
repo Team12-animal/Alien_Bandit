@@ -137,10 +137,10 @@ public class PlayerMovement : MonoBehaviour
     //根據玩家持有物品取得移動動畫
     private string GetMoveAniName(GameObject item)
     {
-        string aniName = "Run";
+        string aniName = "none";
         string tagName = item.gameObject.tag;
 
-        if (tagName == "Rock")
+        if (tagName == "RockModel")
         {
             aniName = "HoldRockWalk";
         }
@@ -237,7 +237,7 @@ public class PlayerMovement : MonoBehaviour
         string aniClip;
 
         //道具桌不能拿取
-        if (tagName == "WorkingTable")
+        if (tagName == "WorkingTable" || tagName == "Tree")
         {
             return "none";
         }
@@ -272,7 +272,7 @@ public class PlayerMovement : MonoBehaviour
     {
         string aniName = "none";
 
-        if (tagName == "Rock")
+        if (tagName == "RockModel")
         {
             aniName = "PickUpRock";
         }
@@ -298,24 +298,16 @@ public class PlayerMovement : MonoBehaviour
     //使用斧頭
     public string UseChop()
     {
-        if (triggerItem != null)
-        {
-            targetItem = triggerItem;
-        }            
-
         string aniClip = "none";
 
-        if(targetItem != null)
+        //如果有樹就砍 沒樹就把斧頭丟掉
+        if (data.inTree == true)
         {
-            //如果有樹就砍 沒樹就把斧頭丟掉
-            if (targetItem.tag == "Tree")
-            {
-                aniClip = ChopTree();
-            }
-            else
-            {
-                aniClip = Drop();
-            }
+            aniClip = ChopTree();
+        }
+        else
+        {
+            aniClip = Drop();
         }
 
         return aniClip;
@@ -419,9 +411,7 @@ public class PlayerMovement : MonoBehaviour
         string aniClip = "none";
 
         aniClip = GetDropAniName(itemInhand.tag);
-
-        itemInhand = null;
-        UpdatePlayerData();
+        targetItem = null;
         Debug.Log("Drop");
         return aniClip;
     }
@@ -435,10 +425,8 @@ public class PlayerMovement : MonoBehaviour
         if (itemInhand != null && itemInhand.tag == "Rock")
         {
             aniClip = "ThrowRock";
-            itemInhand = null;
-            UpdatePlayerData();
         }
-
+        targetItem = null;
         return aniClip;
     }
 
@@ -446,7 +434,7 @@ public class PlayerMovement : MonoBehaviour
     {
         string aniName = "none";
 
-        if (tagName == "Rock")
+        if (tagName == "RockModel")
         {
             aniName = "PutDownRock";
         }
@@ -488,27 +476,65 @@ public class PlayerMovement : MonoBehaviour
     //set item to HoldingPos
     private void HoldItem(GameObject targetItem)
     {
-        if(targetItem == null || targetItem.tag == "WorkingTable")
+        if (targetItem == null || targetItem.tag == "WorkingTable" || targetItem.tag == "Tree")
         {
             return;
         }
 
+        int childAmt = targetItem.transform.childCount;
+        if(childAmt > 0)
+        {
+            foreach(Transform child in targetItem.transform)
+            {
+                (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = false;
+            }
+        }
+
         targetItem.transform.position = holdingPos.position;
+        targetItem.transform.forward = holdingPos.forward;
         targetItem.transform.SetParent(holdingPos);
         Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
         targetRG.isKinematic = true;
         itemInhand = targetItem;
     }
-
-    private void RemoveItem(GameObject targetItem)
+     
+    private void RemoveItem()
     {
-        if (targetItem = null)
+        if (data.item = null)
         {
             return;
         }
 
-        targetItem.transform.parent = null;
-        Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
+        holdingPos.DetachChildren();
+        Rigidbody targetRG = itemInhand.GetComponent<Rigidbody>();
         targetRG.isKinematic = false;
+        foreach (Transform child in itemInhand.transform)
+        {
+            (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = true;
+        }
+        itemInhand = null;
+        UpdatePlayerData();
+    }
+
+    private void ThrowAway()
+    {
+        if (data.item = null)
+        {
+            return;
+        }
+
+        holdingPos.DetachChildren();
+        Rigidbody targetRG = itemInhand.GetComponent<Rigidbody>();
+        targetRG.isKinematic = false;
+        foreach (Transform child in itemInhand.transform)
+        {
+            (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = true;
+        }
+
+        //給item初始力
+        targetRG.AddForce(this.transform.forward * 4.0f, ForceMode.Impulse);
+
+        itemInhand = null;
+        UpdatePlayerData();
     }
 }

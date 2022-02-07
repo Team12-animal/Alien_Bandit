@@ -120,6 +120,7 @@ public class AnimatorController : MonoBehaviour
             animator.SetFloat(animHorizontalHash, horizontal);
             animator.SetFloat(animVerticalHash, vertical);
         }
+        Debug.Log("Move2" + newState);
         ChangeAnimaEventState(newState);
     }
 
@@ -207,7 +208,7 @@ public class AnimatorController : MonoBehaviour
     {
         animator.SetBool(animRoling, false);
     }
-
+    
     #endregion
 
 }
