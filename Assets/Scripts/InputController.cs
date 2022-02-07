@@ -42,22 +42,22 @@ public class InputController : MonoBehaviour
 
         //rotAmt = Input.GetAxis("Horizontal");
         //transAmt = Input.GetAxis("Vertical");
-        takePressed = Input.GetButtonDown("Take");
-        takePressUp = Input.GetButtonUp("Take");
+        takePressed = Input.GetButtonDown("Take3");
+        takePressUp = Input.GetButtonUp("Take3");
         //bool moved = (rotAmt != 0 || transAmt != 0);
         //Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         //movementDirection.Normalize();
 
         bool allowMove = CheckAniPlayingOrNot();
 
-        if (isDash == false && (Input.GetButton("Vertical") || Input.GetButton("Horizontal")))
+        if (isDash == false && (Input.GetButton("Vertical3") || Input.GetButton("Horizontal3")))
         {
             if (allowMove)
             {
                 anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
                 anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
-                transAmt = Input.GetAxis("Vertical");
-                rotAmt = Input.GetAxis("Horizontal");
+                transAmt = Input.GetAxis("Vertical3");
+                rotAmt = Input.GetAxis("Horizontal3");
 
                 if (transAmt <= 0.2f && transAmt >= -0.2f)
                 {
@@ -81,13 +81,13 @@ public class InputController : MonoBehaviour
             }
         }
 
-        if(!Input.GetButton("Vertical") && !Input.GetButton("Horizontal"))
+        if(!Input.GetButton("Vertical3") && !Input.GetButton("Horizontal3"))
         {
             anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
             anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
         }
 
-        if (Input.GetButtonDown("Take") && isDash == false)
+        if (Input.GetButtonDown("Take3") && isDash == false)
         {
             if(data.item != null)
             {
@@ -158,7 +158,7 @@ public class InputController : MonoBehaviour
             anim.ChangeAnimationState(aniClip, 0, 0);
         }
 
-        if (Input.GetButtonDown("Dash") && isDash == false && anim.animator.GetBool(anim.animRoling) == false)
+        if (Input.GetButtonDown("Dash3") && isDash == false && anim.animator.GetBool(anim.animRoling) == false)
         {
             if (isDash == false)
             {
@@ -189,7 +189,7 @@ public class InputController : MonoBehaviour
                 
         }
 
-        CheckAndPlayAnimation(Input.GetButton("Vertical") || Input.GetButton("Horizontal"));
+        CheckAndPlayAnimation(Input.GetButton("Vertical3") || Input.GetButton("Horizontal3"));
     }
 
     //play the animation(for AnimatorController call)

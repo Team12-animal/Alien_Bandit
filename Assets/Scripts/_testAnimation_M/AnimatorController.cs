@@ -46,14 +46,14 @@ public class AnimatorController : MonoBehaviour
 
     private void Update()
     {
-        horizotalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+        horizotalInput = Input.GetAxis("Horizontal3");
+        verticalInput = Input.GetAxis("Vertical3");
     }
 
     public void Init()
     {
-        animHorizontalHash = Animator.StringToHash("Horizontal");
-        animVerticalHash = Animator.StringToHash("Vertical");
+        animHorizontalHash = Animator.StringToHash("Horizontal3");
+        animVerticalHash = Animator.StringToHash("Vertical3");
         animPickedHash = Animator.StringToHash("Picked");
         animHoldChop = Animator.StringToHash("HoldChop");
         animRoling = Animator.StringToHash("Roling");
