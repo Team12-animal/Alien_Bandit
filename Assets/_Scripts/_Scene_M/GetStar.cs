@@ -12,7 +12,10 @@ public class GetStar : MonoBehaviour
     {
         collectTargets = 0;
     }
-
+    /// <summary>
+    /// for testing
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Player"))

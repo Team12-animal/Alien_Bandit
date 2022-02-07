@@ -37,8 +37,10 @@ public class LevelLoader : MonoBehaviour
         chooseRoleUI.SetActive(false);
         chooseLevelUI.SetActive(false);
         AddSelectCharacterButton buttonUI = chooseRoleUI.GetComponent<AddSelectCharacterButton>();
-        buttonUI.rawImage1[3].SetActive(true);//open player01 chanel checking;
-        buttonUI.rawImage2[3].SetActive(true);//open player02 chanel checking;
+        //open player01 chanel checking;
+        buttonUI.rawImage1[3].SetActive(true);
+        //open player02 chanel checking;
+        buttonUI.rawImage2[3].SetActive(true);
         SceneController.instance.GetStars();
     }
 

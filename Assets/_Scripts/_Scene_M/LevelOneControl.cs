@@ -22,7 +22,8 @@ public class LevelOneControl : MonoBehaviour
 
     [SerializeField] List<GameObject> player = new List<GameObject>();
 
-    public bool isWin;//is player win the game?
+    //is player win the game?
+    public bool isWin;
     int stars = 0;
 
     private void Start()
@@ -43,6 +44,7 @@ public class LevelOneControl : MonoBehaviour
         TimeSetting();
         GameOver();
         WinGame();
+        TriggerSceneEvents();
     }
 
     private void TimeSetting()
@@ -79,15 +81,19 @@ public class LevelOneControl : MonoBehaviour
         input01 = player[0].GetComponent<InputController>();
         input02 = player[1].GetComponent<InputController>();
         if (gamingTime <= 0.0f || doorDestroied)
-        {
-            GameOverSetting(input01, input02);// can't control players;
+        {   
+            // can't control players;
+            GameOverSetting(input01, input02);
         }
         else if (isWin)
         {
             //need to creat win UI;
-            GameOverSetting(input01, input02);// can't control players;
+
+            // can't control players;
+            GameOverSetting(input01, input02);
         }
     }
+
     /// <summary>
     /// Get players InputManager and set them not enable;
     /// </summary>
@@ -110,8 +116,10 @@ public class LevelOneControl : MonoBehaviour
         if (isWin == true && gamingTime > 90.0f)
         {
             stars = 3;
-            SceneController.instance.levelOneStarsCounts = stars;//set stars count to manager;
-            SceneController.instance.GetStars();//change star color;
+            //set stars count to manager;
+            SceneController.instance.levelOneStarsCounts = stars;
+            //change star color;
+            SceneController.instance.GetStars();
             GameOver();
         }
         else if (isWin == true && gamingTime >= 60.0f)
@@ -127,6 +135,65 @@ public class LevelOneControl : MonoBehaviour
             SceneController.instance.levelOneStarsCounts = stars;
             SceneController.instance.GetStars();
             GameOver();
+        }
+    }
+
+    //created a rain event or not;
+    [SerializeField]bool createdRain = false;
+    //check rain event start time;
+    [SerializeField] float startRainTime = 120.0f;
+
+    //created others events or not;
+    [SerializeField] bool createdOthers = false;
+    //check others event start time;
+    [SerializeField] float startOthersEventTime = 105.0f;
+
+    //End event time
+    [SerializeField] float endEventTime = 60.0f;
+    [SerializeField] float endOthersEventTime = 90.0f;
+
+    public void TriggerSceneEvents()
+    {
+        int creatOrNot = Random.Range(0,6);
+        //random a event to creat;
+        int sceneEvent = Random.Range((int)MessionEvents.SceneEvent.TorbadoEvent, (int)MessionEvents.SceneEvent.EndCounts);
+
+        if (gamingTime <= startOthersEventTime && creatOrNot > 0 && createdOthers == false)
+        {
+            createdOthers = true;
+            switch (sceneEvent)
+            {
+                case 1:
+                    MessionEvents.instance.TornadoEvent();
+                    break;
+                case 2:
+                    MessionEvents.instance.FireEvent();
+                    break;
+                case 3:
+                    MessionEvents.instance.EarthQuakeEvent();
+                    break;
+                case 4:
+                    MessionEvents.instance.FloodedEvent();
+                    break;
+            }
+        }
+        else if (gamingTime <= startRainTime && creatOrNot > 4 && createdRain == false)
+        {
+            createdRain = true;
+            MessionEvents.instance.RainEvent();
+        }
+
+        if (gamingTime <= endEventTime && createdRain == true)
+        {
+            //dispear event;
+            Debug.LogWarning("EndEvent");
+            createdRain = false;
+        }
+        if (gamingTime <= endOthersEventTime && createdOthers == true)
+        {
+            //dispear event;
+            Debug.LogWarning("EndOthersEvent");
+            createdOthers = false;
         }
     }
 }

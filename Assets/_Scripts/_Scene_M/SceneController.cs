@@ -141,7 +141,8 @@ public class SceneController : MonoBehaviour
         tempRoleSkin.enabled = true;
 
         GetAnimator(player);
-        tempAnim.ChangeAnimationState(tempAnim.Player_DanceType18, 0f, 0f);//詭異
+        //wired
+        tempAnim.ChangeAnimationState(tempAnim.Player_DanceType18, 0f, 0f);
 
         player.transform.localRotation = new Quaternion(0, 180, 0, 0);
         player.SetActive(false);
@@ -186,7 +187,8 @@ public class SceneController : MonoBehaviour
     [Header("關卡獲得星星")]
     [SerializeField] List<RawImage> imagesLevelOne;
     [SerializeField] List<RawImage> imagesLevelTwo;
-    public int levelOneStarsCounts = 0;//how many stars gets when player win the game;
+    //how many stars gets when player win the game;
+    public int levelOneStarsCounts = 0;
 
     /// <summary>
     /// Change stars color;
