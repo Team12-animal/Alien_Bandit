@@ -9,6 +9,7 @@ public class AnimatorController : MonoBehaviour
     float horizotalInput;
     float verticalInput;
     bool Roling;
+    int pid;
 
     [Header("�վ�ʵe����ɶ�")]
     public float delay = 2.1f;
@@ -45,10 +46,15 @@ public class AnimatorController : MonoBehaviour
     public string Player_DanceType18 { get; private set; } = "Dance18";
     public string Player_Test { get; private set; } = "Test";
 
+    private void Start()
+    {
+        pid = this.GetComponent<PlayerData>().pid;
+    }
+
     private void Update()
     {
-        horizotalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+        horizotalInput = Input.GetAxis("Horizontal" + pid);
+        verticalInput = Input.GetAxis("Vertical" + pid);
     }
 
     public void Init()
@@ -121,6 +127,7 @@ public class AnimatorController : MonoBehaviour
             animator.SetFloat(animHorizontalHash, horizontal);
             animator.SetFloat(animVerticalHash, vertical);
         }
+        Debug.Log("Move2" + newState);
         ChangeAnimaEventState(newState);
     }
 
@@ -208,7 +215,7 @@ public class AnimatorController : MonoBehaviour
     {
         animator.SetBool(animRoling, false);
     }
-
+    
     #endregion
 
 }

@@ -135,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
         return aniClip;
     }
 
+    //將人物移動對齊鏡頭Y軸
     public Vector3 GenNewBaseForward()
     {
         Vector3 tempV = cam.transform.forward;
@@ -143,12 +144,13 @@ public class PlayerMovement : MonoBehaviour
         return tempV;
     }
 
+    //根據玩家持有物品取得移動動畫
     private string GetMoveAniName(GameObject item)
     {
-        string aniName = "Run";
+        string aniName = "none";
         string tagName = item.gameObject.tag;
 
-        if (tagName == "Rock")
+        if (tagName == "RockModel")
         {
             aniName = "HoldRockWalk";
         }
@@ -171,33 +173,7 @@ public class PlayerMovement : MonoBehaviour
         return aniName;
     }
 
-    Vector3 oriV;
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "Rock")
-    //    {
-    //        oriV = rb.velocity;
-    //        Vector3 v = oriV;
-    //        if (v.y > 0)
-    //        {
-    //            v.y = 0;
-    //        }
-
-    //        rb.velocity = v;
-    //    }
-    //}
-
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "Rock")
-    //    {
-    //        rb.velocity = oriV;
-    //    }
-    //}
-
-
-
+    //衝刺
     public float Dash(float dashTime)
     {
         Debug.Log("dash");
@@ -245,49 +221,44 @@ public class PlayerMovement : MonoBehaviour
     }
 
     
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * 2);
     }
 
+    //目標道具
     public GameObject targetItem;
+    //在trigger內的道具
     public GameObject triggerItem;
+    
     //check what to pick
     private void OnTriggerStay(Collider other)
     {
         triggerItem = other.gameObject;
     }
     
-    public string Pick()
+    //拿取物品
+    public string Take()
     {
         targetItem = triggerItem;
-        
+
+        string tagName = targetItem.gameObject.tag;
         string aniClip;
 
-        //update what item in hand
+        //道具桌不能拿取
+        if (tagName == "WorkingTable" || tagName == "Tree")
+        {
+            return "none";
+        }
+
+        //拿取道具
         if (targetItem != null)
         {
             FaceTarget(targetItem);
+            HoldItem(targetItem);
 
-            string tagName = targetItem.gameObject.tag;
-
-            if (tagName == "WorkingTable")
-            {
-                //Wait for Pei
-                //UseTable();
-                
-                //if using Table success
-                aniClip = "UsingTable";
-            }
-            else
-            {
-                HoldItem(targetItem);
-                itemInhand = targetItem;
-            }
-
-            aniClip = GetUseAniName(tagName);
+            aniClip = GetTakeAniName(tagName);
             UpdatePlayerData();
             targetItem = null;
 
@@ -296,17 +267,22 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             Debug.Log("unable to use");
-            aniClip = "Idle";
+            return "none";
         }
 
         return aniClip;
     }
 
-    private string GetUseAniName(string tagName)
+    /// <summary>
+    /// 取得撿取動畫
+    /// </summary>
+    /// <param 目標道具tag="tagName"></param>
+    /// <returns></returns>
+    private string GetTakeAniName(string tagName)
     {
-        string aniName = "None";
+        string aniName = "none";
 
-        if (tagName == "Rock")
+        if (tagName == "RockModel")
         {
             aniName = "PickUpRock";
         }
@@ -329,16 +305,13 @@ public class PlayerMovement : MonoBehaviour
         return aniName;
     }
 
+    //使用斧頭
     public string UseChop()
     {
-        if (triggerItem != null)
-        {
-            targetItem = triggerItem;
-        }            
+        string aniClip = "none";
 
-        string aniClip;
-
-        if (targetItem != null && targetItem.tag == "Tree")
+        //如果有樹就砍 沒樹就把斧頭丟掉
+        if (data.inTree == true)
         {
             aniClip = ChopTree();
         }
@@ -350,10 +323,21 @@ public class PlayerMovement : MonoBehaviour
         return aniClip;
     }
 
+    //砍樹
     private string ChopTree()
     {
         string aniName;
+        
+        aniName = "Chopping";
+        UpdatePlayerData();
+        targetItem = null;
 
+        return aniName;
+    }
+
+    //砍樹動畫結束後 產生樹樁和樹幹(給animation event)
+    public void AnimaEventSpawnStumpAndLog()
+    {
         GameObject tree;
         tree = targetItem;
 
@@ -365,88 +349,79 @@ public class PlayerMovement : MonoBehaviour
         //hide tree
         tree.SetActive(false);
 
-        //spawn stump and log
+        //spawn stump and log on treePos
         if (Physics.Raycast(treePos, spawnDir, out hit, Mathf.Infinity, 1 << 7))
         {
             spawnPos = hit.point;
 
             //change tree prefeb to stump
-            GameObject stump = (GameObject)Resources.Load("TreeStump");
+            var stumpPrefab = Resources.Load<GameObject>("TreeStump");
+            GameObject stump = GameObject.Instantiate(stumpPrefab) as GameObject;
             stump.SetActive(true);
             stump.transform.position = spawnPos;
 
             //spawn log
-            GameObject log = (GameObject)Resources.Load("Log");
+            var logPrefab = Resources.Load<GameObject>("Log");
+            GameObject log = GameObject.Instantiate(logPrefab) as GameObject;
             log.SetActive(true);
-            log.transform.position = spawnPos + (-spawnDir) * 4.0f;
+            log.transform.position = spawnPos + (-spawnDir) * 1.0f;
         }
-
-        aniName = "Chopping";
-        UpdatePlayerData();
-        targetItem = null;
-
-        return aniName;
     }
 
 
-    //holding bucket > ctrl press1: get water; press2: pourwater; press3: drop 
+    ////holding bucket > ctrl press1: get water; press2: pourwater; press3: drop
     //bool bucketFilled = false;
     //public string UseBucket()
     //{
-     //if (triggerItem != null)
-     //   {
-     //       targetItem = triggerItem;
-     //   }
+    //    if (triggerItem != null)
+    //    {
+    //        targetItem = triggerItem;
+    //    }
 
-//    string aniClip;
+    //    string aniClip;
 
-//    if (bucketFilled == false)
-//    {
-//        if(targetItem != null && targetItem.tag == "Water")
-//        {
-//            aniClip = GetWater();
-//        }
-//        else
-//        {
-//            aniClip = Drop();
-//        }
-//    }
-//    else
-//    {
-//        aniClip = PourWater();
-//    }
+    //    if (bucketFilled == false)
+    //    {
+    //        if (targetItem != null && targetItem.tag == "Water")
+    //        {
+    //            aniClip = GetWater();
+    //        }
+    //        else
+    //        {
+    //            aniClip = Drop();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        aniClip = PourWater();
+    //    }
 
-//    return aniClip;
-//}
+    //    return aniClip;
+    //}
 
-//private string GetWater()
-//{
-//    string aniName = "GetWater";
-//    bucketFilled = true;
+    //private string GetWater()
+    //{
+    //    string aniName = "GetWater";
+    //    bucketFilled = true;
 
-//    //add put out fire function
+    //    //add put out fire function
 
-//    return aniName;
-//}
+    //    return aniName;
+    //}
 
-//private string PourWater()
-//{
-//    string aniName = "PourWater";
-//    bucketFilled = false;
-//    return aniName;
-//}
+    //private string PourWater()
+    //{
+    //    string aniName = "PourWater";
+    //    bucketFilled = false;
+    //    return aniName;
+    //}
 
-public string Drop()
+    public string Drop()
     {
         string aniClip = "none";
 
         aniClip = GetDropAniName(itemInhand.tag);
-
-        itemInhand = null;
-        UpdatePlayerData();
-
-        //check animation status
-        //remove child
+        targetItem = null;
         Debug.Log("Drop");
         return aniClip;
     }
@@ -457,21 +432,19 @@ public string Drop()
 
         //check animation status
         //remove child
-        if (itemInhand != null)
+        if (itemInhand != null && itemInhand.tag == "Rock")
         {
             aniClip = "ThrowRock";
-            itemInhand = null;
-            UpdatePlayerData();
         }
-
+        targetItem = null;
         return aniClip;
     }
 
     private string GetDropAniName(string tagName)
     {
-        string aniName = "Idle";
+        string aniName = "none";
 
-        if (tagName == "Rock")
+        if (tagName == "RockModel")
         {
             aniName = "PutDownRock";
         }
@@ -495,6 +468,7 @@ public string Drop()
 
         return aniName;
     }
+
     //look at targetItem
     private void FaceTarget(GameObject target)
     {
@@ -512,26 +486,65 @@ public string Drop()
     //set item to HoldingPos
     private void HoldItem(GameObject targetItem)
     {
-        if(targetItem == null)
+        if (targetItem == null || targetItem.tag == "WorkingTable" || targetItem.tag == "Tree")
         {
             return;
+        }
+
+        int childAmt = targetItem.transform.childCount;
+        if(childAmt > 0)
+        {
+            foreach(Transform child in targetItem.transform)
+            {
+                (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = false;
+            }
         }
 
         targetItem.transform.position = holdingPos.position;
+        targetItem.transform.forward = holdingPos.forward;
         targetItem.transform.SetParent(holdingPos);
         Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
         targetRG.isKinematic = true;
+        itemInhand = targetItem;
     }
-
-    private void RemoveItem(GameObject targetItem)
+     
+    private void RemoveItem()
     {
-        if (targetItem = null)
+        if (data.item = null)
         {
             return;
         }
 
-        targetItem.transform.parent = null;
-        Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
+        holdingPos.DetachChildren();
+        Rigidbody targetRG = itemInhand.GetComponent<Rigidbody>();
         targetRG.isKinematic = false;
+        foreach (Transform child in itemInhand.transform)
+        {
+            (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = true;
+        }
+        itemInhand = null;
+        UpdatePlayerData();
+    }
+
+    private void ThrowAway()
+    {
+        if (data.item = null)
+        {
+            return;
+        }
+
+        holdingPos.DetachChildren();
+        Rigidbody targetRG = itemInhand.GetComponent<Rigidbody>();
+        targetRG.isKinematic = false;
+        foreach (Transform child in itemInhand.transform)
+        {
+            (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = true;
+        }
+
+        //給item初始力
+        targetRG.AddForce(this.transform.forward * 4.0f, ForceMode.Impulse);
+
+        itemInhand = null;
+        UpdatePlayerData();
     }
 }

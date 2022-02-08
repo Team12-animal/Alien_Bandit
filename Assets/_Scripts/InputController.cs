@@ -7,6 +7,8 @@ public class InputController : MonoBehaviour
     private PlayerMovement pm;
     private PlayerData data;
 
+    private int pid;
+
     public float transAmt;
     public float rotAmt;
     Vector3 currentPos;
@@ -34,30 +36,31 @@ public class InputController : MonoBehaviour
     void Start()
     {
         setDashTime = pm.setDashTime;
+        pid = data.pid;
     }
 
     void Update()
     {
         string aniClip = "none";
 
-        //rotAmt = Input.GetAxis("Horizontal");
-        //transAmt = Input.GetAxis("Vertical");
-        takePressed = Input.GetButtonDown("Take");
-        takePressUp = Input.GetButtonUp("Take");
+        //rotAmt = Input.GetAxis("Horizontal" + pid);
+        //transAmt = Input.GetAxis("Vertical" + pid);
+        takePressed = Input.GetButtonDown("Take" + pid);
+        takePressUp = Input.GetButtonUp("Take" + pid);
         //bool moved = (rotAmt != 0 || transAmt != 0);
         //Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         //movementDirection.Normalize();
 
         bool allowMove = CheckAniPlayingOrNot();
 
-        if (isDash == false && (Input.GetButton("Vertical") || Input.GetButton("Horizontal")))
+        if (isDash == false && (Input.GetButton("Vertical" + pid) || Input.GetButton("Horizontal" + pid)))
         {
             if (allowMove)
             {
                 anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
                 anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
-                transAmt = Input.GetAxis("Vertical");
-                rotAmt = Input.GetAxis("Horizontal");
+                transAmt = Input.GetAxis("Vertical" + pid);
+                rotAmt = Input.GetAxis("Horizontal" + pid);
 
                 if (transAmt <= 0.2f && transAmt >= -0.2f)
                 {
@@ -76,7 +79,7 @@ public class InputController : MonoBehaviour
                     aniClip = pm.MoveAndRotate(transAmt, rotAmt);
                 }
                 
-                Debug.Log(aniClip);
+                Debug.Log("Move1" + aniClip);
                 anim.ChangeAnimationState(aniClip, transAmt, rotAmt);
             }
         }
@@ -86,24 +89,32 @@ public class InputController : MonoBehaviour
         //    anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
         //}
 
-        if(!Input.GetButton("Vertical") && !Input.GetButton("Horizontal"))
+        if(!Input.GetButton("Vertical" + pid) && !Input.GetButton("Horizontal" + pid))
         {
             anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
             anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
         }
 
-        if (Input.GetButtonDown("Take") && isDash == false)
+        if (Input.GetButtonDown("Take" + pid) && isDash == false)
         {
+            if(data.item != null)
+            {
+                holdingItem = true;
+            }
+            else
+            {
+                holdingItem = false;
+            }
+
             if (holdingItem == false)
             {
-                aniClip = pm.Pick();
+                aniClip = pm.Take();
 
-                if (aniClip == "None")
+                if (aniClip == "none")
                 {
                     return;
                 }
 
-                holdingItem = true;
                 Debug.Log(aniClip);
                 anim.ChangeAnimationState(aniClip, 0, 0);
             }
@@ -115,13 +126,11 @@ public class InputController : MonoBehaviour
                 {
                     aniClip = pm.UseChop();
                 }
-
-                if (itemInhand == "Bucket")
+                else if (itemInhand == "Bucket")
                 {
                     //aniName = pm.UseBucket();
                 }
-
-                if (itemInhand == "Rock")
+                else if (itemInhand == "RockModel")
                 {
                     float endPress = 0.0f;
                     float startPress = 0.0f;
@@ -146,33 +155,18 @@ public class InputController : MonoBehaviour
                     {
                         aniClip = pm.Drop();
                     }
-
-
-                    //if (Input.GetButtonUp("Use"))
-                    //{
-                    //    endPress = Time.time;
-                    //    float pressedTime = endPress - startPress;
-
-                    //    if (pressedTime >= 1.0f)
-                    //    {
-                    //        aniClip = pm.Drop();
-                    //        //aniClip = pm.Throw(pressedTime);
-                    //    }
-                    //    else
-                    //    {
-                    //        aniClip = pm.Drop();
-                    //    }
-                    //}
-                    //}
-
-                    Debug.Log(aniClip);
-                    anim.ChangeAnimationState(aniClip, 0, 0);
-                    holdingItem = false;
+                }
+                else
+                {
+                    aniClip = pm.Drop();
                 }
             }
+
+            Debug.Log(aniClip);
+            anim.ChangeAnimationState(aniClip, 0, 0);
         }
 
-        if (Input.GetButtonDown("Dash") && isDash == false && anim.animator.GetBool(anim.animRoling) == false)
+        if (Input.GetButtonDown("Dash" + pid) && isDash == false && anim.animator.GetBool(anim.animRoling) == false)
         {
             if (isDash == false)
             {
@@ -203,7 +197,7 @@ public class InputController : MonoBehaviour
                 
         }
 
-        CheckAndPlayAnimation(Input.GetButton("Vertical") || Input.GetButton("Horizontal"));
+        CheckAndPlayAnimation(Input.GetButton("Vertical" + pid) || Input.GetButton("Horizontal" + pid));
     }
 
     //play the animation(for AnimatorController call)

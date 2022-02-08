@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
+    public int pid;
     //movement
     public float maxSpeed = 6f;
     public float maxRotate;
@@ -14,4 +15,6 @@ public class PlayerData : MonoBehaviour
     //use item
     public GameObject item;
     public GameObject animal;
+
+    public bool inTree;
 }
