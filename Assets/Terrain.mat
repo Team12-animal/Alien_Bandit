@@ -40,9 +40,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: db2e1dbb74472415bb30894c2f685255, type: 3}
+        m_Texture: {fileID: 2800000, guid: cd9bf611e79836a43b12bf1dd55819fb, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 0.1, y: 0.05}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -67,13 +67,13 @@ Material:
     - _EnableConstSizeOutline: 0
     - _EnableTexturedOutline: 0
     - _EnableZSmooth: 0
-    - _GlossMapScale: 0
-    - _Glossiness: 0
+    - _GlossMapScale: 0.1
+    - _Glossiness: 0.1
     - _GlossyReflections: 1
     - _HSV_H: 0
     - _HSV_S: 0.1
     - _HSV_V: 0.8
-    - _Metallic: 0.5
+    - _Metallic: 1
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Offset1: 0
@@ -82,7 +82,7 @@ Material:
     - _Parallax: 0.02
     - _RampSmooth: 1
     - _RampSmoothAdd: 1
-    - _RampThreshold: 0.7
+    - _RampThreshold: 1
     - _RimAmount: 0.716
     - _RimMax: 1
     - _RimMin: 0.607
@@ -103,9 +103,9 @@ Material:
     - __outline_gui_dummy__: 0
     m_Colors:
     - _AmbientColor: {r: 0.5754133, g: 1, b: 0.3537736, a: 1}
-    - _Color: {r: 0.028390896, g: 0.20754719, b: 0.07317997, a: 1}
+    - _Color: {r: 0.1882353, g: 0.19215687, b: 0.08627451, a: 0.7254902}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HColor: {r: 0.14509821, g: 1, b: 0, a: 1}
+    - _HColor: {r: 0.14509805, g: 1, b: 0, a: 1}
     - _OutlineColor: {r: 0.54901963, g: 0.54509807, b: 0.48627454, a: 1}
     - _RimColor: {r: 0.41631827, g: 1, b: 0.3066038, a: 1}
     - _SColor: {r: 0.5019608, g: 0.23529413, b: 0.08235294, a: 1}
