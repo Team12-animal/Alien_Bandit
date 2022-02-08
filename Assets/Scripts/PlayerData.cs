@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
+    public int pid;
     //movement
     public float maxSpeed;
     public float maxRotate;

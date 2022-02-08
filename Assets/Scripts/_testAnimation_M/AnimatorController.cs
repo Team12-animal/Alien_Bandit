@@ -9,6 +9,7 @@ public class AnimatorController : MonoBehaviour
     float horizotalInput;
     float verticalInput;
     bool Roling;
+    int pid;
 
     [Header("�վ�ʵe����ɶ�")]
     public float delay = 2.1f;
@@ -44,16 +45,21 @@ public class AnimatorController : MonoBehaviour
     public string Player_Fear { get; private set; } = "Fear";
     public string Player_Test { get; private set; } = "Test";
 
+    private void Start()
+    {
+        pid = this.GetComponent<PlayerData>().pid;
+    }
+
     private void Update()
     {
-        horizotalInput = Input.GetAxis("Horizontal3");
-        verticalInput = Input.GetAxis("Vertical3");
+        horizotalInput = Input.GetAxis("Horizontal" + pid);
+        verticalInput = Input.GetAxis("Vertical" + pid);
     }
 
     public void Init()
     {
-        animHorizontalHash = Animator.StringToHash("Horizontal3");
-        animVerticalHash = Animator.StringToHash("Vertical3");
+        animHorizontalHash = Animator.StringToHash("Horizontal");
+        animVerticalHash = Animator.StringToHash("Vertical");
         animPickedHash = Animator.StringToHash("Picked");
         animHoldChop = Animator.StringToHash("HoldChop");
         animRoling = Animator.StringToHash("Roling");

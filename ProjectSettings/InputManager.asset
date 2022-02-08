@@ -44,7 +44,7 @@ InputManager:
     negativeButton: 
     positiveButton: left alt
     altNegativeButton: 
-    altPositiveButton: mouse 0
+    altPositiveButton: 
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
@@ -170,7 +170,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: joystick button 10
-    positiveButton: 
+    positiveButton: joystick button 10
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -180,7 +180,7 @@ InputManager:
     invert: 1
     type: 2
     axis: 0
-    joyNum: 0
+    joyNum: 1
   - serializedVersion: 3
     m_Name: Vertical3
     descriptiveName: 
@@ -194,9 +194,9 @@ InputManager:
     sensitivity: 1000
     snap: 0
     invert: 0
-    type: 0
+    type: 2
     axis: 1
-    joyNum: 0
+    joyNum: 1
   - serializedVersion: 3
     m_Name: Dash3
     descriptiveName: 
@@ -212,7 +212,7 @@ InputManager:
     invert: 0
     type: 0
     axis: 0
-    joyNum: 0
+    joyNum: 1
   - serializedVersion: 3
     m_Name: Take3
     descriptiveName: 
@@ -252,21 +252,21 @@ InputManager:
     negativeButton: joystick button 10
     positiveButton: joystick button 10
     altNegativeButton: 
-    altPositiveButton: space
+    altPositiveButton: 
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
     snap: 0
     invert: 0
-    type: 0
+    type: 2
     axis: 0
-    joyNum: 0
+    joyNum: 2
   - serializedVersion: 3
-    m_Name: Cancel
+    m_Name: Vertical4
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: escape
+    negativeButton: joystick button 10
+    positiveButton: joystick button 10
     altNegativeButton: 
     altPositiveButton: joystick button 1
     gravity: 1000
@@ -274,49 +274,17 @@ InputManager:
     sensitivity: 1000
     snap: 0
     invert: 0
-    type: 0
-    axis: 0
-    joyNum: 0
+    type: 2
+    axis: 1
+    joyNum: 2
   - serializedVersion: 3
-    m_Name: LeftShift
-    descriptiveName: 
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: left shift
-    altNegativeButton: 
-    altPositiveButton: joystick button 1
-    gravity: 1000
-    dead: 0.001
-    sensitivity: 1000
-    snap: 0
-    invert: 0
-    type: 0
-    axis: 0
-    joyNum: 0
-  - serializedVersion: 3
-    m_Name: Use
-    descriptiveName: 
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: left ctrl
-    altNegativeButton: 
-    altPositiveButton: joystick button 1
-    gravity: 1000
-    dead: 0.001
-    sensitivity: 1000
-    snap: 0
-    invert: 0
-    type: 0
-    axis: 0
-    joyNum: 0
-  - serializedVersion: 3
-    m_Name: Take
+    m_Name: Dash4
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: left shift
     altNegativeButton: 
-    altPositiveButton: joystick button 1
+    altPositiveButton: joystick button 0
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
@@ -324,4 +292,36 @@ InputManager:
     invert: 0
     type: 0
     axis: 0
-    joyNum: 0
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: Use4
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 1
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: Take4
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 2
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 2

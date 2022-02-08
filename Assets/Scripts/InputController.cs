@@ -7,6 +7,8 @@ public class InputController : MonoBehaviour
     private PlayerMovement pm;
     private PlayerData data;
 
+    private int pid;
+
     public float transAmt;
     public float rotAmt;
     Vector3 currentPos;
@@ -34,30 +36,31 @@ public class InputController : MonoBehaviour
     void Start()
     {
         setDashTime = pm.setDashTime;
+        pid = data.pid;
     }
 
     void Update()
     {
         string aniClip = "none";
 
-        //rotAmt = Input.GetAxis("Horizontal");
-        //transAmt = Input.GetAxis("Vertical");
-        takePressed = Input.GetButtonDown("Take3");
-        takePressUp = Input.GetButtonUp("Take3");
+        //rotAmt = Input.GetAxis("Horizontal" + pid);
+        //transAmt = Input.GetAxis("Vertical" + pid);
+        takePressed = Input.GetButtonDown("Take" + pid);
+        takePressUp = Input.GetButtonUp("Take" + pid);
         //bool moved = (rotAmt != 0 || transAmt != 0);
         //Vector3 movementDirection = new Vector3(rotAmt, 0.0f, transAmt);
         //movementDirection.Normalize();
 
         bool allowMove = CheckAniPlayingOrNot();
 
-        if (isDash == false && (Input.GetButton("Vertical3") || Input.GetButton("Horizontal3")))
+        if (isDash == false && (Input.GetButton("Vertical" + pid) || Input.GetButton("Horizontal" + pid)))
         {
             if (allowMove)
             {
                 anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
                 anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
-                transAmt = Input.GetAxis("Vertical3");
-                rotAmt = Input.GetAxis("Horizontal3");
+                transAmt = Input.GetAxis("Vertical" + pid);
+                rotAmt = Input.GetAxis("Horizontal" + pid);
 
                 if (transAmt <= 0.2f && transAmt >= -0.2f)
                 {
@@ -81,13 +84,13 @@ public class InputController : MonoBehaviour
             }
         }
 
-        if(!Input.GetButton("Vertical3") && !Input.GetButton("Horizontal3"))
+        if(!Input.GetButton("Vertical" + pid) && !Input.GetButton("Horizontal" + pid))
         {
             anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
             anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
         }
 
-        if (Input.GetButtonDown("Take3") && isDash == false)
+        if (Input.GetButtonDown("Take" + pid) && isDash == false)
         {
             if(data.item != null)
             {
@@ -158,7 +161,7 @@ public class InputController : MonoBehaviour
             anim.ChangeAnimationState(aniClip, 0, 0);
         }
 
-        if (Input.GetButtonDown("Dash3") && isDash == false && anim.animator.GetBool(anim.animRoling) == false)
+        if (Input.GetButtonDown("Dash" + pid) && isDash == false && anim.animator.GetBool(anim.animRoling) == false)
         {
             if (isDash == false)
             {
@@ -189,7 +192,7 @@ public class InputController : MonoBehaviour
                 
         }
 
-        CheckAndPlayAnimation(Input.GetButton("Vertical3") || Input.GetButton("Horizontal3"));
+        CheckAndPlayAnimation(Input.GetButton("Vertical" + pid) || Input.GetButton("Horizontal" + pid));
     }
 
     //play the animation(for AnimatorController call)
