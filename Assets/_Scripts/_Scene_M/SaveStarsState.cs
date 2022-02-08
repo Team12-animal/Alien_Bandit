@@ -10,8 +10,8 @@ public class SaveStarsState : MonoBehaviour
     [SerializeField] List<RawImage> imagesLevelOne;
     [SerializeField] List<RawImage> imagesLevelTwo;
 
-    public string saveLevelOneName { get; private set; } = "/saveStarStateLevelOne.json";
-    public string saveLevelTwoName { get; private set; } = "/saveStarStateLevelTwo.json";
+    public string saveLevelOneName { get; private set; } = "/SaveAndLoad/saveStarStateLevelOne.json";
+    public string saveLevelTwoName { get; private set; } = "/SaveAndLoad/saveStarStateLevelTwo.json";
 
     private void Awake()
     {
@@ -84,14 +84,14 @@ public class SaveStarsState : MonoBehaviour
 
         string json01 = JsonUtility.ToJson(levelOneStar);
         string json02 = JsonUtility.ToJson(levelTwoStar);
-        File.WriteAllText(Application.dataPath + saveLevelOneName, json01);
-        File.WriteAllText(Application.dataPath + saveLevelTwoName, json02);
+        File.WriteAllText(Application.streamingAssetsPath + saveLevelOneName, json01);
+        File.WriteAllText(Application.streamingAssetsPath + saveLevelTwoName, json02);
     }
 
     public void LoadDate()
     {
-        string json01 = File.ReadAllText(Application.dataPath + saveLevelOneName);
-        string json02 = File.ReadAllText(Application.dataPath + saveLevelTwoName);
+        string json01 = File.ReadAllText(Application.streamingAssetsPath + saveLevelOneName);
+        string json02 = File.ReadAllText(Application.streamingAssetsPath + saveLevelTwoName);
         LevelOneStar loadLevelOne = JsonUtility.FromJson<LevelOneStar>(json01);
         LevelTwoStar loadLevelTwo = JsonUtility.FromJson<LevelTwoStar>(json02);
         //write color form json to Unity
