@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelOneControl : MonoBehaviour
+public class LevelTwoControl : MonoBehaviour
 {
     [Header("遊戲開始時間倒數")]
     [SerializeField] float waittingTime = 6.0f;
@@ -43,8 +43,8 @@ public class LevelOneControl : MonoBehaviour
     {
         TimeSetting();
         GameOver();
-        //TriggerSceneEvents();
-        WinGame(1);// 1  means what level one stars state;
+        TriggerSceneEvents();
+        WinGame(2);//2  means what level two stars state;
     }
 
     private void TimeSetting()

@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -16,7 +12,7 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] GameObject playerRawImagePanel02;
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -41,7 +37,6 @@ public class LevelLoader : MonoBehaviour
         buttonUI.rawImage1[3].SetActive(true);
         //open player02 chanel checking;
         buttonUI.rawImage2[3].SetActive(true);
-        SceneController.instance.GetStars();
     }
 
     public void OpenChooseRoleUI(bool open)

@@ -47,14 +47,13 @@ public class SceneController : MonoBehaviour
         animEndHash = Animator.StringToHash("End");
         MainPlayer(player01);
         MainPlayer(player02);
-        levelOneStarsCounts = 0;
     }
     public void LoadLevel(int sceneIndex)
     {
         if (sceneIndex < 0) throw new Exception(" < 0 not correct");
         if (sceneIndex != 0)
         {
-            //視載入情況決定要加入哪一種效果
+            //depend on what situation to change method;using loading bar or not;
             //StartCoroutine(LoadAsynchronously(sceneIndex));
             StartCoroutine(LoadTransition());
             SceneManager.LoadScene(sceneIndex);
@@ -103,7 +102,6 @@ public class SceneController : MonoBehaviour
 
     [Header("MainMenu設定")]
     InputController tempInput;
-    PlayerData tempPlayerData;
     Rigidbody tempRigibody;
     ChangeRoleSkin tempRoleSkin;
     AnimatorController tempAnim;
@@ -168,7 +166,6 @@ public class SceneController : MonoBehaviour
         tempInput = player.GetComponent<InputController>();
         tempRigibody = player.GetComponent<Rigidbody>();
         tempRoleSkin = player.GetComponent<ChangeRoleSkin>();
-        tempPlayerData = player.GetComponent<PlayerData>();
     }
 
     public void StartMove(GameObject player)
@@ -182,34 +179,5 @@ public class SceneController : MonoBehaviour
         player.Add(player01);
         player.Add(player02);
         return player;
-    }
-
-    [Header("關卡獲得星星")]
-    [SerializeField] List<RawImage> imagesLevelOne;
-    [SerializeField] List<RawImage> imagesLevelTwo;
-    //how many stars gets when player win the game;
-    public int levelOneStarsCounts = 0;
-
-    /// <summary>
-    /// Change stars color;
-    /// </summary>
-    public void GetStars()
-    {
-        Color yellowStar = new Color(1, 1, 1);
-        switch (levelOneStarsCounts)
-        {
-            case 1:
-                imagesLevelOne[0].color = yellowStar;
-                break;
-            case 2:
-                imagesLevelOne[0].color = yellowStar;
-                imagesLevelOne[1].color = yellowStar;
-                break;
-            case 3:
-                imagesLevelOne[0].color = yellowStar;
-                imagesLevelOne[1].color = yellowStar;
-                imagesLevelOne[2].color = yellowStar;
-                break;
-        }
     }
 }
