@@ -7,10 +7,10 @@ public class PlayerData : MonoBehaviour
     public int pid;
     //movement
     public float maxSpeed = 6f;
-    public float reduceSpeed;
+    private float reduceSpeed = 0.5f;
     public float realSpeed;
     public float maxRotate;
-    public float reduceRotate;
+    private float reduceRotate = 0.5f;
     public float realRotate;
     public float setDashTime = 0.24f;
     public float dashSpeed;
