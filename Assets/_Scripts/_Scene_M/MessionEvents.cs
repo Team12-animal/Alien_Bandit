@@ -7,7 +7,10 @@ public class MessionEvents : MonoBehaviour
     public static MessionEvents instance;
 
     [SerializeField] GameObject rainWindowPrefab;
+    [SerializeField] GameObject rainPrefab;
     [SerializeField] Material rainMaterial;
+    [SerializeField] float rainningTime = 0;
+    bool startRain = false;
 
     private void Start()
     {
@@ -19,6 +22,21 @@ public class MessionEvents : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+        rainningTime = 0;
+        startRain = false;
+    }
+
+    private void Update()
+    {
+        if (startRain == true)
+        {
+            rainningTime += Time.deltaTime;
+            if(rainningTime > 3f)
+            {
+                StartRainShader();
+                startRain = false;
+            }
         }
     }
 
@@ -32,16 +50,21 @@ public class MessionEvents : MonoBehaviour
         EndCounts,
     }
 
-
     public void RainEvent()
     {
+        startRain = true;
         //show raining effects;
-        GameObject temp = Instantiate(rainWindowPrefab, Camera.main.transform.position, Camera.main.transform.rotation);
-        temp.transform.position += Camera.main.transform.forward * 3f;
-        rainWindowPrefab = temp;
-
+        Instantiate(rainPrefab, transform.position + new Vector3(22.6f, 1.0f, 28.0f), Quaternion.identity);
         Debug.LogWarning("StartRain");
     }
+
+    private void StartRainShader()
+    {
+        GameObject temp = Instantiate(rainWindowPrefab, Camera.main.transform.position, Camera.main.transform.rotation);
+        temp.transform.position += Camera.main.transform.forward * 3f; 
+        rainningTime = 0;
+    }
+
     public void StopRainEvent()
     {
         float tempBlur = Mathf.Lerp(0.6f, 0f, 0.3f);

@@ -27,7 +27,6 @@ public class SceneController : MonoBehaviour
     public bool selected02 = false;
     public int animStartHash { get; private set; }
     public int animEndHash { get; private set; }
-
     private void Awake()
     {
         if (instance == null)
