@@ -6,9 +6,12 @@ public class MessionEvents : MonoBehaviour
 {
     public static MessionEvents instance;
 
+    [SerializeField] GameObject rainWindowPrefab;
+    [SerializeField] Material rainMaterial;
+
     private void Start()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -33,7 +36,17 @@ public class MessionEvents : MonoBehaviour
     public void RainEvent()
     {
         //show raining effects;
+        GameObject temp = Instantiate(rainWindowPrefab, Camera.main.transform.position, Camera.main.transform.rotation);
+        temp.transform.position += Camera.main.transform.forward * 3f;
+        rainWindowPrefab = temp;
+
         Debug.LogWarning("StartRain");
+    }
+    public void StopRainEvent()
+    {
+        float tempBlur = Mathf.Lerp(0.6f, 0f, 0.3f);
+        rainMaterial.SetFloat("_Blur", tempBlur);
+        Destroy(rainWindowPrefab);
     }
 
     public void TornadoEvent()

@@ -43,7 +43,7 @@ public class LevelOneControl : MonoBehaviour
     {
         TimeSetting();
         GameOver();
-        //TriggerSceneEvents();
+        TriggerSceneEvents();
         WinGame(1);// 1  means what level one stars state;
     }
 
@@ -88,7 +88,7 @@ public class LevelOneControl : MonoBehaviour
         else if (isWin)
         {
             //need to creat win UI;
-            
+
 
             // can't control players;
             GameOverSetting(input01, input02);
@@ -138,21 +138,21 @@ public class LevelOneControl : MonoBehaviour
     //created a rain event or not;
     [SerializeField] bool createdRain = false;
     //check rain event start time;
-    [SerializeField] float startRainTime = 120.0f;
+    [SerializeField]float startRainTime = 120.0f;
+    [SerializeField] float endRainEventTime = 60.0f;
     //created others events or not;
     [SerializeField] bool createdOthers = false;
     //check others event start time;
     [SerializeField] float startOthersEventTime = 105.0f;
-    //End event time
-    [SerializeField] float endEventTime = 60.0f;
     [SerializeField] float endOthersEventTime = 90.0f;
+
     public void TriggerSceneEvents()
     {
         int creatOrNot = Random.Range(0, 6);
         //random a event to creat;
         int sceneEvent = Random.Range((int)MessionEvents.SceneEvent.TorbadoEvent, (int)MessionEvents.SceneEvent.EndCounts);
 
-        if (gamingTime <= startOthersEventTime && creatOrNot > 0 && createdOthers == false)
+        if (createdOthers == false && gamingTime <= startOthersEventTime && creatOrNot > 0 && gamingTime > endOthersEventTime)
         {
             createdOthers = true;
             switch (sceneEvent)
@@ -171,13 +171,13 @@ public class LevelOneControl : MonoBehaviour
                     break;
             }
         }
-        else if (gamingTime <= startRainTime && creatOrNot > 4 && createdRain == false)
+        else if (createdRain == false && gamingTime <= startRainTime && creatOrNot > 4 && gamingTime > endRainEventTime)
         {
             createdRain = true;
             MessionEvents.instance.RainEvent();
         }
 
-        if (gamingTime <= endEventTime && createdRain == true)
+        if (gamingTime <= endRainEventTime && createdRain == true)
         {
             //dispear event;
             Debug.LogWarning("EndEvent");

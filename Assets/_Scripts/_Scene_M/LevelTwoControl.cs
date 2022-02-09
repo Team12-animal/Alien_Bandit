@@ -139,12 +139,11 @@ public class LevelTwoControl : MonoBehaviour
     [SerializeField] bool createdRain = false;
     //check rain event start time;
     [SerializeField] float startRainTime = 120.0f;
+    [SerializeField] float endRainEventTime = 60.0f;
     //created others events or not;
     [SerializeField] bool createdOthers = false;
     //check others event start time;
     [SerializeField] float startOthersEventTime = 105.0f;
-    //End event time
-    [SerializeField] float endEventTime = 60.0f;
     [SerializeField] float endOthersEventTime = 90.0f;
     public void TriggerSceneEvents()
     {
@@ -152,7 +151,7 @@ public class LevelTwoControl : MonoBehaviour
         //random a event to creat;
         int sceneEvent = Random.Range((int)MessionEvents.SceneEvent.TorbadoEvent, (int)MessionEvents.SceneEvent.EndCounts);
 
-        if (gamingTime <= startOthersEventTime && creatOrNot > 0 && createdOthers == false)
+        if (gamingTime <= startOthersEventTime && creatOrNot > 0 && createdOthers == false && gamingTime > endOthersEventTime)
         {
             createdOthers = true;
             switch (sceneEvent)
@@ -171,15 +170,16 @@ public class LevelTwoControl : MonoBehaviour
                     break;
             }
         }
-        else if (gamingTime <= startRainTime && creatOrNot > 4 && createdRain == false)
+        else if (gamingTime <= startRainTime && creatOrNot > 4 && createdRain == false && gamingTime > endRainEventTime)
         {
             createdRain = true;
             MessionEvents.instance.RainEvent();
         }
 
-        if (gamingTime <= endEventTime && createdRain == true)
+        if (gamingTime <= endRainEventTime && createdRain == true)
         {
             //dispear event;
+            //MessionEvents.instance.StopRainEvent();
             Debug.LogWarning("EndEvent");
             createdRain = false;
         }
