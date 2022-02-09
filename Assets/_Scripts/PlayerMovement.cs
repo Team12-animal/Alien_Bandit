@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject animalCatched;
 
     //animation
+    [SerializeField]
     private Transform holdingPos;
 
 
@@ -53,8 +54,8 @@ public class PlayerMovement : MonoBehaviour
         rVec = cam.transform.right;
         fVec = GenNewBaseForward();
 
-        holdingPos = FindChildT("HoldingPos");
-
+        //holdingPos = FindChildT("HoldingPos");
+        holdingPos = GameObject.Find("HoldingPos").transform;
         rb = this.gameObject.GetComponent<Rigidbody>();
         velocity = rb.velocity;
     }
@@ -74,13 +75,13 @@ public class PlayerMovement : MonoBehaviour
         data.animal = animalCatched;
     }
 
-    private Transform FindChildT(string cName)
-    {
-        Transform trans = this.gameObject.transform;
-        Transform childT = trans.Find(cName);
+    //private Transform FindChildT(string cName)
+    //{
+    //    Transform trans = this.gameObject.transform;
+    //    Transform childT = trans.Find(cName);
 
-        return childT;
-    }
+    //    return childT;
+    //}
 
     public string MoveAndRotate(float transAmt, float rotAmt)
     {
