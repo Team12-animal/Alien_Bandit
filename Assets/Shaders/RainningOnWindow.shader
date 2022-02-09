@@ -6,12 +6,14 @@ Shader "Unlit/RainningOnWindow"
         _Size("Size",float) = 1
         _TimeforSetting("Time",float) = 1
         _Distortion("Distortion",range(-6,6)) = 1
+        _Blur("Blur",range(0,1)) = 0
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Opaque" "Queue" = "Transparent"}
         LOD 100
 
+            GrabPass{"_GabTexture"}
         Pass
         {
             CGPROGRAM
@@ -30,18 +32,21 @@ Shader "Unlit/RainningOnWindow"
                 float2 uv : TEXCOORD0;
             };
 
-            struct v2f
+            struct v2f//get all the information from VertexShader to Fragment Shader
             {
                 float2 uv : TEXCOORD0;
+                float4 grabUV:TEXCOORD1;
                 float4 vertex : SV_POSITION;
             };
          
             //Using Properties in Shader Code
             sampler2D _MainTex;
+            sampler2D _GabTexture;
             float4 _MainTex_ST;
             float _Size;
             float _TimeforSetting;
             float _Distortion;
+            float _Blur;
          
             //VertexShader
             v2f vert (appdata v)
@@ -49,6 +54,7 @@ Shader "Unlit/RainningOnWindow"
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.grabUV = UNITY_PROJ_COORD(ComputeScreenPos(o.vertex));
                 return o;
             }
 
@@ -60,17 +66,13 @@ Shader "Unlit/RainningOnWindow"
                 return frac(p.x * p.y);
             }
 
-            //Fragment Shader
-            fixed4 frag (v2f i) : SV_Target
+            //make more drops by different layer
+            float3 Layer(float2 UV,float t)
             {
-                float timeOfYVelue = fmod(_Time.y +_TimeforSetting,7200);
-                //Init return color;
-                float4 col = 0;
-                
                 //Take the uv corner getting form VertexShader, and expose on the corner with parameter;
                 float2 aspect = float2(2,1);
-                float2 uv = i.uv *_Size * aspect;
-                uv.y += timeOfYVelue * 0.25f;
+                float2 uv = UV *_Size * aspect;
+                uv.y += t * 0.25f;
 
                 //-0.5f set the origin to middle;
                 float2 gv = frac(uv)-0.5f;
@@ -80,17 +82,17 @@ Shader "Unlit/RainningOnWindow"
 
                 //make a drop path;
                 float n = RandomBoxPattern(id);//for noise 0 or 1;
-                timeOfYVelue += n * 6.28341; //6.2831 = 2 PI
-                float w = i.uv.y * 10;
+                t += n * 6.28341; //6.2831 = 2 PI
+                float w = UV.y * 10;
                 float x = (n - 0.5f) * 0.8f; //the velue between -0.4f~0.4f; 
                 x += (0.4-abs(x)) * sin(3*w)*pow(sin(w),6) * 0.45f;//(0.4-abs(x))make sure the velue between x(-0.4f~0.4f);
-                float y = -sin(timeOfYVelue + sin(timeOfYVelue + sin(timeOfYVelue)*0.5f))*0.45f;
+                float y = -sin(t + sin(t + sin(t)*0.5f))*0.45f;
                 y -= (gv.x-x)*(gv.x-x);
                 float2 dropPos = (gv-float2(x,y)) /aspect;
                 float drop = S(0.05f,0.03f,length(dropPos));
 
                 //make a tail path
-                float2 trailPos = (gv-float2(x,timeOfYVelue *0.25f)) /aspect;
+                float2 trailPos = (gv-float2(x,t *0.25f)) /aspect;
                 trailPos.y = (frac(trailPos.y *6)-0.5f)/6;
                 float trail = S(0.03f,0.01f,length(trailPos));
                 //make trail drop slow down;
@@ -100,18 +102,55 @@ Shader "Unlit/RainningOnWindow"
                 trail *= fogTrail;
                 fogTrail *= S(0.05f,0.04f,abs(dropPos.x));
 
-                col += fogTrail * 0.5f;
-                col += trail;
-                col += drop;
-
+                //col += fogTrail * 0.5f;
+                //col += trail;
+                //col += drop;
                 //if(gv.x > 0.48f || gv.y >0.49f)col = float4(1,0,0,1);//print red lines 
                 //col.rg = id *0.1f;
                 //col = RandomBoxPattern(id);
 
                 float2 offsetPos = drop*dropPos + trail*trailPos;
-                col = tex2D(_MainTex,i.uv+offsetPos * _Distortion);
 
-                return col;
+                return float3(offsetPos,fogTrail);
+            }
+
+            //Fragment Shader
+            fixed4 frag (v2f i) : SV_Target
+            {
+                float timeOfYVelue = fmod(_Time.y +_TimeforSetting,7200);
+                //Init return color;
+                float4 col = 0;
+
+                //more Layer
+                float3 drops = Layer(i.uv,timeOfYVelue);
+                drops += Layer(i.uv * 1.23 + 7.54 , timeOfYVelue);
+                drops += Layer(i.uv * 1.35 + 1.54 , timeOfYVelue);
+                drops += Layer(i.uv * 1.57 - 7.54 , timeOfYVelue);
+                
+                float fade = 1-saturate(fwidth(i.uv) * 60);
+                float blur = _Blur * 3 * (1-drops.z * fade);
+                col = tex2Dlod(_MainTex,float4(i.uv + drops.xy * _Distortion,0,blur));
+
+
+                float2 projUV = i.grabUV.xy / i.grabUV.w;
+                projUV += drops.xy * _Distortion * fade;
+                blur *= 0.01;
+
+                const float numSamples = 1;
+                float a = RandomBoxPattern(i.uv) * 6.2831;
+                for(float i =0 ; i < numSamples ; i++)
+                {
+                    float2 offsetBlur = float2(sin(a),cos(a))*blur;
+                    float d = frac(sin((i+1)*546.0f)*5424.0f);
+                    d = sqrt(d);
+                    offsetBlur *= d;
+                    col = tex2D(_GabTexture,projUV + offsetBlur);
+                    a++;
+                }
+                col /= numSamples;
+                
+                
+                return col*0.9f;
             }
             ENDCG
         }
