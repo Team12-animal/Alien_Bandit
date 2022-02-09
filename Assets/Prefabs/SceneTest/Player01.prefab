@@ -376,11 +376,13 @@ MonoBehaviour:
   cam: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   raydect: 0
+  maxSpeed: 0
   maxRotate: 20
   setDashTime: 0.24
   dashSpeed: 12
   lerpAmt: 0.8
   itemInhand: {fileID: 0}
+  holdingPos: {fileID: 0}
   targetItem: {fileID: 0}
   triggerItem: {fileID: 0}
 --- !u!114 &501842583731638443
@@ -429,13 +431,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba7de638316a6d4b9a654a9688f8517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pid: 1
   maxSpeed: 8
+  reduceSpeed: 0.5
+  realSpeed: 0
   maxRotate: 15
+  reduceRotate: 0.5
+  realRotate: 0
   setDashTime: 0.24
   dashSpeed: 15
   lerpAmt: 0.8
   item: {fileID: 0}
   animal: {fileID: 0}
+  inTree: 0
 --- !u!1 &501842583731639404
 GameObject:
   m_ObjectHideFlags: 0

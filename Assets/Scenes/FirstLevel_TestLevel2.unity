@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.39723042, g: 0.4958442, b: 0.62596774, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.44841242, g: 0.520067, b: 0.5830893, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2963,6 +2963,7 @@ MonoBehaviour:
   rainWindowPrefab: {fileID: 2004037176485422815, guid: 616c7ae02c72917428f867e28d16079d, type: 3}
   rainPrefab: {fileID: 4240146041644091316, guid: f1dc8bce757a7794c8e75ffba5da475e, type: 3}
   rainMaterial: {fileID: 2100000, guid: f5cdd2d79b313a944b811cb697a4a860, type: 2}
+  rainningTime: 0
 --- !u!4 &237041390
 Transform:
   m_ObjectHideFlags: 0
@@ -7713,10 +7714,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
+  m_HorizontalAxis: Horizontal1
+  m_VerticalAxis: Vertical1
+  m_SubmitButton: Use1
+  m_CancelButton: Take1
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
@@ -8262,7 +8263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8430113619589626787, guid: 3590804b6f109dc47b564770d529d6a9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8430113619589864241, guid: 3590804b6f109dc47b564770d529d6a9, type: 3}
       propertyPath: m_RootOrder
@@ -9866,11 +9867,13 @@ MonoBehaviour:
   cam: {fileID: 1278580635}
   velocity: {x: 0, y: 0, z: 0}
   raydect: 0
+  maxSpeed: 0
   maxRotate: 10
   setDashTime: 0.5
   dashSpeed: 12
   lerpAmt: 0.6
   itemInhand: {fileID: 0}
+  holdingPos: {fileID: 0}
   targetItem: {fileID: 0}
   triggerItem: {fileID: 0}
 --- !u!1001 &1043365125
