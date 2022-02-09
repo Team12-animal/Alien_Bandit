@@ -60,10 +60,16 @@ public class PlayerMovement : MonoBehaviour
         velocity = rb.velocity;
     }
 
+    private void Update()
+    {
+        maxSpeed = data.realSpeed;
+        maxRotate = data.realRotate;
+    }
+
     private void InitPlayerData(PlayerData data)
     {
         maxSpeed = data.realSpeed;
-        maxRotate = data.maxRotate;
+        maxRotate = data.realRotate;
         setDashTime = data.setDashTime;
         dashSpeed = data.dashSpeed;
         lerpAmt = data.lerpAmt;

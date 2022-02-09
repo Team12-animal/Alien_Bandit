@@ -7,9 +7,11 @@ public class PlayerData : MonoBehaviour
     public int pid;
     //movement
     public float maxSpeed = 6f;
-    public float reduseSpeed;
+    public float reduceSpeed;
     public float realSpeed;
     public float maxRotate;
+    public float reduceRotate;
+    public float realRotate;
     public float setDashTime = 0.24f;
     public float dashSpeed;
     public float lerpAmt;
@@ -34,13 +36,13 @@ public class PlayerData : MonoBehaviour
     {
         if(item != null || animal != null)
         {
-            realSpeed = maxSpeed * reduseSpeed;
-
+            realSpeed = maxSpeed * reduceSpeed;
+            realRotate = maxRotate * reduceRotate;
         }
         else
         {
             realSpeed = maxSpeed;
+            realRotate = maxRotate;
         }
     }
-
 }
