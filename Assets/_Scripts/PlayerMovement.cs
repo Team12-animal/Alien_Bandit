@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         fVec = GenNewBaseForward();
 
         //holdingPos = FindChildT("HoldingPos");
-        holdingPos = GameObject.Find("HoldingPos").transform;
+        holdingPos = this.transform.Find("HoldingPos").transform;
         rb = this.gameObject.GetComponent<Rigidbody>();
         velocity = rb.velocity;
     }

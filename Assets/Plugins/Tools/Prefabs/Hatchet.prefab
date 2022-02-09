@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33361806133899168}
   - component: {fileID: 23708334674745128}
   - component: {fileID: 64153334305523408}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 33252445765384978}
   - component: {fileID: 23512952735407686}
   - component: {fileID: 64678512828663694}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,9 +201,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4200330878792296}
+  - component: {fileID: 1018494847}
+  - component: {fileID: 1018494844}
   m_Layer: 0
   m_Name: Hatchet
-  m_TagString: Untagged
+  m_TagString: Chop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -217,10 +219,39 @@ Transform:
   m_GameObject: {fileID: 1917468586814384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.2707405, y: 6.2378736, z: 0.7378135}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.4146466, y: 2.4146466, z: 2.4146469}
   m_Children:
   - {fileID: 4358391048080092}
   - {fileID: 4740583797443406}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1018494847
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917468586814384}
+  serializedVersion: 2
+  m_Mass: 0.5
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 96
+  m_CollisionDetection: 0
+--- !u!135 &1018494844
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917468586814384}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.37
+  m_Center: {x: 0, y: 0, z: 0}
