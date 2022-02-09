@@ -221,13 +221,20 @@ public class PlayerMovement : MonoBehaviour
     public GameObject targetItem;
     //在trigger內的道具
     public GameObject triggerItem;
-    
+
     //check what to pick
     private void OnTriggerStay(Collider other)
     {
-        triggerItem = other.gameObject;
+        if (other.tag == "Rock")
+        {
+            triggerItem = other.GetComponent<RockSensor>().targetRock;
+        }
+        else
+        {
+            triggerItem = other.gameObject;
+        }
     }
-    
+
     //拿取物品
     public string Take()
     {
@@ -237,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
         string aniClip;
 
         //道具桌不能拿取
-        if (tagName == "WorkingTable" || tagName == "Tree")
+        if (tagName == "WorkingTable" || tagName == "Tree" || targetItem.tag == "Rock")
         {
             return "none";
         }
@@ -476,7 +483,7 @@ public class PlayerMovement : MonoBehaviour
     //set item to HoldingPos
     private void HoldItem(GameObject targetItem)
     {
-        if (targetItem == null || targetItem.tag == "WorkingTable" || targetItem.tag == "Tree")
+        if (targetItem == null || targetItem.tag == "WorkingTable" || targetItem.tag == "Tree" || targetItem.tag == "Rock")
         {
             return;
         }
