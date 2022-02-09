@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class AddSelectCharacterButton : MonoBehaviour
 {
-    [SerializeField] GameObject[] rawImage1;
-    [SerializeField] GameObject[] rawImage2;
+    public GameObject[] rawImage1;
+    public GameObject[] rawImage2;
 
     string playerBox01 = "PlayerBox01";
     string playerBox02 = "PlayerBox02";

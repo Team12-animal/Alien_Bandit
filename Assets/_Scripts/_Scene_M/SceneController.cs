@@ -27,7 +27,6 @@ public class SceneController : MonoBehaviour
     public bool selected02 = false;
     public int animStartHash { get; private set; }
     public int animEndHash { get; private set; }
-
     private void Awake()
     {
         if (instance == null)
@@ -53,7 +52,7 @@ public class SceneController : MonoBehaviour
         if (sceneIndex < 0) throw new Exception(" < 0 not correct");
         if (sceneIndex != 0)
         {
-            //視載入情況決定要加入哪一種效果
+            //depend on what situation to change method;using loading bar or not;
             //StartCoroutine(LoadAsynchronously(sceneIndex));
             StartCoroutine(LoadTransition());
             SceneManager.LoadScene(sceneIndex);
@@ -102,7 +101,6 @@ public class SceneController : MonoBehaviour
 
     [Header("MainMenu設定")]
     InputController tempInput;
-    PlayerData tempPlayerData;
     Rigidbody tempRigibody;
     ChangeRoleSkin tempRoleSkin;
     AnimatorController tempAnim;
@@ -140,7 +138,8 @@ public class SceneController : MonoBehaviour
         tempRoleSkin.enabled = true;
 
         GetAnimator(player);
-        tempAnim.ChangeAnimationState(tempAnim.Player_DanceType18, 0f, 0f);//詭異
+        //wired
+        tempAnim.ChangeAnimationState(tempAnim.Player_DanceType18, 0f, 0f);
 
         player.transform.localRotation = new Quaternion(0, 180, 0, 0);
         player.SetActive(false);
@@ -166,7 +165,6 @@ public class SceneController : MonoBehaviour
         tempInput = player.GetComponent<InputController>();
         tempRigibody = player.GetComponent<Rigidbody>();
         tempRoleSkin = player.GetComponent<ChangeRoleSkin>();
-        tempPlayerData = player.GetComponent<PlayerData>();
     }
 
     public void StartMove(GameObject player)
