@@ -52,11 +52,12 @@ public class InputController : MonoBehaviour
         //movementDirection.Normalize();
 
         bool allowMove = CheckAniPlayingOrNot();
-
-        if (isDash == false && (Input.GetButton("Vertical" + pid) || Input.GetButton("Horizontal" + pid)))
+        if (isDash == false && (Input.GetAxis("Vertical" + pid)!=0 || Input.GetAxis("Horizontal" + pid)!=0))
         {
+            Debug.LogWarning(allowMove);
             if (allowMove)
             {
+                Debug.LogWarning("JoyStick");
                 anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
                 anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
                 transAmt = Input.GetAxis("Vertical" + pid);
@@ -89,7 +90,7 @@ public class InputController : MonoBehaviour
         //    anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
         //}
 
-        if(!Input.GetButton("Vertical" + pid) && !Input.GetButton("Horizontal" + pid))
+        if(Input.GetAxis("Vertical" + pid)==0 && Input.GetAxis("Horizontal" + pid)==0)
         {
             anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
             anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
@@ -197,7 +198,7 @@ public class InputController : MonoBehaviour
                 
         }
 
-        CheckAndPlayAnimation(Input.GetButton("Vertical" + pid) || Input.GetButton("Horizontal" + pid));
+        CheckAndPlayAnimation(Input.GetAxis("Vertical" + pid)!=0 || Input.GetAxis("Horizontal" + pid)!=0);
     }
 
     //play the animation(for AnimatorController call)
