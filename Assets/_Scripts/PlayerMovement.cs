@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     //movement
     [HideInInspector]
-    float maxSpeed;
+    public float maxSpeed;
     [HideInInspector]
     public float maxRotate;
     [HideInInspector]
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void InitPlayerData(PlayerData data)
     {
-        maxSpeed = data.maxSpeed;
+        maxSpeed = data.realSpeed;
         maxRotate = data.maxRotate;
         setDashTime = data.setDashTime;
         dashSpeed = data.dashSpeed;
@@ -259,7 +259,7 @@ public class PlayerMovement : MonoBehaviour
         string tagName = targetItem.gameObject.tag;
         string aniClip;
 
-        //道具桌不能拿取
+        //不能拿取
         if (tagName == "WorkingTable" || tagName == "Tree" || targetItem.tag == "Rock")
         {
             return "none";
@@ -502,6 +502,11 @@ public class PlayerMovement : MonoBehaviour
         if (targetItem == null || targetItem.tag == "WorkingTable" || targetItem.tag == "Tree" || targetItem.tag == "Rock")
         {
             return;
+        }
+
+        if(targetItem.tag == "RockModel")
+        {
+
         }
 
         int childAmt = targetItem.transform.childCount;

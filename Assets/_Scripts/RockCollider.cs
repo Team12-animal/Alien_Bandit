@@ -5,10 +5,12 @@ using UnityEngine;
 public class RockCollider : MonoBehaviour
 {
     public GameObject targetRock;
+    private Collider childCollider;
 
     private void Start()
     {
         DetectTarget();
+        childCollider = this.transform.Find("RockCollider").GetComponent<Collider>();
     }
 
     private void LateUpdate()
@@ -31,6 +33,22 @@ public class RockCollider : MonoBehaviour
         if (Physics.Raycast(from, to, out hit, Mathf.Infinity, 1 << 12))
         {
             targetRock = hit.collider.gameObject;
+        }
+    }
+
+    bool colliderActive;
+    public void AnimaEventCloseColliderToggle()
+    {
+        if (colliderActive == true)
+        {
+            childCollider.enabled = false;
+            colliderActive = false;
+        }
+
+        if (colliderActive == false)
+        {
+            childCollider.enabled = true;
+            colliderActive = true;
         }
     }
 }

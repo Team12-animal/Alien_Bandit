@@ -7,6 +7,8 @@ public class PlayerData : MonoBehaviour
     public int pid;
     //movement
     public float maxSpeed = 6f;
+    public float reduseSpeed;
+    public float realSpeed;
     public float maxRotate;
     public float setDashTime = 0.24f;
     public float dashSpeed;
@@ -17,4 +19,28 @@ public class PlayerData : MonoBehaviour
     public GameObject animal;
 
     public bool inTree;
+
+    private void Awake()
+    {
+        realSpeed = maxSpeed;
+    }
+
+    private void Update()
+    {
+        AdjustSpeed();
+    }
+
+    private void AdjustSpeed()
+    {
+        if(item != null || animal != null)
+        {
+            realSpeed = maxSpeed * reduseSpeed;
+
+        }
+        else
+        {
+            realSpeed = maxSpeed;
+        }
+    }
+
 }
