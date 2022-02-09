@@ -6,16 +6,18 @@ public class RockCollider : MonoBehaviour
 {
     public GameObject targetRock;
     private Collider childCollider;
+    
 
     private void Start()
     {
         DetectTarget();
-        childCollider = this.transform.Find("RockCollider").GetComponent<Collider>();
+        childCollider = this.transform.Find("RockCollider").GetComponent(typeof(Collider)) as Collider;
     }
 
     private void LateUpdate()
     {
         FollowTarget(targetRock);
+        DetectLeavingGroud();
     }
     private void FollowTarget(GameObject target)
     {
@@ -36,19 +38,30 @@ public class RockCollider : MonoBehaviour
         }
     }
 
-    bool colliderActive;
-    public void AnimaEventCloseColliderToggle()
+    private void DetectLeavingGroud()
     {
-        if (colliderActive == true)
-        {
-            childCollider.enabled = false;
-            colliderActive = false;
-        }
+        Vector3 from = this.transform.position;
+        Vector3 to = -this.transform.up;
 
-        if (colliderActive == false)
+        if (Physics.Raycast(from, to, 0.8f, 1 << 7))
         {
-            childCollider.enabled = true;
-            colliderActive = true;
+            OpenCollider();
         }
+        else
+        {
+            CloseCollider();
+        }
+    }
+
+    public void OpenCollider()
+    {
+        childCollider.enabled = true;
+        Debug.Log("colliderToggle" + childCollider.enabled);
+    }
+
+    public void CloseCollider()
+    {
+        childCollider.enabled = false;
+        Debug.Log("colliderToggle" + childCollider.enabled);
     }
 }

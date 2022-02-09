@@ -40,15 +40,6 @@ public class PlayerMovement : MonoBehaviour
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
         data = GetComponent<PlayerData>();
-
-        if (data == null)
-        {
-            Debug.Log("data null");
-        }
-        else
-        {
-            Debug.Log("data found");
-        }
         InitPlayerData(data);
 
         rVec = cam.transform.right;
@@ -244,9 +235,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.tag == "Rock")
         {
-            triggerItem = other.GetComponent<RockSensor>().targetRock;
+            triggerItem = other.GetComponent<RockTrigger>().targetRock;
         }
-        else
+        else if(other.tag == "Tree" || other.tag == "Wood" || other.tag == "Chop" || other.tag == "Bucket")
         {
             triggerItem = other.gameObject;
         }
@@ -438,7 +429,6 @@ public class PlayerMovement : MonoBehaviour
     public string Drop()
     {
         string aniClip = "none";
-
         aniClip = GetDropAniName(itemInhand.tag);
         targetItem = null;
         Debug.Log("Drop");
@@ -451,7 +441,7 @@ public class PlayerMovement : MonoBehaviour
 
         //check animation status
         //remove child
-        if (itemInhand != null && itemInhand.tag == "Rock")
+        if (itemInhand != null && itemInhand.tag == "RockModel")
         {
             aniClip = "ThrowRock";
         }
@@ -505,14 +495,14 @@ public class PlayerMovement : MonoBehaviour
     //set item to HoldingPos
     private void HoldItem(GameObject targetItem)
     {
-        if (targetItem == null || targetItem.tag == "WorkingTable" || targetItem.tag == "Tree" || targetItem.tag == "Rock")
+        if (targetItem == null || targetItem.tag == "WorkingTable" || targetItem.tag == "Tree")
         {
             return;
         }
 
         if(targetItem.tag == "RockModel")
         {
-
+            
         }
 
         int childAmt = targetItem.transform.childCount;

@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1383995431927206685}
   - component: {fileID: 9099152521488367970}
-  m_Layer: 0
+  - component: {fileID: 7979410807207343288}
+  m_Layer: 10
   m_Name: RockTrigger
-  m_TagString: Untagged
+  m_TagString: Rock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,9 +43,22 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1.2
-  m_Height: 8
+  m_Height: 9.2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7979410807207343288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6523471702129758217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd6deaa0188cf1449584667e37b372e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRock: {fileID: 0}
 --- !u!1 &7075646681803114721
 GameObject:
   m_ObjectHideFlags: 0
@@ -55,7 +69,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7075646681803114723}
   - component: {fileID: 7075646681803114722}
-  - component: {fileID: 114390920788586248}
   - component: {fileID: 2736372289302349002}
   m_Layer: 10
   m_Name: RockCollider
@@ -89,21 +102,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.8
-  m_Height: 8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &114390920788586248
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7075646681803114721}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 1.2
-  m_Height: 8
+  m_Height: 9.2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2736372289302349002
