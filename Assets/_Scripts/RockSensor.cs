@@ -17,6 +17,11 @@ public class RockSensor : MonoBehaviour
         c = this.GetComponent(typeof(Collider)) as Collider;
     }
 
+    private void Update()
+    {
+        OnGroundTest();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
@@ -25,15 +30,20 @@ public class RockSensor : MonoBehaviour
         }
     }
 
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    if (collision.gameObject.layer == 7)
-    //    {
-    //        c.enabled = true;
-    //    }
-    //    else
-    //    {
-    //        c.enabled = false;
-    //    }
-    //}
+    private void OnGroundTest()
+    {
+        Vector3 from = this.transform.position;
+        Vector3 dir = -this.transform.up;
+
+        if(Physics.Raycast(from, dir, 4.5f, 1 << 7))
+        {
+            c.enabled = true;
+            Debug.Log("rock hit");
+        }
+        else
+        {
+            c.enabled = false;
+            Debug.Log("Rock unhit");
+        }
+    }
 }

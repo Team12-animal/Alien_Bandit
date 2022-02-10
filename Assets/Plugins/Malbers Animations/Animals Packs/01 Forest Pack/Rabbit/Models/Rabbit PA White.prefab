@@ -115,8 +115,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1097717256845724}
-  m_LocalRotation: {x: 0.0000000018626451, y: 0.000000029802322, z: -5.551115e-17,
-    w: 1}
+  m_LocalRotation: {x: 0.0000000018626451, y: 0.000000029802322, z: -5.551115e-17, w: 1}
   m_LocalPosition: {x: -0.12715155, y: -0.00006371021, z: -0.00000019073485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -177,8 +176,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113303035910948}
-  m_LocalRotation: {x: -0.0000000010345502, y: -0.0000000013223582, z: 0.31352836,
-    w: 0.9495788}
+  m_LocalRotation: {x: -0.0000000010345502, y: -0.0000000013223582, z: 0.31352836, w: 0.9495788}
   m_LocalPosition: {x: -0.086475104, y: 0.000000095367426, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -196,9 +194,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4027027348718146}
   - component: {fileID: 95952943839256812}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: Rabbit PA White
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -212,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 1143616314940228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.254, y: 0, z: 0}
-  m_LocalScale: {x: 1.15, y: 1.15, z: 1.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4207975586724776}
   - {fileID: 4635711157629948}
@@ -228,7 +226,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1143616314940228}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: e1f61507af3734e4eb2f4bf1b1214c24, type: 3}
   m_Controller: {fileID: 9100000, guid: 7cada9b9eb3fc7942b561ecc467f184a, type: 2}
   m_CullingMode: 0
@@ -280,7 +278,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4207975586724776}
   - component: {fileID: 137240798213451808}
-  m_Layer: 20
+  - component: {fileID: 4772355600311265824}
+  m_Layer: 0
   m_Name: RabbitPolyArt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,7 +294,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1301209165829002}
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0.010637808, y: 0, z: 0}
+  m_LocalPosition: {x: 0.128, y: 0, z: 0.031}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4027027348718146}
@@ -316,6 +315,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -399,6 +399,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.01903312, y: 0.13141924, z: 0.00006778538}
     m_Extent: {x: 0.28127587, y: 0.3118353, z: 0.13993268}
   m_DirtyAABB: 0
+--- !u!64 &4772355600311265824
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301209165829002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1323182251957122
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,8 +466,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1342987056389288}
-  m_LocalRotation: {x: 0.0000000037252903, y: 1.11022276e-16, z: 0.000000029802315,
-    w: 1}
+  m_LocalRotation: {x: 0.0000000037252903, y: 1.11022276e-16, z: 0.000000029802315, w: 1}
   m_LocalPosition: {x: -0.12715168, y: -0.00006369591, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -978,8 +991,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709454031841742}
-  m_LocalRotation: {x: -0.0000000014328941, y: -0.0000000011900679, z: -0.7692791,
-    w: 0.63891286}
+  m_LocalRotation: {x: -0.0000000014328941, y: -0.0000000011900679, z: -0.7692791, w: 0.63891286}
   m_LocalPosition: {x: -0.07694826, y: -0.0000000667572, z: -0.0000000333786}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

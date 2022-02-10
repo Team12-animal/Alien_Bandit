@@ -15,7 +15,7 @@ public class PoolLoader : MonoBehaviour
         instance = this;
     }
 
-    private void Start()
+    private void Awake()
     {
         nodes = GameObject.FindGameObjectsWithTag(nodeTagName);
         

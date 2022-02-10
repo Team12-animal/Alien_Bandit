@@ -8,7 +8,9 @@ public class TreeSensor : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            other.GetComponent<PlayerData>().inTree = true;
+            PlayerData data = other.GetComponent<PlayerData>();
+            data.inTree = true;
+            data.tree = this.gameObject;
         }
     }
 
@@ -16,7 +18,9 @@ public class TreeSensor : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            other.GetComponent<PlayerData>().inTree = false;
+            PlayerData data = other.GetComponent<PlayerData>();
+            data.inTree = false;
+            data.tree = null;
         }
     }
 }

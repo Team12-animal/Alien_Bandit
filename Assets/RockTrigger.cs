@@ -6,9 +6,6 @@ public class RockTrigger : MonoBehaviour
 {
     public GameObject targetRock;
     private GameObject parent;
-    private RockCollider rc;
-    private PlayerData[] datas;
-    private GameObject[] players;
 
     // Start is called before the first frame update
     void Start()

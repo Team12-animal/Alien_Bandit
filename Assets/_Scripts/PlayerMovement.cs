@@ -35,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Transform holdingPos;
 
+    //throw
+    private InputController input;
 
     void Start()
     {
@@ -49,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
         holdingPos = this.transform.Find("HoldingPos").transform;
         rb = this.gameObject.GetComponent<Rigidbody>();
         velocity = rb.velocity;
+
+        input = this.gameObject.GetComponent<InputController>();
     }
 
     private void Update()
@@ -87,11 +91,11 @@ public class PlayerMovement : MonoBehaviour
         Vector3 dir = (rVec * rotAmt) + (fVec * transAmt);
 
         this.transform.forward = Vector3.Slerp(this.transform.forward, dir * maxRotate * Time.deltaTime, lerpAmt);
-        
+
         float moveDist = dir.magnitude;
         Vector3 moveAmt = this.transform.forward * moveDist * maxSpeed;
 
-        //修正人物碰撞抖動問題
+        //?????H???I?????????D
         Vector3 from = this.transform.position;
         from.y += 0.5f;
         Vector3 to = from + moveAmt;
@@ -100,20 +104,18 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawLine(from, to, Color.black);
 
         RaycastHit hit;
-        if(Physics.Linecast(from, to, out hit, 1 << 8))
+        if (Physics.Linecast(from, to, out hit, 1 << 8))
         {
             moveAmt = hit.point - from;
             moveAmt.y += 0.5f;
             moveAmt.z -= 0.5f;
-
-            Debug.Log("Fix collider");
         }
 
-        //修正人物站立高度
+        //?????H??????????
         Vector3 toGround = from + (-this.transform.up * 10f);
 
         RaycastHit ground;
-        if(Physics.Linecast(from, toGround, out ground, 1 << 7))
+        if (Physics.Linecast(from, toGround, out ground, 1 << 7))
         {
             moveAmt.y = ground.point.y;
         }
@@ -121,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         this.transform.position += moveAmt * Time.deltaTime;
 
         //Get Animator Name
-        if(data.item != null)
+        if (data.item != null)
         {
             aniClip = GetMoveAniName(data.item);
         }
@@ -133,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
         return aniClip;
     }
 
-    //將人物移動對齊鏡頭Y軸
+    //?N?H?????????????YY?b
     public Vector3 GenNewBaseForward()
     {
         Vector3 tempV = cam.transform.forward;
@@ -142,13 +144,18 @@ public class PlayerMovement : MonoBehaviour
         return tempV;
     }
 
-    //根據玩家持有物品取得移動動畫
+    //???????a???????~???o???????e
     private string GetMoveAniName(GameObject item)
     {
         string aniName = "none";
         string tagName = item.gameObject.tag;
 
         if (tagName == "RockModel")
+        {
+            aniName = "HoldRockWalk";
+        }
+
+        if (tagName == "Box")
         {
             aniName = "HoldRockWalk";
         }
@@ -171,12 +178,12 @@ public class PlayerMovement : MonoBehaviour
         return aniName;
     }
 
-    //衝刺
+    //????
     public float Dash(float dashTime)
     {
         Debug.Log("dash");
 
-        //修正人物碰撞抖動問題
+        //?????H???I?????????D
         Vector3 from = this.transform.position;
         from.y += 0.5f;
         Vector3 moveAmt = this.transform.forward * dashSpeed;
@@ -193,15 +200,13 @@ public class PlayerMovement : MonoBehaviour
             moveAmt.z -= 0.5f;
 
             raydect = true;
-
-            Debug.Log("Fix collider dash");
         }
         else
         {
             raydect = false;
         }
 
-        //修正人物站立高度
+        //?????H??????????
         Vector3 toGround = from + (-this.transform.up * 10f);
 
         RaycastHit ground;
@@ -212,22 +217,22 @@ public class PlayerMovement : MonoBehaviour
 
 
         this.transform.position += moveAmt * Time.deltaTime;
-        
+
 
         dashTime -= Time.deltaTime;
         return dashTime;
     }
 
-    
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * 2);
     }
 
-    //目標道具
+    //?????D??
     public GameObject targetItem;
-    //在trigger內的道具
+    //?btrigger?????D??
     public GameObject triggerItem;
 
     //check what to pick
@@ -237,7 +242,7 @@ public class PlayerMovement : MonoBehaviour
         {
             triggerItem = other.GetComponent<RockTrigger>().targetRock;
         }
-        else if(other.tag == "Tree" || other.tag == "Wood" || other.tag == "Chop" || other.tag == "Bucket")
+        else if (other.tag == "Wood" || other.tag == "Chop" || other.tag == "Bucket" || other.tag == "Box" || other.tag == "WorkingTable")
         {
             triggerItem = other.gameObject;
         }
@@ -248,21 +253,28 @@ public class PlayerMovement : MonoBehaviour
         triggerItem = null;
     }
 
-    //拿取物品
+    //???????~
     public string Take()
     {
-        targetItem = triggerItem;
+        if(triggerItem == null)
+        {
+            return "none";
+        }
 
-        string tagName = targetItem.gameObject.tag;
+        string tagName;
+
+        targetItem = triggerItem;
+        tagName = targetItem.gameObject.tag;
+
         string aniClip;
 
-        //不能拿取
+        //????????
         if (tagName == "WorkingTable" || tagName == "Tree" || targetItem.tag == "Rock")
         {
             return "none";
         }
 
-        //拿取道具
+        //?????D??
         if (targetItem != null)
         {
             FaceTarget(targetItem);
@@ -284,9 +296,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// 取得撿取動畫
+    /// ???o???????e
     /// </summary>
-    /// <param 目標道具tag="tagName"></param>
+    /// <param ?????D??tag="tagName"></param>
     /// <returns></returns>
     private string GetTakeAniName(string tagName)
     {
@@ -312,18 +324,23 @@ public class PlayerMovement : MonoBehaviour
             aniName = "PickUpBucket";
         }
 
+        if (tagName == "Box")
+        {
+            aniName = "PickUpRock";
+        }
+
         return aniName;
     }
 
-    //使用斧頭
+    //???????Y
     public string UseChop()
     {
         string aniClip = "none";
 
-        //如果有樹就砍 沒樹就把斧頭丟掉
+        //?p?G?????N?? ?S???N?????Y????
         if (data.inTree == true)
         {
-            aniClip = ChopTree();
+            aniClip = ChopTree(data.tree);
         }
         else
         {
@@ -333,8 +350,8 @@ public class PlayerMovement : MonoBehaviour
         return aniClip;
     }
 
-    //砍樹
-    private string ChopTree()
+    //????
+    private string ChopTree(GameObject tree)
     {
         string aniName;
         
@@ -345,37 +362,50 @@ public class PlayerMovement : MonoBehaviour
         return aniName;
     }
 
-    //砍樹動畫結束後 產生樹樁和樹幹(給animation event)
+    int hitTime = 0;
+
+    //???????e?????? ?????????M???F(??animation event)
     public void AnimaEventSpawnStumpAndLog()
     {
-        GameObject tree;
-        tree = targetItem;
-
-        Vector3 spawnPos;
-        Vector3 treePos = tree.transform.position;
-        Vector3 spawnDir = -tree.transform.up;
-        RaycastHit hit;
-
-        //hide tree
-        tree.SetActive(false);
-
-        //spawn stump and log on treePos
-        if (Physics.Raycast(treePos, spawnDir, out hit, Mathf.Infinity, 1 << 7))
+        if (hitTime < 2)
         {
-            spawnPos = hit.point;
-
-            //change tree prefeb to stump
-            var stumpPrefab = Resources.Load<GameObject>("TreeStump");
-            GameObject stump = GameObject.Instantiate(stumpPrefab) as GameObject;
-            stump.SetActive(true);
-            stump.transform.position = spawnPos;
-
-            //spawn log
-            var logPrefab = Resources.Load<GameObject>("Log");
-            GameObject log = GameObject.Instantiate(logPrefab) as GameObject;
-            log.SetActive(true);
-            log.transform.position = spawnPos + (-spawnDir) * 1.0f;
+            hitTime += 1;
         }
+        else
+        {
+            GameObject tree = data.tree;
+            Vector3 spawnPos;
+            Vector3 treePos = tree.transform.position;
+            Vector3 spawnDir = -tree.transform.up;
+            RaycastHit hit;
+
+            //hide tree
+            tree.SetActive(false);
+
+            //spawn stump and log on treePos
+            if (Physics.Raycast(treePos, spawnDir, out hit, Mathf.Infinity, 1 << 7))
+            {
+                spawnPos = hit.point;
+
+                //change tree prefeb to stump
+                var stumpPrefab = Resources.Load<GameObject>("TreeStump");
+                GameObject stump = GameObject.Instantiate(stumpPrefab) as GameObject;
+                stump.SetActive(true);
+                stump.transform.position = spawnPos;
+
+                //spawn log
+                var logPrefab = Resources.Load<GameObject>("Log");
+                GameObject log = GameObject.Instantiate(logPrefab) as GameObject;
+                log.SetActive(true);
+                log.transform.position = spawnPos + (-spawnDir) * 4.0f;
+            }
+
+            hitTime = 0;
+            data.tree = null;
+            data.inTree = false;
+        }
+
+        Debug.Log("SpawnStump" + hitTime);
     }
 
 
@@ -441,7 +471,7 @@ public class PlayerMovement : MonoBehaviour
 
         //check animation status
         //remove child
-        if (itemInhand != null && itemInhand.tag == "RockModel")
+        if (itemInhand != null && (itemInhand.tag == "RockModel" || itemInhand.tag == "Box"))
         {
             aniClip = "ThrowRock";
         }
@@ -473,6 +503,11 @@ public class PlayerMovement : MonoBehaviour
             aniName = "PutDownBucket";
         }
 
+        if (tagName == "Box")
+        {
+            aniName = "PutDownRock";
+        }
+
         Debug.Log("Drop" + tagName + aniName);
 
         return aniName;
@@ -482,6 +517,7 @@ public class PlayerMovement : MonoBehaviour
     private void FaceTarget(GameObject target)
     {
         Vector3 dirToItem = target.transform.position - this.transform.position;
+        dirToItem.y = this.transform.position.y;
         float fDotD = Vector3.Dot(this.transform.forward, dirToItem);
 
         if (fDotD < 0.3f)
@@ -498,11 +534,6 @@ public class PlayerMovement : MonoBehaviour
         if (targetItem == null || targetItem.tag == "WorkingTable" || targetItem.tag == "Tree")
         {
             return;
-        }
-
-        if(targetItem.tag == "RockModel")
-        {
-            
         }
 
         int childAmt = targetItem.transform.childCount;
@@ -540,9 +571,12 @@ public class PlayerMovement : MonoBehaviour
         UpdatePlayerData();
     }
 
+    float inputf = 0.0f;
+    float force = 90.0f;
+
     private void ThrowAway()
     {
-        if (data.item = null)
+        if(data.item = null)
         {
             return;
         }
@@ -550,15 +584,31 @@ public class PlayerMovement : MonoBehaviour
         holdingPos.DetachChildren();
         Rigidbody targetRG = itemInhand.GetComponent<Rigidbody>();
         targetRG.isKinematic = false;
+
+        inputf = input.pressTimeSaver / 0.2f;
+        force *= inputf;
+
+        if (force > 800.0f)
+        {
+            force = 800.0f;
+        }
+
+        if (force <= 100.0f)
+        {
+            force = 100.0f;
+        }
+
+        //??item???l?O
+        targetRG.AddForce(this.transform.forward * force, ForceMode.Impulse);
+
         foreach (Transform child in itemInhand.transform)
         {
             (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = true;
         }
 
-        //給item初始力
-        targetRG.AddForce(this.transform.forward * 4.0f, ForceMode.Impulse);
-
         itemInhand = null;
         UpdatePlayerData();
+
+        Debug.Log("ThrowAway" + force);
     }
 }

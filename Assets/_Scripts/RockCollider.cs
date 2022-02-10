@@ -17,7 +17,6 @@ public class RockCollider : MonoBehaviour
     private void LateUpdate()
     {
         FollowTarget(targetRock);
-        DetectLeavingGroud();
     }
     private void FollowTarget(GameObject target)
     {
@@ -38,30 +37,4 @@ public class RockCollider : MonoBehaviour
         }
     }
 
-    private void DetectLeavingGroud()
-    {
-        Vector3 from = this.transform.position;
-        Vector3 to = -this.transform.up;
-
-        if (Physics.Raycast(from, to, 0.8f, 1 << 7))
-        {
-            OpenCollider();
-        }
-        else
-        {
-            CloseCollider();
-        }
-    }
-
-    public void OpenCollider()
-    {
-        childCollider.enabled = true;
-        Debug.Log("colliderToggle" + childCollider.enabled);
-    }
-
-    public void CloseCollider()
-    {
-        childCollider.enabled = false;
-        Debug.Log("colliderToggle" + childCollider.enabled);
-    }
 }

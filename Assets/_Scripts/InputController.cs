@@ -22,8 +22,8 @@ public class InputController : MonoBehaviour
     bool takePressed;
     bool takePressUp;
     float holdDownStartTime = 0f;
-    [SerializeField] float pressedTime = 1.0f;
-    [SerializeField] bool inTreeArea = false;
+    [SerializeField] float pressedTime = 0.2f;
+    [SerializeField] bool inTreeArea;
 
     private void Awake()
     {
@@ -32,6 +32,7 @@ public class InputController : MonoBehaviour
         anim.Init();
         pm = GetComponent<PlayerMovement>();
         data = GetComponent<PlayerData>();
+        inTreeArea = data.inTree;
     }
     void Start()
     {
@@ -39,8 +40,14 @@ public class InputController : MonoBehaviour
         pid = data.pid;
     }
 
+    bool takePressDown;
+    float takePressTimer;
+    public float pressTimeSaver = 0.0f;
+
     void Update()
     {
+        inTreeArea = data.inTree;
+
         string aniClip = "none";
 
         //rotAmt = Input.GetAxis("Horizontal" + pid);
@@ -95,9 +102,24 @@ public class InputController : MonoBehaviour
             anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
         }
 
-        if (Input.GetButtonDown("Take" + pid) && isDash == false)
+        if(Input.GetButtonDown("Take" + pid) && isDash == false)
         {
-            if(data.item != null)
+            takePressDown = true;
+        }
+
+        if(Input.GetButtonUp("Take" + pid) && isDash == false)
+        {
+            takePressDown = false;
+        }
+
+        if(takePressDown == true)
+        {
+            takePressTimer += Time.deltaTime;
+        }
+
+        if(Input.GetButtonUp("Take" + pid) && isDash == false)
+        {
+            if (data.item != null)
             {
                 holdingItem = true;
             }
@@ -122,50 +144,37 @@ public class InputController : MonoBehaviour
             {
                 string itemInhand = data.item.gameObject.tag;
 
-                if (itemInhand == "Chop")
+                if(takePressTimer >= 0.2f && (itemInhand == "RockModel" || itemInhand == "Box"))
                 {
-                    aniClip = pm.UseChop();
+                    aniClip = pm.Throw(takePressTimer);
                 }
-                else if (itemInhand == "Bucket")
+                else
                 {
-                    //aniName = pm.UseBucket();
-                }
-                else if (itemInhand == "RockModel")
-                {
-                    float endPress = 0.0f;
-                    float startPress = 0.0f;
-
-                    if (takePressed)
+                    if (itemInhand == "Chop")
                     {
-                        startPress = Time.time;
+                        aniClip = pm.UseChop();
                     }
-
-                    if (takePressUp)
+                    else if (itemInhand == "Bucket")
                     {
-                        endPress = Time.time;
-                    }
-
-                    float pressTime = endPress - startPress;
-
-                    if (pressedTime >= 3.0f)
-                    {
-                        aniClip = pm.Throw(pressTime);
+                        //aniName = pm.UseBucket();
                     }
                     else
                     {
                         aniClip = pm.Drop();
                     }
                 }
-                else
-                {
-                    aniClip = pm.Drop();
-                }
+
+                Debug.Log(aniClip);
+                anim.ChangeAnimationState(aniClip, 0, 0);
             }
 
-            Debug.Log(aniClip);
-            anim.ChangeAnimationState(aniClip, 0, 0);
+
+            Debug.Log("takepress" + takePressTimer);
+            pressTimeSaver = takePressTimer;
+            takePressTimer = 0.0f;
         }
 
+        
         if (Input.GetButtonDown("Dash" + pid) && isDash == false && anim.animator.GetBool(anim.animRoling) == false)
         {
             if (isDash == false)
@@ -231,12 +240,13 @@ public class InputController : MonoBehaviour
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldRockWalk) && takePressUp)
         {
-            float temp = pressedTime;
+            pressedTime = 0.2f;
             float holdDownTime = Time.time - holdDownStartTime;
             if (holdDownTime >= pressedTime)
                 anim.ChangeAnimaEventState(anim.Player_ThrowRock);
             else if (holdDownTime > 0.03f)
                 anim.ChangeAnimaEventState(anim.Player_PutDownRock);
+            Debug.Log(pressedTime + "takepress2" + holdDownTime);
             //GetComponent<PlayerData>().maxSpeed = 6;
         }
         if (anim.animator.GetBool(anim.animPickedHash) && anim.animator.GetCurrentAnimatorStateInfo(0).IsName(anim.Player_HoldWoodWalk) && moving)
@@ -314,12 +324,6 @@ public class InputController : MonoBehaviour
         {
             anim.ChangeAnimaEventState(anim.Player_PickUpChop);
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Tree")
-            inTreeArea = false;
     }
 
     private void OnTriggerEnter(Collider other)
