@@ -8,7 +8,7 @@ public class LevelTwoControl : MonoBehaviour
     [Header("遊戲開始時間倒數")]
     [SerializeField] float waittingTime = 6.0f;
     [SerializeField] Text waittingTimeText;
-    [SerializeField] Canvas timeUI;
+    [SerializeField] Canvas waittingTimeUI;
 
     [Header("遊戲進行期間")]
     [SerializeField] float gamingTime = 180.0f;
@@ -24,7 +24,6 @@ public class LevelTwoControl : MonoBehaviour
 
     //is player win the game?
     public bool isWin;
-    int stars = 0;
 
     private void Start()
     {
@@ -36,7 +35,6 @@ public class LevelTwoControl : MonoBehaviour
         gamingTime = 180.0f;
         doorDestroied = false;
         isWin = false;
-        stars = 0;
     }
 
     private void Update()
@@ -51,6 +49,7 @@ public class LevelTwoControl : MonoBehaviour
     {
         if (waittingTime <= 0f)
         {
+            waittingTimeUI.gameObject.SetActive(false);
             if (SceneController.instance.selected01)
             {
                 SceneController.instance.StartMove(player[0]);
@@ -59,13 +58,17 @@ public class LevelTwoControl : MonoBehaviour
             {
                 SceneController.instance.StartMove(player[1]);
             }
-            timeUI.gameObject.SetActive(false);
+            waittingTimeUI.gameObject.SetActive(false);
             if (!isWin)
             {
                 gamingTime = SetTime(gamingTime, gamingTimeText);
             }
         }
-        waittingTime = SetTime(waittingTime, waittingTimeText);
+        else if (waittingTime < 1.2f)
+        {
+            waittingTimeText.text = "GO!";
+        }
+        waittingTime -= Time.deltaTime;
     }
 
     public float SetTime(float time, Text text)
@@ -88,7 +91,7 @@ public class LevelTwoControl : MonoBehaviour
         else if (isWin)
         {
             //need to creat win UI;
-            
+
 
             // can't control players;
             GameOverSetting(input01, input02);

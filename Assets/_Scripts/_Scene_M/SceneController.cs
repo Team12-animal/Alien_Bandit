@@ -27,6 +27,7 @@ public class SceneController : MonoBehaviour
     public bool selected02 = false;
     public int animStartHash { get; private set; }
     public int animEndHash { get; private set; }
+
     private void Awake()
     {
         if (instance == null)
@@ -47,6 +48,7 @@ public class SceneController : MonoBehaviour
         MainPlayer(player01);
         MainPlayer(player02);
     }
+
     public void LoadLevel(int sceneIndex)
     {
         if (sceneIndex < 0) throw new Exception(" < 0 not correct");

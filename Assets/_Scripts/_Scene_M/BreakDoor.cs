@@ -9,6 +9,7 @@ public class BreakDoor : MonoBehaviour
     [SerializeField] GameObject breakDoor;
     [SerializeField] Vector3 setPosition = new Vector3(18.98f, -0.36f, 17.7f);
     [SerializeField] LevelOneControl levelOne;
+    [SerializeField] LevelTwoControl levelTwo;
 
     private void Start()
     {
@@ -21,7 +22,13 @@ public class BreakDoor : MonoBehaviour
         {
             Destroy(originDoor);
             Instantiate(breakDoor, setPosition,Quaternion.identity);
-            levelOne.doorDestroied = true;
+            if(levelOne != null)
+            {
+                levelOne.doorDestroied = true;
+            }else if(levelTwo != null)
+            {
+                levelTwo.doorDestroied = true;
+            }
         }
     }
 }

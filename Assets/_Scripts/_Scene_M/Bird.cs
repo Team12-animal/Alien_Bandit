@@ -5,38 +5,35 @@ using UnityEngine.EventSystems;
 
 public class Bird : MonoBehaviour
 {
-
-
     private void Start()
     {
-     
+        //Vector3(326.0625, 254.77655, 0)  need to offset parent position;
+        transform.position = new Vector3(890.1f, 260.73f, -1092.16f);
+        //Vector3(564.048096, 5.95675659, -1092.16235) right position
     }
-
     void Update()
     {
-        SeagulPos();
+        //SeagulPos();
 
-        //Vector3 mouse = Input.mousePosition;
-        //Ray castPoint = Camera.main.ScreenPointToRay(mouse);
-        //RaycastHit hit;
-        //if (Physics.Raycast(castPoint, out hit, Mathf.Infinity))
-        //{
-        //    if (hit.transform.tag == "Button")
-        //self.transform.position = hit.transform.position + offsetPosition;
-        //}
+        Vector3 mouse = Input.mousePosition;
+        Vector3 offsetPosition = new Vector3(-1.0f, 0.0f, -1.0f);
+        Ray castPoint = Camera.main.ScreenPointToRay(mouse);
+        RaycastHit hit;
+        if (Physics.Raycast(castPoint, out hit, Mathf.Infinity))
+        {
+            if (hit.transform.tag == "Button")
+                transform.position = hit.transform.position + offsetPosition;
+        }
     }
     void SeagulPos()
     {
         string current = EventSystem.current.currentSelectedGameObject.name;
-        Debug.LogError(current);
         switch (current)
         {
             case "NewGame":
-                Debug.LogError("EnterNewGame");
                 transform.position = new Vector3(889f, 261.7f, -1092f);
                 break;
             case "Continue":
-                Debug.LogError("EnterContinue");
                 transform.position = new Vector3(889f, 259.6f, -1092f);
                 break;
             case "Setting":
@@ -45,7 +42,8 @@ public class Bird : MonoBehaviour
             case "Exit":
                 transform.position = new Vector3(889f, 256.8f, -1092f);
                 break;
+            case "":
+                break;
         }
-
     }
 }

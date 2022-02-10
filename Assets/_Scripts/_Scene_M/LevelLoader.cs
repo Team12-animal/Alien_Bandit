@@ -8,6 +8,7 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] GameObject chooseLevelUI;
     ChangeRoleSkin changeRole = new ChangeRoleSkin();
 
+
     [SerializeField] GameObject playerRawImagePanel01;
     [SerializeField] GameObject playerRawImagePanel02;
     private void Awake()
