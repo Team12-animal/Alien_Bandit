@@ -15,7 +15,8 @@ public class LevelTwoControl : MonoBehaviour
     [SerializeField] Text gamingTimeText;
 
     [Header("¹CÀ¸µ²§ô")]
-    [SerializeField] GameObject[] gameoverUIText;
+    [SerializeField] GameObject[] gameOverUIText;
+    [SerializeField] GameObject gameWinUI;
     public bool doorDestroied = false;
     InputController input01 = new InputController();
     InputController input02 = new InputController();
@@ -30,13 +31,14 @@ public class LevelTwoControl : MonoBehaviour
     private void Start()
     {
         SceneController.instance.GetPlayer(player);
-        for (int i = 0; i < gameoverUIText.Length; i++)
+        for (int i = 0; i < gameOverUIText.Length; i++)
         {
-            gameoverUIText[i].gameObject.SetActive(false);
+            gameOverUIText[i].gameObject.SetActive(false);
         }
         gamingTime = 180.0f;
         doorDestroied = false;
         isWin = false;
+        gameWinUI.SetActive(false);
     }
 
     private void Update()
@@ -85,7 +87,10 @@ public class LevelTwoControl : MonoBehaviour
     {
         time -= Time.deltaTime;
         time = Mathf.Clamp(time, 0f, Mathf.Infinity);
-        text.text = string.Format("{0:00}", time);
+        int minute = (int)gamingTime / 60;
+        int second = (int)gamingTime- minute * 60;
+        text.text = string.Format("{0:D2}:{1:D2}", minute, second);
+
         return time;
     }
 
@@ -97,13 +102,17 @@ public class LevelTwoControl : MonoBehaviour
         input04 = player[3].GetComponent<InputController>();
         if (gamingTime <= 0.0f || doorDestroied)
         {
+            GameOverSetting(input01, input02, input03, input04);
             // can't control players;
-            GameOverSetting(input01, input02,input03,input04);
+            for (int i = 0; i < gameOverUIText.Length; i++)
+            {
+                gameOverUIText[i].gameObject.SetActive(true);
+            }
         }
         else if (isWin)
         {
             //need to creat win UI;
-
+            gameWinUI.SetActive(true);
 
             // can't control players;
             GameOverSetting(input01, input02,input03,input04);
@@ -121,10 +130,6 @@ public class LevelTwoControl : MonoBehaviour
         input02.enabled = false;
         input03.enabled = false;
         input04.enabled = false;
-        for (int i = 0; i < gameoverUIText.Length; i++)
-        {
-            gameoverUIText[i].gameObject.SetActive(true);
-        }
     }
     /// <summary>
     /// finish mession on time to win stars; 

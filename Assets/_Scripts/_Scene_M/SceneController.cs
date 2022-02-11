@@ -34,6 +34,9 @@ public class SceneController : MonoBehaviour
     public int animStartHash { get; private set; }
     public int animEndHash { get; private set; }
 
+    [Header("Events")]
+    [SerializeField] GameObject eventsController;
+
     private void Awake()
     {
         if (instance == null)
@@ -66,6 +69,7 @@ public class SceneController : MonoBehaviour
             //StartCoroutine(LoadAsynchronously(sceneIndex));
             StartCoroutine(LoadTransition());
             SceneManager.LoadScene(sceneIndex);
+            eventsController.SetActive(true);
             if (selected01)
             {
                 SetPlayer(player01);
@@ -87,8 +91,11 @@ public class SceneController : MonoBehaviour
         {
             StartCoroutine(LoadTransition());
             SceneManager.LoadScene(0);
+            eventsController.SetActive(false);
             selected01 = false;
             selected02 = false;
+            selected03 = false;
+            selected04 = false;
             MainPlayer(player01);
             MainPlayer(player02);
             MainPlayer(player03);

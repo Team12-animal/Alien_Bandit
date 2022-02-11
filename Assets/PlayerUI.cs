@@ -6,13 +6,19 @@ public class PlayerUI : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public GameObject targetPlayer;
+    [SerializeField] GameObject targetPlayer;
+    [SerializeField] string targetPlayerName;
     public float height;
     private Vector3 followPos;
     private Camera cam;
 
     private void Start()
     {
+        targetPlayer = GameObject.Find(targetPlayerName);
+        if (targetPlayer == null)
+        {
+            return;
+        }
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         if(cam != null)
@@ -25,7 +31,11 @@ public class PlayerUI : MonoBehaviour
 
     void LateUpdate()
     {
-        if(targetPlayer.activeInHierarchy == true)
+        if (targetPlayer == null)
+        {
+            return;
+        }
+        if (targetPlayer.activeInHierarchy == true)
         {
             followPos = targetPlayer.transform.position;
             followPos.y += height;
