@@ -80,14 +80,16 @@ public class PlayerMovement : MonoBehaviour
     //    return childT;
     //}
 
-    public string MoveAndRotate(float transAmt, float rotAmt)
+    public string MoveAndRotate(float transAmt, float rotAmt,Camera camera)
     {
+        camera = CatchCurrentMainCamera();
+
         string aniClip;
 
         Vector3 dir = (rVec * rotAmt) + (fVec * transAmt);
 
         this.transform.forward = Vector3.Slerp(this.transform.forward, dir * maxRotate * Time.deltaTime, lerpAmt);
-        
+
         float moveDist = dir.magnitude;
         Vector3 moveAmt = this.transform.forward * moveDist * maxSpeed;
 
@@ -100,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawLine(from, to, Color.black);
 
         RaycastHit hit;
-        if(Physics.Linecast(from, to, out hit, 1 << 8))
+        if (Physics.Linecast(from, to, out hit, 1 << 8))
         {
             moveAmt = hit.point - from;
             moveAmt.y += 0.5f;
@@ -113,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 toGround = from + (-this.transform.up * 10f);
 
         RaycastHit ground;
-        if(Physics.Linecast(from, toGround, out ground, 1 << 7))
+        if (Physics.Linecast(from, toGround, out ground, 1 << 7))
         {
             moveAmt.y = ground.point.y;
         }
@@ -121,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         this.transform.position += moveAmt * Time.deltaTime;
 
         //Get Animator Name
-        if(data.item != null)
+        if (data.item != null)
         {
             aniClip = GetMoveAniName(data.item);
         }
@@ -131,6 +133,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return aniClip;
+    }
+
+    private Camera CatchCurrentMainCamera()
+    {
+        Camera camera = Camera.main;
+        rVec = camera.transform.right;
+        Vector3 tempV = camera.transform.forward;
+        tempV.y = 0;
+        tempV.Normalize();
+        fVec = tempV;
+        return camera;
     }
 
     //將人物移動對齊鏡頭Y軸

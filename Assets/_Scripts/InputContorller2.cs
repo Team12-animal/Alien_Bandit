@@ -46,7 +46,7 @@ public class InputContorller2 : MonoBehaviour
             transAmt = Input.GetAxis("Vertical");
             rotAmt = Input.GetAxis("Horizontal");
 
-            pm.MoveAndRotate(transAmt, rotAmt);
+            pm.MoveAndRotate(transAmt, rotAmt,Camera.main);
         }
 
         if (Input.GetButtonDown("Dash") && isDash == false)
