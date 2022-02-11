@@ -5,8 +5,11 @@ using UnityEngine;
 public class BoxController : MonoBehaviour
 {
     public bool beUsing;
-    public GameObject animalCatched;
+    public GameObject user;
+    public GameObject targetAnimal;
+    private Collider ac;
     private GameObject contentSpot;
+    public bool animalCatched = false;
 
     private void Awake()
     {
@@ -15,16 +18,20 @@ public class BoxController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (beUsing == true && other.gameObject.tag == "Animal" && animalCatched == null)
+        if (beUsing == true && other.gameObject.tag == "Animal" && targetAnimal == null)
         {
-            animalCatched = other.gameObject;
-            animalCatched.transform.position = contentSpot.transform.position;
-            animalCatched.transform.parent = contentSpot.gameObject.transform;
+            targetAnimal = other.gameObject;
+            ac = targetAnimal.GetComponent(typeof(Collider)) as Collider;
+            ac.enabled = false;
+            targetAnimal.transform.position = contentSpot.transform.position;
+            targetAnimal.transform.parent = contentSpot.gameObject.transform;
+            animalCatched = true;
         }
 
         if (beUsing == true && other.gameObject.tag != "Player")
         {
             beUsing = false;
+            user = null;
         }
     }
 }

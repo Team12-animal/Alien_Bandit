@@ -18,7 +18,7 @@ public class PlayerData : MonoBehaviour
 
     //use item
     public GameObject item;
-    public GameObject animal;
+    public int catchedAmt;
     public GameObject tree;
 
     public bool inTree;
@@ -36,7 +36,7 @@ public class PlayerData : MonoBehaviour
 
     private void AdjustSpeed()
     {
-        if((item != null && item.tag != "Chop") || animal != null)
+        if(item != null && item.tag != "Chop")
         {
             realSpeed = maxSpeed * reduceSpeed;
             realRotate = maxRotate * reduceRotate;
@@ -53,6 +53,7 @@ public class PlayerData : MonoBehaviour
         if(item != null && item.tag == "Box")
         {
             item.GetComponent<BoxController>().beUsing = true;
+            item.GetComponent<BoxController>().user = this.gameObject;
         }
     }
 }

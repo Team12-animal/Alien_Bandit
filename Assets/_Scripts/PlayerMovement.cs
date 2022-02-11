@@ -73,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
     private void UpdatePlayerData()
     {
         data.item = itemInhand;
-        data.animal = animalCatched;
     }
 
     //private Transform FindChildT(string cName)

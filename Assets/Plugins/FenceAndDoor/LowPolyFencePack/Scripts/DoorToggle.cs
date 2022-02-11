@@ -7,7 +7,6 @@ namespace BrokenVector.LowPolyFencePack
     /// The gameobject of this script has to have the DoorController script which needs an Animator component
     /// and some kind of Collider which detects your mouse click applied.
     /// </summary>
-    [RequireComponent(typeof(DoorController))]
 	public class DoorToggle : MonoBehaviour
     {
 

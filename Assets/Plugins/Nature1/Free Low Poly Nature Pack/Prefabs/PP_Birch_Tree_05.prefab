@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7208770312383436556}
   - component: {fileID: 9154215057541871320}
   - component: {fileID: 9053371939004866264}
+  - component: {fileID: 5007682944137630383}
   m_Layer: 0
   m_Name: PP_Birch_Tree_05
   m_TagString: Tree
@@ -27,9 +28,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9154215057541871321}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.927179, y: 0.9271789, z: 0.927179}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -94,7 +95,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -808811649734903215, guid: d721af70c8ba1ab4daa81f30de0dbb54, type: 3}
 --- !u!136 &9053371939004866264
@@ -107,7 +108,19 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1.25
-  m_Height: 8.252353
+  m_Radius: 2.1
+  m_Height: 9.17
   m_Direction: 1
   m_Center: {x: -0.4179215, y: -0.73546505, z: -0.06801557}
+--- !u!114 &5007682944137630383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9154215057541871321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6b68e5b581a9fa489f13e3c157a0b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

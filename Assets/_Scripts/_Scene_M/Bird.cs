@@ -14,7 +14,7 @@ public class Bird : MonoBehaviour
 
     void Update()
     {
-        SeagulPos();
+        //SeagulPos();
 
         //Vector3 mouse = Input.mousePosition;
         //Ray castPoint = Camera.main.ScreenPointToRay(mouse);
