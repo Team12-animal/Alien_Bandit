@@ -23,8 +23,14 @@ public class SceneController : MonoBehaviour
     [SerializeField] Vector3 translatePosition01 = new Vector3(19.67f, 0.12f, 19.14f);
     [SerializeField] GameObject player02;
     [SerializeField] Vector3 translatePosition02 = new Vector3(21.0f, 0.12f, 18f);
+    [SerializeField] GameObject player03;
+    [SerializeField] Vector3 translatePosition03 = new Vector3(21.0f, 0.12f, 18f);
+    [SerializeField] GameObject player04;
+    [SerializeField] Vector3 translatePosition04 = new Vector3(21.0f, 0.12f, 18f);
     public bool selected01 = false;
     public bool selected02 = false;
+    public bool selected03 = false;
+    public bool selected04 = false;
     public int animStartHash { get; private set; }
     public int animEndHash { get; private set; }
 
@@ -47,6 +53,8 @@ public class SceneController : MonoBehaviour
         animEndHash = Animator.StringToHash("End");
         MainPlayer(player01);
         MainPlayer(player02);
+        MainPlayer(player03);
+        MainPlayer(player04);
     }
 
     public void LoadLevel(int sceneIndex)
@@ -66,6 +74,14 @@ public class SceneController : MonoBehaviour
             {
                 SetPlayer(player02);
             }
+            if (selected03)
+            {
+                SetPlayer(player03);
+            }
+            if (selected04)
+            {
+                SetPlayer(player04);
+            }
         }
         else if (sceneIndex == 0)
         {
@@ -75,6 +91,8 @@ public class SceneController : MonoBehaviour
             selected02 = false;
             MainPlayer(player01);
             MainPlayer(player02);
+            MainPlayer(player03);
+            MainPlayer(player04);
         }
     }
     IEnumerator LoadAsynchronously(int sceneIndex)
@@ -109,6 +127,8 @@ public class SceneController : MonoBehaviour
     string defaultAnimator = "CharacterControllerTest_Male";
     [SerializeField] Vector3 mainPosition01 = new Vector3(30.0f, 30.0f, 30.0f);
     [SerializeField] Vector3 mainPosition02 = new Vector3(36.0f, 30.0f, 30.0f);
+    [SerializeField] Vector3 mainPosition03 = new Vector3(42.0f, 30.0f, 30.0f);
+    [SerializeField] Vector3 mainPosition04 = new Vector3(48.0f, 30.0f, 30.0f);
 
     public void SetPlayer(GameObject player)
     {
@@ -127,6 +147,14 @@ public class SceneController : MonoBehaviour
         else if (player == player02)
         {
             player.transform.position = translatePosition02;
+        }
+        else if (player == player03)
+        {
+            player.transform.position = translatePosition03;
+        }
+        else if (player == player04)
+        {
+            player.transform.position = translatePosition04;
         }
     }
 
@@ -152,6 +180,14 @@ public class SceneController : MonoBehaviour
         else if (player == player02)
         {
             player.transform.localPosition = mainPosition02;
+        }
+        else if (player == player03)
+        {
+            player.transform.localPosition = mainPosition03;
+        }
+        else if (player == player04)
+        {
+            player.transform.localPosition = mainPosition04;
         }
     }
 
@@ -179,6 +215,8 @@ public class SceneController : MonoBehaviour
     {
         player.Add(player01);
         player.Add(player02);
+        player.Add(player03);
+        player.Add(player04);
         return player;
     }
 }

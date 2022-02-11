@@ -11,6 +11,8 @@ public class LevelLoader : MonoBehaviour
 
     [SerializeField] GameObject playerRawImagePanel01;
     [SerializeField] GameObject playerRawImagePanel02;
+    [SerializeField] GameObject playerRawImagePanel03;
+    [SerializeField] GameObject playerRawImagePanel04;
     private void Awake()
     {
         if (instance == null)
@@ -38,6 +40,10 @@ public class LevelLoader : MonoBehaviour
         buttonUI.rawImage1[3].SetActive(true);
         //open player02 chanel checking;
         buttonUI.rawImage2[3].SetActive(true);
+        //open player02 chanel checking;
+        buttonUI.rawImage3[3].SetActive(true);
+        //open player02 chanel checking;
+        buttonUI.rawImage4[3].SetActive(true);
     }
 
     public void OpenChooseRoleUI(bool open)
@@ -63,6 +69,14 @@ public class LevelLoader : MonoBehaviour
         else if (target == playerRawImagePanel02)
         {
             SceneController.instance.selected02 = false;
+        }
+        else if (target == playerRawImagePanel03)
+        {
+            SceneController.instance.selected03 = false;
+        }
+        else if (target == playerRawImagePanel04)
+        {
+            SceneController.instance.selected04 = false;
         }
         target.SetActive(false);
     }
