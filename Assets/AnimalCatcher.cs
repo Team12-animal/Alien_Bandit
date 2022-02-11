@@ -7,26 +7,14 @@ public class AnimalCatcher : MonoBehaviour
     public GameObject box;
     private BoxController bc;
     private GameObject animalInBox;
+    private GetStarTest getStar;
 
     public GameObject player;
 
-    //public GameObject P1;
-    //private PlayerData p1Data;
-    //public GameObject p2;
-    //private PlayerData p2Data;
-    //public GameObject P3;
-    //private PlayerData p3Data;
-    //public GameObject p4;
-    //private PlayerData p4Data;
-
-    //public void Start()
-    //{
-    //    p1Data = P1.GetComponent<PlayerData>();
-    //    p2Data = P1.GetComponent<PlayerData>();
-    //    p3Data = P1.GetComponent<PlayerData>();
-    //    p4Data = P1.GetComponent<PlayerData>();
-    //}
-
+    private void Start()
+    {
+        getStar = this.GetComponent<GetStarTest>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -34,7 +22,8 @@ public class AnimalCatcher : MonoBehaviour
         {
             box = other.gameObject;
             bc = box.GetComponent<BoxController>();
-            if(bc.animalCatched == true)
+            player = bc.user;
+            if (bc.animalCatched == true)
             {
                 SendAnimalToHome(box);
             }
@@ -43,9 +32,9 @@ public class AnimalCatcher : MonoBehaviour
 
     private void SendAnimalToHome(GameObject box)
     {
-        player = bc.user;
         animalInBox = bc.targetAnimal;
         player.GetComponent<PlayerData>().catchedAmt += 1;
+        getStar.collectTargets += 1;
 
         Debug.Log("Catch!");
 

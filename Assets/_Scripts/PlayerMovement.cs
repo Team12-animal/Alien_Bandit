@@ -375,6 +375,7 @@ public class PlayerMovement : MonoBehaviour
             GameObject tree = data.tree;
             Vector3 spawnPos;
             Vector3 treePos = tree.transform.position;
+            treePos.y += 10.0f;
             Vector3 spawnDir = -tree.transform.up;
             RaycastHit hit;
 
@@ -396,7 +397,11 @@ public class PlayerMovement : MonoBehaviour
                 var logPrefab = Resources.Load<GameObject>("Log");
                 GameObject log = GameObject.Instantiate(logPrefab) as GameObject;
                 log.SetActive(true);
-                log.transform.position = spawnPos + (-spawnDir) * 4.0f;
+                Vector3 temp = spawnPos + (-spawnDir) * 4.0f;
+                temp.x += 1.0f;
+                log.transform.position = temp;
+
+                Debug.Log("SpawnStump success");
             }
 
             hitTime = 0;
@@ -515,16 +520,25 @@ public class PlayerMovement : MonoBehaviour
     //look at targetItem
     private void FaceTarget(GameObject target)
     {
+        Vector3 temp;
         Vector3 dirToItem = target.transform.position - this.transform.position;
         dirToItem.y = this.transform.position.y;
+        
         float fDotD = Vector3.Dot(this.transform.forward, dirToItem);
 
-        if (fDotD < 0.3f)
+        if (fDotD < 0.5f)
         {
-            this.transform.forward = Vector3.Slerp(this.transform.forward, dirToItem, 0.8f);
+            temp = Vector3.Slerp(this.transform.forward, dirToItem, 1.0f);
+            temp.y = this.transform.forward.y;
+            this.transform.forward = temp;
         }
 
         float dist = dirToItem.magnitude;
+
+        if(dist < 0.2f)
+        {
+            this.transform.position += -this.transform.forward * 0.2f;
+        }
     }
 
     //set item to HoldingPos
@@ -554,7 +568,7 @@ public class PlayerMovement : MonoBehaviour
      
     private void RemoveItem()
     {
-        if (data.item = null)
+        if (data.item == null)
         {
             return;
         }
@@ -566,16 +580,22 @@ public class PlayerMovement : MonoBehaviour
         {
             (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = true;
         }
+
+        if(itemInhand.tag == "Box")
+        {
+            itemInhand.GetComponent<BoxController>().beUsing = false;
+        }
+
         itemInhand = null;
         UpdatePlayerData();
     }
 
     float inputf = 0.0f;
-    float force = 90.0f;
+    float force = 100.0f;
 
     private void ThrowAway()
     {
-        if(data.item = null)
+        if(data.item == null)
         {
             return;
         }
@@ -587,14 +607,14 @@ public class PlayerMovement : MonoBehaviour
         inputf = input.pressTimeSaver / 0.2f;
         force *= inputf;
 
-        if (force > 800.0f)
+        if (force > 6000.0f)
         {
-            force = 800.0f;
+            force = 6000.0f;
         }
 
-        if (force <= 100.0f)
+        if (force <= 1000.0f)
         {
-            force = 100.0f;
+            force = 1000.0f;
         }
 
         //??item???l?O
@@ -603,6 +623,11 @@ public class PlayerMovement : MonoBehaviour
         foreach (Transform child in itemInhand.transform)
         {
             (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = true;
+        }
+
+        if (itemInhand.tag == "Box")
+        {
+            itemInhand.GetComponent<BoxController>().beUsing = false;
         }
 
         itemInhand = null;

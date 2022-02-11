@@ -6,12 +6,36 @@ public class GetStarTest : MonoBehaviour
 {
     [SerializeField] LevelOneControl levelOneControl;
     [SerializeField] LevelTwoControl levelTwoControl;
-    [SerializeField] int collectTargets;
+    [SerializeField] public int collectTargets;
 
-    private void Start()
+    public int targetAmt;
+
+    private void Awake()
     {
         collectTargets = 0;
     }
+
+    private void Update()
+    {
+        if(levelOneControl == null)
+        {
+            return;
+        }
+        else
+        {
+            CheckCollectAmt();
+        }
+    }
+
+    private void CheckCollectAmt()
+    {
+        if(collectTargets == targetAmt)
+        {
+            levelOneControl.isWin = true;
+        }
+    }
+
+
     /// <summary>
     /// for testing
     /// </summary>

@@ -27,11 +27,5 @@ public class BoxController : MonoBehaviour
             targetAnimal.transform.parent = contentSpot.gameObject.transform;
             animalCatched = true;
         }
-
-        if (beUsing == true && other.gameObject.tag != "Player")
-        {
-            beUsing = false;
-            user = null;
-        }
     }
 }

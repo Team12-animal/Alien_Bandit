@@ -974,7 +974,7 @@ MonoBehaviour:
   dashSpeed: 15
   lerpAmt: 0.8
   item: {fileID: 0}
-  animal: {fileID: 0}
+  catchedAmt: 0
   tree: {fileID: 0}
   inTree: 0
 --- !u!136 &151458794
@@ -1603,23 +1603,6 @@ Transform:
   m_Father: {fileID: 2107183487}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &266133204 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
-  m_PrefabInstance: {fileID: 1305372688}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &266133210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266133204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6b68e5b581a9fa489f13e3c157a0b48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &270480871
 GameObject:
   m_ObjectHideFlags: 0
@@ -7765,7 +7748,7 @@ MonoBehaviour:
   dashSpeed: 15
   lerpAmt: 0.8
   item: {fileID: 0}
-  animal: {fileID: 0}
+  catchedAmt: 0
   tree: {fileID: 0}
   inTree: 0
 --- !u!136 &1798286523
