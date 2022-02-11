@@ -71,7 +71,7 @@ public class LevelTwoControl : MonoBehaviour
                 SceneController.instance.StartMove(player[3]);
             }
             waittingTimeUI.gameObject.SetActive(false);
-            if (!isWin)
+            if (!isWin && !doorDestroied)
             {
                 gamingTime = SetTime(gamingTime, gamingTimeText);
             }
