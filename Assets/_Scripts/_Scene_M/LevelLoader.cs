@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] GameObject chooseLevelUI;
     ChangeRoleSkin changeRole = new ChangeRoleSkin();
 
-
     [SerializeField] GameObject playerRawImagePanel01;
     [SerializeField] GameObject playerRawImagePanel02;
     [SerializeField] GameObject playerRawImagePanel03;
@@ -18,6 +18,11 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] GameObject roleUIButtonStartPos;
     [SerializeField] GameObject levelUIButtonStartPos;
     [SerializeField] GameObject mainMenuUIButtonStartPos;
+
+    [SerializeField] GameObject finger01;
+    [SerializeField] GameObject finger02;
+    [SerializeField] GameObject finger03;
+    [SerializeField] GameObject finger04;
     private void Awake()
     {
         if (instance == null)
@@ -54,6 +59,7 @@ public class LevelLoader : MonoBehaviour
     public void OpenChooseRoleUI(bool open)
     {
         chooseRoleUI.SetActive(open);
+
         if (open)
         {
             EventSystem.current.SetSelectedGameObject(roleUIButtonStartPos);
@@ -65,6 +71,10 @@ public class LevelLoader : MonoBehaviour
     }
     public void OpenChooseLevelUI(bool open)
     {
+        finger01.GetComponent<Image>().enabled = true;
+        finger02.GetComponent<Image>().enabled = true;
+        finger03.GetComponent<Image>().enabled = true;
+        finger04.GetComponent<Image>().enabled = true;
         chooseLevelUI.SetActive(open);
         if (open)
         {
@@ -102,6 +112,6 @@ public class LevelLoader : MonoBehaviour
     }
     public void OpenSelect(GameObject target)
     {
-        target.SetActive(true);
+        target.GetComponent<Image>().enabled = true;
     }
 }

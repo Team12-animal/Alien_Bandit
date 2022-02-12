@@ -56,7 +56,7 @@ public class AddSelectCharacterButton : MonoBehaviour
     {
         for (int i = 0; i < objects.Length; i++)
         {
-            if (i == 2)
+            if (i == 2)//2 = Player Box;
             {
                 GameObject temp = GameObject.Find(player);
                 if (player == playerBox01)
@@ -105,7 +105,8 @@ public class AddSelectCharacterButton : MonoBehaviour
                 }
             }
             objects[i].SetActive(true);
+
         }
-        objects[objects.Length - 1].SetActive(false);
+        objects[objects.Length - 1].GetComponent<Image>().enabled = false;
     }
 }

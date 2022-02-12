@@ -4107,16 +4107,16 @@ RectTransform:
   - {fileID: 879595408}
   - {fileID: 1681732766}
   - {fileID: 365279483}
-  - {fileID: 2110209182}
-  - {fileID: 1935764155}
-  - {fileID: 1815311367}
-  - {fileID: 590933684}
   - {fileID: 525643517}
   - {fileID: 1923402486}
   - {fileID: 700037506}
   - {fileID: 912536516}
   - {fileID: 625091426}
   - {fileID: 1538273049}
+  - {fileID: 2110209182}
+  - {fileID: 1935764155}
+  - {fileID: 1815311367}
+  - {fileID: 590933684}
   - {fileID: 1606039433}
   m_Father: {fileID: 605161556}
   m_RootOrder: 4
@@ -5139,7 +5139,7 @@ RectTransform:
   - {fileID: 665606464}
   - {fileID: 269196540}
   m_Father: {fileID: 397888010}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5750,7 +5750,7 @@ RectTransform:
   m_Children:
   - {fileID: 1940033721}
   m_Father: {fileID: 397888010}
-  m_RootOrder: 7
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6030,6 +6030,10 @@ MonoBehaviour:
   roleUIButtonStartPos: {fileID: 269196539}
   levelUIButtonStartPos: {fileID: 804318572}
   mainMenuUIButtonStartPos: {fileID: 2032569824}
+  finger01: {fileID: 525643516}
+  finger02: {fileID: 1923402485}
+  finger03: {fileID: 700037505}
+  finger04: {fileID: 912536515}
 --- !u!1 &610116076
 GameObject:
   m_ObjectHideFlags: 0
@@ -6313,7 +6317,7 @@ RectTransform:
   m_Children:
   - {fileID: 539572876}
   m_Father: {fileID: 397888010}
-  m_RootOrder: 12
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6803,7 +6807,7 @@ RectTransform:
   - {fileID: 851068955}
   - {fileID: 723404502}
   m_Father: {fileID: 397888010}
-  m_RootOrder: 10
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8592,7 +8596,7 @@ RectTransform:
   - {fileID: 307527188}
   - {fileID: 1466291716}
   m_Father: {fileID: 397888010}
-  m_RootOrder: 11
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13276,7 +13280,7 @@ RectTransform:
   m_Children:
   - {fileID: 229711787}
   m_Father: {fileID: 397888010}
-  m_RootOrder: 13
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13298,10 +13302,10 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
+    m_SelectOnUp: {fileID: 269196541}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 625091428}
-    m_SelectOnRight: {fileID: 2032569826}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -14188,7 +14192,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 269196541}
     m_SelectOnDown: {fileID: 625091428}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 625091428}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -15599,7 +15603,7 @@ RectTransform:
   m_Children:
   - {fileID: 2021059396}
   m_Father: {fileID: 397888010}
-  m_RootOrder: 6
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -16534,7 +16538,7 @@ RectTransform:
   - {fileID: 1894019863}
   - {fileID: 442377270}
   m_Father: {fileID: 397888010}
-  m_RootOrder: 9
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -30943,7 +30947,7 @@ RectTransform:
   m_Children:
   - {fileID: 2044353137}
   m_Father: {fileID: 397888010}
-  m_RootOrder: 5
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -32547,7 +32551,7 @@ RectTransform:
   m_Children:
   - {fileID: 2063901699}
   m_Father: {fileID: 397888010}
-  m_RootOrder: 4
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
