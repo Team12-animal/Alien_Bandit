@@ -49,7 +49,7 @@ public class Node : MonoBehaviour
         }
         else
         {
-            Debug.Log("gen nodes error");
+            //Debug.Log("gen nodes error");
         }
     }
 

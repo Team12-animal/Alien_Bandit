@@ -173,6 +173,11 @@ public class InputController : MonoBehaviour
             pressTimeSaver = takePressTimer;
             takePressTimer = 0.0f;
         }
+        else
+        {
+            anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
+            anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
+        }
 
         
         if (Input.GetButtonDown("Dash" + pid) && isDash == false && anim.animator.GetBool(anim.animRoling) == false)
