@@ -544,8 +544,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if(targetItem != null && targetItem.tag == "WorkingTable")
         {
-            string aniClip = tableCM.CraftingItem();
-            return aniClip;
+            tableCM.CraftingItem();
+            return "UsingTable";
         }
         else
         {

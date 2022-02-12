@@ -89,6 +89,7 @@ public class CraftingManager : MonoBehaviour
             craftGameObjects[slotPos].transform.position = move;
             craftGameObjects.Remove(slotPos);
         }
+
         craftItems.Add(slotPos, item);
         craftGameObjects.Add(slotPos, col.gameObject);
         //?]?wGameObject???m
@@ -141,9 +142,13 @@ public class CraftingManager : MonoBehaviour
     /// </summary>
     public void CraftingItem()
     {
-        Instantiate(craftItem.gm[0], instaniate);
-        isTake = false;
-        ClearAll();
+        if (isCraft && isTake)
+        {
+
+            Instantiate(craftItem.gm[0], instaniate);
+            isTake = false;
+            ClearAll();
+        }
     }
     /// <summary>
     /// ???l??
@@ -189,19 +194,19 @@ public class CraftingManager : MonoBehaviour
         other.gameObject.transform.position = move;
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    //?P?_???a???m
-    //    if (other.tag == "Player")
-    //    {
-    //        ItemPos(other.gameObject);
-    //        //???i?H?X???B???a???UleftControl?????o
-    //        if (isCraft && Input.GetKeyUp(KeyCode.LeftControl) && isTake)
-    //        {
-    //            CraftingItem();
-    //        }
-    //    }
-    //}
+    private void OnTriggerStay(Collider other)
+    {
+        //?P?_???a???m
+        if (other.tag == "Player")
+        {
+            ItemPos(other.gameObject);
+            //???i?H?X???B???a???UleftControl?????o
+            //if (isCraft && Input.GetKeyUp(KeyCode.LeftControl) && isTake)
+            //{
+            //    CraftingItem();
+            //}
+        }
+    }
 
     private void OnTriggerExit(Collider other)
     {
