@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] GameObject playerRawImagePanel02;
     [SerializeField] GameObject playerRawImagePanel03;
     [SerializeField] GameObject playerRawImagePanel04;
+
+    [SerializeField] GameObject roleUIButtonStartPos;
+    [SerializeField] GameObject levelUIButtonStartPos;
+    [SerializeField] GameObject mainMenuUIButtonStartPos;
     private void Awake()
     {
         if (instance == null)
@@ -49,12 +54,27 @@ public class LevelLoader : MonoBehaviour
     public void OpenChooseRoleUI(bool open)
     {
         chooseRoleUI.SetActive(open);
+        if (open)
+        {
+            EventSystem.current.SetSelectedGameObject(roleUIButtonStartPos);
+        }
+        else
+        {
+            EventSystem.current.SetSelectedGameObject(mainMenuUIButtonStartPos);
+        }
     }
     public void OpenChooseLevelUI(bool open)
     {
         chooseLevelUI.SetActive(open);
+        if (open)
+        {
+            EventSystem.current.SetSelectedGameObject(levelUIButtonStartPos);
+        }
+        else
+        {
+            EventSystem.current.SetSelectedGameObject(roleUIButtonStartPos);
+        }
     }
-
     public void ExitGame()
     {
         Application.Quit();

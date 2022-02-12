@@ -12,5 +12,4 @@ public class UIAnimationControl : ScriptableObject
         this.animator = animator;
         animator.SetTrigger("StopAnim");
     }
-
 }
