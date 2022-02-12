@@ -211,6 +211,24 @@ public class InputController : MonoBehaviour
                 
         }
 
+        if (Input.GetButtonDown("Use" + pid) && isDash == false)
+        {
+            if (data.item != null)
+            {
+                holdingItem = true;
+            }
+            else
+            {
+                holdingItem = false;
+            }
+
+            if(holdingItem == false)
+            {
+                aniClip = pm.UseBench();
+                anim.ChangeAnimationState(aniClip, 0, 0);
+            }
+        }
+
         CheckAndPlayAnimation(Input.GetAxis("Vertical" + pid) != 0|| Input.GetAxis("Horizontal" + pid) != 0);
     }
 

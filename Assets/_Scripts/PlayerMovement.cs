@@ -38,6 +38,10 @@ public class PlayerMovement : MonoBehaviour
     //throw
     private InputController input;
 
+    //use working table
+    public GameObject workingTable;
+    private CraftingManager tableCM;
+
     void Start()
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -53,6 +57,10 @@ public class PlayerMovement : MonoBehaviour
         velocity = rb.velocity;
 
         input = this.gameObject.GetComponent<InputController>();
+
+        workingTable = GameObject.Find("BenchTable");
+        tableCM = workingTable.GetComponent<CraftingManager>();
+
     }
 
     private void Update()
@@ -174,6 +182,11 @@ public class PlayerMovement : MonoBehaviour
             aniName = "HoldBucketWalk";
         }
 
+        if (tagName == "Rope")
+        {
+            aniName = "HoldWoodWalk";
+        }
+
         return aniName;
     }
 
@@ -241,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
         {
             triggerItem = other.GetComponent<RockTrigger>().targetRock;
         }
-        else if (other.tag == "Wood" || other.tag == "Chop" || other.tag == "Bucket" || other.tag == "Box" || other.tag == "WorkingTable")
+        else if (other.tag == "Wood" || other.tag == "Chop" || other.tag == "Bucket" || other.tag == "Box" || other.tag == "WorkingTable" || other.tag == "Rope")
         {
             triggerItem = other.gameObject;
         }
@@ -326,6 +339,11 @@ public class PlayerMovement : MonoBehaviour
         if (tagName == "Box")
         {
             aniName = "PickUpRock";
+        }
+
+        if (tagName == "Rope")
+        {
+            aniName = "PickWood";
         }
 
         return aniName;
@@ -512,9 +530,27 @@ public class PlayerMovement : MonoBehaviour
             aniName = "PutDownRock";
         }
 
+        if(tagName == "Rope")
+        {
+            aniName = "PutDownWood";
+        }
+
         Debug.Log("Drop" + tagName + aniName);
 
         return aniName;
+    }
+
+    public string UseBench()
+    {
+        if(targetItem != null && targetItem.tag == "WorkingTable")
+        {
+            string aniClip = tableCM.CraftingItem();
+            return aniClip;
+        }
+        else
+        {
+            return "none";
+        }
     }
 
     //look at targetItem
