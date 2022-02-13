@@ -32,6 +32,39 @@ public class CraftingManager : MonoBehaviour
     //已合成物件是否拿走
     public bool isTake = true;
 
+    //縮小版物件icon
+    public GameObject log0;
+    public GameObject log1;
+    public GameObject rope0;
+    public GameObject rope1;
+    private List<GameObject> logIcons;
+    private List<GameObject> ropeIcons;
+
+    private GameObject[] showingIcons;
+
+    private void Awake()
+    {
+        //init object icon: find and put it into list
+        log0 = this.transform.Find("Item").Find("Log _small").gameObject;
+        logIcons.Add(log0);
+        log0.SetActive(false);
+
+        log1 = this.transform.Find("Item").Find("Log _small1").gameObject;
+        logIcons.Add(log1);
+        log1.SetActive(false);
+
+        rope0 = this.transform.Find("Item").Find("Rope_small").gameObject;
+        ropeIcons.Add(rope0);
+        rope0.SetActive(false);
+
+        rope1 = this.transform.Find("Item").Find("Rope_small1").gameObject;
+        ropeIcons.Add(rope1);
+        rope1.SetActive(false);
+
+        showingIcons = new GameObject[2];
+    }
+
+
     /// <summary>
     ///利用內積確認玩家當前位置最靠近的儲存格 
     /// </summary>
@@ -65,7 +98,22 @@ public class CraftingManager : MonoBehaviour
         {
             slot = 1;
         }
-        craftGameObjects[slot].transform.position = slotimage[slot].transform.position;
+        
+        //craftGameObjects[slot].transform.position = slotimage[slot].transform.position;
+
+        if(craftGameObjects[slot].tag == "Log")
+        {
+            craftGameObjects[slot].SetActive(false);
+            logIcons[slot].SetActive(true);
+            showingIcons[slot] = logIcons[slot];
+        }
+
+        if(craftGameObjects[slot].tag == "Rope")
+        {
+            craftGameObjects[slot].SetActive(false);
+            ropeIcons[slot].SetActive(true);
+            showingIcons[slot] = logIcons[slot];
+        }
     }
     /// <summary>
     /// 新增可合成Item，最多2個物件，排序法
@@ -82,6 +130,9 @@ public class CraftingManager : MonoBehaviour
         //如果當前已有存放物品，原本的被刪除，以新的取代
         if (craftItems.ContainsKey(slotPos))
         {
+            showingIcons[slotPos].SetActive(false);
+
+            craftGameObjects[slotPos].SetActive(true);
             //移到工作台旁邊的位置
             Vector3 move = new Vector3(transform.position.x - 3f, transform.position.y, transform.position.z);
             //移除舊的Item和GameObject
