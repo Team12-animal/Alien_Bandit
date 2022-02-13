@@ -25,6 +25,12 @@ public class CamMovement : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+
+        
+    }
+
+    void Start()
+    {
         instance = this;
 
         cam = GetComponent<Camera>();
@@ -32,11 +38,6 @@ public class CamMovement : MonoBehaviour
         oriCamPos = camPos;
         players = GameObject.FindGameObjectsWithTag("Player");
         p1 = players[0];
-        
-    }
-
-    void Start()
-    {
     }
 
     // Update is called once per frame

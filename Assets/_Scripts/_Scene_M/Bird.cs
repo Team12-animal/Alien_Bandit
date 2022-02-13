@@ -48,6 +48,10 @@ public class Bird : MonoBehaviour
 
     void SeagulPos()
     {
+        if (!EventSystem.current.currentSelectedGameObject)
+        {
+            return;
+        }
         string current = EventSystem.current.currentSelectedGameObject.name;
         if (selectCharacterUI.activeInHierarchy && selectLevelUI.activeInHierarchy)
         {
@@ -63,6 +67,8 @@ public class Bird : MonoBehaviour
                     break;
                 case "Button (1)":
                     seagullUIButton.rectTransform.position = new Vector3(1721.0f, 130.0f, 0f);
+                    break;
+                default:
                     break;
             }
         }
