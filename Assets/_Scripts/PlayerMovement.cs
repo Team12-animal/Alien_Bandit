@@ -112,17 +112,21 @@ public class PlayerMovement : MonoBehaviour
         //?????H???I?????????D
         Vector3 from = this.transform.position;
         from.y += 0.5f;
-        Vector3 to = from + moveAmt;
-        to.z += 0.8f;
+        //Vector3 to = from + moveAmt;
+        //to.z += 0.38f;
+
+        Vector3 to = from + this.transform.forward * 2.0f;
+        to.z += 0.38f;
 
         Debug.DrawLine(from, to, Color.black);
 
         RaycastHit hit;
         if (Physics.Linecast(from, to, out hit, 1 << 8))
         {
-            moveAmt = hit.point - from;
-            moveAmt.y += 0.5f;
-            moveAmt.z -= 0.5f;
+            //moveAmt = hit.point - from;
+            moveAmt = new Vector3(0, 0, 0);
+            //moveAmt.y += 0.5f;
+            //moveAmt.z -= 0.5f;
         }
 
         //?????H??????????

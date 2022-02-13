@@ -60,6 +60,15 @@ public class InputController : MonoBehaviour
 
         bool allowMove = CheckAniPlayingOrNot();
 
+        if (data.item != null)
+        {
+            holdingItem = true;
+        }
+        else
+        {
+            holdingItem = false;
+        }
+
         if (isDash == false && (Input.GetAxis("Vertical" + pid) != 0 || Input.GetAxis("Horizontal" + pid) != 0))
         {
             if (allowMove)
@@ -86,7 +95,7 @@ public class InputController : MonoBehaviour
                     aniClip = pm.MoveAndRotate(transAmt, rotAmt, Camera.main);
                 }
                 
-                Debug.Log("Move1" + aniClip);
+                Debug.Log("Move1" + aniClip + transAmt + "/" + rotAmt);
                 anim.ChangeAnimationState(aniClip, transAmt, rotAmt);
             }
         }
@@ -119,15 +128,6 @@ public class InputController : MonoBehaviour
 
         if(Input.GetButtonUp("Take" + pid) && isDash == false)
         {
-            if (data.item != null)
-            {
-                holdingItem = true;
-            }
-            else
-            {
-                holdingItem = false;
-            }
-
             if (holdingItem == false)
             {
                 aniClip = pm.Take();
