@@ -5915,6 +5915,7 @@ GameObject:
   - component: {fileID: 605161554}
   - component: {fileID: 605161553}
   - component: {fileID: 605161557}
+  - component: {fileID: 605161558}
   m_Layer: 5
   m_Name: CanvasParent
   m_TagString: Untagged
@@ -6034,6 +6035,18 @@ MonoBehaviour:
   finger02: {fileID: 1923402485}
   finger03: {fileID: 700037505}
   finger04: {fileID: 912536515}
+--- !u!114 &605161558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605161552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49098f00a0fad448bd0bb93ab5b3ef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &610116076
 GameObject:
   m_ObjectHideFlags: 0
@@ -12978,7 +12991,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1475673861}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 605161558}
+        m_TargetAssemblyTypeName: CheckMouseOnclick, Assembly-CSharp
+        m_MethodName: CheckWhichUIButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Setting
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1475673861
 MonoBehaviour:
   m_ObjectHideFlags: 0

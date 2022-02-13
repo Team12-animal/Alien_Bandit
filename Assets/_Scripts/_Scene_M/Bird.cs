@@ -22,24 +22,14 @@ public class Bird : MonoBehaviour
         transform.position = new Vector3(890.1f, 260.73f, -1092.16f);
         //Vector3(564.048096, 5.95675659, -1092.16235) right position
         LevelLoader.instance.OpenChooseRoleUI(false);
+        CancelMouse();
     }
 
-    public GameObject FindObject(GameObject parent, string name)
-    {
-        Transform[] trs = parent.GetComponentsInChildren<Transform>(true);
-        foreach (Transform t in trs)
-        {
-            if (t.name == name)
-            {
-                return t.gameObject;
-            }
-        }
-        return null;
-    }
     void LateUpdate()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         SeagulPos();
-
         //UsingMouse();
     }
 
@@ -52,7 +42,7 @@ public class Bird : MonoBehaviour
         if (Physics.Raycast(castPoint, out hit, Mathf.Infinity))
         {
             if (hit.transform.tag == "Button")
-                transform.position = hit.transform.position + offsetPosition;
+            transform.position = hit.transform.position + offsetPosition;
         }
     }
 
@@ -115,5 +105,23 @@ public class Bird : MonoBehaviour
                     break;
             }
         }
+    }
+    private static void CancelMouse()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public GameObject FindObject(GameObject parent, string name)
+    {
+        Transform[] trs = parent.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in trs)
+        {
+            if (t.name == name)
+            {
+                return t.gameObject;
+            }
+        }
+        return null;
     }
 }

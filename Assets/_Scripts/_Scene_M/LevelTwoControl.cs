@@ -43,6 +43,12 @@ public class LevelTwoControl : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetButtonDown(KeyCode.Escape.ToString()))
+        {
+            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+            SceneController.instance.LoadLevel(0);
+            LevelLoader.instance.LoadLevel(0);
+        }
         TimeSetting();
         GameOver();
         TriggerSceneEvents();
