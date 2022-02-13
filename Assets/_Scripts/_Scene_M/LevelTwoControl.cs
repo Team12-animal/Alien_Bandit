@@ -94,7 +94,7 @@ public class LevelTwoControl : MonoBehaviour
         time -= Time.deltaTime;
         time = Mathf.Clamp(time, 0f, Mathf.Infinity);
         int minute = (int)gamingTime / 60;
-        int second = (int)gamingTime- minute * 60;
+        int second = (int)gamingTime - minute * 60;
         text.text = string.Format("{0:D2}:{1:D2}", minute, second);
 
         return time;
@@ -121,7 +121,7 @@ public class LevelTwoControl : MonoBehaviour
             gameWinUI.SetActive(true);
 
             // can't control players;
-            GameOverSetting(input01, input02,input03,input04);
+            GameOverSetting(input01, input02, input03, input04);
         }
     }
 
@@ -130,7 +130,7 @@ public class LevelTwoControl : MonoBehaviour
     /// </summary>
     /// <param name="input01"></param>
     /// <param name="input02"></param>
-    private void GameOverSetting(InputController input01, InputController input02,InputController input03,InputController input04)
+    private void GameOverSetting(InputController input01, InputController input02, InputController input03, InputController input04)
     {
         input01.enabled = false;
         input02.enabled = false;

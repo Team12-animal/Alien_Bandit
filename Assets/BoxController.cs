@@ -18,7 +18,7 @@ public class BoxController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (beUsing == true && other.gameObject.tag == "Animal" && targetAnimal == null)
+        if (beUsing == true && other.gameObject.tag == "Rabbit" && targetAnimal == null)
         {
             targetAnimal = other.gameObject;
             ac = targetAnimal.GetComponent(typeof(Collider)) as Collider;

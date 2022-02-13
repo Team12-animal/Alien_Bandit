@@ -44,6 +44,9 @@ public class CraftingManager : MonoBehaviour
 
     private void Awake()
     {
+        logIcons = new List<GameObject>();
+        ropeIcons = new List<GameObject>();
+
         //init object icon: find and put it into list
         log0 = this.transform.Find("Item").Find("Log _small").gameObject;
         logIcons.Add(log0);

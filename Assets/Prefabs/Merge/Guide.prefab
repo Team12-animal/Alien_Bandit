@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5555761440165396994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5555761440165397020}
+  - component: {fileID: 5555761440165396995}
+  m_Layer: 0
+  m_Name: Guide
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5555761440165397020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5555761440165396994}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5555761440165396995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5555761440165396994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead04afd0174db243a8624f8de412cb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusitemCircle: {fileID: 383525479118882661, guid: 4760f15b66d94e34da74851ca08f221a, type: 3}
+  focusRabbitCircle: {fileID: 1795741376356887800, guid: 1157214ff7f1f884ebc457e38a90943a, type: 3}
+  focusFoxCircle: {fileID: 5775928081762187682, guid: 7067a0f6b88eb34448796b616a11ba64, type: 3}
+  targetText: {fileID: 0}
+  dialogueText: {fileID: 0}
+  tipsCanvas: {fileID: 0}
+  backgroundCanvas: {fileID: 0}
+  dialogue:
+    focusItem:
+    - TREE
+    - WOOD
+    - ROCK
+    - TABLE
+    - RABBIT
+    - FOX
+    - WINDOOR
+    - LOSEDOOR
+    sentences:
+    - "\u780D\u6A39\uFF0C\u6709\u6728\u982D"
+    - "\u6728\u982D\uFF0C\u53EF\u4EE5\u5408\u6210\u7BB1\u5B50"
+    - "\u77F3\u982D\uFF0C\u53EF\u4EE5\u4E1F"
+    - "\u5DE5\u5177\u684C\uFF0C\u5408\u6210\u7BB1\u5B50\u7684\u5730\u65B9"
+    - "\u5154\u5B50\uFF0C\u8981\u6293"
+    - "\u72D0\u72F8\uFF0C\u5F88\u8ABF\u76AE"
+    - "\u5C07\u6293\u5230\u7684\u5154\u5B50\u9001\u9032\u53BB"
+    - "\u5982\u679C\u9580\u88AB\u7834\u58DE\u5C31\u8F38\u56C9"
+  levelTwoControl: {fileID: 0}
+  waittingTimeUI: {fileID: 0}

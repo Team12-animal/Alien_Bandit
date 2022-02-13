@@ -159,6 +159,7 @@ Transform:
   m_Children:
   - {fileID: 486584}
   - {fileID: 440614}
+  - {fileID: 1808344259}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
@@ -245,8 +246,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   players: []
   originDoor: {fileID: 179570}
-  breakDoor: {fileID: 3383326581816041101, guid: 86f083389ef919d45a34ff67cb3c0886, type: 3}
+  breakDoor: {fileID: 5493586321287175217, guid: a61d9ba6bf39dbc48a1d1a8208736b17, type: 3}
   setPosition: {x: 18.98, y: -0.36, z: 17.7}
+  levelOne: {fileID: 0}
+  levelTwo: {fileID: 0}
 --- !u!1 &190126
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,3 +365,33 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.7025894, y: 0.68780845, z: -0.55679834}
     m_Extent: {x: 1.3321575, y: 0.6928535, z: 0.662542}
   m_DirtyAABB: 0
+--- !u!1 &1808344258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1808344259}
+  m_Layer: 0
+  m_Name: CirclePostion
+  m_TagString: LoseDoor
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1808344259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808344258}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.22, y: 0.08, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 401926}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

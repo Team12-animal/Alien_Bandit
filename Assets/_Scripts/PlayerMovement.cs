@@ -57,10 +57,15 @@ public class PlayerMovement : MonoBehaviour
         velocity = rb.velocity;
 
         input = this.gameObject.GetComponent<InputController>();
+    }
 
-        workingTable = GameObject.Find("BenchTable");
-        tableCM = workingTable.GetComponent<CraftingManager>();
-
+    public void FindWorkTable()
+    {
+        if (workingTable == null)
+        {
+            workingTable = GameObject.Find("BenchTable");
+            tableCM = workingTable.GetComponent<CraftingManager>();
+        }
     }
 
     private void Update()
@@ -91,8 +96,10 @@ public class PlayerMovement : MonoBehaviour
     //    return childT;
     //}
 
-    public string MoveAndRotate(float transAmt, float rotAmt)
+    public string MoveAndRotate(float transAmt, float rotAmt, Camera camera)
     {
+        camera = CatchCurrentMainCamera();
+
         string aniClip;
 
         Vector3 dir = (rVec * rotAmt) + (fVec * transAmt);
@@ -141,6 +148,18 @@ public class PlayerMovement : MonoBehaviour
 
         return aniClip;
     }
+
+    private Camera CatchCurrentMainCamera()
+    {
+        Camera camera = Camera.main;
+        rVec = camera.transform.right;
+        Vector3 tempV = camera.transform.forward;
+        tempV.y = 0;
+        tempV.Normalize();
+        fVec = tempV;
+        return camera;
+    }
+
 
     //?N?H?????????????YY?b
     public Vector3 GenNewBaseForward()
@@ -542,6 +561,8 @@ public class PlayerMovement : MonoBehaviour
 
     public string UseBench()
     {
+        FindWorkTable();
+
         if(targetItem != null && targetItem.tag == "WorkingTable")
         {
             tableCM.CraftingItem();

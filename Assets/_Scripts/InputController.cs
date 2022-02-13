@@ -83,7 +83,7 @@ public class InputController : MonoBehaviour
 
                 if (transAmt != 0 || rotAmt != 0)
                 {
-                    aniClip = pm.MoveAndRotate(transAmt, rotAmt,Camera.main);
+                    aniClip = pm.MoveAndRotate(transAmt, rotAmt, Camera.main);
                 }
                 
                 Debug.Log("Move1" + aniClip);

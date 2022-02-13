@@ -26,6 +26,8 @@ public class Guide : MonoBehaviour
     string treeTag = "Tree";
     string winDoorTag = "WinDoor";
     string loseDoorTag = "LoseDoor";
+    string ropeTag = "Rope";
+    string doorOpenerTag = "DoorOpener";
 
     List<GameObject> rocks;
     List<GameObject> woods;
@@ -35,12 +37,14 @@ public class Guide : MonoBehaviour
     List<GameObject> trees;
     List<GameObject> winDoor;
     List<GameObject> loseDoor;
+    List<GameObject> ropes;
+    List<GameObject> doorOpeners;
 
     [Header("TriggerFocusCircleEvent and UI")]
     [SerializeField] GameObject tipsCanvas;
     [SerializeField] GameObject backgroundCanvas;
     [SerializeField] Dialogue dialogue;
-    [SerializeField] LevelTwoControl levelTwoControl;
+    [SerializeField] LevelOneControl levelOneControl;
     [SerializeField] Canvas waittingTimeUI;
 
     private void Awake()
@@ -83,6 +87,8 @@ public class Guide : MonoBehaviour
         trees = new List<GameObject>();
         winDoor = new List<GameObject>();
         loseDoor = new List<GameObject>();
+        ropes = new List<GameObject>();
+        doorOpeners = new List<GameObject>();
         GameObject[] tempRocks = GameObject.FindGameObjectsWithTag(rockTag);
         GameObject[] tempWoods = GameObject.FindGameObjectsWithTag(woodTag);
         GameObject[] tempRabbits = GameObject.FindGameObjectsWithTag(rabbitsTag);
@@ -91,6 +97,8 @@ public class Guide : MonoBehaviour
         GameObject[] tempTrees = GameObject.FindGameObjectsWithTag(treeTag);
         GameObject[] tempWinDoor = GameObject.FindGameObjectsWithTag(winDoorTag);
         GameObject[] tempLoseDoor = GameObject.FindGameObjectsWithTag(loseDoorTag);
+        GameObject[] tempRops = GameObject.FindGameObjectsWithTag(ropeTag);
+        GameObject[] tempDoorOpener = GameObject.FindGameObjectsWithTag(doorOpenerTag);
         SettingTargets(rocks, tempRocks);
         SettingTargets(woods, tempWoods);
         SettingTargets(rabbits, tempRabbits);
@@ -99,6 +107,8 @@ public class Guide : MonoBehaviour
         SettingTargets(trees, tempTrees);
         SettingTargets(winDoor, tempWinDoor);
         SettingTargets(loseDoor, tempLoseDoor);
+        SettingTargets(ropes, tempRops);
+        SettingTargets(doorOpeners, tempDoorOpener);
     }
 
     private void SettingTargets(List<GameObject> items, GameObject[] targets)
@@ -174,12 +184,18 @@ public class Guide : MonoBehaviour
             case "LOSEDOOR":
                 CreatCircle(loseDoor, focusFoxCircle);
                 break;
+            case "ROPE":
+                CreatCircle(ropes, focusitemCircle);
+                break;
+            case "DOOROPENER":
+                CreatCircle(doorOpeners, focusRabbitCircle);
+                break;
         }
     }
 
     public void EndDialogue()
     {
-        levelTwoControl.gameObject.SetActive(true);
+        levelOneControl.gameObject.SetActive(true);
         tipsCanvas.SetActive(false);
         waittingTimeUI.gameObject.SetActive(true);
         //close
