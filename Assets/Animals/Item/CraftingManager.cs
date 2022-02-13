@@ -10,9 +10,9 @@ public class CraftingManager : MonoBehaviour
     //儲存所有Item
     [SerializeField]
     private List<Item> items = new List<Item>();
-    //儲存所有加入工作台Item
+    //儲存所有加入工作台Item virtual gameobect
     private Dictionary<int, Item> craftItems = new Dictionary<int, Item>();
-    //儲存可合成Item的GameObject
+    //儲存可合成Item的GameObject Gameobjects on the scene
     private Dictionary<int, GameObject> craftGameObjects = new Dictionary<int, GameObject>();
     //當前位置
     private bool isLeft = true;
@@ -22,14 +22,14 @@ public class CraftingManager : MonoBehaviour
     //變化是否選取到的儲存格
     [SerializeField]
     private Sprite[] slotsprite = new Sprite[2];
-    //是否可以合成
+    //是否可以合成 could be crafted or not
     private bool isCraft = false;
     //可合成Item
     private Item craftItem;
-    //物件生成位置
+    //物件生成位置 object spawn pos
     [SerializeField]
     private Transform instaniate;
-    //已合成物件是否拿走
+    //已合成物件是否拿走 box be taken or not
     public bool isTake = true;
 
     //縮小版物件icon
