@@ -233,6 +233,8 @@ public class CraftingManager : MonoBehaviour
             isTake = false;
             return;
         }
+
+        Debug.Log("Craft enter" + other.name);
         //搜尋碰撞到的物體是否可合成，有便加入
         foreach (var v in items)
         {
@@ -240,6 +242,7 @@ public class CraftingManager : MonoBehaviour
             {
                 AddItem(other, v);
                 CanMixItem();
+                Debug.Log("Craft add");
                 return;
             }
         }
