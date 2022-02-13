@@ -132,7 +132,7 @@ public class SceneController : MonoBehaviour
     ChangeRoleSkin tempRoleSkin;
     AnimatorController tempAnim;
     PlayerMovement tempPlayerMovement;
-    string defaultAnimator = "CharacterControllerTest_Male";
+    
     [SerializeField] Vector3 mainPosition01 = new Vector3(30.0f, 30.0f, 30.0f);
     [SerializeField] Vector3 mainPosition02 = new Vector3(36.0f, 30.0f, 30.0f);
     [SerializeField] Vector3 mainPosition03 = new Vector3(42.0f, 30.0f, 30.0f);
@@ -145,6 +145,7 @@ public class SceneController : MonoBehaviour
         GetPlayerState(player);
         tempRigibody.useGravity = true;
         tempRoleSkin.enabled = false;
+        string defaultAnimator = "CharacterControllerTest_Male_withItem";
         GetAnimator(player).runtimeAnimatorController = Resources.Load(defaultAnimator) as RuntimeAnimatorController;
 
         if (player == player01)
