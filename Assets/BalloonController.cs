@@ -64,7 +64,7 @@ public class BalloonController : MonoBehaviour
     bool timeCounting = false;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         ropeInScene = GameObject.FindGameObjectsWithTag("Rope").Length;
 

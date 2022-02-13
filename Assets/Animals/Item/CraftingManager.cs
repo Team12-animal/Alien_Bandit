@@ -7,42 +7,42 @@ public class CraftingManager : MonoBehaviour
 {
     //Dictionary<int, Dictionary<GameObject, Item>> crafting = new Dictionary<int, Dictionary<GameObject, Item>>();
 
-    //?x?s????Item
+    //儲存所有Item
     [SerializeField]
     private List<Item> items = new List<Item>();
-    //?x?s?????[?J?u?@?xItem
+    //儲存所有加入工作台Item
     private Dictionary<int, Item> craftItems = new Dictionary<int, Item>();
-    //?x?s?i?X??Item??GameObject
+    //儲存可合成Item的GameObject
     private Dictionary<int, GameObject> craftGameObjects = new Dictionary<int, GameObject>();
-    //???e???m
+    //當前位置
     private bool isLeft = true;
-    //?s?????l?W???x?s??
+    //存放桌子上的儲存格
     [SerializeField]
     private GameObject[] slotimage;
-    //?????O?_?????????x?s??
+    //變化是否選取到的儲存格
     [SerializeField]
     private Sprite[] slotsprite = new Sprite[2];
-    //?O?_?i?H?X??
+    //是否可以合成
     private bool isCraft = false;
-    //?i?X??Item
+    //可合成Item
     private Item craftItem;
-    //???????????m
+    //物件生成位置
     [SerializeField]
     private Transform instaniate;
-    //?w?X???????O?_????
+    //已合成物件是否拿走
     public bool isTake = true;
 
     /// <summary>
-    ///?Q?????n?T?{???a???e???m???a?????x?s?? 
+    ///利用內積確認玩家當前位置最靠近的儲存格 
     /// </summary>
     /// <param name="player"></param>
     private void ItemPos(GameObject player)
     {
-        //?N?????y?????????@???y????up(-1,0,0)
+        //將自身座標轉換成世界座標的up(-1,0,0)
         Vector3 left = transform.TransformDirection(Vector3.up);
-        //?u?@?x?????a???V?q
+        //工作台到玩家的向量
         Vector3 toOther = player.transform.position - transform.position;
-        if (Vector3.Dot(left, toOther) > 0) //Player?b?k???x?s??
+        if (Vector3.Dot(left, toOther) > 0) //Player在右邊儲存格
         {
             slotimage[1].GetComponent<Image>().sprite = slotsprite[1];
             slotimage[0].GetComponent<Image>().sprite = slotsprite[0];
@@ -56,7 +56,7 @@ public class CraftingManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// ?N?????w?????M?x?s?????P???m
+    /// 將物件定位到和儲存格相同位置
     /// </summary>
     private void SetGameObjectPos()
     {
@@ -68,10 +68,10 @@ public class CraftingManager : MonoBehaviour
         craftGameObjects[slot].transform.position = slotimage[slot].transform.position;
     }
     /// <summary>
-    /// ?s?W?i?X??Item?A???h2???????A?????k
+    /// 新增可合成Item，最多2個物件，排序法
     /// </summary>
-    /// <param name="col">?M?u?@?x?I?????i?X??????Collider</param>
-    /// <param name="item">?i?X??????Item</param>
+    /// <param name="col">和工作台碰撞的可合成物體Collider</param>
+    /// <param name="item">可合成物體Item</param>
     private void AddItem(Collider col, Item item)
     {
         int slotPos = 0;
@@ -79,50 +79,49 @@ public class CraftingManager : MonoBehaviour
         {
             slotPos = 1;
         }
-        //?p?G???e?w???s?????~?A???????Q?R???A?H?s?????N
+        //如果當前已有存放物品，原本的被刪除，以新的取代
         if (craftItems.ContainsKey(slotPos))
         {
-            //?????u?@?x?????????m
+            //移到工作台旁邊的位置
             Vector3 move = new Vector3(transform.position.x - 3f, transform.position.y, transform.position.z);
-            //????????Item?MGameObject
+            //移除舊的Item和GameObject
             craftItems.Remove(slotPos);
             craftGameObjects[slotPos].transform.position = move;
             craftGameObjects.Remove(slotPos);
         }
-
         craftItems.Add(slotPos, item);
         craftGameObjects.Add(slotPos, col.gameObject);
-        //?]?wGameObject???m
+        //設定GameObject位置
         SetGameObjectPos();
     }
     /// <summary>
-    /// ????Item
+    /// 移除Item
     /// </summary>
-    /// <param name="key">?n??????Dictionary value??key</param>
+    /// <param name="key">要移除的Dictionary value的key</param>
     private void RemoveItem(int key)
     {
         craftGameObjects.Remove(key);
         craftItems.Remove(key);
     }
     /// <summary>
-    /// ?O?_?i?H?X??
+    /// 是否可以合成
     /// </summary>
     private void CanMixItem()
     {
         string craft = "";
         foreach (var v in craftItems)
         {
-            //?NCraftItems????Item??id???[?i???omixId
+            //將CraftItems中的Item的id相加可獲得mixId
             craft += v.Value.id;
         }
         foreach (var a in items)
         {
-            //?j?M?????i?X????Item???d??mixId?????q
+            //搜尋所有可合成的Item並查找mixId的數量
             if (a.mixId.Count > 0)
             {
                 for (int i = 0; i < a.mixId.Count; i++)
                 {
-                    //?Y?????i?X????Item?K???X?j??
+                    //若找到可合成的Item便跳出迴圈
                     if (a.mixId[i] == craft)
                     {
                         isCraft = true;
@@ -138,20 +137,20 @@ public class CraftingManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// ?X??Item?????l??
+    /// 合成Item並初始化
     /// </summary>
     public void CraftingItem()
     {
-        if (isCraft && isTake)
+        if (isTake && isCraft)
         {
-
             Instantiate(craftItem.gm[0], instaniate);
+            instaniate.transform.DetachChildren();
             isTake = false;
             ClearAll();
         }
     }
     /// <summary>
-    /// ???l??
+    /// 初始化
     /// 1.craftItems
     /// 2.craftGameObjects
     /// 3.craftItem
@@ -180,7 +179,7 @@ public class CraftingManager : MonoBehaviour
             isTake = false;
             return;
         }
-        //?j?M?I???????????O?_?i?X???A???K?[?J
+        //搜尋碰撞到的物體是否可合成，有便加入
         foreach (var v in items)
         {
             if (v.canMix && other.tag == v.itemName && isTake)
@@ -196,11 +195,11 @@ public class CraftingManager : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        //?P?_???a???m
+        //判斷玩家位置
         if (other.tag == "Player")
         {
             ItemPos(other.gameObject);
-            //???i?H?X???B???a???UleftControl?????o
+            //當可以合成且玩家按下leftControl時觸發
             //if (isCraft && Input.GetKeyUp(KeyCode.LeftControl) && isTake)
             //{
             //    CraftingItem();
