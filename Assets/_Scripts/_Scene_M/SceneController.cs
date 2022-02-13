@@ -23,10 +23,20 @@ public class SceneController : MonoBehaviour
     [SerializeField] Vector3 translatePosition01 = new Vector3(19.67f, 0.12f, 19.14f);
     [SerializeField] GameObject player02;
     [SerializeField] Vector3 translatePosition02 = new Vector3(21.0f, 0.12f, 18f);
+    [SerializeField] GameObject player03;
+    [SerializeField] Vector3 translatePosition03 = new Vector3(21.0f, 0.12f, 18f);
+    [SerializeField] GameObject player04;
+    [SerializeField] Vector3 translatePosition04 = new Vector3(21.0f, 0.12f, 18f);
     public bool selected01 = false;
     public bool selected02 = false;
+    public bool selected03 = false;
+    public bool selected04 = false;
     public int animStartHash { get; private set; }
     public int animEndHash { get; private set; }
+
+    [Header("Events")]
+    [SerializeField] GameObject eventsController;
+
     private void Awake()
     {
         if (instance == null)
@@ -46,7 +56,10 @@ public class SceneController : MonoBehaviour
         animEndHash = Animator.StringToHash("End");
         MainPlayer(player01);
         MainPlayer(player02);
+        MainPlayer(player03);
+        MainPlayer(player04);
     }
+
     public void LoadLevel(int sceneIndex)
     {
         if (sceneIndex < 0) throw new Exception(" < 0 not correct");
@@ -56,6 +69,7 @@ public class SceneController : MonoBehaviour
             //StartCoroutine(LoadAsynchronously(sceneIndex));
             StartCoroutine(LoadTransition());
             SceneManager.LoadScene(sceneIndex);
+            eventsController.SetActive(true);
             if (selected01)
             {
                 SetPlayer(player01);
@@ -64,15 +78,28 @@ public class SceneController : MonoBehaviour
             {
                 SetPlayer(player02);
             }
+            if (selected03)
+            {
+                SetPlayer(player03);
+            }
+            if (selected04)
+            {
+                SetPlayer(player04);
+            }
         }
         else if (sceneIndex == 0)
         {
             StartCoroutine(LoadTransition());
             SceneManager.LoadScene(0);
+            eventsController.SetActive(false);
             selected01 = false;
             selected02 = false;
+            selected03 = false;
+            selected04 = false;
             MainPlayer(player01);
             MainPlayer(player02);
+            MainPlayer(player03);
+            MainPlayer(player04);
         }
     }
     IEnumerator LoadAsynchronously(int sceneIndex)
@@ -104,9 +131,12 @@ public class SceneController : MonoBehaviour
     Rigidbody tempRigibody;
     ChangeRoleSkin tempRoleSkin;
     AnimatorController tempAnim;
+    PlayerMovement tempPlayerMovement;
     string defaultAnimator = "CharacterControllerTest_Male";
     [SerializeField] Vector3 mainPosition01 = new Vector3(30.0f, 30.0f, 30.0f);
     [SerializeField] Vector3 mainPosition02 = new Vector3(36.0f, 30.0f, 30.0f);
+    [SerializeField] Vector3 mainPosition03 = new Vector3(42.0f, 30.0f, 30.0f);
+    [SerializeField] Vector3 mainPosition04 = new Vector3(48.0f, 30.0f, 30.0f);
 
     public void SetPlayer(GameObject player)
     {
@@ -115,7 +145,6 @@ public class SceneController : MonoBehaviour
         GetPlayerState(player);
         tempRigibody.useGravity = true;
         tempRoleSkin.enabled = false;
-
         GetAnimator(player).runtimeAnimatorController = Resources.Load(defaultAnimator) as RuntimeAnimatorController;
 
         if (player == player01)
@@ -125,6 +154,14 @@ public class SceneController : MonoBehaviour
         else if (player == player02)
         {
             player.transform.position = translatePosition02;
+        }
+        else if (player == player03)
+        {
+            player.transform.position = translatePosition03;
+        }
+        else if (player == player04)
+        {
+            player.transform.position = translatePosition04;
         }
     }
 
@@ -136,7 +173,6 @@ public class SceneController : MonoBehaviour
         tempInput.enabled = false;
         tempRigibody.useGravity = false;
         tempRoleSkin.enabled = true;
-
         GetAnimator(player);
         //wired
         tempAnim.ChangeAnimationState(tempAnim.Player_DanceType18, 0f, 0f);
@@ -150,6 +186,14 @@ public class SceneController : MonoBehaviour
         else if (player == player02)
         {
             player.transform.localPosition = mainPosition02;
+        }
+        else if (player == player03)
+        {
+            player.transform.localPosition = mainPosition03;
+        }
+        else if (player == player04)
+        {
+            player.transform.localPosition = mainPosition04;
         }
     }
 
@@ -165,6 +209,7 @@ public class SceneController : MonoBehaviour
         tempInput = player.GetComponent<InputController>();
         tempRigibody = player.GetComponent<Rigidbody>();
         tempRoleSkin = player.GetComponent<ChangeRoleSkin>();
+        tempPlayerMovement = player.GetComponent<PlayerMovement>();
     }
 
     public void StartMove(GameObject player)
@@ -177,6 +222,8 @@ public class SceneController : MonoBehaviour
     {
         player.Add(player01);
         player.Add(player02);
+        player.Add(player03);
+        player.Add(player04);
         return player;
     }
 }

@@ -248,7 +248,7 @@ Shader "Toony Colors Pro 2/Examples/PBS/Sketch"
 			float4 texcoord2 : TEXCOORD2;
 			float4 tangent : TANGENT;
 		#if defined(LIGHTMAP_ON) && defined(DIRLIGHTMAP_COMBINED)
-			float4 tangent : TANGENT;
+			//float4 tangent : TANGENT;
 		#endif
 			UNITY_VERTEX_INPUT_INSTANCE_ID
 		};

@@ -8,39 +8,47 @@ public class LevelTwoControl : MonoBehaviour
     [Header("遊戲開始時間倒數")]
     [SerializeField] float waittingTime = 6.0f;
     [SerializeField] Text waittingTimeText;
-    [SerializeField] Canvas timeUI;
+    [SerializeField] Canvas waittingTimeUI;
 
     [Header("遊戲進行期間")]
     [SerializeField] float gamingTime = 180.0f;
     [SerializeField] Text gamingTimeText;
 
     [Header("遊戲結束")]
-    [SerializeField] GameObject[] gameoverUIText;
+    [SerializeField] GameObject[] gameOverUIText;
+    [SerializeField] GameObject gameWinUI;
     public bool doorDestroied = false;
     InputController input01 = new InputController();
     InputController input02 = new InputController();
+    InputController input03 = new InputController();
+    InputController input04 = new InputController();
 
     [SerializeField] List<GameObject> player = new List<GameObject>();
 
     //is player win the game?
     public bool isWin;
-    int stars = 0;
 
     private void Start()
     {
         SceneController.instance.GetPlayer(player);
-        for (int i = 0; i < gameoverUIText.Length; i++)
+        for (int i = 0; i < gameOverUIText.Length; i++)
         {
-            gameoverUIText[i].gameObject.SetActive(false);
+            gameOverUIText[i].gameObject.SetActive(false);
         }
         gamingTime = 180.0f;
         doorDestroied = false;
         isWin = false;
-        stars = 0;
+        gameWinUI.SetActive(false);
     }
 
     private void Update()
     {
+        if (Input.GetButtonDown(KeyCode.Escape.ToString()))
+        {
+            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+            SceneController.instance.LoadLevel(0);
+            LevelLoader.instance.LoadLevel(0);
+        }
         TimeSetting();
         GameOver();
         TriggerSceneEvents();
@@ -51,6 +59,7 @@ public class LevelTwoControl : MonoBehaviour
     {
         if (waittingTime <= 0f)
         {
+            waittingTimeUI.gameObject.SetActive(false);
             if (SceneController.instance.selected01)
             {
                 SceneController.instance.StartMove(player[0]);
@@ -59,20 +68,35 @@ public class LevelTwoControl : MonoBehaviour
             {
                 SceneController.instance.StartMove(player[1]);
             }
-            timeUI.gameObject.SetActive(false);
-            if (!isWin)
+            if (SceneController.instance.selected03)
+            {
+                SceneController.instance.StartMove(player[2]);
+            }
+            if (SceneController.instance.selected04)
+            {
+                SceneController.instance.StartMove(player[3]);
+            }
+            waittingTimeUI.gameObject.SetActive(false);
+            if (!isWin && !doorDestroied)
             {
                 gamingTime = SetTime(gamingTime, gamingTimeText);
             }
         }
-        waittingTime = SetTime(waittingTime, waittingTimeText);
+        else if (waittingTime < 1.2f)
+        {
+            waittingTimeText.text = "GO!";
+        }
+        waittingTime -= Time.deltaTime;
     }
 
     public float SetTime(float time, Text text)
     {
         time -= Time.deltaTime;
         time = Mathf.Clamp(time, 0f, Mathf.Infinity);
-        text.text = string.Format("{0:00}", time);
+        int minute = (int)gamingTime / 60;
+        int second = (int)gamingTime- minute * 60;
+        text.text = string.Format("{0:D2}:{1:D2}", minute, second);
+
         return time;
     }
 
@@ -80,18 +104,24 @@ public class LevelTwoControl : MonoBehaviour
     {
         input01 = player[0].GetComponent<InputController>();
         input02 = player[1].GetComponent<InputController>();
+        input03 = player[2].GetComponent<InputController>();
+        input04 = player[3].GetComponent<InputController>();
         if (gamingTime <= 0.0f || doorDestroied)
         {
+            GameOverSetting(input01, input02, input03, input04);
             // can't control players;
-            GameOverSetting(input01, input02);
+            for (int i = 0; i < gameOverUIText.Length; i++)
+            {
+                gameOverUIText[i].gameObject.SetActive(true);
+            }
         }
         else if (isWin)
         {
             //need to creat win UI;
-            
+            gameWinUI.SetActive(true);
 
             // can't control players;
-            GameOverSetting(input01, input02);
+            GameOverSetting(input01, input02,input03,input04);
         }
     }
 
@@ -100,14 +130,12 @@ public class LevelTwoControl : MonoBehaviour
     /// </summary>
     /// <param name="input01"></param>
     /// <param name="input02"></param>
-    private void GameOverSetting(InputController input01, InputController input02)
+    private void GameOverSetting(InputController input01, InputController input02,InputController input03,InputController input04)
     {
         input01.enabled = false;
         input02.enabled = false;
-        for (int i = 0; i < gameoverUIText.Length; i++)
-        {
-            gameoverUIText[i].gameObject.SetActive(true);
-        }
+        input03.enabled = false;
+        input04.enabled = false;
     }
     /// <summary>
     /// finish mession on time to win stars; 
