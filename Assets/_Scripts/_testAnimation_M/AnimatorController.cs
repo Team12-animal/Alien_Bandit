@@ -127,7 +127,7 @@ public class AnimatorController : MonoBehaviour
             animator.SetFloat(animHorizontalHash, horizontal);
             animator.SetFloat(animVerticalHash, vertical);
         }
-        Debug.Log("Move2" + newState);
+        Debug.Log("Move2" + newState + horizontal + "/" + vertical);
         ChangeAnimaEventState(newState);
     }
 

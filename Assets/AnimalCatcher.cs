@@ -33,7 +33,10 @@ public class AnimalCatcher : MonoBehaviour
     private void SendAnimalToHome(GameObject box)
     {
         animalInBox = bc.targetAnimal;
-        player.GetComponent<PlayerData>().catchedAmt += 1;
+        PlayerData data = player.GetComponent<PlayerData>();
+        PlayerMovement pm = player.GetComponent<PlayerMovement>();
+        data.catchedAmt += 1;
+       
         getStar.collectTargets += 1;
 
         Debug.Log("Catch!");
@@ -42,5 +45,8 @@ public class AnimalCatcher : MonoBehaviour
         box.SetActive(false);
         GameObject.Destroy(animalInBox);
         GameObject.Destroy(box);
+
+        data.item = null;
+        pm.itemInhand = null;
     }
 }
