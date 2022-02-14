@@ -1,54 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MissionManager : MonoBehaviour
 {
-    [SerializeField]
-    GameObject mission;
-    [SerializeField]
-    Image missionBar;
-    public bool missionAction;
+    public List<GameObject> missions;
 
     // Start is called before the first frame update
     void Start()
     {
-        missionBar.fillAmount = 1;
-        missionBar.color = new Color(0.3f, 0.6f, 0.2f);
+        missions = new List<GameObject>();      
     }
 
-    void FixedUpdate()
+    // Update is called once per frame
+    void Update()
     {
-        if (missionAction)
+        if (Input.GetKeyDown(KeyCode.N))
         {
-            TimeLine();
-            ChangeColor();
+            AddMission(2);
         }
-    }
-
-    void TimeLine()
-    {
-        missionBar.fillAmount -= 0.025f * Time.deltaTime; //40¬íÂk¹s
-        if (missionBar.fillAmount <= 0)
+        else if(Input.GetKeyDown(KeyCode.M))
         {
-            mission.SetActive(false);
+            RemoveMission();
         }
     }
 
-    void ChangeColor()
+    void AddMission( int id )
     {
-        if (missionBar.fillAmount > 0.6f)
-        {
-            missionBar.color = new Color(0.3f, 0.6f, 0.2f);
-        }
-        else if (missionBar.fillAmount > 0.3f)
-        {
-            missionBar.color = new Color(0.78f, 0.58f, 0.19f);
-        }
-        else
-        {
-            missionBar.color = new Color(0.78f,0.19f,0.19f);
-        }
+        GameObject go = Resources.Load("Mission") as GameObject;
+        missions.Add(Instantiate(go,transform));
+        missions[missions.Count - 1].GetComponent<MissionList>().id = id;
+    }
+
+    public void RemoveMission()
+    {
+        missions.RemoveAt(0);
+    }
+
+    public void RemoveMission(GameObject go)
+    {
+        missions.Remove(go);
     }
 }
