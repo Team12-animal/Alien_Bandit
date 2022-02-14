@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.39489004, g: 0.49235535, b: 0.6263235, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.43657154, g: 0.5012743, b: 0.58516014, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1757,7 +1757,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 388.80505, y: -75}
+  m_AnchoredPosition: {x: 373, y: -65}
   m_SizeDelta: {x: 247.3901, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &86833788
@@ -32396,6 +32396,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6815000350421683800, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 245
+      objectReference: {fileID: 0}
+    - target: {fileID: 6815000350421683800, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -150
+      objectReference: {fileID: 0}
     - target: {fileID: 6818416531399703885, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -32403,6 +32411,26 @@ PrefabInstance:
     - target: {fileID: 8585017286416331632, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
       propertyPath: m_Text
       value: "\u6559\u5B78\u958B\u59CB\u56C9\uFF0C\u8ACB\u6309\u4E0BSpace"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8585017286416331632, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8585017286416331633, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 840.2996
+      objectReference: {fileID: 0}
+    - target: {fileID: 8585017286416331633, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 126.7297
+      objectReference: {fileID: 0}
+    - target: {fileID: 8585017286416331633, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.9563
+      objectReference: {fileID: 0}
+    - target: {fileID: 8585017286416331633, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -143.08124
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
