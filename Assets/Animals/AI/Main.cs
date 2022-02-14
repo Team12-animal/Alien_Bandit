@@ -14,7 +14,8 @@ public class Main : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start () 
+    {
         m_Obstacles = new List<Obstacle>();
         GameObject [] gos = GameObject.FindGameObjectsWithTag("Obstacle");
         if (gos != null || gos.Length > 0)
@@ -38,7 +39,8 @@ public class Main : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
 		
 	}
 }

@@ -24,7 +24,8 @@ public class SimpleFSM3 : MonoBehaviour{
     private Animator m_Am;
     
 	// Use this for initialization
-	public void Start () {
+	public void Start () 
+    {
         m_CurrentEnemyTarget = null;
         m_eCurrentState = eFSMState.Idle;
         m_fCurrentTime = 0.0f;
@@ -32,7 +33,6 @@ public class SimpleFSM3 : MonoBehaviour{
         m_iCurrentWanderPt = -1;
         m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");
         m_Am = GetComponent<Animator>();
-
     }
 
     private GameObject CheckEnemyInSight(ref bool bAttack)
@@ -72,7 +72,8 @@ public class SimpleFSM3 : MonoBehaviour{
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update () 
+    {
         Debug.Log("Current State " + m_eCurrentState);
         if (m_eCurrentState == eFSMState.Idle)
         {
@@ -238,9 +239,7 @@ public class SimpleFSM3 : MonoBehaviour{
         else if (m_eCurrentState == eFSMState.Dead)
         {
             // Every state can be here.
-        }
-
-        
+        }     
     }
 
     private void OnDrawGizmos()
