@@ -174,11 +174,13 @@ public class AnimatorController : MonoBehaviour
     }
     public void AnimaEventMixUsingTableToWalk()
     {
-        int random = Random.Range(0, 6);
-        if (random > 1)
-            ChangeAnimaEventState(Player_MixUsingTableToWalk);
-        else
-            ChangeAnimaEventState(Player_Cheer);
+        ChangeAnimaEventState(Player_Cheer);
+
+        //int random = Random.Range(0, 6);
+        //if (random > 1)
+        //    ChangeAnimaEventState(Player_MixUsingTableToWalk);
+        //else
+        //    ChangeAnimaEventState(Player_Cheer);
     }
 
     public void AnimaEventChopFinished()

@@ -52,8 +52,9 @@ public class PlayerData : MonoBehaviour
     {
         if(item != null && item.tag == "Box")
         {
-            item.GetComponent<BoxController>().beUsing = true;
-            item.GetComponent<BoxController>().user = this.gameObject;
+            BoxController bc = item.GetComponent<BoxController>();
+            bc.beUsing = true;
+            bc.user = this.gameObject;
         }
     }
 }
