@@ -33,6 +33,8 @@ public class TeachingLevelControl : MonoBehaviour
     PlayerMovement playerMovement03;
     PlayerMovement playerMovement04;
 
+    private List<PlayerMovement> playerMovements;
+
     [Header("itemHolded")]
     string chop = "Chop ";
     string wood = "Log(Clone)";
@@ -84,6 +86,7 @@ public class TeachingLevelControl : MonoBehaviour
     private void Start()
     {
         startTeaching = false;
+        playerMovements = new List<PlayerMovement>();
         Init();
         getStarTest = GameObject.Find(goal).GetComponent<GetStarTest>();
         completeImage.SetActive(true);
@@ -122,21 +125,25 @@ public class TeachingLevelControl : MonoBehaviour
         {
             playerOne = GameObject.Find(one);
             playerMovement01 = playerOne.GetComponent<PlayerMovement>();
+            playerMovements.Add(playerMovement01);
         }
         if (player02)
         {
             playerTwo = GameObject.Find(two);
             playerMovement02 = playerTwo.GetComponent<PlayerMovement>();
+            playerMovements.Add(playerMovement02);
         }
         if (player03)
         {
             playerThree = GameObject.Find(three);
             playerMovement03 = playerThree.GetComponent<PlayerMovement>();
+            playerMovements.Add(playerMovement03);
         }
         if (player04)
         {
             playerFour = GameObject.Find(four);
             playerMovement04 = playerFour.GetComponent<PlayerMovement>();
+            playerMovements.Add(playerMovement04);
         }
 
         rocks = new List<GameObject>();
@@ -186,16 +193,12 @@ public class TeachingLevelControl : MonoBehaviour
         bool checkPoint07 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && !process07;
         bool checkPoint08 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07;
 
-        //if (playerMovement01.itemInhand == null)
-        //{
-        //    return;
-        //}
-        if (checkPoint00 && playerMovement01.itemInhand != null && playerMovement01.itemInhand.name == chop)
+        if (checkPoint00 && CheckIfHolding(chop))
         {
             process00 = true;
             Process(chop, 1);
         }
-        else if (checkPoint01 && playerMovement01.itemInhand != null && playerMovement01.itemInhand.name == wood)
+        else if (checkPoint01 && CheckIfHolding(wood))
         {
             process01 = true;
             Process(wood, 2);
@@ -213,7 +216,7 @@ public class TeachingLevelControl : MonoBehaviour
             GameObject tempBox = Instantiate(boxPrefab,transform.position, Quaternion.identity);
             boxController = tempBox.GetComponent<BoxController>();
         }
-        else if (checkPoint04 && playerMovement01.itemInhand != null &&  playerMovement01.itemInhand.name == box)
+        else if (checkPoint04 && CheckIfHolding(box))
         {
             process04 = true;
             Process(box, 5);
@@ -222,11 +225,9 @@ public class TeachingLevelControl : MonoBehaviour
         {
             process05 = true;
             Process(6);
-            Debug.LogWarning(buttonSensor.GetPressedBool());
         }
         else if (checkPoint06 && buttonSensor.GetPressedBool())
         {
-            Debug.LogWarning(buttonSensor.GetPressedBool());
             process06 = true;
             Process(7);
         }
@@ -237,6 +238,22 @@ public class TeachingLevelControl : MonoBehaviour
             completeImage.SetActive(true);
         }
     }
+
+    private bool CheckIfHolding(string itemType)
+    {
+        if(playerMovements.Count > 0)
+        {
+           foreach(PlayerMovement pm in playerMovements)
+            {
+                if(pm.itemInhand != null && pm.itemInhand.name == itemType)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /// <summary>
     /// Player Dont Take Item On Hand
     /// </summary>
@@ -254,7 +271,7 @@ public class TeachingLevelControl : MonoBehaviour
     /// <param name="number"></param>
     public void Process(string item, int number)
     {
-        if (playerMovement01.itemInhand.name == item)
+        if (CheckIfHolding(item))
         {
             TargetText.text = dialogue.title[number];
             DialogueText.text = dialogue.sentences[number];

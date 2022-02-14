@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43657154, g: 0.5012743, b: 0.58516014, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.39489004, g: 0.49235535, b: 0.6263235, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19901,7 +19901,7 @@ PrefabInstance:
     - target: {fileID: 5555761440165396995, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: tipsCanvas
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1467478951}
     - target: {fileID: 5555761440165396995, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: dialogueText
       value: 
@@ -19909,7 +19909,7 @@ PrefabInstance:
     - target: {fileID: 5555761440165396995, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: waittingTimeUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1467478954}
     - target: {fileID: 5555761440165396995, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: levelOneControl
       value: 
@@ -19917,7 +19917,7 @@ PrefabInstance:
     - target: {fileID: 5555761440165396995, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: backgroundCanvas
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1467478950}
     - target: {fileID: 5555761440165396995, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: dialogue.focusItem.Array.size
       value: 10
@@ -21074,6 +21074,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2050471575202202737, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2051638167244666724, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
       propertyPath: m_SizeDelta.y
       value: 255
@@ -21162,6 +21166,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4807006678902931979, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
 --- !u!114 &1467478947 stripped
@@ -21175,6 +21183,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1467478948 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4807006678902931979, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+  m_PrefabInstance: {fileID: 1467478946}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1467478949 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1283954575917347295, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
@@ -21186,6 +21199,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1467478950 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6139416934896639229, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+  m_PrefabInstance: {fileID: 1467478946}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1467478951 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8100255691557587989, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+  m_PrefabInstance: {fileID: 1467478946}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1467478952 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3877395875993127500, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
@@ -21208,6 +21231,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!223 &1467478954 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 1283954574519607974, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+  m_PrefabInstance: {fileID: 1467478946}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1467478955 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2050471575202202737, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+  m_PrefabInstance: {fileID: 1467478946}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1483967604
 GameObject:
   m_ObjectHideFlags: 0
@@ -28524,13 +28557,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waittingTime: 3
   waittingTimeText: {fileID: 1467478949}
-  waittingTimeUI: {fileID: 0}
+  waittingTimeUI: {fileID: 1467478948}
   gamingTime: 180
   gamingTimeText: {fileID: 1467478947}
   gameOverUIText:
   - {fileID: 1744547751}
   - {fileID: 1744547750}
-  gameWinUI: {fileID: 0}
+  gameWinUI: {fileID: 1467478955}
   doorDestroied: 0
   player: []
   isWin: 0

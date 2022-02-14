@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43657154, g: 0.5012743, b: 0.58516014, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.39489004, g: 0.49235535, b: 0.6263235, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15451,6 +15451,9 @@ MonoBehaviour:
   table: {fileID: 855982259}
   boxPrefab: {fileID: 7296520087955823214, guid: a31a484d9d90b4ee49a33923bb5d1196, type: 3}
   switchPlace: {fileID: 626900875}
+  focusitemCircle: {fileID: 383525479118882661, guid: 4760f15b66d94e34da74851ca08f221a, type: 3}
+  focusRabbitCircle: {fileID: 1795741376356887800, guid: 1157214ff7f1f884ebc457e38a90943a, type: 3}
+  focusFoxCircle: {fileID: 5775928081762187682, guid: 7067a0f6b88eb34448796b616a11ba64, type: 3}
 --- !u!1 &1110424094
 GameObject:
   m_ObjectHideFlags: 0
@@ -32320,6 +32323,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3584055323528596972, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5020869956158298983, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -32431,6 +32438,10 @@ PrefabInstance:
     - target: {fileID: 8585017286416331633, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -143.08124
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731287404795775580, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9771cc3901f7724fbab9f4274bb33ee, type: 3}
