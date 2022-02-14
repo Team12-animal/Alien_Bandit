@@ -5,11 +5,31 @@ using UnityEngine;
 public class MissionManager : MonoBehaviour
 {
     public List<GameObject> missions;
-
+    private static MissionManager s_Instance;
+    public static MissionManager Instance
+    {
+        get
+        {
+            if (s_Instance != null)
+            {
+                return s_Instance;      // 已經註冊的Singleton物件
+            }
+            s_Instance = FindObjectOfType<MissionManager>();
+            //尋找已經在Scene的Singleton物件:
+            return s_Instance;
+        }
+    }
+    void Awake()
+    {
+        if (s_Instance = null)
+        {
+            s_Instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
-        missions = new List<GameObject>();      
+        missions = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -17,7 +37,7 @@ public class MissionManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
-            AddMission(2);
+            AddMission(0);
         }
         else if(Input.GetKeyDown(KeyCode.M))
         {
@@ -25,7 +45,7 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    void AddMission( int id )
+    public void AddMission( int id  = 0 )
     {
         GameObject go = Resources.Load("Mission") as GameObject;
         missions.Add(Instantiate(go,transform));

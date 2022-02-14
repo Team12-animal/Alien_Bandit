@@ -84,8 +84,9 @@ public class LevelOneControl : MonoBehaviour
         }
         else if (waittingTime < 1.2f)
         {
-            waittingTimeText.text = "GO!";
+            waittingTimeText.text = "GO!";                
         }
+
         waittingTime -= Time.deltaTime;
     }
 
