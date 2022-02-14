@@ -29,18 +29,18 @@ public class RainEventControl : MonoBehaviour
         rainTime += tempTime;
         //reset blur and distortion
         rainMaterial.SetFloat(blur, 0f);
-        rainMaterial.SetFloat(distortion, 0f);
+        rainMaterial.SetFloat(distortion, 3f);
         //when going to stop raining ,cost down blur and distortion value;
         if (rainTime > 9f)
         {
             float blurSpeed = Mathf.Lerp(0f, 0.6f, 3/rainTime);
-            float distortionSpeed = Mathf.Lerp(0f, -6.0f, 9.6f/rainTime);
+            //float distortionSpeed = Mathf.Lerp(0f, -6.0f, 9.6f/rainTime);
             rainMaterial.SetFloat(blur, blurSpeed);
-            rainMaterial.SetFloat(distortion, distortionSpeed);
+            //rainMaterial.SetFloat(distortion, distortionSpeed);
             if (rainMaterial.GetFloat(blur) < 0.1f && rainMaterial.GetFloat(distortion) > -2.7f)
             {
                 rainMaterial.SetFloat(blur, 0f);
-                rainMaterial.SetFloat(distortion, 0f);
+                //rainMaterial.SetFloat(distortion, 0f);
                 Destroy(gameObject);
             }
         }
@@ -49,7 +49,7 @@ public class RainEventControl : MonoBehaviour
             float blurSpeed = Mathf.Lerp(0f, 0.6f, rainTime * 0.3f);
             float distortionSpeed = Mathf.Lerp(0f, -6.0f, rainTime * 0.3f);
             rainMaterial.SetFloat(blur, blurSpeed);
-            rainMaterial.SetFloat(distortion, distortionSpeed);
+            //rainMaterial.SetFloat(distortion, distortionSpeed);
         }
     }
 }
