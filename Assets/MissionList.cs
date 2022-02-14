@@ -11,7 +11,7 @@ public class MissionList : MonoBehaviour
     Image missionBar;
     Animator MissionAnimator;
     public bool missionAction;
-    public int id=0; //任務內容{0=兔子,1=狐狸,2=鹿...}
+    public int id = 0; //任務內容{0=兔子,1=狐狸,2=鹿...}
     MissionManager missionManager;
 
     // Start is called before the first frame update

@@ -21,7 +21,7 @@ public class MissionManager : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.M))
         {
-            RemoveMission();
+            RemoveMission(0);
         }
     }
 
@@ -32,9 +32,11 @@ public class MissionManager : MonoBehaviour
         missions[missions.Count - 1].GetComponent<MissionList>().id = id;
     }
 
-    public void RemoveMission()
+    public void RemoveMission(int i)
     {
-        missions.RemoveAt(0);
+        Destroy(missions[i]);
+        missions.RemoveAt(i);
+
     }
 
     public void RemoveMission(GameObject go)
