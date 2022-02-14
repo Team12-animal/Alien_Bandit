@@ -12,7 +12,7 @@ public class ButtonSensor : MonoBehaviour
     private Collider doorCollider;
     public GameObject goal;
     private Collider goalTrigger;
-    private bool pressed = false;
+    [SerializeField]private bool pressed = false;
     private int playerOnButton = 0;
 
     private void Awake()
@@ -66,5 +66,11 @@ public class ButtonSensor : MonoBehaviour
     private void POnButton()
     {
         dc.ToggleDoor();
+    }
+
+    public bool GetPressedBool()
+    {
+        Debug.LogWarning(pressed);
+        return pressed;
     }
 }

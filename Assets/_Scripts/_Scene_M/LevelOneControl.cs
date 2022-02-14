@@ -8,7 +8,7 @@ public class LevelOneControl : MonoBehaviour
     [Header("遊戲開始時間倒數")]
     [SerializeField] float waittingTime = 6.0f;
     [SerializeField] Text waittingTimeText;
-    [SerializeField] Canvas waittingTimeUI;
+    [SerializeField] GameObject waittingTimeUI;
 
     [Header("遊戲進行期間")]
     [SerializeField] float gamingTime = 180.0f;

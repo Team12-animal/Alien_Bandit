@@ -222,6 +222,18 @@ public class CraftingManager : MonoBehaviour
         isCraft = false;
     }
 
+    public bool CheckItemOnTable(string itemname)
+    {
+        foreach (var v in craftItems)
+        {
+            if (v.Value.itemName == itemname)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
