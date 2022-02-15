@@ -105,7 +105,7 @@ public class CraftingManager : MonoBehaviour
         }
 
         p4 = GameObject.Find("Player0" + 4);
-        if (p1 != null)
+        if (p4 != null)
         {
             players.Add(p4);
         }
@@ -344,9 +344,30 @@ public class CraftingManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        foreach (var v in craftGameObjects)
+        if (other.gameObject.tag == "Player")
         {
-            //if (canMix)
+            return;
+        }
+
+        if (user == null)
+        {
+            foreach (var v in items)
+            {
+                if (v.canMix && other.tag == v.itemName && isTake)
+                {
+                    AddItem(other.gameObject, v);
+                    CanMixItem();
+                    return;
+                }
+                else
+                {
+                    Vector3 savePos = this.transform.position;
+                    savePos.y += 5.0f;
+                    savePos.z += 2.0f;
+                    other.transform.position = savePos;
+                    return;
+                }
+            }
         }
     }
 
@@ -354,15 +375,18 @@ public class CraftingManager : MonoBehaviour
     {
         if (other.tag == "Box")
         {
+            //box left on table
             isTake = false;
             return;
         }
     }
 
+    //remove item
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Box")
         {
+            //box be taken
             isTake = true;
             return;
         }
@@ -380,6 +404,7 @@ public class CraftingManager : MonoBehaviour
     int pid = 5;
     public GameObject userItem;
 
+    //Rest user data
     private void UserDataReset()
     {
         user = null;
@@ -388,9 +413,10 @@ public class CraftingManager : MonoBehaviour
     }
 
     float dist = 10000.0f;
-    GameObject tempUser;
+    GameObject tempUser = null;
     float tempDist;
 
+    //Find the usable player
     private void FindUser()
     {
         if (players.Count == 0)
@@ -398,32 +424,37 @@ public class CraftingManager : MonoBehaviour
             return;
         }
 
-        //Find the closest user
+        //Find the nearest user
         foreach (GameObject p in players)
         {
             tempDist = (p.transform.position - this.transform.position).magnitude;
 
-            if (tempDist <= dist && tempDist < 7.0f)
+            if (tempDist <= dist && tempDist <= 3.0f)
             {
                 tempUser = p;
                 dist = tempDist;
             }
         }
 
-        //check if any player close enough to user workBench
-        if (tempUser == null && user != null)
+        //check if user left
+        if (user != null && (user.transform.position - this.transform.position).magnitude > 3.0f)
         {
-            //no player using
-            ResetItmPos(user);
-            UserDataReset();
+            user = null;
         }
-        else
+
+        if (tempUser != null && user == null)
         {
             //get new user
             user = tempUser;
             data = user.GetComponent<PlayerData>();
             pid = data.pid;
-
+        }
+        //check if any player close enough to user workBench
+        else if (tempUser == null && user != null)
+        {
+            //no player using
+            ResetItmPos(user);
+            UserDataReset();
         }
 
         //reset compare data

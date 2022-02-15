@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43657154, g: 0.5012743, b: 0.58516014, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.44223222, g: 0.5098348, b: 0.58425075, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5369,7 +5369,7 @@ GameObject:
   - component: {fileID: 355305232}
   - component: {fileID: 355305231}
   m_Layer: 11
-  m_Name: 'Character_Jock_01 (P3) '
+  m_Name: Player03
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8925,7 +8925,7 @@ GameObject:
   - component: {fileID: 635961961}
   - component: {fileID: 635961960}
   m_Layer: 11
-  m_Name: 'Character_Jock_01 (P4) '
+  m_Name: Player04
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17724,7 +17724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1261619251
 Transform:
   m_ObjectHideFlags: 0
@@ -24249,7 +24249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1637417449}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.03, y: -1.2, z: 0.77}
+  m_LocalPosition: {x: -0.64, y: -1.2, z: -3.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2064244334}
@@ -30938,7 +30938,7 @@ GameObject:
   - component: {fileID: 2064244327}
   - component: {fileID: 2064244326}
   m_Layer: 11
-  m_Name: Character_Jock_01 (P2)
+  m_Name: Player02
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31097,7 +31097,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2064244325}
   m_LocalRotation: {x: -0, y: 0.9982721, z: -0, w: -0.05876101}
-  m_LocalPosition: {x: 25.45, y: -0.38, z: 19.97}
+  m_LocalPosition: {x: 19.54, y: -0.38, z: 24.79}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 2009504469}
@@ -32336,11 +32336,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2187076790391383682, guid: b50dc2a9695766045ad584eb8a9ceae1, type: 3}
       propertyPath: m_Name
-      value: Character_Jock_01 (P1)
+      value: Player01
       objectReference: {fileID: 0}
     - target: {fileID: 2187076790391383682, guid: b50dc2a9695766045ad584eb8a9ceae1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2187076790391383691, guid: b50dc2a9695766045ad584eb8a9ceae1, type: 3}
       propertyPath: m_RootOrder
