@@ -69,7 +69,7 @@ public class SceneController : MonoBehaviour
             //StartCoroutine(LoadAsynchronously(sceneIndex));
             StartCoroutine(LoadTransition());
             SceneManager.LoadScene(sceneIndex);
-            eventsController.SetActive(true);
+            //eventsController.SetActive(true);
             if (selected01)
             {
                 SetPlayer(player01);

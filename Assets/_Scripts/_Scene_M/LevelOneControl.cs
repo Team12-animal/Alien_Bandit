@@ -51,7 +51,7 @@ public class LevelOneControl : MonoBehaviour
         }
         TimeSetting();
         GameOver();
-        TriggerSceneEvents();
+        //TriggerSceneEvents();
         WinGame(1);//1  means what level two stars state;
     }
 

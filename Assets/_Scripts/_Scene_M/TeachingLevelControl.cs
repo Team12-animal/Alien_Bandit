@@ -7,18 +7,18 @@ public class TeachingLevelControl : MonoBehaviour
 {
     [Header("Moving On Which Teaching Process")]
     bool startTeaching = false;
-    [SerializeField] bool process00 = false;//take the ax;
-    [SerializeField] bool process01 = false;//cut tree;
-    [SerializeField] bool process02 = false;//Put down the ax ;
-    [SerializeField] bool process03 = false;//Pick up wood ; 
-    [SerializeField] bool process04 = false;//take wood to workingTable; 
-    [SerializeField] bool process05 = false;//take rope to workingTable; 
-    [SerializeField] bool process06 = false;//use workingTable to creat a box; 
-    [SerializeField] bool process07 = false;//use box to ctach a rabbit;
-    [SerializeField] bool process08 = false;//touch switch to open door;
-    [SerializeField] bool process09 = false;//throw box in to the door;
-    [SerializeField] bool process10 = false;//try again;
-    [SerializeField] bool processFail = false;//Fail;
+    bool process00 = false;//take the ax;
+    bool process01 = false;//cut tree;
+    bool process02 = false;//Put down the ax ;
+    bool process03 = false;//Pick up wood ; 
+    bool process04 = false;//take wood to workingTable; 
+    bool process05 = false;//take rope to workingTable; 
+    bool process06 = false;//use workingTable to creat a box; 
+    bool process07 = false;//use box to ctach a rabbit;
+    bool process08 = false;//touch switch to open door;
+    bool process09 = false;//throw box in to the door;
+    bool process10 = false;//try again;
+    bool processFail = false;//Fail;
 
     [Header("Player States")]
     string one = "Player01";
@@ -61,7 +61,7 @@ public class TeachingLevelControl : MonoBehaviour
     string goal = "Goal";
     List<GameObject> rocks;
     List<GameObject> woods;
-    List<GameObject> rabbits;
+    [SerializeField]List<GameObject> rabbits;
     List<GameObject> fox;
     List<GameObject> workingTable;
     [SerializeField] List<GameObject> trees;
@@ -79,6 +79,12 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] GameObject chop;
     ChopInUse chopInUse;//this scripts under the chop object
 
+    [Header("CircleTpyesPrefabs")]
+    [SerializeField] GameObject itemCircle;
+    [SerializeField] GameObject rabbitCircle;
+    [SerializeField] GameObject foxCircle;
+    [SerializeField] GameObject newCircle;
+    [SerializeField] GameObject oldCircle;
 
     private void Start()
     {
@@ -96,6 +102,7 @@ public class TeachingLevelControl : MonoBehaviour
             DialogueText.text = dialogue.sentences[0];
             ButtonTip.text = dialogue.buttonTip[0];
             startTeaching = true;
+            CreatCircle(chop, itemCircle);
         }
         else if (startTeaching)
         {
@@ -139,7 +146,7 @@ public class TeachingLevelControl : MonoBehaviour
 
         rocks = new List<GameObject>();
         woods = new List<GameObject>();
-        rabbits = new List<GameObject>();
+        //rabbits = new List<GameObject>();
         fox = new List<GameObject>();
         workingTable = new List<GameObject>();
         //trees = new List<GameObject>();
@@ -149,7 +156,7 @@ public class TeachingLevelControl : MonoBehaviour
         doorOpeners = new List<GameObject>();
         GameObject[] tempRocks = GameObject.FindGameObjectsWithTag(rockTag);
         GameObject[] tempWoods = GameObject.FindGameObjectsWithTag(woodTag);
-        GameObject[] tempRabbits = GameObject.FindGameObjectsWithTag(rabbitsTag);
+        //GameObject[] tempRabbits = GameObject.FindGameObjectsWithTag(rabbitsTag);
         GameObject[] tempFox = GameObject.FindGameObjectsWithTag(foxTag);
         GameObject[] tempWorkingTable = GameObject.FindGameObjectsWithTag(workingTableTag);
         //GameObject[] tempTrees = GameObject.FindGameObjectsWithTag(treeTag);
@@ -159,7 +166,7 @@ public class TeachingLevelControl : MonoBehaviour
         GameObject[] tempDoorOpener = GameObject.FindGameObjectsWithTag(doorOpenerTag);
         SettingTargets(rocks, tempRocks);
         SettingTargets(woods, tempWoods);
-        SettingTargets(rabbits, tempRabbits);
+        //SettingTargets(rabbits, tempRabbits);
         SettingTargets(fox, tempFox);
         SettingTargets(workingTable, tempWorkingTable);
         SettingTargets(winDoor, tempWinDoor);
@@ -186,18 +193,20 @@ public class TeachingLevelControl : MonoBehaviour
         bool checkPoint08 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && !process08 && !process09 && !process10;
         bool checkPoint09 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && process08 && !process09 && !process10;
         bool checkPoint10 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && process08 && process09 && !process10;
-        
+
         if (checkPoint00 && CheckIfHolding(chopHolded))//take the ax 01;
         {
             process00 = true;
             tempPlayMoveMent = CheckWhoTakeItem(chopHolded);
             DialogueProcess(1);
+            ChangeFocusItemCircle(trees[5],itemCircle);
         }
         else if (checkPoint01 && CheckSomeThingInactive(trees))//cut tree 02;
         {
             process01 = true;
             DialogueProcess(2);
-        } 
+            Destroy(newCircle);
+        }
         else if (checkPoint02 && tempPlayMoveMent.itemInhand == null && !chopInUse.used)//Put down the ax 03;
         {
             process02 = true;
@@ -207,16 +216,19 @@ public class TeachingLevelControl : MonoBehaviour
         {
             process03 = true;
             DialogueProcess(4);
-        } 
+            ChangeFocusItemCircle(workingTable[0], itemCircle);
+        }
         else if (checkPoint04 && Input.GetKeyDown(KeyCode.Space))//craftingManager.CheckItemOnTable(wood)//take wood to workingTable 05; 
         {
             process04 = true;
             DialogueProcess(5);
+            ChangeFocusItemCircle(ropes[0], itemCircle);
         }
         else if (checkPoint05 && Input.GetKeyDown(KeyCode.Space))//craftingManager.CheckItemOnTable(rope)//take rope to workingTable 06; 
         {
             process05 = true;
             DialogueProcess(6);
+            ChangeFocusItemCircle(rabbits[0], rabbitCircle);
         }
         else if (checkPoint06 && CreatBox())//wait fuction to use//use workingTable to creat a box 07; 
         {
@@ -227,16 +239,19 @@ public class TeachingLevelControl : MonoBehaviour
         {
             process07 = true;
             DialogueProcess(8);
+            ChangeFocusItemCircle(doorOpeners[0], rabbitCircle);
         }
         else if (checkPoint08 && buttonSensor.GetPressedBool())//touch switch to open door 09;
         {
             process08 = true;
             DialogueProcess(9);
+            ChangeFocusItemCircle(winDoor[0], rabbitCircle);
         }
         else if (checkPoint09 && getStarTest.collectTargets >= 1)//throw box in to the door 10;
         {
             process09 = true;
             DialogueProcess(10);
+            Destroy(oldCircle);
         }
         else if (checkPoint10 && getStarTest.collectTargets >= 2)//try again 11;
         {
@@ -250,6 +265,13 @@ public class TeachingLevelControl : MonoBehaviour
             processFail = true;
             Debug.LogError("Level 01 Fail");
         }
+    }
+
+    private void ChangeFocusItemCircle(GameObject target , GameObject circleType)
+    {
+        oldCircle = newCircle;
+        CreatCircle(target, circleType);
+        Destroy(oldCircle);
     }
 
     public bool CreatBox()//wait to fuction complete
@@ -334,5 +356,12 @@ public class TeachingLevelControl : MonoBehaviour
         process09 = false;
         process10 = false;
         processFail = false;
+    }
+
+    public void CreatCircle(GameObject target, GameObject circleType)
+    {
+        Vector3 offset = new Vector3(0f, 3f, -3f);
+        GameObject temp = Instantiate(circleType, target.transform.position + offset, Quaternion.Euler(40.0f, 0f, 0f));
+        newCircle = temp;
     }
 }
