@@ -10,7 +10,7 @@ public class Bird : MonoBehaviour
     [SerializeField] GameObject selectLevelUI;
     [SerializeField] RawImage seagullUIButton;
     [SerializeField] GameObject parent;
-
+    string current;
     private void Start()
     {
         parent = GameObject.Find("CanvasParent");
@@ -48,7 +48,10 @@ public class Bird : MonoBehaviour
 
     void SeagulPos()
     {
-        string current = EventSystem.current.currentSelectedGameObject.name;
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            current = EventSystem.current.currentSelectedGameObject.name;
+        }
         //if (selectCharacterUI.activeInHierarchy && selectLevelUI.activeInHierarchy)
         //{
         //    seagullUIButton.gameObject.SetActive(true);

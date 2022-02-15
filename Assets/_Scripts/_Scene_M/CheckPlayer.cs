@@ -21,22 +21,25 @@ public class CheckPlayer : MonoBehaviour
 
     [Header("ActiveUI")]
     [SerializeField] GameObject checkUI;
+    [SerializeField] GameObject skinUI;
+    [SerializeField] GameObject levelUI;
     [SerializeField] GameObject startButton;
     [SerializeField] GameObject newGameButton;
+    string newGameButtonName = "NewGame";
 
     [Header("Roles Outer frame")]
-    [SerializeField] GameObject checkButton01;
-    [SerializeField] GameObject checkButton02;
-    [SerializeField] GameObject checkButton03;
-    [SerializeField] GameObject checkButton04;
+    [SerializeField] GameObject checkSelectButton01;
+    [SerializeField] GameObject checkSelectButton02;
+    [SerializeField] GameObject checkSelectButton03;
+    [SerializeField] GameObject checkSelectButton04;
     [SerializeField] GameObject outerFrameP1;
     [SerializeField] GameObject outerFrameP2;
     [SerializeField] GameObject outerFrameP3;
     [SerializeField] GameObject outerFrameP4;
 
     [Header("Confirm Skin")]
-    bool confirm01 = false;
-    bool confirm02 = false;
+    [SerializeField] bool confirm01 = false;
+    [SerializeField] bool confirm02 = false;
     bool confirm03 = false;
     bool confirm04 = false;
     string confirmName01 = "confirm01";
@@ -44,39 +47,30 @@ public class CheckPlayer : MonoBehaviour
     string confirmName03 = "confirm03";
     string confirmName04 = "confirm04";
 
+    [Header("EventSystems")]
+
+    [SerializeField] EventSystem eventSystem01;
+    [SerializeField] EventSystem eventSystem02;
+    [SerializeField] EventSystem eventSystem03;
+    [SerializeField] EventSystem eventSystem04;
 
     void Update()
     {
-        if (outerFrameP1.activeInHierarchy)//Change player01 skin
+        if (outerFrameP1.activeInHierarchy && Input.GetButtonDown("Horizontal1") && !confirm01 && eventSystem01.currentSelectedGameObject == checkSelectButton01)//Change player01 skin
         {
-            if (Input.GetButtonDown("Horizontal1"))
-            {
-                if (!confirm01)
-                {
-                    SceneController.instance.player01.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal1");
-                }
-            }
+            SceneController.instance.player01.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal1");
         }
-        if (outerFrameP2.activeInHierarchy)//Change player02 skin
+        if (outerFrameP2.activeInHierarchy && Input.GetButtonDown("Horizontal2") && !confirm02 && eventSystem02.currentSelectedGameObject == checkSelectButton02)//Change player02 skin
         {
-            if (Input.GetButtonDown("Horizontal2"))
-            {
-                SceneController.instance.player02.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal2");
-            }
+            SceneController.instance.player02.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal2");
         }
-        if (outerFrameP3.activeInHierarchy)
+        if (outerFrameP3.activeInHierarchy && Input.GetButtonDown("Horizontal3") && !confirm03 && eventSystem03.currentSelectedGameObject == checkSelectButton03)//Change player03 skin
         {
-            if (Input.GetButtonDown("Horizontal3"))//Change player03 skin
-            {
-                SceneController.instance.player03.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal3");
-            }
+            SceneController.instance.player03.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal3");
         }
-        if (outerFrameP4.activeInHierarchy)//Change player04 skin
+        if (outerFrameP4.activeInHierarchy && Input.GetButtonDown("Horizontal4") && !confirm04 && eventSystem04.currentSelectedGameObject == checkSelectButton04)//Change player04 skin
         {
-            if (Input.GetButtonDown("Horizontal4"))
-            {
-                SceneController.instance.player04.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal4");
-            }
+            SceneController.instance.player04.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal4");
         }
         if (Input.GetButtonDown("Use2"))//add player02
         {
@@ -102,8 +96,6 @@ public class CheckPlayer : MonoBehaviour
         {
             player4AddButtonImage.GetComponent<Image>().sprite = normal04;
         }
-
-
     }
     /// <summary>
     /// Confirm how many player will play this game;
@@ -111,24 +103,22 @@ public class CheckPlayer : MonoBehaviour
     public void ConfirmPlayerCount()
     {
         SceneController.instance.selected01 = true;
-        checkButton01.SetActive(true);
+        checkSelectButton01.SetActive(true);
         if (player2AddButtonImage.GetComponent<Image>().sprite == added02)
         {
             SceneController.instance.selected02 = true;
-            checkButton02.SetActive(true);
+            checkSelectButton02.SetActive(true);
         }
         if (player3AddButtonImage.GetComponent<Image>().sprite == added03)
         {
             SceneController.instance.selected03 = true;
-            checkButton03.SetActive(true);
+            checkSelectButton03.SetActive(true);
         }
         if (player4AddButtonImage.GetComponent<Image>().sprite == added04)
         {
             SceneController.instance.selected04 = true;
-            checkButton04.SetActive(true);
+            checkSelectButton04.SetActive(true);
         }
-        ResetImages();
-        ResetBool();
     }
     /// <summary>
     /// Cancel Check Player UI;
@@ -162,12 +152,12 @@ public class CheckPlayer : MonoBehaviour
         player4AddButtonImage.GetComponent<Image>().sprite = normal04;
     }
 
-    private void ResetBool()
+    public void ResetBool()
     {
-        bool confirm01 = false;
-        bool confirm02 = false;
-        bool confirm03 = false;
-        bool confirm04 = false;
+        confirm01 = false;
+        confirm02 = false;
+        confirm03 = false;
+        confirm04 = false;
     }
 
     public void ConfirmSkin(string confirmBool)
@@ -209,4 +199,22 @@ public class CheckPlayer : MonoBehaviour
             confirm04 = false;
         }
     }
+
+    public void OpenSkinUI()
+    {
+        skinUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(skinUI);
+    }
+
+    public void OpenLevelUI()
+    {
+        levelUI.SetActive(true);
+    }
+
+    public void CloseSkinUI()
+    {
+        skinUI.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(newGameButton);
+    }
+
 }
