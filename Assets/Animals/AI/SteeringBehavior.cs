@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class SteeringBehavior
 {
-    static public void aaa(float a)
-    {
-        a = 1.0f;
-    }
-    static public void Move(AIData data)
+    static public void Move(RabbitAIData data)
     {
         if (data.m_bMove == false)
         {
@@ -73,9 +69,9 @@ public class SteeringBehavior
         t.position = cPos;
     }
 
-    static public bool CheckCollision(AIData data)
+    static public bool CheckCollision(RabbitAIData data)
     {
-        List<Obstacle> m_AvoidTargets = Main.m_Instance.GetObstacles();
+        List<Obstacle> m_AvoidTargets = AIMain.m_Instance.GetObstacles();
         if(m_AvoidTargets == null)
         {
             return false;
@@ -122,9 +118,9 @@ public class SteeringBehavior
     }
 
 
-    static public bool CollisionAvoid(AIData data)
+    static public bool CollisionAvoid(RabbitAIData data)
     {
-        List<Obstacle> m_AvoidTargets = Main.m_Instance.GetObstacles();
+        List<Obstacle> m_AvoidTargets = AIMain.m_Instance.GetObstacles();
         Transform ct = data.m_Go.transform;
         Vector3 cPos = ct.position;
         Vector3 cForward = ct.forward;
@@ -208,7 +204,7 @@ public class SteeringBehavior
         return false;
     }
 
-    static public bool Flee(AIData data)
+    static public bool Flee(RabbitAIData data)
     {
         Vector3 cPos = data.m_Go.transform.position;
         Vector3 vec = data.m_vTarget - cPos;
@@ -273,7 +269,7 @@ public class SteeringBehavior
         return true;
     }
 
-    static public bool Seek(AIData data)
+    static public bool Seek(RabbitAIData data)
     {
         Vector3 cPos = data.m_Go.transform.position;
         Vector3 vec = data.m_vTarget - cPos;
@@ -343,10 +339,7 @@ public class SteeringBehavior
         } else
         {
             data.m_fMoveForce = 100.0f;
-        }
-
-
-       
+        }      
         data.m_bMove = true;
         return true;
     }
