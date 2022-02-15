@@ -5445,6 +5445,7 @@ MonoBehaviour:
   itemInhand: {fileID: 0}
   holdingPos: {fileID: 0}
   workingTable: {fileID: 0}
+  usingTable: 0
   targetItem: {fileID: 0}
   triggerItem: {fileID: 0}
 --- !u!114 &355305235
@@ -9001,6 +9002,7 @@ MonoBehaviour:
   itemInhand: {fileID: 0}
   holdingPos: {fileID: 0}
   workingTable: {fileID: 0}
+  usingTable: 0
   targetItem: {fileID: 0}
   triggerItem: {fileID: 0}
 --- !u!114 &635961964
@@ -12076,6 +12078,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 5383805828951117794, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
+      propertyPath: m_Name
+      value: Hammer
+      objectReference: {fileID: 0}
     - target: {fileID: 5588928325490914496, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
       propertyPath: m_Layer
       value: 14
@@ -14717,6 +14723,7 @@ MonoBehaviour:
   itemInhand: {fileID: 0}
   holdingPos: {fileID: 0}
   workingTable: {fileID: 0}
+  usingTable: 0
   targetItem: {fileID: 0}
   triggerItem: {fileID: 0}
 --- !u!1001 &1043365125
@@ -24249,7 +24256,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1637417449}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.64, y: -1.2, z: -3.2}
+  m_LocalPosition: {x: -4.29, y: -1.2, z: -1.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2064244334}
@@ -31014,6 +31021,7 @@ MonoBehaviour:
   itemInhand: {fileID: 0}
   holdingPos: {fileID: 0}
   workingTable: {fileID: 0}
+  usingTable: 0
   targetItem: {fileID: 0}
   triggerItem: {fileID: 0}
 --- !u!114 &2064244330
@@ -31097,7 +31105,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2064244325}
   m_LocalRotation: {x: -0, y: 0.9982721, z: -0, w: -0.05876101}
-  m_LocalPosition: {x: 19.54, y: -0.38, z: 24.79}
+  m_LocalPosition: {x: 25.21, y: -0.38, z: 21.24}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 2009504469}

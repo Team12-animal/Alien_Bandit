@@ -11,6 +11,10 @@ public class AnimatorController : MonoBehaviour
     bool Roling;
     int pid;
 
+    //crafting 
+    Transform hand;
+    GameObject hammer;
+
     [Header("�վ�ʵe����ɶ�")]
     public float delay = 2.1f;
     private string currentState;
@@ -49,6 +53,9 @@ public class AnimatorController : MonoBehaviour
     private void Start()
     {
         pid = this.GetComponent<PlayerData>().pid;
+        hand = this.transform.Find("Hand_R");
+        hammer = GameObject.Find("Hammer");
+        hammerOriPos = hammer.transform.position;
     }
 
     private void Update()
@@ -187,7 +194,7 @@ public class AnimatorController : MonoBehaviour
     {
         ChangeAnimaEventState(Player_ChopFinished);
     }
-    
+
     public void AnimaEventSpeedRunToRun()
     {
         animator.SetFloat(animHorizontalHash, 0.0f);
@@ -217,7 +224,30 @@ public class AnimatorController : MonoBehaviour
     {
         animator.SetBool(animRoling, false);
     }
-    
+
+
+    bool holdingHammer = false;
+    Vector3 hammerOriPos;
+    public void AnimaEventHammerInhandToggle()
+    {
+        if(hammer != null && hand != null)
+        {
+            if(holdingHammer == false)
+            {
+                hammer.transform.position = hand.transform.position;
+                hammer.transform.parent = hand;
+                holdingHammer = true;
+            }
+            else
+            {
+                hammer.transform.parent = null;
+                hammer.transform.position = hammerOriPos;
+                holdingHammer = false;
+            }
+
+        }
+    }
+
     #endregion
 
 }

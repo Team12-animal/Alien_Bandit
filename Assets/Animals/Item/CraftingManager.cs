@@ -167,7 +167,7 @@ public class CraftingManager : MonoBehaviour
         }
     }
 
-    private void ResetItmPos(GameObject player)
+    private void ResetItemPos(GameObject player)
     {
         if (isLeft == false) //Player?b?k???x?s??
         {
@@ -341,36 +341,6 @@ public class CraftingManager : MonoBehaviour
         isCraft = false;
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            return;
-        }
-
-        if (user == null)
-        {
-            foreach (var v in items)
-            {
-                if (v.canMix && other.tag == v.itemName && isTake)
-                {
-                    AddItem(other.gameObject, v);
-                    CanMixItem();
-                    return;
-                }
-                else
-                {
-                    Vector3 savePos = this.transform.position;
-                    savePos.y += 5.0f;
-                    savePos.z += 2.0f;
-                    other.transform.position = savePos;
-                    return;
-                }
-            }
-        }
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Box")
@@ -407,6 +377,7 @@ public class CraftingManager : MonoBehaviour
     //Rest user data
     private void UserDataReset()
     {
+        pm.usingTable = false;
         user = null;
         data = null;
         pid = 5;
@@ -415,6 +386,7 @@ public class CraftingManager : MonoBehaviour
     float dist = 10000.0f;
     GameObject tempUser = null;
     float tempDist;
+    PlayerMovement pm;
 
     //Find the usable player
     private void FindUser()
@@ -439,13 +411,16 @@ public class CraftingManager : MonoBehaviour
         //check if user left
         if (user != null && (user.transform.position - this.transform.position).magnitude > 3.0f)
         {
-            user = null;
+            ResetItemPos(user);
+            UserDataReset();
         }
 
         if (tempUser != null && user == null)
         {
             //get new user
             user = tempUser;
+            pm = user.GetComponent<PlayerMovement>();
+            pm.usingTable = true;
             data = user.GetComponent<PlayerData>();
             pid = data.pid;
         }
@@ -453,7 +428,7 @@ public class CraftingManager : MonoBehaviour
         else if (tempUser == null && user != null)
         {
             //no player using
-            ResetItmPos(user);
+            ResetItemPos(user);
             UserDataReset();
         }
 

@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     private CraftingManager tableCM;
     private GameObject wtLeft;
     private GameObject wtRight;
+    public bool usingTable = false;
 
     void Start()
     {
@@ -511,7 +512,7 @@ public class PlayerMovement : MonoBehaviour
 
     public string Drop()
     {
-        if(triggerItem.tag == "WorkingTable")
+        if(usingTable)
         {
             FindWorkTable();
             FaceTarget(workingTable);
@@ -577,13 +578,14 @@ public class PlayerMovement : MonoBehaviour
         return aniName;
     }
 
+    bool readyToUseBench = false;
     public string UseBench()
     {
-        if(triggerItem != null && triggerItem.tag == "WorkingTable" && tableCM.isCraft == true)
+        if(usingTable && triggerItem != null && tableCM.isCraft == true)
         {
             FindWorkTable();
             FaceTarget(workingTable);
-            //tableCM.CraftingItem();
+            readyToUseBench = true;
             return "UsingTable";
         }
         else
@@ -592,15 +594,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //pospond box appear time after animation ended
     private void AnimaEventCraftingItem()
     {
-        tableCM.CraftingItem();
+        if (readyToUseBench)
+        {
+            tableCM.CraftingItem();
+            readyToUseBench = false;
+        }
     }
 
     //look at targetItem
     private void FaceTarget(GameObject target)
     {
-        if(target.tag == "WorkingTable")
+        if(usingTable)
         {
             if (tableCM.isLeft == true)
             {
@@ -726,5 +733,14 @@ public class PlayerMovement : MonoBehaviour
         UpdatePlayerData();
 
         Debug.Log("ThrowAway" + force);
+    }
+
+    //inactive item while put it on table
+    private void AnimaEventItemInActivator()
+    {
+        if (usingTable)
+        {
+            itemInhand.SetActive(false);
+        }
     }
 }
