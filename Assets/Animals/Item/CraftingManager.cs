@@ -7,6 +7,9 @@ public class CraftingManager : MonoBehaviour
 {
     //Dictionary<int, Dictionary<GameObject, Item>> crafting = new Dictionary<int, Dictionary<GameObject, Item>>();
 
+    //one user on time
+    public GameObject user;
+
     //儲存所有Item
     [SerializeField]
     private List<Item> items = new List<Item>();
@@ -15,16 +18,17 @@ public class CraftingManager : MonoBehaviour
     //儲存可合成Item的GameObject Gameobjects on the scene
     private Dictionary<int, GameObject> craftGameObjects = new Dictionary<int, GameObject>();
     //當前位置
-    private bool isLeft = true;
+    public bool isLeft = true;
     //存放桌子上的儲存格
     [SerializeField]
-    private GameObject[] slotimage;
+    public GameObject[] slotimage;
     //變化是否選取到的儲存格
     [SerializeField]
     private Sprite[] slotsprite = new Sprite[2];
     //是否可以合成 could be crafted or not
-    private bool isCraft = false;
+    public bool isCraft = false;
     //可合成Item
+    [SerializeField]
     private Item craftItem;
     //物件生成位置 object spawn pos
     [SerializeField]
@@ -91,6 +95,21 @@ public class CraftingManager : MonoBehaviour
             isLeft = true;
         }
     }
+
+    private void ResetItmPos(GameObject player)
+    {
+        if (isLeft == false) //Player在右邊儲存格
+        {
+            slotimage[1].GetComponent<Image>().sprite = slotsprite[0];
+            isLeft = false;
+        }
+        else
+        {
+            slotimage[0].GetComponent<Image>().sprite = slotsprite[0];
+            isLeft = false;
+        }
+    }
+
     /// <summary>
     /// 將物件定位到和儲存格相同位置
     /// </summary>
@@ -104,8 +123,9 @@ public class CraftingManager : MonoBehaviour
         
         //craftGameObjects[slot].transform.position = slotimage[slot].transform.position;
 
-        if(craftGameObjects[slot].tag == "Log")
+        if(craftGameObjects[slot].tag == "Wood")
         {
+            //close item gameobject and open item icon
             craftGameObjects[slot].SetActive(false);
             logIcons[slot].SetActive(true);
             showingIcons[slot] = logIcons[slot];
@@ -115,39 +135,53 @@ public class CraftingManager : MonoBehaviour
         {
             craftGameObjects[slot].SetActive(false);
             ropeIcons[slot].SetActive(true);
-            showingIcons[slot] = logIcons[slot];
+            showingIcons[slot] = ropeIcons[slot];
         }
+
+        //save the item gameobject at the top of slotimage
+        Vector3 savePos = slotimage[slot].transform.position;
+        savePos.y += 5.0f;
+        savePos.z += 2.0f;
+        craftGameObjects[slot].transform.position = savePos;
     }
     /// <summary>
     /// 新增可合成Item，最多2個物件，排序法
     /// </summary>
-    /// <param name="col">和工作台碰撞的可合成物體Collider</param>
+    /// <param name="go">和工作台碰撞的可合成物體</param>
     /// <param name="item">可合成物體Item</param>
-    private void AddItem(Collider col, Item item)
+    private void AddItem(GameObject go, Item item)
     {
         int slotPos = 0;
         if (!isLeft)
         {
             slotPos = 1;
         }
+
         //如果當前已有存放物品，原本的被刪除，以新的取代
         if (craftItems.ContainsKey(slotPos))
         {
+            Debug.Log("craft remove item" + craftGameObjects[slotPos]);
+            //close the item icon, and show the item
             showingIcons[slotPos].SetActive(false);
-
             craftGameObjects[slotPos].SetActive(true);
+            
             //移到工作台旁邊的位置
-            Vector3 move = new Vector3(transform.position.x - 3f, transform.position.y, transform.position.z);
+            //Vector3 move = new Vector3(transform.position.x - 3f, transform.position.y, transform.position.z);
             //移除舊的Item和GameObject
             craftItems.Remove(slotPos);
-            craftGameObjects[slotPos].transform.position = move;
+            //craftGameObjects[slotPos].transform.position = move;
             craftGameObjects.Remove(slotPos);
         }
+
         craftItems.Add(slotPos, item);
-        craftGameObjects.Add(slotPos, col.gameObject);
+        craftGameObjects.Add(slotPos, go);
+
         //設定GameObject位置
         SetGameObjectPos();
+
+        Debug.Log("craft Add item" + go.tag);
     }
+
     /// <summary>
     /// 移除Item
     /// </summary>
@@ -190,6 +224,7 @@ public class CraftingManager : MonoBehaviour
             }
         }
     }
+
     /// <summary>
     /// 合成Item並初始化
     /// </summary>
@@ -197,12 +232,25 @@ public class CraftingManager : MonoBehaviour
     {
         if (isTake && isCraft)
         {
+            CloseItemIcon();
             Instantiate(craftItem.gm[0], instaniate);
             instaniate.transform.DetachChildren();
             isTake = false;
             ClearAll();
         }
     }
+
+    /// <summary>
+    /// Close item icon
+    /// </summary>
+    private void CloseItemIcon()
+    {
+        foreach(GameObject icon in showingIcons)
+        {
+            icon.SetActive(false);
+        }
+    }
+
     /// <summary>
     /// 初始化
     /// 1.craftItems
@@ -222,45 +270,70 @@ public class CraftingManager : MonoBehaviour
         isCraft = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    PlayerData data;
+    int pid = 5;
+    public GameObject userItem;
+
+    private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
-        {
-            return;
-        }
         if (other.tag == "Box")
         {
             isTake = false;
             return;
         }
 
-        Debug.Log("Craft enter" + other.name);
-        //搜尋碰撞到的物體是否可合成，有便加入
-        foreach (var v in items)
-        {
-            if (v.canMix && other.tag == v.itemName && isTake)
-            {
-                AddItem(other, v);
-                CanMixItem();
-                Debug.Log("Craft add");
-                return;
-            }
-        }
-        Vector3 move = new Vector3(transform.position.x - 3f, transform.position.y, transform.position.z);
-        other.gameObject.transform.position = move;
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
         //判斷玩家位置
         if (other.tag == "Player")
         {
-            ItemPos(other.gameObject);
-            //當可以合成且玩家按下leftControl時觸發
-            //if (isCraft && Input.GetKeyUp(KeyCode.LeftControl) && isTake)
-            //{
-            //    CraftingItem();
-            //}
+            if(user == null)
+            {
+                //init user data;
+                user = other.gameObject;
+                
+                Debug.Log("craft itempos");
+
+                data = user.GetComponent<PlayerData>();
+                pid = data.pid;
+            }
+
+            if(user != null)
+            {
+                ItemPos(user);
+
+                userItem = data.item;
+
+                if(pid < 1 || pid > 4 || userItem == null)
+                {
+                    return;
+                }
+
+                //check if player's item could be add > if yes then add
+                if (isTake && Input.GetButtonDown("Take" + pid) && userItem != null)
+                {
+                    foreach (var v in items)
+                    {
+                        if (v.canMix && userItem.tag == v.itemName && isTake)
+                        {
+                            AddItem(userItem, v);
+                            CanMixItem();
+                            return;
+                        }
+                        //else
+                        //{
+                        //    //if item can't be crafted > put it aside
+                        //    Vector3 newPos = new Vector3(transform.position.x - 3f, transform.position.y, transform.position.z);
+                        //    item.transform.position = newPos;
+                        //    return;
+                        //}
+                    }
+
+                    //當可以合成且玩家按下leftControl時觸發 > 在input controller控制
+                    //if (isCraft && Input.GetKeyUp(KeyCode.LeftControl) && isTake)
+                    //{
+                    //CraftingItem();
+                    //}
+                }
+            }
         }
     }
 
@@ -278,5 +351,18 @@ public class CraftingManager : MonoBehaviour
                 RemoveItem(v.Key);
             }
         }
+
+        if (other.tag == "Player")
+        {
+            ResetItmPos(user);
+            user = null;
+        }
+    }
+
+    private void UserDataReset()
+    {
+        user = null;
+        data = null;
+        pid = 5;
     }
 }

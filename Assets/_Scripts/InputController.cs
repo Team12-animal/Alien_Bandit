@@ -34,6 +34,7 @@ public class InputController : MonoBehaviour
         data = GetComponent<PlayerData>();
         inTreeArea = data.inTree;
     }
+
     void Start()
     {
         setDashTime = pm.setDashTime;
@@ -225,7 +226,17 @@ public class InputController : MonoBehaviour
             if(holdingItem == false)
             {
                 aniClip = pm.UseBench();
+
+                if (aniClip == "none")
+                {
+                    return;
+                }
+
                 anim.ChangeAnimationState(aniClip, 0, 0);
+            }
+            else
+            {
+                return;
             }
         }
 

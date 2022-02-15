@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     //use working table
     public GameObject workingTable;
     private CraftingManager tableCM;
+    private GameObject wtLeft;
+    private GameObject wtRight;
 
     void Start()
     {
@@ -65,6 +67,8 @@ public class PlayerMovement : MonoBehaviour
         {
             workingTable = GameObject.Find("BenchTable");
             tableCM = workingTable.GetComponent<CraftingManager>();
+            wtLeft = tableCM.slotimage[0];
+            wtRight = tableCM.slotimage[1];
         }
     }
 
@@ -280,6 +284,10 @@ public class PlayerMovement : MonoBehaviour
         else if (other.tag == "Wood" || other.tag == "Chop" || other.tag == "Bucket" || other.tag == "Box" || other.tag == "WorkingTable" || other.tag == "Rope")
         {
             triggerItem = other.gameObject;
+        }
+        else if (other.tag == "Tree")
+        {
+            return;
         }
     }
 
@@ -503,6 +511,12 @@ public class PlayerMovement : MonoBehaviour
 
     public string Drop()
     {
+        if(triggerItem.tag == "WorkingTable")
+        {
+            FindWorkTable();
+            FaceTarget(workingTable);
+        }
+
         string aniClip = "none";
         aniClip = GetDropAniName(itemInhand.tag);
         targetItem = null;
@@ -565,11 +579,11 @@ public class PlayerMovement : MonoBehaviour
 
     public string UseBench()
     {
-        FindWorkTable();
-
-        if(targetItem != null && targetItem.tag == "WorkingTable")
+        if(triggerItem != null && triggerItem.tag == "WorkingTable" && tableCM.isCraft == true)
         {
-            tableCM.CraftingItem();
+            FindWorkTable();
+            FaceTarget(workingTable);
+            //tableCM.CraftingItem();
             return "UsingTable";
         }
         else
@@ -578,9 +592,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void AnimaEventCraftingItem()
+    {
+        tableCM.CraftingItem();
+    }
+
     //look at targetItem
     private void FaceTarget(GameObject target)
     {
+        if(target.tag == "WorkingTable")
+        {
+            if (tableCM.isLeft == true)
+            {
+                target = wtLeft;
+            }
+            else
+            {
+                target = wtRight;
+            }
+        }
+
         Vector3 temp;
         Vector3 dirToItem = target.transform.position - this.transform.position;
         dirToItem.y = this.transform.position.y;
@@ -605,7 +636,7 @@ public class PlayerMovement : MonoBehaviour
     //set item to HoldingPos
     private void HoldItem(GameObject targetItem)
     {
-        if (targetItem == null || targetItem.tag == "WorkingTable" || targetItem.tag == "Tree")
+        if (targetItem == null || triggerItem.tag == "WorkingTable" || triggerItem.tag == "Tree")
         {
             return;
         }
