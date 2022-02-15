@@ -19,13 +19,13 @@ public class SceneController : MonoBehaviour
     [SerializeField] float transitionTime = 1f;
 
     [Header("角色選擇設定")]
-    [SerializeField] GameObject player01;
+    public GameObject player01;
     [SerializeField] Vector3 translatePosition01 = new Vector3(19.67f, 0.12f, 19.14f);
-    [SerializeField] GameObject player02;
+    public GameObject player02;
     [SerializeField] Vector3 translatePosition02 = new Vector3(21.0f, 0.12f, 18f);
-    [SerializeField] GameObject player03;
+    public GameObject player03;
     [SerializeField] Vector3 translatePosition03 = new Vector3(21.0f, 0.12f, 18f);
-    [SerializeField] GameObject player04;
+    public GameObject player04;
     [SerializeField] Vector3 translatePosition04 = new Vector3(21.0f, 0.12f, 18f);
     public bool selected01 = false;
     public bool selected02 = false;
@@ -91,7 +91,7 @@ public class SceneController : MonoBehaviour
         {
             StartCoroutine(LoadTransition());
             SceneManager.LoadScene(0);
-            eventsController.SetActive(false);
+            //eventsController.SetActive(false);
             selected01 = false;
             selected02 = false;
             selected03 = false;
@@ -179,7 +179,7 @@ public class SceneController : MonoBehaviour
         tempAnim.ChangeAnimationState(tempAnim.Player_DanceType18, 0f, 0f);
 
         player.transform.localRotation = new Quaternion(0, 180, 0, 0);
-        player.SetActive(false);
+        player.SetActive(true);
         if (player == player01)
         {
             player.transform.localPosition = mainPosition01;

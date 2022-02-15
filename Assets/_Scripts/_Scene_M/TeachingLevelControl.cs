@@ -258,6 +258,7 @@ public class TeachingLevelControl : MonoBehaviour
             process10 = true;
             canvas.SetActive(false);
             completeImage.SetActive(true);
+
         }
 
         if (levelOneControl.GetGameTime() <= 0.1f)//Fail
