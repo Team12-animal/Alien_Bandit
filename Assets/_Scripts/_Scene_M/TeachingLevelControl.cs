@@ -6,24 +6,21 @@ using UnityEngine.UI;
 public class TeachingLevelControl : MonoBehaviour
 {
     [Header("Moving On Which Teaching Process")]
-    [SerializeField] bool process00 = false;//take ax;
+    bool startTeaching = false;
+    [SerializeField] bool process00 = false;//take the ax;
     [SerializeField] bool process01 = false;//cut tree;
-    [SerializeField] bool process02 = false;//take wood to workingTable;
-    [SerializeField] bool process03 = false;//take rope to workingTable;
-    [SerializeField] bool process04 = false;//use workingTable to creat a box;
-    [SerializeField] bool process05 = false;//use box to ctach a rabbit;
-    [SerializeField] bool process06 = false;//touch switch to open door;
-    [SerializeField] bool process07 = false;//throw box in to the door;
+    [SerializeField] bool process02 = false;//Put down the ax ;
+    [SerializeField] bool process03 = false;//Pick up wood ; 
+    [SerializeField] bool process04 = false;//take wood to workingTable; 
+    [SerializeField] bool process05 = false;//take rope to workingTable; 
+    [SerializeField] bool process06 = false;//use workingTable to creat a box; 
+    [SerializeField] bool process07 = false;//use box to ctach a rabbit;
+    [SerializeField] bool process08 = false;//touch switch to open door;
+    [SerializeField] bool process09 = false;//throw box in to the door;
+    [SerializeField] bool process10 = false;//try again;
+    [SerializeField] bool processFail = false;//Fail;
 
     [Header("Player States")]
-    [SerializeField] bool player01 = false;
-    [SerializeField] bool player02 = false;
-    [SerializeField] bool player03 = false;
-    [SerializeField] bool player04 = false;
-    [SerializeField] GameObject playerOne;
-    [SerializeField] GameObject playerTwo;
-    [SerializeField] GameObject playerThree;
-    [SerializeField] GameObject playerFour;
     string one = "Player01";
     string two = "Player02";
     string three = "Player03";
@@ -32,23 +29,23 @@ public class TeachingLevelControl : MonoBehaviour
     PlayerMovement playerMovement02;
     PlayerMovement playerMovement03;
     PlayerMovement playerMovement04;
-
-    private List<PlayerMovement> playerMovements;
+    List<PlayerMovement> playerMovements;
+    PlayerMovement tempPlayMoveMent = null;
 
     [Header("itemHolded")]
-    string chop = "Chop ";
-    string wood = "Log(Clone)";
-    string rope = "Rope_tut";
-    string box = "Box(Clone)";
+    string chopHolded = "Chop ";
+    string woodHolded = "Log(Clone)";
+    string ropeHolded = "Rope_tut";
+    string boxHolded = "Box(Clone)";
 
     [Header("ChangerUIText")]
+    [SerializeField] LevelOneControl levelOneControl;
     [SerializeField] GameObject canvas;
     [SerializeField] Text TargetText;
     [SerializeField] Text DialogueText;
     [SerializeField] Text ButtonTip;
     [SerializeField] GameObject completeImage;
     [SerializeField] Dialogue dialogue;
-
 
     [Header("Item States")]
     string rockTag = "RockModel";
@@ -61,34 +58,33 @@ public class TeachingLevelControl : MonoBehaviour
     string loseDoorTag = "LoseDoor";
     string ropeTag = "Rope";
     string doorOpenerTag = "DoorOpener";
+    string goal = "Goal";
     List<GameObject> rocks;
     List<GameObject> woods;
     List<GameObject> rabbits;
     List<GameObject> fox;
     List<GameObject> workingTable;
-    List<GameObject> trees;
+    [SerializeField] List<GameObject> trees;
     List<GameObject> winDoor;
     List<GameObject> loseDoor;
     List<GameObject> ropes;
     List<GameObject> doorOpeners;
-    [SerializeField] GameObject table;
-    CraftingManager craftingManager;
-    [SerializeField] GameObject boxPrefab;
-    BoxController boxController;
-    [SerializeField] GameObject switchPlace;
-    ButtonSensor buttonSensor;
-
-    bool startTeaching = false;
-
-    string goal = "Goal";
     GetStarTest getStarTest;
+    [SerializeField] GameObject table;
+    CraftingManager craftingManager;//this scripts under the table object
+    [SerializeField] GameObject boxPrefab;
+    BoxController boxController;//this scripts under the boxPrefab object
+    [SerializeField] GameObject switchPlace;
+    ButtonSensor buttonSensor;//this scripts under the switchPlace object
+    [SerializeField] GameObject chop;
+    ChopInUse chopInUse;//this scripts under the chop object
+
 
     private void Start()
     {
         startTeaching = false;
         playerMovements = new List<PlayerMovement>();
         Init();
-        getStarTest = GameObject.Find(goal).GetComponent<GetStarTest>();
         completeImage.SetActive(true);
     }
 
@@ -96,53 +92,48 @@ public class TeachingLevelControl : MonoBehaviour
     {
         if (!startTeaching && Input.GetKeyDown(KeyCode.Space))
         {
-            TargetText.text = dialogue.focusItem[0];
+            TargetText.text = dialogue.title[0];
             DialogueText.text = dialogue.sentences[0];
             ButtonTip.text = dialogue.buttonTip[0];
             startTeaching = true;
         }
-        else if(startTeaching)
+        else if (startTeaching)
         {
             CheckProcess();
         }
     }
 
+    public bool CheckSomeThingInactive(List<GameObject> gameObjects)
+    {
+        for (int i = 0; i < gameObjects.Count; i++)
+        {
+            if (!gameObjects[i].activeInHierarchy)
+                return true;
+        }
+        return false;
+    }
+
     public void Init()
     {
-        process00 = false;
-        process01 = false;
-        process02 = false;
-        process03 = false;
-        process04 = false;
-        process05 = false;
-        process06 = false;
-        process07 = false;
-        player01 = SceneController.instance.selected01;
-        player02 = SceneController.instance.selected02;
-        player03 = SceneController.instance.selected03;
-        player04 = SceneController.instance.selected04;
-        if (player01)
+        RestProcessesBool();
+        if (SceneController.instance.selected01)
         {
-            playerOne = GameObject.Find(one);
-            playerMovement01 = playerOne.GetComponent<PlayerMovement>();
+            playerMovement01 = GameObject.Find(one).GetComponent<PlayerMovement>();
             playerMovements.Add(playerMovement01);
         }
-        if (player02)
+        if (SceneController.instance.selected02)
         {
-            playerTwo = GameObject.Find(two);
-            playerMovement02 = playerTwo.GetComponent<PlayerMovement>();
+            playerMovement02 = GameObject.Find(two).GetComponent<PlayerMovement>();
             playerMovements.Add(playerMovement02);
         }
-        if (player03)
+        if (SceneController.instance.selected03)
         {
-            playerThree = GameObject.Find(three);
-            playerMovement03 = playerThree.GetComponent<PlayerMovement>();
+            playerMovement03 = GameObject.Find(three).GetComponent<PlayerMovement>();
             playerMovements.Add(playerMovement03);
         }
-        if (player04)
+        if (SceneController.instance.selected04)
         {
-            playerFour = GameObject.Find(four);
-            playerMovement04 = playerFour.GetComponent<PlayerMovement>();
+            playerMovement04 = GameObject.Find(four).GetComponent<PlayerMovement>();
             playerMovements.Add(playerMovement04);
         }
 
@@ -151,7 +142,7 @@ public class TeachingLevelControl : MonoBehaviour
         rabbits = new List<GameObject>();
         fox = new List<GameObject>();
         workingTable = new List<GameObject>();
-        trees = new List<GameObject>();
+        //trees = new List<GameObject>();
         winDoor = new List<GameObject>();
         loseDoor = new List<GameObject>();
         ropes = new List<GameObject>();
@@ -161,7 +152,7 @@ public class TeachingLevelControl : MonoBehaviour
         GameObject[] tempRabbits = GameObject.FindGameObjectsWithTag(rabbitsTag);
         GameObject[] tempFox = GameObject.FindGameObjectsWithTag(foxTag);
         GameObject[] tempWorkingTable = GameObject.FindGameObjectsWithTag(workingTableTag);
-        GameObject[] tempTrees = GameObject.FindGameObjectsWithTag(treeTag);
+        //GameObject[] tempTrees = GameObject.FindGameObjectsWithTag(treeTag);
         GameObject[] tempWinDoor = GameObject.FindGameObjectsWithTag(winDoorTag);
         GameObject[] tempLoseDoor = GameObject.FindGameObjectsWithTag(loseDoorTag);
         GameObject[] tempRops = GameObject.FindGameObjectsWithTag(ropeTag);
@@ -171,7 +162,6 @@ public class TeachingLevelControl : MonoBehaviour
         SettingTargets(rabbits, tempRabbits);
         SettingTargets(fox, tempFox);
         SettingTargets(workingTable, tempWorkingTable);
-        SettingTargets(trees, tempTrees);
         SettingTargets(winDoor, tempWinDoor);
         SettingTargets(loseDoor, tempLoseDoor);
         SettingTargets(ropes, tempRops);
@@ -179,73 +169,112 @@ public class TeachingLevelControl : MonoBehaviour
         craftingManager = table.GetComponent<CraftingManager>();
         boxController = boxPrefab.GetComponent<BoxController>();
         buttonSensor = switchPlace.GetComponent<ButtonSensor>();
+        getStarTest = GameObject.Find(goal).GetComponent<GetStarTest>();
+        chopInUse = chop.GetComponent<ChopInUse>();
     }
 
     public void CheckProcess()
     {
-        bool checkPoint00 = !process00 && !process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07;
-        bool checkPoint01 = process00 && !process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07;
-        bool checkPoint02 = process00 && process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07;
-        bool checkPoint03 = process00 && process01 && process02 && !process03 && !process04 && !process05 && !process06 && !process07;
-        bool checkPoint04 = process00 && process01 && process02 && process03 && !process04 && !process05 && !process06 && !process07;
-        bool checkPoint05 = process00 && process01 && process02 && process03 && process04 && !process05 && !process06 && !process07;
-        bool checkPoint06 = process00 && process01 && process02 && process03 && process04 && process05 && !process06 && !process07;
-        bool checkPoint07 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && !process07;
-        bool checkPoint08 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07;
-
-        if (checkPoint00 && CheckIfHolding(chop))
+        bool checkPoint00 = !process00 && !process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
+        bool checkPoint01 = process00 && !process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
+        bool checkPoint02 = process00 && process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
+        bool checkPoint03 = process00 && process01 && process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
+        bool checkPoint04 = process00 && process01 && process02 && process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
+        bool checkPoint05 = process00 && process01 && process02 && process03 && process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
+        bool checkPoint06 = process00 && process01 && process02 && process03 && process04 && process05 && !process06 && !process07 && !process08 && !process09 && !process10;
+        bool checkPoint07 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && !process07 && !process08 && !process09 && !process10;
+        bool checkPoint08 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && !process08 && !process09 && !process10;
+        bool checkPoint09 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && process08 && !process09 && !process10;
+        bool checkPoint10 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && process08 && process09 && !process10;
+        
+        if (checkPoint00 && CheckIfHolding(chopHolded))//take the ax 01;
         {
             process00 = true;
-            Process(chop, 1);
+            tempPlayMoveMent = CheckWhoTakeItem(chopHolded);
+            DialogueProcess(1);
         }
-        else if (checkPoint01 && CheckIfHolding(wood))
+        else if (checkPoint01 && CheckSomeThingInactive(trees))//cut tree 02;
         {
             process01 = true;
-            Process(wood, 2);
-        }
-        else if (checkPoint02 && Input.GetKeyDown(KeyCode.Space))//craftingManager.CheckItemOnTable(wood)
+            DialogueProcess(2);
+        } 
+        else if (checkPoint02 && tempPlayMoveMent.itemInhand == null && !chopInUse.used)//Put down the ax 03;
         {
             process02 = true;
-            Process(3);
+            DialogueProcess(3);
         }
-        else if (checkPoint03 && Input.GetKeyDown(KeyCode.Space))//craftingManager.CheckItemOnTable(rope)
+        else if (checkPoint03 && CheckIfHolding(woodHolded))//Pick up wood 04;
         {
             process03 = true;
-            Process(4);
-            //生成一個箱子做測試
-            GameObject tempBox = Instantiate(boxPrefab,transform.position, Quaternion.identity);
-            boxController = tempBox.GetComponent<BoxController>();
-        }
-        else if (checkPoint04 && CheckIfHolding(box))
+            DialogueProcess(4);
+        } 
+        else if (checkPoint04 && Input.GetKeyDown(KeyCode.Space))//craftingManager.CheckItemOnTable(wood)//take wood to workingTable 05; 
         {
             process04 = true;
-            Process(box, 5);
+            DialogueProcess(5);
         }
-        else if (checkPoint05 && boxController.animalCatched)
+        else if (checkPoint05 && Input.GetKeyDown(KeyCode.Space))//craftingManager.CheckItemOnTable(rope)//take rope to workingTable 06; 
         {
             process05 = true;
-            Process(6);
+            DialogueProcess(6);
         }
-        else if (checkPoint06 && buttonSensor.GetPressedBool())
+        else if (checkPoint06 && CreatBox())//wait fuction to use//use workingTable to creat a box 07; 
         {
             process06 = true;
-            Process(7);
+            DialogueProcess(7);
         }
-        else if(checkPoint07 && getStarTest.collectTargets>=1)
+        else if (checkPoint07 && boxController.animalCatched)//use box to ctach a rabbit 08;
         {
             process07 = true;
+            DialogueProcess(8);
+        }
+        else if (checkPoint08 && buttonSensor.GetPressedBool())//touch switch to open door 09;
+        {
+            process08 = true;
+            DialogueProcess(9);
+        }
+        else if (checkPoint09 && getStarTest.collectTargets >= 1)//throw box in to the door 10;
+        {
+            process09 = true;
+            DialogueProcess(10);
+        }
+        else if (checkPoint10 && getStarTest.collectTargets >= 2)//try again 11;
+        {
+            process10 = true;
             canvas.SetActive(false);
             completeImage.SetActive(true);
         }
+
+        if (levelOneControl.GetGameTime() <= 0.1f)//Fail
+        {
+            processFail = true;
+            Debug.LogError("Level 01 Fail");
+        }
+    }
+
+    public bool CreatBox()//wait to fuction complete
+    {
+        if (!boxController.firstCreated)
+        {
+            //creat a box to test
+            GameObject tempBox = Instantiate(boxPrefab, transform.position, Quaternion.identity);
+            boxController = tempBox.GetComponent<BoxController>();
+
+            GameObject go_child = tempBox.transform.Find("Box").gameObject;
+            go_child.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+
+            Instantiate(boxPrefab, transform.position, Quaternion.identity);
+        }
+        return boxController.firstCreated;
     }
 
     private bool CheckIfHolding(string itemType)
     {
-        if(playerMovements.Count > 0)
+        if (playerMovements.Count > 0)
         {
-           foreach(PlayerMovement pm in playerMovements)
+            foreach (PlayerMovement pm in playerMovements)
             {
-                if(pm.itemInhand != null && pm.itemInhand.name == itemType)
+                if (pm.itemInhand != null && pm.itemInhand.name == itemType)
                 {
                     return true;
                 }
@@ -254,29 +283,30 @@ public class TeachingLevelControl : MonoBehaviour
         return false;
     }
 
+    private PlayerMovement CheckWhoTakeItem(string itemType)
+    {
+        if (playerMovements.Count > 0)
+        {
+            for (int i = 0; i < playerMovements.Count; i++)
+            {
+                if (playerMovements[i].itemInhand != null && playerMovements[i].itemInhand.name == itemType)
+                {
+                    return playerMovements[i];
+                }
+            }
+        }
+        return null;
+    }
+
     /// <summary>
     /// Player Dont Take Item On Hand
     /// </summary>
     /// <param name="number"></param>
-    private void Process(int number)
+    private void DialogueProcess(int number)
     {
         TargetText.text = dialogue.title[number];
         DialogueText.text = dialogue.sentences[number];
         ButtonTip.text = dialogue.buttonTip[number];
-    }
-    /// <summary>
-    /// Player Take Item On Hand
-    /// </summary>
-    /// <param name="item">item name</param>
-    /// <param name="number"></param>
-    public void Process(string item, int number)
-    {
-        if (CheckIfHolding(item))
-        {
-            TargetText.text = dialogue.title[number];
-            DialogueText.text = dialogue.sentences[number];
-            ButtonTip.text = dialogue.buttonTip[number];
-        }
     }
 
     private void SettingTargets(List<GameObject> items, GameObject[] targets)
@@ -285,5 +315,24 @@ public class TeachingLevelControl : MonoBehaviour
         {
             items.Add(targets[i]);
         }
+    }
+
+    /// <summary>
+    /// Set All the processXX = false;
+    /// </summary>
+    private void RestProcessesBool()
+    {
+        process00 = false;
+        process01 = false;
+        process02 = false;
+        process03 = false;
+        process04 = false;
+        process05 = false;
+        process06 = false;
+        process07 = false;
+        process08 = false;
+        process09 = false;
+        process10 = false;
+        processFail = false;
     }
 }

@@ -70,7 +70,6 @@ public class ButtonSensor : MonoBehaviour
 
     public bool GetPressedBool()
     {
-        Debug.LogWarning(pressed);
         return pressed;
     }
 }

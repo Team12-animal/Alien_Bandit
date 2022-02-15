@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BoxController : MonoBehaviour
 {
+    public bool firstCreated = false;
     public bool beUsing;
     public GameObject user;
     public GameObject targetAnimal;
@@ -14,6 +15,11 @@ public class BoxController : MonoBehaviour
     private void Awake()
     {
         contentSpot = this.transform.Find("Box").Find("ContentSpot").gameObject;
+    }
+
+    private void Start()
+    {
+        firstCreated = true;
     }
 
     private void OnTriggerEnter(Collider other)
