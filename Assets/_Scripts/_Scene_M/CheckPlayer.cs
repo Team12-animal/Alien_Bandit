@@ -33,22 +33,31 @@ public class CheckPlayer : MonoBehaviour
     [SerializeField] GameObject outerFrameP2;
     [SerializeField] GameObject outerFrameP3;
     [SerializeField] GameObject outerFrameP4;
-    Vector3 pos01 = new Vector3(-173.399994f - (-303.0f), 40f - (-137.0f), 0);
-    Vector3 pos02 = new Vector3(-55.7999992f - (-303.0f), 40f - (-137.0f), 0);
-    Vector3 pos03 = new Vector3(61.9000015f, 40f, 0);
-    Vector3 pos04 = new Vector3(175.100006f, 40f, 0);
+
+    [Header("Confirm Skin")]
+    bool confirm01 = false;
+    bool confirm02 = false;
+    bool confirm03 = false;
+    bool confirm04 = false;
+    string confirmName01 = "confirm01";
+    string confirmName02 = "confirm02";
+    string confirmName03 = "confirm03";
+    string confirmName04 = "confirm04";
 
 
     void Update()
     {
-        if (outerFrameP1.activeInHierarchy)
+        if (outerFrameP1.activeInHierarchy)//Change player01 skin
         {
             if (Input.GetButtonDown("Horizontal1"))
             {
-                SceneController.instance.player01.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal1");
+                if (!confirm01)
+                {
+                    SceneController.instance.player01.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal1");
+                }
             }
         }
-        if (outerFrameP2.activeInHierarchy)
+        if (outerFrameP2.activeInHierarchy)//Change player02 skin
         {
             if (Input.GetButtonDown("Horizontal2"))
             {
@@ -57,46 +66,48 @@ public class CheckPlayer : MonoBehaviour
         }
         if (outerFrameP3.activeInHierarchy)
         {
-            if (Input.GetButtonDown("Horizontal3"))
+            if (Input.GetButtonDown("Horizontal3"))//Change player03 skin
             {
                 SceneController.instance.player03.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal3");
             }
         }
-        if (outerFrameP4.activeInHierarchy)
+        if (outerFrameP4.activeInHierarchy)//Change player04 skin
         {
             if (Input.GetButtonDown("Horizontal4"))
             {
                 SceneController.instance.player04.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal4");
             }
         }
-        if (Input.GetButtonDown("Use2"))
+        if (Input.GetButtonDown("Use2"))//add player02
         {
             player2AddButtonImage.GetComponent<Image>().sprite = added02;
         }
-        else if (Input.GetButtonDown("Take2"))
+        else if (Input.GetButtonDown("Take2"))//cancel player02
         {
             player2AddButtonImage.GetComponent<Image>().sprite = normal02;
         }
-        if (Input.GetButtonDown("Use3"))
+        if (Input.GetButtonDown("Use3"))//add player03
         {
             player3AddButtonImage.GetComponent<Image>().sprite = added03;
         }
-        else if (Input.GetButtonDown("Take3"))
+        else if (Input.GetButtonDown("Take3"))//cancel player03
         {
             player3AddButtonImage.GetComponent<Image>().sprite = normal03;
         }
-        if (Input.GetButtonDown("Use4"))
+        if (Input.GetButtonDown("Use4"))//add player04
         {
             player4AddButtonImage.GetComponent<Image>().sprite = added04;
         }
-        else if (Input.GetButtonDown("Take4"))
+        else if (Input.GetButtonDown("Take4"))//cancel player04
         {
             player4AddButtonImage.GetComponent<Image>().sprite = normal04;
         }
 
 
     }
-
+    /// <summary>
+    /// Confirm how many player will play this game;
+    /// </summary>
     public void ConfirmPlayerCount()
     {
         SceneController.instance.selected01 = true;
@@ -117,20 +128,25 @@ public class CheckPlayer : MonoBehaviour
             checkButton04.SetActive(true);
         }
         ResetImages();
+        ResetBool();
     }
-
+    /// <summary>
+    /// Cancel Check Player UI;
+    /// </summary>
     public void CancelCheckPlayerUI()
     {
-        player2AddButtonImage.GetComponent<Image>().sprite = normal02;
-        player3AddButtonImage.GetComponent<Image>().sprite = normal03;
-        player4AddButtonImage.GetComponent<Image>().sprite = normal04;
+        ResetImages();
+        ResetBool();
         EventSystem.current.SetSelectedGameObject(newGameButton);
     }
-
+    /// <summary>
+    /// Going to Choose Role UI;
+    /// </summary>
     public void InactiveCheckUI()
     {
         checkUI.SetActive(false);
         ResetImages();
+        ResetBool();
     }
 
     public void ActiveCheckUI()
@@ -144,5 +160,53 @@ public class CheckPlayer : MonoBehaviour
         player2AddButtonImage.GetComponent<Image>().sprite = normal02;
         player3AddButtonImage.GetComponent<Image>().sprite = normal03;
         player4AddButtonImage.GetComponent<Image>().sprite = normal04;
+    }
+
+    private void ResetBool()
+    {
+        bool confirm01 = false;
+        bool confirm02 = false;
+        bool confirm03 = false;
+        bool confirm04 = false;
+    }
+
+    public void ConfirmSkin(string confirmBool)
+    {
+        if (confirmBool == confirmName01)
+        {
+            confirm01 = true;
+        }
+        else if (confirmBool == confirmName02)
+        {
+            confirm02 = true;
+        }
+        else if (confirmBool == confirmName03)
+        {
+            confirm03 = true;
+        }
+        else if (confirmBool == confirmName04)
+        {
+            confirm04 = true;
+        }
+    }
+
+    public void ReChoseSkin(string confirmBool)
+    {
+        if (confirmBool == confirmName01)
+        {
+            confirm01 = false;
+        }
+        else if (confirmBool == confirmName02)
+        {
+            confirm02 = false;
+        }
+        else if (confirmBool == confirmName03)
+        {
+            confirm03 = false;
+        }
+        else if (confirmBool == confirmName04)
+        {
+            confirm04 = false;
+        }
     }
 }
