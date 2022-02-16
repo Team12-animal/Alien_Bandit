@@ -66,6 +66,14 @@ public class CheckPlayer : MonoBehaviour
     string menuDance03 = "CharacterControllerTest_Male_MainMenu03";
     string menuDance04 = "CharacterControllerTest_Male_MainMenu04";
 
+    private void Awake()
+    {
+        player01 = GameObject.Find("Player01");
+        player02 = GameObject.Find("Player02");
+        player03 = GameObject.Find("Player03");
+        player04 = GameObject.Find("Player04");
+    }
+
     void Update()
     {
         if (outerFrameP1.activeInHierarchy && Input.GetButtonDown("Horizontal1") && !confirm01 && eventSystem01.currentSelectedGameObject == checkSelectButton01)//Change player01 skin
