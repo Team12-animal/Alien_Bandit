@@ -25,7 +25,7 @@ public class RabbitAIData
     public GameObject m_TargetObject;  //警戒目標
 
     [HideInInspector]
-    public Vector3 m_vTarget;  //警戒目標位置
+    public Vector3 m_vTarget;  //要移動到的目標位置
     [HideInInspector]
     public Vector3 m_vCurrentVector;  //當前位置
     [HideInInspector]
@@ -59,7 +59,7 @@ public class RabbitAIFunction
     public static GameObject CheckEnemyInSight(RabbitAIData data, ref bool bAttack)
     {
         List<float> diss = new List<float>();
-        List<GameObject> go = AIMain.m_Instance.GetPlayer();  //找到玩家
+        List<GameObject> go = AIMain.m_Instance.GetPlayerList();  //找到玩家
         foreach (var v in go) //所有玩家和AI距離
         {
             Vector3 dis = v.transform.position - data.m_Go.transform.position;  //距離位置

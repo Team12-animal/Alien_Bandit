@@ -8,48 +8,51 @@ public class RabbitAI : MonoBehaviour
     public enum eFSMState
     {
         NONE = -1,
-        Idle,
-        Wander,
-        Chase,
-        Attack,
-        Dead,
+        Idle,  //狀態機State:0
+        Wander,//狀態機State:1
+        Attack,//狀態機State:2
+        Chase,//狀態機State:3
+        MoveToTarget,//狀態機State:3 到兔子洞State:4
         Runaway,
-        MoveToTarget,
+        Dead,
     }
 
-    private eFSMState m_eCurrentState;
-    public RabbitAIData m_Data;
-    private float m_fCurrentTime;
-    private float m_fIdleTime;
-    private GameObject m_CurrentEnemyTarget;
-    private int m_iCurrentWanderPt;
-    private GameObject[] m_WanderPoints;
-    private Animator m_Am;
-
+    private eFSMState m_eCurrentState;  //當前狀態
+    public RabbitAIData m_Data;         //AI資料
+    private float m_fCurrentTime;       //當前狀態經過時間
+    private float m_fIdleTime;          //狀態時間
+    private GameObject m_CurrentEnemyTarget;//當前偵測目標
+    private GameObject[] m_WanderPoints;//兔子窩的位置物件
+    private Animator m_Am;              //AI的動畫狀態機
+    private List<GameObject> players;
     // Use this for initialization
     public void Start()
     {
         m_CurrentEnemyTarget = null;
         m_eCurrentState = eFSMState.Idle;
         m_fCurrentTime = 0.0f;
-        m_fIdleTime = Random.Range(5.0f, 8.0f);
-        m_iCurrentWanderPt = -1;
-        m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");
+        m_fIdleTime = Random.Range(3.0f, 5.0f);
+        m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");  //找到場景上的所有兔子窩
         m_Am = GetComponent<Animator>();
+        players = AIMain.m_Instance.GetPlayerList();
     }
 
+    /// <summary>
+    /// 檢查離兔子最近的那個兔子窩
+    /// </summary>
+    /// <returns>返回離兔子最近的那個兔子窩</returns>
     private GameObject CheckCloseHole()
     {
-        List<float> diss = new List<float>();
+        List<float> diss = new List<float>();  //存放距離的清單
         int index = 0;
-        foreach (var v in m_WanderPoints) //所有玩家和AI距離
+        foreach (var v in m_WanderPoints) //所有兔子窩和AI距離
         {
-            Vector3 dis = v.transform.position - m_Data.m_Go.transform.position;  //距離位置
+            Vector3 dis = v.transform.position - m_Data.m_Go.transform.position;  //兔子和兔子窩距離位置
             diss.Add(dis.magnitude);  //距離長度
         }
-        if (diss.Count != 1)
+        if (diss.Count != 1)  //如果數量為一的話不用查找
         {
-            for (int i = 0; i < diss.Count - 1; i++)  //找出距離最近得
+            for (int i = 0; i < diss.Count - 1; i++)  //找出距離最近得並排序到最後一個
             {
                 float temp = 0;
                 GameObject gtemp = null;
@@ -62,57 +65,93 @@ public class RabbitAI : MonoBehaviour
                     gtemp = m_WanderPoints[i];
                     m_WanderPoints[i] = m_WanderPoints[i + 1];
                     m_WanderPoints[i + 1] = gtemp;
-                }       
+                }
             }
-            index = diss.Count - 1;
+            index = diss.Count - 1;  //最後一個陣列的參數(總數量減一)
             return m_WanderPoints[index];
         }
         return m_WanderPoints[0];
     }
 
+
     private GameObject CheckEnemyInSight(ref bool bAttack)
     {
-        List<float> diss = new List<float>();
-        List<GameObject> go = AIMain.m_Instance.GetPlayer();  //找到玩家
-        int index = 0;
-        foreach (var v in go) //所有玩家和AI距離
+        float currentDist = m_Data.m_fSight+1f;
+        GameObject play = null;
+        foreach (var v in players) //所有玩家和AI距離
         {
-            Vector3 dis = v.transform.position - m_Data.m_Go.transform.position;  //距離位置
-            diss.Add(dis.magnitude);  //距離長度
-        }
-        if (diss.Count != 1)
-        {
-            for (int i = 0; i < diss.Count - 1; i++)  //找出距離最近得
+            float dist = (v.transform.position - m_Data.m_Go.transform.position).magnitude;
+            if (currentDist > dist)
             {
-                float temp = 0;
-                GameObject gtemp = null;
-                if (diss[i] < diss[i + 1])
-                {
-                    temp = diss[i];
-                    diss[i] = diss[i + 1];
-                    diss[i + 1] = temp;
-
-                    gtemp = go[i];
-                    go[i] = go[i + 1];
-                    go[i + 1] = gtemp;
-                }
+                currentDist = dist;
+                play = v;
             }
-            index = diss.Count - 1;
         }
-
-        if (diss[index] < m_Data.m_fAttackRange)  //如果小於攻擊範圍
+        if (currentDist < m_Data.m_fAttackRange)  //如果小於警戒範圍
         {
             bAttack = true;
-            return go[index];
+            return play;
         }
-        else if (diss[index] < m_Data.m_fSight)
+        else if (currentDist < m_Data.m_fSight)  //如果進入視線範圍
         {
             bAttack = false;
-            return go[index];
+            return play;
         }
         return null;
     }
+    /// <summary>
+    /// 檢查玩家是否進入AI的視線範圍內
+    /// </summary>
+    /// <param name="bAttack">當玩家進入警戒範圍</param>
+    /// <returns>進入視線範圍最近的玩家</returns>
+    //private GameObject CheckEnemyInSight(ref bool bAttack)
+    //{
+    //    List<float> diss = new List<float>();
+    //    List<GameObject> go = AIMain.m_Instance.GetPlayerList();  //找到玩家
+    //    int index = 0;
+    //    foreach (var v in go) //所有玩家和AI距離
+    //    {
+    //        Vector3 dis = v.transform.position - m_Data.m_Go.transform.position;  //距離位置
+    //        diss.Add(dis.magnitude);  //距離長度
+    //    }
+    //    if (diss.Count != 1)
+    //    {
+    //        for (int i = 0; i < diss.Count - 1; i++)  //找出距離最近得
+    //        {
+    //            float temp = 0;
+    //            GameObject gtemp = null;
+    //            if (diss[i] < diss[i + 1])
+    //            {
+    //                temp = diss[i];
+    //                diss[i] = diss[i + 1];
+    //                diss[i + 1] = temp;
 
+    //                gtemp = go[i];
+    //                go[i] = go[i + 1];
+    //                go[i + 1] = gtemp;
+    //            }
+    //        }
+    //        index = diss.Count - 1;
+    //    }
+    //    if (diss[index] < m_Data.m_fAttackRange)  //如果小於警戒範圍
+    //    {
+    //        bAttack = true;
+    //        return go[index];
+    //    }
+    //    else if (diss[index] < m_Data.m_fSight)  //如果進入視線範圍
+    //    {
+    //        bAttack = false;
+    //        return go[index];
+    //    }
+    //    return null;
+    //}
+
+    /// <summary>
+    /// 檢查物件是否還在視線範圍內
+    /// </summary>
+    /// <param name="target">目標物件</param>
+    /// <param name="bAttack">是否進入警戒</param>
+    /// <returns>返回是否還在視線內</returns>
     private bool CheckTargetEnemyInSight(GameObject target, ref bool bAttack)
     {
         GameObject go = target;
@@ -134,43 +173,48 @@ public class RabbitAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.LogError("Current State " + m_eCurrentState);
+        //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
         if (m_eCurrentState == eFSMState.Idle)
         {
             bool bAttack = false;
-            m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);
-            if (m_CurrentEnemyTarget != null) //偵測範圍內有玩家
+            m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);  //偵測範圍內有玩家
+            if (m_CurrentEnemyTarget != null && m_CurrentEnemyTarget.tag == "Players")   //如果有玩家的話
             {
-                Debug.LogError(m_CurrentEnemyTarget.gameObject+"玩家靠近");
-                m_Data.m_TargetObject = m_CurrentEnemyTarget;
-                if (bAttack)  //在警戒範圍內
+                Debug.LogError("IDLE玩家入侵");
+                m_Data.m_TargetObject = m_CurrentEnemyTarget;  //傳給AIData目標物
+                if (bAttack)  //在警戒範圍內便會移動到兔子洞
                 {
-                    m_Data.m_vTarget = CheckCloseHole().transform.position;
+                    m_Data.m_vTarget = CheckCloseHole().transform.position;  //將目標位置改為最近兔子洞
                     m_Am.SetInteger("State", 3);
                     m_eCurrentState = eFSMState.MoveToTarget;
                 }
                 else
                 {
+                    Debug.LogError("IDLE轉為逃跑");
                     m_eCurrentState = eFSMState.Chase;   //逃跑
                     m_Am.SetInteger("State", 3);
+                    m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
+                    if (SteeringBehavior.CollisionAvoid(m_Data) == false)
+                    {
+                        SteeringBehavior.Flee(m_Data);
+                    }
+                    SteeringBehavior.Move(m_Data);
                 }
                 return;
-            }  
-            
+            }
             // Wait to move.           
-            if (m_fCurrentTime > m_fIdleTime)
+            if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
             {
                 m_fCurrentTime = 0.0f;
                 m_fIdleTime = 0.5f;
-                m_Data.m_vTarget = RandomNavSphere(transform.position, m_Data.m_fSight, -1);
+                m_Data.m_vTarget = RandomNavSphere(transform.position, m_Data.m_fSight, -1);  //在視野範圍內隨機位置
                 m_eCurrentState = eFSMState.Wander;
+                m_Am.applyRootMotion = false;
                 m_Am.SetInteger("State", 1);
-                m_Data.m_bMove = true;
             }
             else
             {
                 m_fCurrentTime += Time.deltaTime;
-                m_Am.SetInteger("State", 0);
             }
         }
         else if (m_eCurrentState == eFSMState.Wander)
@@ -178,10 +222,11 @@ public class RabbitAI : MonoBehaviour
             // Check Dead.            
             bool bAttack = false;
             m_Data.agent.updateRotation = true;
-            m_fIdleTime = Random.Range(2.0f, 3.0f);
+            m_fIdleTime = Random.Range(2.0f, 3.0f);  //漫步停留時間為隨機2～3秒
             m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);
             if (m_CurrentEnemyTarget != null) //偵測範圍內有玩家
             {
+                Debug.LogError("Wander玩家入侵");
                 m_Data.m_TargetObject = m_CurrentEnemyTarget;
                 if (bAttack)  //在警戒範圍內
                 {
@@ -191,44 +236,36 @@ public class RabbitAI : MonoBehaviour
                 }
                 else
                 {
+                    Debug.LogError("漫步轉為逃跑");
                     m_eCurrentState = eFSMState.Chase;   //逃跑
                     m_Am.SetInteger("State", 3);
+                    m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
+                    if (SteeringBehavior.CollisionAvoid(m_Data) == false)
+                    {
+                        SteeringBehavior.Flee(m_Data);
+                    }
+                    SteeringBehavior.Move(m_Data);
                 }
                 return;
             }
-            m_Data.agent.SetDestination(m_Data.m_vTarget);
-            Vector3 newPos = (m_Data.m_vTarget - transform.position);
-            float dis = newPos.magnitude;
-            Debug.LogError("目標位置在" + newPos + "離目標位置還有"+dis);
-            if (dis < 0.1f)
+            m_Data.agent.SetDestination(m_Data.m_vTarget);  //AI移動到隨機目標點
+            Vector3 newPos = (m_Data.m_vTarget - transform.position); //到目標點的向量
+            float dis = newPos.magnitude;  //距離長度
+            if (dis < 0.1f || (m_fCurrentTime > m_fIdleTime))  //若小於0.1f便回到IDLE狀態 (到達) Or 若超過停留時間便中斷並進入IDLE狀態 (未到達)
             {
                 m_Data.agent.updateRotation = false;
-                m_Data.agent.SetDestination(transform.position);
+                m_Data.agent.SetDestination(transform.position);  //將位置調整為當前位置(避免平移)
                 m_eCurrentState = eFSMState.Idle;
                 m_fCurrentTime = 0.0f;
                 m_fIdleTime = Random.Range(2.0f, 3.0f);
                 m_Data.m_bMove = false;
-            }
-            else if (m_fCurrentTime > m_fIdleTime)
-            {
-                m_Data.agent.updateRotation = false;
-                m_Data.agent.SetDestination(transform.position);
-                m_eCurrentState = eFSMState.Idle;
-                m_fCurrentTime = 0.0f;
-                m_fIdleTime = Random.Range(2.0f, 3.0f);
-                m_Data.m_bMove = false;
+                m_Am.SetInteger("State", 0);
+
             }
             else
             {
                 m_fCurrentTime += Time.deltaTime;
             }
-            //if (m_Data.m_bMove == false)
-            //{
-            //    m_eCurrentState = eFSMState.Idle;
-            //    m_fCurrentTime = 0.0f;
-            //    m_fIdleTime = Random.Range(3.0f, 5.0f);
-            //    m_Am.SetInteger("State", 0);
-            //}
         }
         else if (m_eCurrentState == eFSMState.MoveToTarget)
         {
@@ -238,13 +275,12 @@ public class RabbitAI : MonoBehaviour
             float dis = newPos.magnitude;
             if (dis < 1.5f)
             {
-                m_Am.SetInteger("State",4);
+                m_Am.applyRootMotion = true;
+                m_Am.SetInteger("State", 4);
             }
         }
         else if (m_eCurrentState == eFSMState.Chase)
         {
-            // Check Dead.
-
             bool bAttack = false;
             bool bCheck = CheckTargetEnemyInSight(m_CurrentEnemyTarget, ref bAttack);
 
@@ -253,7 +289,7 @@ public class RabbitAI : MonoBehaviour
                 Debug.LogError("不用逃跑了");
                 m_eCurrentState = eFSMState.Idle;
                 m_fCurrentTime = 0.0f;
-                m_fIdleTime = Random.Range(3.0f, 5.0f);
+                m_fIdleTime = Random.Range(2.0f, 3.0f);
                 m_Am.SetInteger("State", 1);
                 return;
             }
@@ -265,25 +301,18 @@ public class RabbitAI : MonoBehaviour
             }
             else
             {
-                Debug.LogError("還在視線範圍內");
                 m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
                 if (SteeringBehavior.CollisionAvoid(m_Data) == false)
                 {
                     SteeringBehavior.Flee(m_Data);
                 }
                 SteeringBehavior.Move(m_Data);
-                m_Am.SetInteger("State",3);
+                m_Am.SetInteger("State", 3);
             }
 
         }
         else if (m_eCurrentState == eFSMState.Attack)
         {
-            // Check Dead.
-
-            // Check Animation complete.
-            //...
-
-
             if (m_Am.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             {
                 // Check enemy damage.
@@ -295,7 +324,6 @@ public class RabbitAI : MonoBehaviour
             {
                 return;
             }
-
 
             bool bAttack = false;
             bool bCheck = CheckTargetEnemyInSight(m_CurrentEnemyTarget, ref bAttack);
@@ -331,7 +359,6 @@ public class RabbitAI : MonoBehaviour
     public Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
 
-
         Vector3 randDirection = Random.insideUnitCircle * dist;
 
         randDirection += origin;
@@ -340,8 +367,6 @@ public class RabbitAI : MonoBehaviour
 
         NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
 
-
-        Debug.LogError("新的目標點"+navHit.position);
         return navHit.position;
     }
 
@@ -351,11 +376,11 @@ public class RabbitAI : MonoBehaviour
         {
             return;
         }
-        Gizmos.color = Color.cyan;
+        Gizmos.color = Color.black;
         Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * 2.0f);
         if (m_eCurrentState == eFSMState.Idle)
         {
-            Gizmos.color = Color.green;
+            Gizmos.color = Color.white;
         }
         else if (m_eCurrentState == eFSMState.MoveToTarget)
         {
@@ -364,19 +389,19 @@ public class RabbitAI : MonoBehaviour
         }
         else if (m_eCurrentState == eFSMState.Chase)
         {
-            Gizmos.color = Color.yellow;
+            Gizmos.color = Color.red;
             Gizmos.DrawLine(this.transform.position, m_Data.m_vTarget);
         }
         else if (m_eCurrentState == eFSMState.Attack)
         {
             Gizmos.color = Color.red;
         }
-        else if (m_eCurrentState == eFSMState.Dead)
+        else if (m_eCurrentState == eFSMState.Wander)
         {
-            Gizmos.color = Color.gray;
+            Gizmos.color = Color.cyan;
         }
-        Gizmos.DrawWireSphere(this.transform.position, m_Data.m_fSight);
 
+        Gizmos.DrawWireSphere(this.transform.position, m_Data.m_fSight);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.transform.position, m_Data.m_fAttackRange);
     }

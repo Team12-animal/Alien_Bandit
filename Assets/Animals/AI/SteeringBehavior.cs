@@ -71,6 +71,7 @@ public class SteeringBehavior
 
     static public bool CheckCollision(RabbitAIData data)
     {
+        List<GameObject> m_AvoidTargetsGm = AIMain.m_Instance.GetObstaclesgm();
         List<Obstacle> m_AvoidTargets = AIMain.m_Instance.GetObstacles();
         if(m_AvoidTargets == null)
         {
@@ -86,7 +87,7 @@ public class SteeringBehavior
         int iCount = m_AvoidTargets.Count;
         for (int i = 0; i < iCount; i++)
         {
-            vec = m_AvoidTargets[i].transform.position - cPos;
+            vec = m_AvoidTargetsGm[i].transform.position - cPos;
             vec.y = 0.0f;
             fDist = vec.magnitude;
             if (fDist > data.m_fProbeLength + m_AvoidTargets[i].m_fRadius)
@@ -231,7 +232,7 @@ public class SteeringBehavior
         {
             fDotF = -1.0f;
             data.m_vCurrentVector = -vec;
-            //  data.m_Go.transform.forward = -vec;
+            data.m_Go.transform.forward = -vec;
             data.m_fTempTurnForce = 0.0f;
             data.m_fRot = 0.0f;
         }
@@ -259,7 +260,7 @@ public class SteeringBehavior
             Debug.Log(fDotR);
             data.m_fTempTurnForce = -fDotR;
 
-            // data.m_fTempTurnForce *= 0.1f;
+            data.m_fTempTurnForce *= 0.1f;
 
 
         }
