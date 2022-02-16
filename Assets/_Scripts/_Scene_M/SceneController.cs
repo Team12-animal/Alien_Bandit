@@ -15,7 +15,7 @@ public class SceneController : MonoBehaviour
 
     [Header("使用轉場動畫的設定")]
     public Animator transition;
-    [SerializeField] GameObject canvas;
+    [SerializeField] GameObject canvasCrossFade;
     [SerializeField] float transitionTime = 1f;
 
     [Header("角色選擇設定")]
@@ -34,9 +34,6 @@ public class SceneController : MonoBehaviour
     public int animStartHash { get; private set; }
     public int animEndHash { get; private set; }
 
-    [Header("Events")]
-    [SerializeField] GameObject eventsController;
-
     private void Awake()
     {
         if (instance == null)
@@ -48,7 +45,7 @@ public class SceneController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        canvas.SetActive(true);
+        canvasCrossFade.SetActive(true);
     }
     private void Start()
     {
