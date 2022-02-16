@@ -122,7 +122,7 @@ public class AnimatorController : MonoBehaviour
     }
 
     /// <summary>
-    /// �u�n�򲾰ʬ����ݭn�h��J���Input
+    /// set horizontal and veritfal value to animator
     /// </summary>
     /// <param name="newState"></param>
     /// <param name="horizontal"></param>
@@ -131,9 +131,17 @@ public class AnimatorController : MonoBehaviour
     {
         if (newState == Player_Run || newState == Player_HoldRockWalk || newState == Player_HoldWoodWalk || newState == Player_HoldChopWalk)
         {
+            Debug.Log("anima set float");
             animator.SetFloat(animHorizontalHash, horizontal);
             animator.SetFloat(animVerticalHash, vertical);
         }
+
+        if (newState == Player_SpeedRun)
+        {
+            animator.SetFloat(animHorizontalHash, 0.0f);
+            animator.SetFloat(animVerticalHash, 0.0f);
+        }
+
         Debug.Log("Move2" + newState + horizontal + "/" + vertical);
         ChangeAnimaEventState(newState);
     }
@@ -250,4 +258,47 @@ public class AnimatorController : MonoBehaviour
 
     #endregion
 
+    public bool CheckAniPlayingOrNot()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PutDownRock))
+        {
+            float time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            Debug.Log("putdown" + time);
+        }
+        
+        bool allowMove =
+            StartIdelEnded()
+            &&!animator.GetCurrentAnimatorStateInfo(0).IsName(Player_UsingTable)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_Chopping)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PickUpChop)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PickUpRock)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PickUpWood)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_Fear)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_ChopFinished)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_ChopIdle)
+            && !(animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PutDownChop) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            && !(animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PutDownRock) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            && !(animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PutDownWood) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            && !(animator.GetCurrentAnimatorStateInfo(0).IsName(Player_ThrowRock) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_Cheer)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_SpeedRun);
+
+        Debug.Log("allow move" + allowMove);
+        return allowMove;
+    }
+
+
+    /// <summary>
+    /// lock animation to idel while game start
+    /// </summary>
+    bool startIdelEnd = false;
+    private bool StartIdelEnded()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(Player_Idle) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.2f)
+        {
+            startIdelEnd = true;
+        }
+
+        return startIdelEnd;
+    }
 }
