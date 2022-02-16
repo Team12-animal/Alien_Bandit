@@ -1410,8 +1410,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 605161557}
-        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -2071,8 +2071,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 154866765}
-  - component: {fileID: 154866764}
   - component: {fileID: 154866763}
+  - component: {fileID: 154866764}
   m_Layer: 0
   m_Name: EventSystem04
   m_TagString: Untagged
@@ -2089,16 +2089,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 154866762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: b16c6f78230fa4964a222622d8aae332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal4
-  m_VerticalAxis: Vertical4
-  m_SubmitButton: Dash4
-  m_CancelButton: Use4
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_FirstSelected: {fileID: 1750435242}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+  m_PlayerRoot: {fileID: 397888009}
 --- !u!114 &154866764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2108,13 +2105,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 154866762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16c6f78230fa4964a222622d8aae332, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 912536515}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
-  m_PlayerRoot: {fileID: 397888009}
+  m_HorizontalAxis: Horizontal4
+  m_VerticalAxis: Vertical4
+  m_SubmitButton: Use4
+  m_CancelButton: Take4
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!4 &154866765
 Transform:
   m_ObjectHideFlags: 0
@@ -2216,7 +2216,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 165932559}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: CloseLevelUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: ShowPlayerRawImages
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &165932559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2275,7 +2299,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 177577204}
-  - component: {fileID: 177577205}
   m_Layer: 0
   m_Name: EventSystems
   m_TagString: Untagged
@@ -2294,25 +2317,13 @@ Transform:
   m_LocalPosition: {x: 1041.8091, y: 777.4194, z: -135.66692}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 736657171}
+  - {fileID: 744867633}
   - {fileID: 195216724}
   - {fileID: 1787984149}
   - {fileID: 154866765}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &177577205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 177577202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08b89e4f341fc584eb75f7b72bcaa23f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &183944077
 GameObject:
   m_ObjectHideFlags: 0
@@ -2698,8 +2709,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 195216724}
-  - component: {fileID: 195216723}
   - component: {fileID: 195216722}
+  - component: {fileID: 195216723}
   m_Layer: 0
   m_Name: EventSystem02
   m_TagString: Untagged
@@ -2716,16 +2727,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 195216721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: b16c6f78230fa4964a222622d8aae332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal2
-  m_VerticalAxis: Vertical2
-  m_SubmitButton: Use2
-  m_CancelButton: Dash2
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_FirstSelected: {fileID: 1681732765}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+  m_PlayerRoot: {fileID: 397888009}
 --- !u!114 &195216723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2735,13 +2743,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 195216721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16c6f78230fa4964a222622d8aae332, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 1923402485}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
-  m_PlayerRoot: {fileID: 397888009}
+  m_HorizontalAxis: Horizontal2
+  m_VerticalAxis: Vertical2
+  m_SubmitButton: Use2
+  m_CancelButton: Take2
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!4 &195216724
 Transform:
   m_ObjectHideFlags: 0
@@ -4879,6 +4890,18 @@ MonoBehaviour:
           m_StringArgument: confirm01
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: CancelPlayerAnimationToDance
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &365922476 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5136066076151933908, guid: f8de2bccbec18864489342d2891d0725, type: 3}
@@ -6676,7 +6699,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 605161557}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
         m_MethodName: ExitGame
         m_Mode: 1
@@ -7488,6 +7511,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: confirm01
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: ChangePlayerAnimationToDance
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!4 &528481338 stripped
@@ -10093,8 +10128,6 @@ GameObject:
   - component: {fileID: 605161555}
   - component: {fileID: 605161554}
   - component: {fileID: 605161553}
-  - component: {fileID: 605161557}
-  - component: {fileID: 605161558}
   - component: {fileID: 605161559}
   m_Layer: 5
   m_Name: CanvasParent
@@ -10190,43 +10223,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &605161557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605161552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6344632314949a8478c5fde97327d22a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chooseRoleUI: {fileID: 397888009}
-  chooseLevelUI: {fileID: 1606039432}
-  playerRawImagePanel01: {fileID: 2110209181}
-  playerRawImagePanel02: {fileID: 1935764154}
-  playerRawImagePanel03: {fileID: 1815311366}
-  playerRawImagePanel04: {fileID: 590933683}
-  roleUIButtonStartPos: {fileID: 525643516}
-  levelUIButtonStartPos: {fileID: 804318572}
-  mainMenuUIButtonStartPos: {fileID: 2032569824}
-  finger01: {fileID: 525643516}
-  finger02: {fileID: 1923402485}
-  finger03: {fileID: 700037505}
-  finger04: {fileID: 912536515}
---- !u!114 &605161558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605161552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49098f00a0fad448bd0bb93ab5b3ef5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &605161559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10251,8 +10247,10 @@ MonoBehaviour:
   checkUI: {fileID: 622957280}
   skinUI: {fileID: 397888009}
   levelUI: {fileID: 1606039432}
-  startButton: {fileID: 1946902170}
-  newGameButton: {fileID: 2032569824}
+  mainMenuNewGameButton: {fileID: 2032569824}
+  checkPlayerUIStartButton: {fileID: 1946902170}
+  chooseRoleUIStartButton: {fileID: 525643516}
+  chooseLevelStartButton: {fileID: 804318572}
   checkSelectButton01: {fileID: 525643516}
   checkSelectButton02: {fileID: 1923402485}
   checkSelectButton03: {fileID: 700037505}
@@ -10261,12 +10259,19 @@ MonoBehaviour:
   outerFrameP2: {fileID: 259084909}
   outerFrameP3: {fileID: 2069332953}
   outerFrameP4: {fileID: 1801561408}
-  confirm01: 0
-  confirm02: 0
-  eventSystem01: {fileID: 736657170}
-  eventSystem02: {fileID: 195216723}
-  eventSystem03: {fileID: 1787984148}
-  eventSystem04: {fileID: 154866764}
+  rawImages:
+  - {fileID: 2110209183}
+  - {fileID: 1935764156}
+  - {fileID: 1815311368}
+  - {fileID: 590933685}
+  eventSystem01: {fileID: 744867634}
+  eventSystem02: {fileID: 195216722}
+  eventSystem03: {fileID: 1787984147}
+  eventSystem04: {fileID: 154866763}
+  player01: {fileID: 374582663}
+  player02: {fileID: 1093815328}
+  player03: {fileID: 877490337}
+  player04: {fileID: 593578705}
 --- !u!1 &609865192 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4067021796462647781, guid: b4a3a5d8ad3494f4fb9f0821db4d42f7, type: 3}
@@ -10684,7 +10689,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 625091429}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: OpenLevelUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: CancelPlayerRawImages
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &625091429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11214,6 +11243,18 @@ MonoBehaviour:
           m_StringArgument: confirm03
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: ChangePlayerAnimationToDance
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &709226995 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3964796614846736872, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
@@ -11345,7 +11386,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4819606783095600, guid: 3a9b422ae305e3b49aadf8ece0bfa915, type: 3}
   m_PrefabInstance: {fileID: 533228232}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &736657168
+--- !u!4 &737803762 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4458312218162336, guid: 72aa2807f4924be41808b0652e1a3be6, type: 3}
+  m_PrefabInstance: {fileID: 1429366831}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &744867632
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11353,9 +11399,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 736657171}
-  - component: {fileID: 736657170}
-  - component: {fileID: 736657169}
+  - component: {fileID: 744867633}
+  - component: {fileID: 744867634}
+  - component: {fileID: 744867635}
   m_Layer: 0
   m_Name: EventSystem01
   m_TagString: Untagged
@@ -11363,13 +11409,43 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &736657169
+--- !u!4 &744867633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744867632}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3568.317, y: -205.05042, z: -603.6767}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177577204}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &744867634
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736657168}
+  m_GameObject: {fileID: 744867632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b16c6f78230fa4964a222622d8aae332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 2032569824}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+  m_PlayerRoot: {fileID: 605161552}
+--- !u!114 &744867635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744867632}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
@@ -11378,45 +11454,10 @@ MonoBehaviour:
   m_HorizontalAxis: Horizontal1
   m_VerticalAxis: Vertical1
   m_SubmitButton: Use1
-  m_CancelButton: Dash1
+  m_CancelButton: Take1
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
-  m_ForceModuleActive: 1
---- !u!114 &736657170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736657168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16c6f78230fa4964a222622d8aae332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 525643516}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
-  m_PlayerRoot: {fileID: 397888009}
---- !u!4 &736657171
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736657168}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3568.317, y: -205.05042, z: -603.6767}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177577204}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &737803762 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4458312218162336, guid: 72aa2807f4924be41808b0652e1a3be6, type: 3}
-  m_PrefabInstance: {fileID: 1429366831}
-  m_PrefabAsset: {fileID: 0}
+  m_ForceModuleActive: 0
 --- !u!1001 &754937106
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11783,7 +11824,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 605161557}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
         m_MethodName: LoadLevel
         m_Mode: 3
@@ -12547,6 +12588,18 @@ MonoBehaviour:
           m_StringArgument: confirm03
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: CancelPlayerAnimationToDance
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &881236465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13107,6 +13160,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: confirm04
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: ChangePlayerAnimationToDance
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1001 &914591579
@@ -17979,7 +18044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1352676265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19190,6 +19255,7 @@ MonoBehaviour:
   selectLevelUI: {fileID: 1606039432}
   seagullUIButton: {fileID: 1072366718}
   parent: {fileID: 605161552}
+  eventSystem01: {fileID: 744867634}
 --- !u!1001 &1532597204
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19329,7 +19395,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1538273052}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: CloseSkinUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1538273052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20895,6 +20973,18 @@ MonoBehaviour:
           m_StringArgument: confirm02
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: CancelPlayerAnimationToDance
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1686336174 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4739574486837986, guid: b0622c7c0ff092b46a37f31c718c5eba, type: 3}
@@ -22218,6 +22308,18 @@ MonoBehaviour:
           m_StringArgument: confirm04
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: CancelPlayerAnimationToDance
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1751126924
 GameObject:
   m_ObjectHideFlags: 0
@@ -22487,8 +22589,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1787984149}
-  - component: {fileID: 1787984148}
   - component: {fileID: 1787984147}
+  - component: {fileID: 1787984148}
   m_Layer: 0
   m_Name: EventSystem03
   m_TagString: Untagged
@@ -22505,16 +22607,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1787984146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: b16c6f78230fa4964a222622d8aae332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal3
-  m_VerticalAxis: Vertical3
-  m_SubmitButton: Use3
-  m_CancelButton: Dash3
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_FirstSelected: {fileID: 879595407}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+  m_PlayerRoot: {fileID: 397888009}
 --- !u!114 &1787984148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22524,13 +22623,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1787984146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16c6f78230fa4964a222622d8aae332, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 700037505}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
-  m_PlayerRoot: {fileID: 397888009}
+  m_HorizontalAxis: Horizontal3
+  m_VerticalAxis: Vertical3
+  m_SubmitButton: Use3
+  m_CancelButton: Take3
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!4 &1787984149
 Transform:
   m_ObjectHideFlags: 0
@@ -24108,6 +24210,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: confirm02
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: ChangePlayerAnimationToDance
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!4 &1926520780 stripped
@@ -39719,10 +39833,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 605161557}
-        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
-        m_MethodName: OpenChooseRoleUI
-        m_Mode: 6
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: OpenSkinUI
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

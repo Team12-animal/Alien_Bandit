@@ -23,8 +23,10 @@ public class CheckPlayer : MonoBehaviour
     [SerializeField] GameObject checkUI;
     [SerializeField] GameObject skinUI;
     [SerializeField] GameObject levelUI;
-    [SerializeField] GameObject startButton;
-    [SerializeField] GameObject newGameButton;
+    [SerializeField] GameObject mainMenuNewGameButton;
+    [SerializeField] GameObject checkPlayerUIStartButton;
+    [SerializeField] GameObject chooseRoleUIStartButton;
+    [SerializeField] GameObject chooseLevelStartButton;
     string newGameButtonName = "NewGame";
 
     [Header("Roles Outer frame")]
@@ -38,8 +40,9 @@ public class CheckPlayer : MonoBehaviour
     [SerializeField] GameObject outerFrameP4;
 
     [Header("Confirm Skin")]
-    [SerializeField] bool confirm01 = false;
-    [SerializeField] bool confirm02 = false;
+    [SerializeField] List<RawImage> rawImages;
+    bool confirm01 = false;
+    bool confirm02 = false;
     bool confirm03 = false;
     bool confirm04 = false;
     string confirmName01 = "confirm01";
@@ -48,11 +51,20 @@ public class CheckPlayer : MonoBehaviour
     string confirmName04 = "confirm04";
 
     [Header("EventSystems")]
-
     [SerializeField] EventSystem eventSystem01;
     [SerializeField] EventSystem eventSystem02;
     [SerializeField] EventSystem eventSystem03;
     [SerializeField] EventSystem eventSystem04;
+
+    [Header("When select player then show dancing animation")]
+    [SerializeField] GameObject player01;
+    [SerializeField] GameObject player02;
+    [SerializeField] GameObject player03;
+    [SerializeField] GameObject player04;
+    string menuDance01 = "CharacterControllerTest_Male_MainMenu01";
+    string menuDance02 = "CharacterControllerTest_Male_MainMenu02";
+    string menuDance03 = "CharacterControllerTest_Male_MainMenu03";
+    string menuDance04 = "CharacterControllerTest_Male_MainMenu04";
 
     void Update()
     {
@@ -127,7 +139,7 @@ public class CheckPlayer : MonoBehaviour
     {
         ResetImages();
         ResetBool();
-        EventSystem.current.SetSelectedGameObject(newGameButton);
+        eventSystem01.SetSelectedGameObject(mainMenuNewGameButton);
     }
     /// <summary>
     /// Going to Choose Role UI;
@@ -142,7 +154,7 @@ public class CheckPlayer : MonoBehaviour
     public void ActiveCheckUI()
     {
         checkUI.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(startButton);
+        eventSystem01.SetSelectedGameObject(checkPlayerUIStartButton);
     }
 
     private void ResetImages()
@@ -203,18 +215,100 @@ public class CheckPlayer : MonoBehaviour
     public void OpenSkinUI()
     {
         skinUI.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(skinUI);
+        eventSystem01.SetSelectedGameObject(chooseRoleUIStartButton);
     }
 
     public void OpenLevelUI()
     {
         levelUI.SetActive(true);
+        eventSystem01.SetSelectedGameObject(chooseLevelStartButton);
     }
 
     public void CloseSkinUI()
     {
         skinUI.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(newGameButton);
+        eventSystem01.SetSelectedGameObject(mainMenuNewGameButton);
     }
 
+    public void CloseLevelUI()
+    {
+        levelUI.SetActive(false);
+        eventSystem01.SetSelectedGameObject(chooseRoleUIStartButton);
+    }
+
+    public void ShowPlayerRawImages()
+    {
+        for (int i = 0; i < rawImages.Count; i++)
+        {
+            rawImages[i].enabled = true;
+        }
+    }
+
+    public void CancelPlayerRawImages()
+    {
+        for (int i = 0; i < rawImages.Count; i++)
+        {
+            rawImages[i].enabled = false;
+        }
+    }
+    public void LoadLevel(int sceneIndex)
+    {
+        SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+        SceneController.instance.LoadLevel(sceneIndex);
+        skinUI.SetActive(false);
+        levelUI.SetActive(false);
+    }
+
+    public void ChangePlayerAnimationToDance(int playerID)
+    {
+        switch (playerID)
+        {
+            case 1:
+                AnimatorController anim01 = player01.GetComponent<AnimatorController>();
+                anim01.animator = player01.GetComponent<Animator>();
+                anim01.Init();
+                anim01.animator.runtimeAnimatorController = Resources.Load(menuDance01) as RuntimeAnimatorController;
+                player01.GetComponent<AnimatorController>().animator.Play("Dance");
+                break;
+            case 2:
+                AnimatorController anim02 = player02.GetComponent<AnimatorController>();
+                anim02.animator = player02.GetComponent<Animator>();
+                anim02.Init();
+                anim02.animator.runtimeAnimatorController = Resources.Load(menuDance02) as RuntimeAnimatorController;
+                player02.GetComponent<AnimatorController>().animator.Play("Dance");
+                break;
+            case 3:
+                AnimatorController anim03 = player03.GetComponent<AnimatorController>();
+                anim03.animator = player03.GetComponent<Animator>();
+                anim03.Init();
+                anim03.animator.runtimeAnimatorController = Resources.Load(menuDance03) as RuntimeAnimatorController;
+                player03.GetComponent<AnimatorController>().animator.Play("Dance");
+                break;
+            case 4:
+                AnimatorController anim04 = player04.GetComponent<AnimatorController>();
+                anim04.animator = player04.GetComponent<Animator>();
+                anim04.Init();
+                anim04.animator.runtimeAnimatorController = Resources.Load(menuDance04) as RuntimeAnimatorController;
+                player04.GetComponent<AnimatorController>().animator.Play("Dance");
+                break;
+        }
+    }
+    public void CancelPlayerAnimationToDance(int playerID)
+    {
+        switch (playerID)
+        {
+            case 1:
+                player01.GetComponent<AnimatorController>().animator.SetTrigger("Stop");
+                break;
+            case 2:
+                player02.GetComponent<AnimatorController>().animator.SetTrigger("Stop");
+                break;
+            case 3:
+                player03.GetComponent<AnimatorController>().animator.SetTrigger("Stop");
+                break;
+            case 4:
+                player04.GetComponent<AnimatorController>().animator.SetTrigger("Stop");
+                break;
+        }
+    }
 }

@@ -10,6 +10,7 @@ public class Bird : MonoBehaviour
     [SerializeField] GameObject selectLevelUI;
     [SerializeField] RawImage seagullUIButton;
     [SerializeField] GameObject parent;
+    [SerializeField] EventSystem eventSystem01;
     string current;
     private void Start()
     {
@@ -21,7 +22,7 @@ public class Bird : MonoBehaviour
         //Vector3(326.0625, 254.77655, 0)  need to offset parent position;
         transform.position = new Vector3(890.1f, 260.73f, -1092.16f);
         //Vector3(564.048096, 5.95675659, -1092.16235) right position
-        LevelLoader.instance.OpenChooseRoleUI(false);
+        //LevelLoader.instance.OpenChooseRoleUI(false);
         //CancelMouse();
 
         //UsingMouse();
@@ -48,9 +49,9 @@ public class Bird : MonoBehaviour
 
     void SeagulPos()
     {
-        if (EventSystem.current.currentSelectedGameObject != null)
+        if (eventSystem01.currentSelectedGameObject != null)
         {
-            current = EventSystem.current.currentSelectedGameObject.name;
+            current = eventSystem01.currentSelectedGameObject.name;
         }
         //if (selectCharacterUI.activeInHierarchy && selectLevelUI.activeInHierarchy)
         //{
