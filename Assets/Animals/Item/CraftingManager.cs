@@ -81,6 +81,9 @@ public class CraftingManager : MonoBehaviour
     private void Start()
     {
         PlayerInit();
+
+        slotimage[1].GetComponent<Image>().sprite = slotsprite[0];
+        slotimage[0].GetComponent<Image>().sprite = slotsprite[0];
     }
 
     private void PlayerInit()
@@ -348,13 +351,21 @@ public class CraftingManager : MonoBehaviour
         {
             return;
         }
-        
-        if(userItem != null && other.gameObject == data.item)
-        {
-            return;
-        }
 
+        //foreach (var v in items)
+        //{
+        //    if (v.canMix && other.tag == v.itemName && isTake)
+        //    {
+        //        AddItem(other.gameObject, v);
+        //        CanMixItem();
+        //        return;
+        //    }
+        //}
 
+        //Vector3 move = new Vector3(transform.position.x, transform.position.y + 5.0f, transform.position.z + 1.0f);
+        //other.gameObject.transform.position = move;
+
+       
     }
 
     private void OnTriggerStay(Collider other)
@@ -364,6 +375,19 @@ public class CraftingManager : MonoBehaviour
             //box left on table
             isTake = false;
             return;
+        }
+
+        if (other.tag == "Player" || (userItem != null && other.gameObject == userItem))
+        {
+            return;
+        }
+
+        Debug.Log("stay" + other.gameObject.name);
+        Rigidbody rb = other.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.AddForce(new Vector3(30.0f, 30.0f, 0.0f), ForceMode.Impulse);
+            Debug.Log("force");
         }
     }
 

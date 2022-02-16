@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7296520087955823201}
   - component: {fileID: 7296520087955823203}
   - component: {fileID: 7296520087955823202}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Box
   m_TagString: Box
   m_Icon: {fileID: 0}
@@ -86,9 +86,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7296520087955823200}
     m_Modifications:
+    - target: {fileID: 1589716151, guid: 0b054356ce925634183cb5e92cceb9fc, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1083941557583290, guid: 0b054356ce925634183cb5e92cceb9fc, type: 3}
       propertyPath: m_Name
       value: Box
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083941557583290, guid: 0b054356ce925634183cb5e92cceb9fc, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4196028084717306, guid: 0b054356ce925634183cb5e92cceb9fc, type: 3}
       propertyPath: m_RootOrder

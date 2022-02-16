@@ -7,7 +7,7 @@ namespace BrokenVector.LowPolyFencePack
     /// It needs the legacy animation component.
     /// </summary>
     [RequireComponent(typeof(Animation))]
-    public class DoorController : MonoBehaviour
+    public class DoorController_s : MonoBehaviour
     {
 
         /// <summary>
@@ -76,13 +76,12 @@ namespace BrokenVector.LowPolyFencePack
         void Start()
         {            
             // a little hack, to set the initial state
-            currentState = DoorState.Open;
+            currentState = DoorState.Closed;
             var clip = GetCurrentAnimation();
             animator[clip].speed = 9999;
             animator.Play(clip);
             Debug.Log("door start" + clip.ToString());
-            CloseDoor();
-            currentState = DoorState.Closed;
+            
         }
 
         private void Update()

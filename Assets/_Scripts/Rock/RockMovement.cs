@@ -6,6 +6,7 @@ public class RockMovement : MonoBehaviour
 {
     private Rigidbody rb;
     public float force = 4.0f;
+    public bool beUsing = false;
 
     private void Start()
     {

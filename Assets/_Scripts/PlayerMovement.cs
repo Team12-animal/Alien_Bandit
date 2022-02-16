@@ -117,21 +117,15 @@ public class PlayerMovement : MonoBehaviour
         //?????H???I?????????D
         Vector3 from = this.transform.position;
         from.y += 0.5f;
-        //Vector3 to = from + moveAmt;
-        //to.z += 0.38f;
 
         Vector3 to = from + this.transform.forward * 2.0f;
         to.z += 0.38f;
 
         Debug.DrawLine(from, to, Color.black);
 
-        RaycastHit hit;
-        if (Physics.Linecast(from, to, out hit, 1 << 8))
+        if (Physics.Linecast(from, to, 1 << 8 | 1 << 15))
         {
-            //moveAmt = hit.point - from;
             moveAmt = new Vector3(0, 0, 0);
-            //moveAmt.y += 0.5f;
-            //moveAmt.z -= 0.5f;
         }
 
         //?????H??????????
@@ -233,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawLine(from, to, Color.black);
 
         RaycastHit hit;
-        if (Physics.Linecast(from, to, out hit, 1 << 8))
+        if (Physics.Linecast(from, to, out hit, 1 << 8 | 1 << 15))
         {
             moveAmt = hit.point - from;
             moveAmt.y += 0.5f;
@@ -663,6 +657,11 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
         targetRG.isKinematic = true;
         itemInhand = targetItem;
+
+        if (itemInhand.tag == "RockModel")
+        {
+            itemInhand.GetComponent<RockMovement>().beUsing = true;
+        }
     }
      
     private void RemoveItem()
@@ -683,6 +682,11 @@ public class PlayerMovement : MonoBehaviour
         if(itemInhand.tag == "Box")
         {
             itemInhand.GetComponent<BoxController>().beUsing = false;
+        }
+
+        if (itemInhand.tag == "RockModel")
+        {
+            itemInhand.GetComponent<RockMovement>().beUsing = false;
         }
 
         itemInhand = null;
@@ -727,6 +731,11 @@ public class PlayerMovement : MonoBehaviour
         if (itemInhand.tag == "Box")
         {
             itemInhand.GetComponent<BoxController>().beUsing = false;
+        }
+
+        if (itemInhand.tag == "RockModel")
+        {
+            itemInhand.GetComponent<RockMovement>().beUsing = false;
         }
 
         itemInhand = null;

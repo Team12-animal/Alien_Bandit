@@ -19,7 +19,8 @@ public class RockSensor : MonoBehaviour
 
     private void Update()
     {
-        OnGroundTest();
+        //OnGroundTest();
+        ColliderOpenerToggle();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -38,12 +39,23 @@ public class RockSensor : MonoBehaviour
         if(Physics.Raycast(from, dir, 4.5f, 1 << 7))
         {
             c.enabled = true;
-            Debug.Log("rock hit");
         }
         else
         {
             c.enabled = false;
-            Debug.Log("Rock unhit");
+        }
+    }
+
+
+    public void ColliderOpenerToggle()
+    {
+        if (rm.beUsing == true)
+        {
+            c.enabled = false;
+        }
+        else
+        {
+            c.enabled = true;
         }
     }
 }

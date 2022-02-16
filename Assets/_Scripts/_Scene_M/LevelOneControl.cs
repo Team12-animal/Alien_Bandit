@@ -218,4 +218,16 @@ public class LevelOneControl : MonoBehaviour
             createdOthers = false;
         }
     }
+
+    //for treeController
+    public float GetGameTime()
+    {
+        return gamingTime;
+    }
+
+    //for treeController
+    public bool WinOrNot()
+    {
+        return isWin;
+    }
 }
