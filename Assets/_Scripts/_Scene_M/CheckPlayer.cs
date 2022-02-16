@@ -38,6 +38,14 @@ public class CheckPlayer : MonoBehaviour
     [SerializeField] GameObject outerFrameP2;
     [SerializeField] GameObject outerFrameP3;
     [SerializeField] GameObject outerFrameP4;
+    [SerializeField] GameObject leftTraingle01;
+    [SerializeField] GameObject rightTraingle01;
+    [SerializeField] GameObject leftTraingle02;
+    [SerializeField] GameObject rightTraingle02;
+    [SerializeField] GameObject leftTraingle03;
+    [SerializeField] GameObject rightTraingle03;
+    [SerializeField] GameObject leftTraingle04;
+    [SerializeField] GameObject rightTraingle04;
 
     [Header("Confirm Skin")]
     [SerializeField] List<RawImage> rawImages;
@@ -55,6 +63,10 @@ public class CheckPlayer : MonoBehaviour
     [SerializeField] EventSystem eventSystem02;
     [SerializeField] EventSystem eventSystem03;
     [SerializeField] EventSystem eventSystem04;
+    GameObject tempCurrentButton01;
+    GameObject tempCurrentButton02;
+    GameObject tempCurrentButton03;
+    GameObject tempCurrentButton04;
 
     [Header("When select player then show dancing animation")]
     [SerializeField] GameObject player01;
@@ -66,32 +78,44 @@ public class CheckPlayer : MonoBehaviour
     string menuDance03 = "CharacterControllerTest_Male_MainMenu03";
     string menuDance04 = "CharacterControllerTest_Male_MainMenu04";
 
+
     private void Awake()
+    {
+        FindPlayers();
+        SetUpFirstCurrentSelectedButton();
+    }
+
+    void Update()
+    {
+        CheckMouseClickOnCurrentSelectedButton();
+
+        AddAndCaneclPlayer();
+        ChangePlayerSkinWhenSelectButtonON();
+        ChangeSelectTraingleColor();
+    }
+    private void LateUpdate()
+    {
+        ResetMouseCurrentSelectedButton();
+    }
+    #region Process scripts
+    private void FindPlayers()
     {
         player01 = GameObject.Find("Player01");
         player02 = GameObject.Find("Player02");
         player03 = GameObject.Find("Player03");
         player04 = GameObject.Find("Player04");
     }
-
-    void Update()
+    private void SetUpFirstCurrentSelectedButton()
     {
-        if (outerFrameP1.activeInHierarchy && Input.GetButtonDown("Horizontal1") && !confirm01 && eventSystem01.currentSelectedGameObject == checkSelectButton01)//Change player01 skin
-        {
-            SceneController.instance.player01.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal1");
-        }
-        if (outerFrameP2.activeInHierarchy && Input.GetButtonDown("Horizontal2") && !confirm02 && eventSystem02.currentSelectedGameObject == checkSelectButton02)//Change player02 skin
-        {
-            SceneController.instance.player02.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal2");
-        }
-        if (outerFrameP3.activeInHierarchy && Input.GetButtonDown("Horizontal3") && !confirm03 && eventSystem03.currentSelectedGameObject == checkSelectButton03)//Change player03 skin
-        {
-            SceneController.instance.player03.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal3");
-        }
-        if (outerFrameP4.activeInHierarchy && Input.GetButtonDown("Horizontal4") && !confirm04 && eventSystem04.currentSelectedGameObject == checkSelectButton04)//Change player04 skin
-        {
-            SceneController.instance.player04.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal4");
-        }
+        tempCurrentButton02 = checkSelectButton02;
+        tempCurrentButton03 = checkSelectButton03;
+        tempCurrentButton04 = checkSelectButton04;
+        eventSystem02.SetSelectedGameObject(tempCurrentButton02);
+        eventSystem03.SetSelectedGameObject(tempCurrentButton03);
+        eventSystem04.SetSelectedGameObject(tempCurrentButton04);
+    }
+    private void AddAndCaneclPlayer()
+    {
         if (Input.GetButtonDown("Use2"))//add player02
         {
             player2AddButtonImage.GetComponent<Image>().sprite = added02;
@@ -117,6 +141,119 @@ public class CheckPlayer : MonoBehaviour
             player4AddButtonImage.GetComponent<Image>().sprite = normal04;
         }
     }
+    private void ChangePlayerSkinWhenSelectButtonON()
+    {
+        if (outerFrameP1.activeInHierarchy && Input.GetButtonDown("Horizontal1") && confirm01 && eventSystem01.currentSelectedGameObject == checkSelectButton01)//Change player01 skin
+        {
+            SceneController.instance.player01.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal1");
+            float horizontal = Input.GetAxisRaw("Horizontal1");
+            if (horizontal < 0)
+            {
+                leftTraingle01.GetComponent<Image>().color = Color.red;
+            }
+            else if (horizontal > 0)
+            {
+                leftTraingle01.GetComponent<Image>().color = Color.black;
+            }
+            if (horizontal > 0)
+            {
+                rightTraingle01.GetComponent<Image>().color = Color.red;
+            }
+            else if (horizontal < 0)
+            {
+                rightTraingle01.GetComponent<Image>().color = Color.black;
+            }
+        }
+        if (outerFrameP2.activeInHierarchy && Input.GetButtonDown("Horizontal2") && confirm02 && eventSystem02.currentSelectedGameObject == checkSelectButton02)//Change player02 skin
+        {
+            SceneController.instance.player02.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal2");
+            float horizontal = Input.GetAxisRaw("Horizontal2");
+            if (horizontal < 0)
+            {
+                leftTraingle02.GetComponent<Image>().color = Color.red;
+            }
+            else if (horizontal > 0)
+            {
+                leftTraingle02.GetComponent<Image>().color = Color.black;
+            }
+            if (horizontal > 0)
+            {
+                rightTraingle02.GetComponent<Image>().color = Color.red;
+            }
+            else if (horizontal < 0)
+            {
+                rightTraingle02.GetComponent<Image>().color = Color.black;
+            }
+        }
+        if (outerFrameP3.activeInHierarchy && Input.GetButtonDown("Horizontal3") && confirm03 && eventSystem03.currentSelectedGameObject == checkSelectButton03)//Change player03 skin
+        {
+            SceneController.instance.player03.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal3");
+            float horizontal = Input.GetAxisRaw("Horizontal3");
+            if (horizontal < 0)
+            {
+                leftTraingle03.GetComponent<Image>().color = Color.red;
+            }
+            else if (horizontal > 0)
+            {
+                leftTraingle03.GetComponent<Image>().color = Color.black;
+            }
+            if (horizontal > 0)
+            {
+                rightTraingle03.GetComponent<Image>().color = Color.red;
+            }
+            else if (horizontal < 0)
+            {
+                rightTraingle03.GetComponent<Image>().color = Color.black;
+            }
+        }
+        if (outerFrameP4.activeInHierarchy && Input.GetButtonDown("Horizontal4") && confirm04 && eventSystem04.currentSelectedGameObject == checkSelectButton04)//Change player04 skin
+        {
+            SceneController.instance.player04.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal4");
+            float horizontal = Input.GetAxisRaw("Horizontal4");
+            if (horizontal < 0)
+            {
+                leftTraingle04.GetComponent<Image>().color = Color.red;
+            }
+            else if (horizontal > 0)
+            {
+                leftTraingle04.GetComponent<Image>().color = Color.black;
+            }
+            if (horizontal > 0)
+            {
+                rightTraingle04.GetComponent<Image>().color = Color.red;
+            }
+            else if (horizontal < 0)
+            {
+                rightTraingle04.GetComponent<Image>().color = Color.black;
+            }
+        }
+    }
+    private void ChangeSelectTraingleColor()
+    {
+        if(eventSystem01.currentSelectedGameObject != checkSelectButton01)
+        {
+            leftTraingle01.GetComponent<Image>().color = Color.black;
+            rightTraingle01.GetComponent<Image>().color = Color.black;
+        }
+        if (eventSystem02.currentSelectedGameObject != checkSelectButton02)
+        {
+            leftTraingle02.GetComponent<Image>().color = Color.black;
+            rightTraingle02.GetComponent<Image>().color = Color.black;
+        }
+        if (eventSystem03.currentSelectedGameObject != checkSelectButton03)
+        {
+            leftTraingle03.GetComponent<Image>().color = Color.black;
+            rightTraingle03.GetComponent<Image>().color = Color.black;
+        }
+        if (eventSystem04.currentSelectedGameObject != checkSelectButton04)
+        {
+            leftTraingle04.GetComponent<Image>().color = Color.black;
+            rightTraingle04.GetComponent<Image>().color = Color.black;
+        }
+    }
+    #endregion
+
+    #region Unity Button Events
     /// <summary>
     /// Confirm how many player will play this game;
     /// </summary>
@@ -124,45 +261,25 @@ public class CheckPlayer : MonoBehaviour
     {
         SceneController.instance.selected01 = true;
         checkSelectButton01.SetActive(true);
+        confirm01 = true;
         if (player2AddButtonImage.GetComponent<Image>().sprite == added02)
         {
             SceneController.instance.selected02 = true;
             checkSelectButton02.SetActive(true);
+            confirm02 = true;
         }
         if (player3AddButtonImage.GetComponent<Image>().sprite == added03)
         {
             SceneController.instance.selected03 = true;
             checkSelectButton03.SetActive(true);
+            confirm03 = true;
         }
         if (player4AddButtonImage.GetComponent<Image>().sprite == added04)
         {
             SceneController.instance.selected04 = true;
             checkSelectButton04.SetActive(true);
+            confirm04 = true;
         }
-    }
-    /// <summary>
-    /// Cancel Check Player UI;
-    /// </summary>
-    public void CancelCheckPlayerUI()
-    {
-        ResetImages();
-        ResetBool();
-        eventSystem01.SetSelectedGameObject(mainMenuNewGameButton);
-    }
-    /// <summary>
-    /// Going to Choose Role UI;
-    /// </summary>
-    public void InactiveCheckUI()
-    {
-        checkUI.SetActive(false);
-        ResetImages();
-        ResetBool();
-    }
-
-    public void ActiveCheckUI()
-    {
-        checkUI.SetActive(true);
-        eventSystem01.SetSelectedGameObject(checkPlayerUIStartButton);
     }
 
     private void ResetImages()
@@ -220,6 +337,12 @@ public class CheckPlayer : MonoBehaviour
         }
     }
 
+    public void OpenCheckUI()
+    {
+        checkUI.SetActive(true);
+        eventSystem01.SetSelectedGameObject(checkPlayerUIStartButton);
+    }
+
     public void OpenSkinUI()
     {
         skinUI.SetActive(true);
@@ -230,6 +353,14 @@ public class CheckPlayer : MonoBehaviour
     {
         levelUI.SetActive(true);
         eventSystem01.SetSelectedGameObject(chooseLevelStartButton);
+    }
+
+    public void CloseCheckPlayerUI()
+    {
+        checkUI.SetActive(false);
+        ResetImages();
+        ResetBool();
+        eventSystem01.SetSelectedGameObject(mainMenuNewGameButton);
     }
 
     public void CloseSkinUI()
@@ -259,7 +390,8 @@ public class CheckPlayer : MonoBehaviour
             rawImages[i].enabled = false;
         }
     }
-    public void LoadLevel(int sceneIndex)
+
+    public void LoadSecneLevel(int sceneIndex)
     {
         SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
         SceneController.instance.LoadLevel(sceneIndex);
@@ -301,6 +433,7 @@ public class CheckPlayer : MonoBehaviour
                 break;
         }
     }
+
     public void CancelPlayerAnimationToDance(int playerID)
     {
         switch (playerID)
@@ -319,4 +452,51 @@ public class CheckPlayer : MonoBehaviour
                 break;
         }
     }
+    #endregion
+
+    #region solve mouse trigger currebt event problems
+
+    private void CheckMouseClickOnCurrentSelectedButton()
+    {
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        {
+            if (eventSystem01.currentSelectedGameObject != null)
+            {
+                tempCurrentButton01 = eventSystem01.currentSelectedGameObject;
+            }
+            if (eventSystem02.currentSelectedGameObject != null)
+            {
+                tempCurrentButton02 = eventSystem02.currentSelectedGameObject;
+            }
+            if (eventSystem03.currentSelectedGameObject != null)
+            {
+                tempCurrentButton03 = eventSystem03.currentSelectedGameObject;
+            }
+            if (eventSystem04.currentSelectedGameObject != null)
+            {
+                tempCurrentButton04 = eventSystem04.currentSelectedGameObject;
+            }
+        }
+    }
+
+    private void ResetMouseCurrentSelectedButton()
+    {
+        if (eventSystem01.currentSelectedGameObject == null)
+        {
+            eventSystem01.SetSelectedGameObject(tempCurrentButton01);
+        }
+        if (eventSystem02.currentSelectedGameObject == null)
+        {
+            eventSystem02.SetSelectedGameObject(tempCurrentButton02);
+        }
+        if (eventSystem03.currentSelectedGameObject == null)
+        {
+            eventSystem03.SetSelectedGameObject(tempCurrentButton03);
+        }
+        if (eventSystem04.currentSelectedGameObject == null)
+        {
+            eventSystem04.SetSelectedGameObject(tempCurrentButton04);
+        }
+    }
+    #endregion
 }
