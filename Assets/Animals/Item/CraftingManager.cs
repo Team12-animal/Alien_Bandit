@@ -15,6 +15,7 @@ public class CraftingManager : MonoBehaviour
     private GameObject p4;
     [SerializeField]
     public List<GameObject> players;
+    public GameObject userItem;
 
     //?x?s????Item
     [SerializeField]
@@ -341,6 +342,21 @@ public class CraftingManager : MonoBehaviour
         isCraft = false;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Box" || other.tag == "Player")
+        {
+            return;
+        }
+        
+        if(userItem != null && other.gameObject == data.item)
+        {
+            return;
+        }
+
+
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Box")
@@ -372,7 +388,6 @@ public class CraftingManager : MonoBehaviour
 
     PlayerData data;
     int pid = 5;
-    public GameObject userItem;
 
     //Rest user data
     private void UserDataReset()
