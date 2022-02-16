@@ -2333,25 +2333,6 @@ Transform:
   m_Father: {fileID: 1561313717}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &129219797 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1999163930331547814, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
-  m_PrefabInstance: {fileID: 1467478946}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &129219799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129219797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98785499fc8adbe4ea4a81f9facf59b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  animationControl: {fileID: 11400000, guid: dc3f0fe60cb95b749a7826ed2034f058, type: 2}
 --- !u!1001 &134682075
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7401,7 +7382,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 30
     m_Right: 0
-    m_Top: 18
+    m_Top: 25
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 50
@@ -20843,6 +20824,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2051638167244666724, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2051638167244666724, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -110
+      objectReference: {fileID: 0}
     - target: {fileID: 3877395875993127500, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -20927,7 +20916,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8994811488524114795, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
 --- !u!114 &1467478947 stripped
 MonoBehaviour:
