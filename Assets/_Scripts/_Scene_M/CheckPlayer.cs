@@ -230,7 +230,7 @@ public class CheckPlayer : MonoBehaviour
     }
     private void ChangeSelectTraingleColor()
     {
-        if(eventSystem01.currentSelectedGameObject != checkSelectButton01)
+        if (eventSystem01.currentSelectedGameObject != checkSelectButton01)
         {
             leftTraingle01.GetComponent<Image>().color = Color.black;
             rightTraingle01.GetComponent<Image>().color = Color.black;
@@ -451,6 +451,11 @@ public class CheckPlayer : MonoBehaviour
                 player04.GetComponent<AnimatorController>().animator.SetTrigger("Stop");
                 break;
         }
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
     #endregion
 

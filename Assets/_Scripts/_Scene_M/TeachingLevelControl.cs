@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class TeachingLevelControl : MonoBehaviour
@@ -40,11 +41,13 @@ public class TeachingLevelControl : MonoBehaviour
 
     [Header("ChangerUIText")]
     [SerializeField] LevelOneControl levelOneControl;
-    [SerializeField] GameObject canvas;
+    [SerializeField] GameObject tipsCanvas;
     [SerializeField] Text TargetText;
     [SerializeField] Text DialogueText;
     [SerializeField] Text ButtonTip;
-    [SerializeField] GameObject completeImage;
+    [SerializeField] GameObject completeImageUI;
+    [SerializeField] GameObject gameFailImageUI;
+    [SerializeField] GameObject eventStartCurrentButton;
     [SerializeField] Dialogue dialogue;
 
     [Header("Item States")]
@@ -83,15 +86,16 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] GameObject itemCircle;
     [SerializeField] GameObject rabbitCircle;
     [SerializeField] GameObject foxCircle;
-    [SerializeField] GameObject newCircle;
-    [SerializeField] GameObject oldCircle;
+    GameObject newCircle;
+    GameObject oldCircle;
 
     private void Start()
     {
         startTeaching = false;
         playerMovements = new List<PlayerMovement>();
         Init();
-        completeImage.SetActive(true);
+        completeImageUI.SetActive(false);
+        gameFailImageUI.SetActive(false);
     }
 
     private void Update()
@@ -256,14 +260,16 @@ public class TeachingLevelControl : MonoBehaviour
         else if (checkPoint10 && getStarTest.collectTargets >= 2)//try again 11;
         {
             process10 = true;
-            canvas.SetActive(false);
-            completeImage.SetActive(true);
+            tipsCanvas.SetActive(false);
+            completeImageUI.SetActive(true);
 
         }
 
         if (levelOneControl.GetGameTime() <= 0.1f)//Fail
         {
             processFail = true;
+            gameFailImageUI.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(eventStartCurrentButton);
             Debug.LogError("Level 01 Fail");
         }
     }
