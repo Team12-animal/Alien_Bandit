@@ -76,7 +76,7 @@ public class RabbitAI : MonoBehaviour
 
     private GameObject CheckEnemyInSight(ref bool bAttack)
     {
-        float currentDist = m_Data.m_fSight+1f;
+        float currentDist = m_Data.m_fSight + 1f;
         GameObject play = null;
         foreach (var v in players) //所有玩家和AI距離
         {
@@ -176,6 +176,7 @@ public class RabbitAI : MonoBehaviour
         //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
         if (m_eCurrentState == eFSMState.Idle)
         {
+            m_Am.SetInteger("State", 0);
             bool bAttack = false;
             m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);  //偵測範圍內有玩家
             if (m_CurrentEnemyTarget != null && m_CurrentEnemyTarget.tag == "Players")   //如果有玩家的話
@@ -219,14 +220,12 @@ public class RabbitAI : MonoBehaviour
         }
         else if (m_eCurrentState == eFSMState.Wander)
         {
-            // Check Dead.            
             bool bAttack = false;
             m_Data.agent.updateRotation = true;
             m_fIdleTime = Random.Range(2.0f, 3.0f);  //漫步停留時間為隨機2～3秒
             m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);
             if (m_CurrentEnemyTarget != null) //偵測範圍內有玩家
             {
-                Debug.LogError("Wander玩家入侵");
                 m_Data.m_TargetObject = m_CurrentEnemyTarget;
                 if (bAttack)  //在警戒範圍內
                 {
@@ -236,7 +235,6 @@ public class RabbitAI : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("漫步轉為逃跑");
                     m_eCurrentState = eFSMState.Chase;   //逃跑
                     m_Am.SetInteger("State", 3);
                     m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
@@ -259,7 +257,6 @@ public class RabbitAI : MonoBehaviour
                 m_fCurrentTime = 0.0f;
                 m_fIdleTime = Random.Range(2.0f, 3.0f);
                 m_Data.m_bMove = false;
-                m_Am.SetInteger("State", 0);
 
             }
             else
@@ -269,6 +266,7 @@ public class RabbitAI : MonoBehaviour
         }
         else if (m_eCurrentState == eFSMState.MoveToTarget)
         {
+
             m_Am.SetInteger("State", 3);
             m_Data.agent.SetDestination(m_Data.m_vTarget);
             Vector3 newPos = (m_Data.m_vTarget - transform.position);
@@ -286,11 +284,9 @@ public class RabbitAI : MonoBehaviour
 
             if (bCheck == false)
             {
-                Debug.LogError("不用逃跑了");
                 m_eCurrentState = eFSMState.Idle;
                 m_fCurrentTime = 0.0f;
                 m_fIdleTime = Random.Range(2.0f, 3.0f);
-                m_Am.SetInteger("State", 1);
                 return;
             }
             if (bAttack)

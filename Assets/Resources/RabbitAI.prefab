@@ -469,8 +469,8 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e1f61507af3734e4eb2f4bf1b1214c24, type: 3}
   m_Controller: {fileID: 9100000, guid: 76d68e565519ba14ba715c4d2a571648, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 1
+  m_CullingMode: 1
+  m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -498,7 +498,7 @@ MonoBehaviour:
     m_fMaxRot: 0.06
     m_Go: {fileID: 6605799889360882253}
     m_fSight: 8
-    m_fAttackRange: 2
+    m_fAttackRange: 3
     m_fAttackTime: 0
     m_TargetObject: {fileID: 0}
     m_vTarget: {x: 0, y: 0, z: 0}
