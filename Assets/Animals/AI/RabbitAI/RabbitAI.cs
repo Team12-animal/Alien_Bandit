@@ -32,7 +32,7 @@ public class RabbitAI : MonoBehaviour
         m_CurrentEnemyTarget = null;
         m_eCurrentState = eFSMState.Idle;
         m_fCurrentTime = 0.0f;
-        m_fIdleTime = Random.Range(3.0f, 5.0f);
+        m_fIdleTime = Random.Range(5.0f, 8.0f);
         m_iCurrentWanderPt = -1;
         m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");
         m_Am = GetComponent<Animator>();
@@ -138,14 +138,15 @@ public class RabbitAI : MonoBehaviour
         if (m_eCurrentState == eFSMState.Idle)
         {
             bool bAttack = false;
+            m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);
             if (m_CurrentEnemyTarget != null) //偵測範圍內有玩家
             {
-                Debug.LogError("玩家靠近");
+                Debug.LogError(m_CurrentEnemyTarget.gameObject+"玩家靠近");
                 m_Data.m_TargetObject = m_CurrentEnemyTarget;
                 if (bAttack)  //在警戒範圍內
                 {
                     m_Data.m_vTarget = CheckCloseHole().transform.position;
-                    m_Am.SetInteger("State", 2);
+                    m_Am.SetInteger("State", 3);
                     m_eCurrentState = eFSMState.MoveToTarget;
                 }
                 else
@@ -154,26 +155,30 @@ public class RabbitAI : MonoBehaviour
                     m_Am.SetInteger("State", 3);
                 }
                 return;
-            }
+            }  
+            
             // Wait to move.           
             if (m_fCurrentTime > m_fIdleTime)
             {
                 m_fCurrentTime = 0.0f;
                 m_fIdleTime = 0.5f;
-                m_Data.m_vTarget = RandomNavSphere(m_Data.m_vCurrentVector, m_Data.m_fSight, -1);
+                m_Data.m_vTarget = RandomNavSphere(transform.position, m_Data.m_fSight, -1);
                 m_eCurrentState = eFSMState.Wander;
                 m_Am.SetInteger("State", 1);
+                m_Data.m_bMove = true;
             }
             else
             {
                 m_fCurrentTime += Time.deltaTime;
+                m_Am.SetInteger("State", 0);
             }
         }
         else if (m_eCurrentState == eFSMState.Wander)
         {
-            // Check Dead.
-
+            // Check Dead.            
             bool bAttack = false;
+            m_Data.agent.updateRotation = true;
+            m_fIdleTime = Random.Range(2.0f, 3.0f);
             m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);
             if (m_CurrentEnemyTarget != null) //偵測範圍內有玩家
             {
@@ -181,7 +186,7 @@ public class RabbitAI : MonoBehaviour
                 if (bAttack)  //在警戒範圍內
                 {
                     m_Data.m_vTarget = CheckCloseHole().transform.position;
-                    m_Am.SetInteger("State", 2);
+                    m_Am.SetInteger("State", 3);
                     m_eCurrentState = eFSMState.MoveToTarget;
                 }
                 else
@@ -191,23 +196,39 @@ public class RabbitAI : MonoBehaviour
                 }
                 return;
             }
-
             m_Data.agent.SetDestination(m_Data.m_vTarget);
             Vector3 newPos = (m_Data.m_vTarget - transform.position);
             float dis = newPos.magnitude;
-
+            Debug.LogError("目標位置在" + newPos + "離目標位置還有"+dis);
             if (dis < 0.1f)
             {
-                m_Data.m_vTarget = RandomNavSphere(m_Data.m_vCurrentVector, m_Data.m_fSight, -1);
-                Debug.LogError("NewPoint");
-            }
-            if (m_Data.m_bMove == false)
-            {
+                m_Data.agent.updateRotation = false;
+                m_Data.agent.SetDestination(transform.position);
                 m_eCurrentState = eFSMState.Idle;
                 m_fCurrentTime = 0.0f;
-                m_fIdleTime = Random.Range(3.0f, 5.0f);
-                m_Am.SetInteger("State", 0);
+                m_fIdleTime = Random.Range(2.0f, 3.0f);
+                m_Data.m_bMove = false;
             }
+            else if (m_fCurrentTime > m_fIdleTime)
+            {
+                m_Data.agent.updateRotation = false;
+                m_Data.agent.SetDestination(transform.position);
+                m_eCurrentState = eFSMState.Idle;
+                m_fCurrentTime = 0.0f;
+                m_fIdleTime = Random.Range(2.0f, 3.0f);
+                m_Data.m_bMove = false;
+            }
+            else
+            {
+                m_fCurrentTime += Time.deltaTime;
+            }
+            //if (m_Data.m_bMove == false)
+            //{
+            //    m_eCurrentState = eFSMState.Idle;
+            //    m_fCurrentTime = 0.0f;
+            //    m_fIdleTime = Random.Range(3.0f, 5.0f);
+            //    m_Am.SetInteger("State", 0);
+            //}
         }
         else if (m_eCurrentState == eFSMState.MoveToTarget)
         {
@@ -226,8 +247,10 @@ public class RabbitAI : MonoBehaviour
 
             bool bAttack = false;
             bool bCheck = CheckTargetEnemyInSight(m_CurrentEnemyTarget, ref bAttack);
+
             if (bCheck == false)
             {
+                Debug.LogError("不用逃跑了");
                 m_eCurrentState = eFSMState.Idle;
                 m_fCurrentTime = 0.0f;
                 m_fIdleTime = Random.Range(3.0f, 5.0f);
@@ -237,19 +260,19 @@ public class RabbitAI : MonoBehaviour
             if (bAttack)
             {
                 m_Data.m_vTarget = CheckCloseHole().transform.position;
-                m_Am.SetInteger("State", 2);
+                m_Am.SetInteger("State", 3);
                 m_eCurrentState = eFSMState.MoveToTarget;
             }
             else
             {
+                Debug.LogError("還在視線範圍內");
                 m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
                 if (SteeringBehavior.CollisionAvoid(m_Data) == false)
                 {
                     SteeringBehavior.Flee(m_Data);
                 }
-
                 SteeringBehavior.Move(m_Data);
-                m_Am.SetInteger("State",2);
+                m_Am.SetInteger("State",3);
             }
 
         }
@@ -307,7 +330,9 @@ public class RabbitAI : MonoBehaviour
 
     public Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
-        Vector3 randDirection = Random.insideUnitSphere * dist;
+
+
+        Vector3 randDirection = Random.insideUnitCircle * dist;
 
         randDirection += origin;
 
@@ -315,6 +340,8 @@ public class RabbitAI : MonoBehaviour
 
         NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
 
+
+        Debug.LogError("新的目標點"+navHit.position);
         return navHit.position;
     }
 
