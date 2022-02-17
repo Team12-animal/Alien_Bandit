@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ChangeRoleSkin : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class ChangeRoleSkin : MonoBehaviour
 
     public void ChangeSkin(string buttonName)
     {
-        if (Input.GetAxisRaw(buttonName) != 0)
+        if (Input.GetButtonDown(buttonName) || Input.GetKeyDown(KeyCode.Joystick1Button8))
         {
             roleSkins[currentSkin].SetActive(false);
             if (currentSkin < roleSkins.Length - 1)
