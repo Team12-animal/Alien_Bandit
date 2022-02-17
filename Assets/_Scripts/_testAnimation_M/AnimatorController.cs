@@ -129,17 +129,11 @@ public class AnimatorController : MonoBehaviour
     /// <param name="vertical"></param>
     public void ChangeAnimationState(string newState, float horizontal, float vertical)
     {
-        if (newState == Player_Run || newState == Player_HoldRockWalk || newState == Player_HoldWoodWalk || newState == Player_HoldChopWalk)
+        if (newState == Player_Run || newState == Player_HoldRockWalk || newState == Player_HoldWoodWalk || newState == Player_HoldChopWalk || newState == Player_SpeedRun)
         {
             Debug.Log("anima set float");
             animator.SetFloat(animHorizontalHash, horizontal);
             animator.SetFloat(animVerticalHash, vertical);
-        }
-
-        if (newState == Player_SpeedRun)
-        {
-            animator.SetFloat(animHorizontalHash, 0.0f);
-            animator.SetFloat(animVerticalHash, 0.0f);
         }
 
         Debug.Log("Move2" + newState + horizontal + "/" + vertical);

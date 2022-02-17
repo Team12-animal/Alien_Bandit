@@ -200,7 +200,10 @@ public class InputController : MonoBehaviour
 
             if (allowSpeedRun)
             {
+
                 remainDashTime = pm.Dash(remainDashTime);
+                aniClip = "SpeedRun";
+                anim.ChangeAnimationState(aniClip, 0, 0);
             }
             else
             {
