@@ -12,13 +12,13 @@ public class RabbitAIData
     public float m_fMaxSpeed;  //最大移動速度
     public float m_fRot;  //旋轉速度
     public float m_fMaxRot;  //最大旋轉速度
-    public GameObject m_Go ;  //Self
+    public GameObject m_Go;  //Self
 
 
     public float m_fSight;  //視野距離
     public float m_fAttackRange;  //攻擊距離
 
-    [HideInInspector]
+
     public float m_fAttackTime;  //攻擊時間
 
     [HideInInspector]
@@ -44,6 +44,8 @@ public class RabbitAIData
     public BT.cBTSystem m_BTSystem;
 
     public NavMeshAgent agent;
+
+    public bool iscatched;
 }
 
 

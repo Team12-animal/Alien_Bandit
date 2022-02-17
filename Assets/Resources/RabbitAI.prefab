@@ -434,9 +434,10 @@ GameObject:
   - component: {fileID: 6556239047322022373}
   - component: {fileID: 6605799889360882252}
   - component: {fileID: 7899327696254469028}
+  - component: {fileID: 8191868684259807697}
   m_Layer: 0
   m_Name: RabbitAI
-  m_TagString: Animal
+  m_TagString: Rabbit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -490,17 +491,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Data:
-    m_fRadius: 5
+    m_fRadius: 1
     m_fProbeLength: 5
-    m_Speed: 0.05
-    m_fMaxSpeed: 0.06
-    m_fRot: 0.05
-    m_fMaxRot: 0.06
+    m_Speed: 0
+    m_fMaxSpeed: 0.03
+    m_fRot: 0.1
+    m_fMaxRot: 0.2
     m_Go: {fileID: 6605799889360882253}
-    m_fSight: 8
-    m_fAttackRange: 3
-    m_fAttackTime: 0
-    m_TargetObject: {fileID: 0}
+    m_fSight: 5
+    m_fAttackRange: 2.5
+    m_fAttackTime: 1
+    m_TargetObject: {fileID: 3964796615413391712, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
     m_vTarget: {x: 0, y: 0, z: 0}
     m_vCurrentVector: {x: 0, y: 0, z: 0}
     m_fTempTurnForce: 0
@@ -508,6 +509,7 @@ MonoBehaviour:
     m_bMove: 0
     m_bCol: 0
     agent: {fileID: 7899327696254469028}
+    iscatched: 0
 --- !u!195 &7899327696254469028
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -530,6 +532,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!135 &8191868684259807697
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6605799889360882253}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6605844830539169729
 GameObject:
   m_ObjectHideFlags: 0
