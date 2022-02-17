@@ -55,8 +55,7 @@ public class AnimatorController : MonoBehaviour
     private void Start()
     {
         pid = this.GetComponent<PlayerData>().pid;
-        hammer = GameObject.Find("Hammer");
-        hammerOriPos = hammer.transform.position;
+       
     }
 
     private void Update()
@@ -239,6 +238,12 @@ public class AnimatorController : MonoBehaviour
     Vector3 hammerOriPos;
     public void AnimaEventHammerInhandToggle()
     {
+        if(hammer == null)
+        {
+            hammer = GameObject.Find("Hammer");
+            hammerOriPos = hammer.transform.position;
+        }
+       
         Debug.Log("hammerInhand");
         if(hammer != null && hand != null)
         {

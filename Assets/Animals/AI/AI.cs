@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AI : MonoBehaviour {
-    public AIData m_Data;
+    public RabbitAIData m_Data;
     FSMSystem m_FSM;
     // Use this for initialization
     void Start () {

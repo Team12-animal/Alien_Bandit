@@ -4,7 +4,8 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class AIData  {
+public class AIData  
+{
     public float m_fRadius;
     public float m_fProbeLength;   
     public float m_Speed;
@@ -20,6 +21,7 @@ public class AIData  {
     [HideInInspector]
     public float m_fAttackTime;
     public float m_fHp;
+
     [HideInInspector]
     public GameObject m_TargetObject;
 

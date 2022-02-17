@@ -6,16 +6,14 @@ using UnityEngine;
 
 public class FSMSystem
 {
-
-
     private List<FSMState> m_states;
     private Dictionary<eFSMTransition, FSMState> m_GlobalMap;
     private eFSMStateID m_currentStateID;
     public eFSMStateID CurrentStateID { get { return m_currentStateID; } }
     private FSMState m_currentState;
     public FSMState CurrentState { get { return m_currentState; } }
-    private AIData m_Data;
-    public FSMSystem(AIData data)
+    private RabbitAIData m_Data;
+    public FSMSystem(RabbitAIData data)
     {
         m_Data = data;
         m_states = new List<FSMState>();
