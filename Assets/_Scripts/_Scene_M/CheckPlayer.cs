@@ -46,6 +46,8 @@ public class CheckPlayer : MonoBehaviour
     [SerializeField] GameObject rightTraingle03;
     [SerializeField] GameObject leftTraingle04;
     [SerializeField] GameObject rightTraingle04;
+    Color normalColor = Color.white;
+    Color pressedColor = new Color(0.6f, 0.6f, 0.6f, 1.0f);
 
     [Header("Confirm Skin")]
     [SerializeField] List<RawImage> rawImages;
@@ -77,6 +79,7 @@ public class CheckPlayer : MonoBehaviour
     string menuDance02 = "CharacterControllerTest_Male_MainMenu02";
     string menuDance03 = "CharacterControllerTest_Male_MainMenu03";
     string menuDance04 = "CharacterControllerTest_Male_MainMenu04";
+    string withItemAnimator = "CharacterControllerTest_Male_withItem";
 
 
     private void Awake()
@@ -149,19 +152,19 @@ public class CheckPlayer : MonoBehaviour
             float horizontal = Input.GetAxisRaw("Horizontal1");
             if (horizontal < 0)
             {
-                leftTraingle01.GetComponent<Image>().color = Color.red;
+                leftTraingle01.GetComponent<Image>().color = pressedColor;
             }
             else if (horizontal > 0)
             {
-                leftTraingle01.GetComponent<Image>().color = Color.black;
+                leftTraingle01.GetComponent<Image>().color = normalColor;
             }
             if (horizontal > 0)
             {
-                rightTraingle01.GetComponent<Image>().color = Color.red;
+                rightTraingle01.GetComponent<Image>().color = pressedColor;
             }
             else if (horizontal < 0)
             {
-                rightTraingle01.GetComponent<Image>().color = Color.black;
+                rightTraingle01.GetComponent<Image>().color = normalColor;
             }
         }
         if (outerFrameP2.activeInHierarchy && Input.GetButtonDown("Horizontal2") && confirm02 && eventSystem02.currentSelectedGameObject == checkSelectButton02)//Change player02 skin
@@ -170,19 +173,19 @@ public class CheckPlayer : MonoBehaviour
             float horizontal = Input.GetAxisRaw("Horizontal2");
             if (horizontal < 0)
             {
-                leftTraingle02.GetComponent<Image>().color = Color.red;
+                leftTraingle02.GetComponent<Image>().color = pressedColor;
             }
             else if (horizontal > 0)
             {
-                leftTraingle02.GetComponent<Image>().color = Color.black;
+                leftTraingle02.GetComponent<Image>().color = normalColor;
             }
             if (horizontal > 0)
             {
-                rightTraingle02.GetComponent<Image>().color = Color.red;
+                rightTraingle02.GetComponent<Image>().color = pressedColor;
             }
             else if (horizontal < 0)
             {
-                rightTraingle02.GetComponent<Image>().color = Color.black;
+                rightTraingle02.GetComponent<Image>().color = normalColor;
             }
         }
         if (outerFrameP3.activeInHierarchy && Input.GetButtonDown("Horizontal3") && confirm03 && eventSystem03.currentSelectedGameObject == checkSelectButton03)//Change player03 skin
@@ -191,19 +194,19 @@ public class CheckPlayer : MonoBehaviour
             float horizontal = Input.GetAxisRaw("Horizontal3");
             if (horizontal < 0)
             {
-                leftTraingle03.GetComponent<Image>().color = Color.red;
+                leftTraingle03.GetComponent<Image>().color = pressedColor;
             }
             else if (horizontal > 0)
             {
-                leftTraingle03.GetComponent<Image>().color = Color.black;
+                leftTraingle03.GetComponent<Image>().color = normalColor;
             }
             if (horizontal > 0)
             {
-                rightTraingle03.GetComponent<Image>().color = Color.red;
+                rightTraingle03.GetComponent<Image>().color = pressedColor;
             }
             else if (horizontal < 0)
             {
-                rightTraingle03.GetComponent<Image>().color = Color.black;
+                rightTraingle03.GetComponent<Image>().color = normalColor;
             }
         }
         if (outerFrameP4.activeInHierarchy && Input.GetButtonDown("Horizontal4") && confirm04 && eventSystem04.currentSelectedGameObject == checkSelectButton04)//Change player04 skin
@@ -212,19 +215,19 @@ public class CheckPlayer : MonoBehaviour
             float horizontal = Input.GetAxisRaw("Horizontal4");
             if (horizontal < 0)
             {
-                leftTraingle04.GetComponent<Image>().color = Color.red;
+                leftTraingle04.GetComponent<Image>().color = pressedColor;
             }
             else if (horizontal > 0)
             {
-                leftTraingle04.GetComponent<Image>().color = Color.black;
+                leftTraingle04.GetComponent<Image>().color = normalColor;
             }
             if (horizontal > 0)
             {
-                rightTraingle04.GetComponent<Image>().color = Color.red;
+                rightTraingle04.GetComponent<Image>().color = pressedColor;
             }
             else if (horizontal < 0)
             {
-                rightTraingle04.GetComponent<Image>().color = Color.black;
+                rightTraingle04.GetComponent<Image>().color = normalColor;
             }
         }
     }
@@ -232,23 +235,23 @@ public class CheckPlayer : MonoBehaviour
     {
         if (eventSystem01.currentSelectedGameObject != checkSelectButton01)
         {
-            leftTraingle01.GetComponent<Image>().color = Color.black;
-            rightTraingle01.GetComponent<Image>().color = Color.black;
+            leftTraingle01.GetComponent<Image>().color = normalColor;
+            rightTraingle01.GetComponent<Image>().color = normalColor;
         }
         if (eventSystem02.currentSelectedGameObject != checkSelectButton02)
         {
-            leftTraingle02.GetComponent<Image>().color = Color.black;
-            rightTraingle02.GetComponent<Image>().color = Color.black;
+            leftTraingle02.GetComponent<Image>().color = normalColor;
+            rightTraingle02.GetComponent<Image>().color = normalColor;
         }
         if (eventSystem03.currentSelectedGameObject != checkSelectButton03)
         {
-            leftTraingle03.GetComponent<Image>().color = Color.black;
-            rightTraingle03.GetComponent<Image>().color = Color.black;
+            leftTraingle03.GetComponent<Image>().color = normalColor;
+            rightTraingle03.GetComponent<Image>().color = normalColor;
         }
         if (eventSystem04.currentSelectedGameObject != checkSelectButton04)
         {
-            leftTraingle04.GetComponent<Image>().color = Color.black;
-            rightTraingle04.GetComponent<Image>().color = Color.black;
+            leftTraingle04.GetComponent<Image>().color = normalColor;
+            rightTraingle04.GetComponent<Image>().color = normalColor;
         }
     }
     #endregion
@@ -326,14 +329,20 @@ public class CheckPlayer : MonoBehaviour
         else if (confirmBool == confirmName02)
         {
             confirm02 = false;
+            checkSelectButton02.SetActive(false);
+            ChangePlayerAnimator(player02,withItemAnimator);
         }
         else if (confirmBool == confirmName03)
         {
             confirm03 = false;
+            checkSelectButton03.SetActive(false);
+            ChangePlayerAnimator(player03, withItemAnimator);
         }
         else if (confirmBool == confirmName04)
         {
             confirm04 = false;
+            checkSelectButton04.SetActive(false);
+            ChangePlayerAnimator(player04, withItemAnimator);
         }
     }
 
@@ -404,32 +413,32 @@ public class CheckPlayer : MonoBehaviour
         switch (playerID)
         {
             case 1:
-                AnimatorController anim01 = player01.GetComponent<AnimatorController>();
-                anim01.animator = player01.GetComponent<Animator>();
-                anim01.Init();
-                anim01.animator.runtimeAnimatorController = Resources.Load(menuDance01) as RuntimeAnimatorController;
-                player01.GetComponent<AnimatorController>().animator.Play("Dance");
+                if (confirm01)
+                {
+                    ChangePlayerAnimator(player01, menuDance01);
+                    player01.GetComponent<AnimatorController>().animator.Play("Dance");
+                }
                 break;
             case 2:
-                AnimatorController anim02 = player02.GetComponent<AnimatorController>();
-                anim02.animator = player02.GetComponent<Animator>();
-                anim02.Init();
-                anim02.animator.runtimeAnimatorController = Resources.Load(menuDance02) as RuntimeAnimatorController;
-                player02.GetComponent<AnimatorController>().animator.Play("Dance");
+                if (confirm02)
+                {
+                    ChangePlayerAnimator(player02, menuDance02);
+                    player02.GetComponent<AnimatorController>().animator.Play("Dance");
+                }
                 break;
             case 3:
-                AnimatorController anim03 = player03.GetComponent<AnimatorController>();
-                anim03.animator = player03.GetComponent<Animator>();
-                anim03.Init();
-                anim03.animator.runtimeAnimatorController = Resources.Load(menuDance03) as RuntimeAnimatorController;
-                player03.GetComponent<AnimatorController>().animator.Play("Dance");
+                if (confirm03)
+                {
+                    ChangePlayerAnimator(player03, menuDance03);
+                    player03.GetComponent<AnimatorController>().animator.Play("Dance");
+                }
                 break;
             case 4:
-                AnimatorController anim04 = player04.GetComponent<AnimatorController>();
-                anim04.animator = player04.GetComponent<Animator>();
-                anim04.Init();
-                anim04.animator.runtimeAnimatorController = Resources.Load(menuDance04) as RuntimeAnimatorController;
-                player04.GetComponent<AnimatorController>().animator.Play("Dance");
+                if (confirm04)
+                {
+                    ChangePlayerAnimator(player04, menuDance04);
+                    player04.GetComponent<AnimatorController>().animator.Play("Dance");
+                }
                 break;
         }
     }
@@ -504,4 +513,12 @@ public class CheckPlayer : MonoBehaviour
         }
     }
     #endregion
+
+    private void ChangePlayerAnimator(GameObject player, string animatorName)
+    {
+        AnimatorController anim02 = player.GetComponent<AnimatorController>();
+        anim02.animator = player.GetComponent<Animator>();
+        anim02.Init();
+        anim02.animator.runtimeAnimatorController = Resources.Load(animatorName) as RuntimeAnimatorController;
+    }
 }
