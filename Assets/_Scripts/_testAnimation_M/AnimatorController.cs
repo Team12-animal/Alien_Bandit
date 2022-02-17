@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AnimatorController : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject hand;
+
     [HideInInspector]
     public Animator animator;
     float horizotalInput;
@@ -12,7 +15,6 @@ public class AnimatorController : MonoBehaviour
     int pid;
 
     //crafting 
-    Transform hand;
     GameObject hammer;
 
     [Header("�վ�ʵe����ɶ�")]
@@ -53,7 +55,6 @@ public class AnimatorController : MonoBehaviour
     private void Start()
     {
         pid = this.GetComponent<PlayerData>().pid;
-        hand = this.transform.Find("Hand_R");
         hammer = GameObject.Find("Hammer");
         hammerOriPos = hammer.transform.position;
     }
@@ -238,12 +239,13 @@ public class AnimatorController : MonoBehaviour
     Vector3 hammerOriPos;
     public void AnimaEventHammerInhandToggle()
     {
+        Debug.Log("hammerInhand");
         if(hammer != null && hand != null)
         {
             if(holdingHammer == false)
             {
                 hammer.transform.position = hand.transform.position;
-                hammer.transform.parent = hand;
+                hammer.transform.parent = hand.transform;
                 holdingHammer = true;
             }
             else

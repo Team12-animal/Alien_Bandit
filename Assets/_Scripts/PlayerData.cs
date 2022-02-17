@@ -20,7 +20,6 @@ public class PlayerData : MonoBehaviour
     public GameObject item;
     public int catchedAmt;
     public GameObject tree;
-
     public bool inTree;
 
     private void Awake()

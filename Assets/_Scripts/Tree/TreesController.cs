@@ -44,18 +44,40 @@ public class TreesController : MonoBehaviour
                 {
                     if (trees[j].activeSelf == false)
                     {
+                        RemoveStump(trees[j]);
                         trees[j].SetActive(true);
                         break;
                     }
                 }
             }
 
-            yield return new WaitForSecondsRealtime(10);
+            yield return new WaitForSecondsRealtime(20);
         }
     }
 
     private int checkTreeAmt()
     {
         return GameObject.FindGameObjectsWithTag("Tree").Length;
+    }
+
+    private void RemoveStump(GameObject tree)
+    {
+        Debug.Log("remove stump");
+
+        Vector3 from = tree.transform.position;
+        from.y += 10.0f;
+        Vector3 dir = -tree.transform.up;
+
+        RaycastHit hit;
+        if(Physics.Raycast(from, dir, out hit, Mathf.Infinity))
+        {
+            Debug.Log("stump delet" + hit.collider.gameObject.name);
+            if (hit.collider.gameObject.tag == "Stump")
+            {
+                hit.collider.gameObject.SetActive(false);
+                GameObject.Destroy(hit.collider.gameObject);
+                
+            }
+        }
     }
 }

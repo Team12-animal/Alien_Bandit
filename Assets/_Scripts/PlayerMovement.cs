@@ -444,17 +444,13 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 temp = spawnPos + (-spawnDir) * 4.0f;
                 temp.x += 1.0f;
                 log.transform.position = temp;
-
-                Debug.Log("SpawnStump success");
             }
 
             hitTime = 0;
             data.tree = null;
             data.inTree = false;
         }
-
-        Debug.Log("SpawnStump" + hitTime);
-    }
+   }
 
 
     ////holding bucket > ctrl press1: get water; press2: pourwater; press3: drop
