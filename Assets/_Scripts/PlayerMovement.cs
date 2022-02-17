@@ -41,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
     //use working table
     public GameObject workingTable;
     private CraftingManager tableCM;
+    private GameObject wtLeft;
+    private GameObject wtRight;
+    public bool usingTable = false;
 
     void Start()
     {
@@ -65,6 +68,8 @@ public class PlayerMovement : MonoBehaviour
         {
             workingTable = GameObject.Find("BenchTable");
             tableCM = workingTable.GetComponent<CraftingManager>();
+            wtLeft = tableCM.slotimage[0];
+            wtRight = tableCM.slotimage[1];
         }
     }
 
@@ -112,21 +117,15 @@ public class PlayerMovement : MonoBehaviour
         //?????H???I?????????D
         Vector3 from = this.transform.position;
         from.y += 0.5f;
-        //Vector3 to = from + moveAmt;
-        //to.z += 0.38f;
 
         Vector3 to = from + this.transform.forward * 2.0f;
         to.z += 0.38f;
 
         Debug.DrawLine(from, to, Color.black);
 
-        RaycastHit hit;
-        if (Physics.Linecast(from, to, out hit, 1 << 8))
+        if (Physics.Linecast(from, to, 1 << 8 | 1 << 15))
         {
-            //moveAmt = hit.point - from;
             moveAmt = new Vector3(0, 0, 0);
-            //moveAmt.y += 0.5f;
-            //moveAmt.z -= 0.5f;
         }
 
         //?????H??????????
@@ -228,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawLine(from, to, Color.black);
 
         RaycastHit hit;
-        if (Physics.Linecast(from, to, out hit, 1 << 8))
+        if (Physics.Linecast(from, to, out hit, 1 << 8 | 1 << 15))
         {
             moveAmt = hit.point - from;
             moveAmt.y += 0.5f;
@@ -280,6 +279,10 @@ public class PlayerMovement : MonoBehaviour
         else if (other.tag == "Wood" || other.tag == "Chop" || other.tag == "Bucket" || other.tag == "Box" || other.tag == "WorkingTable" || other.tag == "Rope")
         {
             triggerItem = other.gameObject;
+        }
+        else if (other.tag == "Tree")
+        {
+            return;
         }
     }
 
@@ -441,17 +444,13 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 temp = spawnPos + (-spawnDir) * 4.0f;
                 temp.x += 1.0f;
                 log.transform.position = temp;
-
-                Debug.Log("SpawnStump success");
             }
 
             hitTime = 0;
             data.tree = null;
             data.inTree = false;
         }
-
-        Debug.Log("SpawnStump" + hitTime);
-    }
+   }
 
 
     ////holding bucket > ctrl press1: get water; press2: pourwater; press3: drop
@@ -503,6 +502,12 @@ public class PlayerMovement : MonoBehaviour
 
     public string Drop()
     {
+        if(usingTable)
+        {
+            FindWorkTable();
+            FaceTarget(workingTable);
+        }
+
         string aniClip = "none";
         aniClip = GetDropAniName(itemInhand.tag);
         targetItem = null;
@@ -563,13 +568,14 @@ public class PlayerMovement : MonoBehaviour
         return aniName;
     }
 
+    bool readyToUseBench = false;
     public string UseBench()
     {
-        FindWorkTable();
-
-        if(targetItem != null && targetItem.tag == "WorkingTable")
+        if(usingTable && triggerItem != null && tableCM.isCraft == true)
         {
-            tableCM.CraftingItem();
+            FindWorkTable();
+            FaceTarget(workingTable);
+            readyToUseBench = true;
             return "UsingTable";
         }
         else
@@ -578,9 +584,31 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //pospond box appear time after animation ended
+    private void AnimaEventCraftingItem()
+    {
+        if (readyToUseBench)
+        {
+            tableCM.CraftingItem();
+            readyToUseBench = false;
+        }
+    }
+
     //look at targetItem
     private void FaceTarget(GameObject target)
     {
+        if(usingTable)
+        {
+            if (tableCM.isLeft == true)
+            {
+                target = wtLeft;
+            }
+            else
+            {
+                target = wtRight;
+            }
+        }
+
         Vector3 temp;
         Vector3 dirToItem = target.transform.position - this.transform.position;
         dirToItem.y = this.transform.position.y;
@@ -605,7 +633,7 @@ public class PlayerMovement : MonoBehaviour
     //set item to HoldingPos
     private void HoldItem(GameObject targetItem)
     {
-        if (targetItem == null || targetItem.tag == "WorkingTable" || targetItem.tag == "Tree")
+        if (targetItem == null || triggerItem.tag == "WorkingTable" || triggerItem.tag == "Tree")
         {
             return;
         }
@@ -625,6 +653,11 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
         targetRG.isKinematic = true;
         itemInhand = targetItem;
+
+        if (itemInhand.tag == "RockModel")
+        {
+            itemInhand.GetComponent<RockMovement>().beUsing = true;
+        }
     }
      
     private void RemoveItem()
@@ -645,6 +678,11 @@ public class PlayerMovement : MonoBehaviour
         if(itemInhand.tag == "Box")
         {
             itemInhand.GetComponent<BoxController>().beUsing = false;
+        }
+
+        if (itemInhand.tag == "RockModel")
+        {
+            itemInhand.GetComponent<RockMovement>().beUsing = false;
         }
 
         itemInhand = null;
@@ -691,9 +729,23 @@ public class PlayerMovement : MonoBehaviour
             itemInhand.GetComponent<BoxController>().beUsing = false;
         }
 
+        if (itemInhand.tag == "RockModel")
+        {
+            itemInhand.GetComponent<RockMovement>().beUsing = false;
+        }
+
         itemInhand = null;
         UpdatePlayerData();
 
         Debug.Log("ThrowAway" + force);
+    }
+
+    //inactive item while put it on table
+    private void AnimaEventItemInActivator()
+    {
+        if (usingTable)
+        {
+            itemInhand.SetActive(false);
+        }
     }
 }
