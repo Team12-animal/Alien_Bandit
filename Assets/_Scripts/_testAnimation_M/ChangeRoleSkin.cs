@@ -10,12 +10,12 @@ public class ChangeRoleSkin : MonoBehaviour
 
     void Update()
     {
-        ChangeSkin();
+        //ChangeSkin();
     }
 
-    public void ChangeSkin()
+    public void ChangeSkin(string buttonName)
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown(buttonName))
         {
             roleSkins[currentSkin].SetActive(false);
             if(currentSkin < roleSkins.Length-1)
