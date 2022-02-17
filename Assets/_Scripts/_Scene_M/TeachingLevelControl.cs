@@ -117,6 +117,10 @@ public class TeachingLevelControl : MonoBehaviour
 
     public GameObject SettingFollowTarget()
     {
+        if(tempTarget == winDoor[0])
+        {
+            return null;
+        }
         return tempTarget;
     }
 
@@ -251,25 +255,27 @@ public class TeachingLevelControl : MonoBehaviour
             process07 = true;
             DialogueProcess(8);
             ChangeFocusItemCircle(doorOpeners[0], rabbitCircle);
+            tempTarget = doorOpeners[0];
         }
         else if (checkPoint08 && buttonSensor.GetPressedBool())//touch switch to open door 09;
         {
             process08 = true;
             DialogueProcess(9);
             ChangeFocusItemCircle(winDoor[0], rabbitCircle);
+            tempTarget = winDoor[0];
         }
         else if (checkPoint09 && getStarTest.collectTargets >= 1)//throw box in to the door 10;
         {
             process09 = true;
             DialogueProcess(10);
             Destroy(oldCircle);
+            Destroy(newCircle);
         }
         else if (checkPoint10 && getStarTest.collectTargets >= 2)//try again 11;
         {
             process10 = true;
             tipsCanvas.SetActive(false);
             completeImageUI.SetActive(true);
-
         }
 
         if (levelOneControl.GetGameTime() <= 0.1f)//Fail

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CircleFollowTarget : MonoBehaviour
 {
-    GameObject followTarget;
+    [SerializeField]GameObject followTarget;
     TeachingLevelControl teachingLevel;
     Vector3 offsetPosition = new Vector3(0f, 3f, -3f);
 
@@ -18,7 +18,8 @@ public class CircleFollowTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = followTarget.transform.position + offsetPosition;
+        if (followTarget != null)
+            transform.position = followTarget.transform.position + offsetPosition;
     }
 
 }
