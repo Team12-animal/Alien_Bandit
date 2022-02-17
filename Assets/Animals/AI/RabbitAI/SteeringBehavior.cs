@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class SteeringBehavior
 {
-    static public void aaa(float a)
-    {
-        a = 1.0f;
-    }
-    static public void Move(AIData data)
+    static public void Move(RabbitAIData data)
     {
         if (data.m_bMove == false)
         {
@@ -73,9 +69,10 @@ public class SteeringBehavior
         t.position = cPos;
     }
 
-    static public bool CheckCollision(AIData data)
+    static public bool CheckCollision(RabbitAIData data)
     {
-        List<Obstacle> m_AvoidTargets = Main.m_Instance.GetObstacles();
+        List<GameObject> m_AvoidTargetsGm = AIMain.m_Instance.GetObstaclesgm();
+        List<Obstacle> m_AvoidTargets = AIMain.m_Instance.GetObstacles();
         if(m_AvoidTargets == null)
         {
             return false;
@@ -90,7 +87,7 @@ public class SteeringBehavior
         int iCount = m_AvoidTargets.Count;
         for (int i = 0; i < iCount; i++)
         {
-            vec = m_AvoidTargets[i].transform.position - cPos;
+            vec = m_AvoidTargetsGm[i].transform.position - cPos;
             vec.y = 0.0f;
             fDist = vec.magnitude;
             if (fDist > data.m_fProbeLength + m_AvoidTargets[i].m_fRadius)
@@ -122,9 +119,9 @@ public class SteeringBehavior
     }
 
 
-    static public bool CollisionAvoid(AIData data)
+    static public bool CollisionAvoid(RabbitAIData data)
     {
-        List<Obstacle> m_AvoidTargets = Main.m_Instance.GetObstacles();
+        List<Obstacle> m_AvoidTargets = AIMain.m_Instance.GetObstacles();
         Transform ct = data.m_Go.transform;
         Vector3 cPos = ct.position;
         Vector3 cForward = ct.forward;
@@ -208,20 +205,19 @@ public class SteeringBehavior
         return false;
     }
 
-    static public bool Flee(AIData data)
+    static public bool Flee(RabbitAIData data)
     {
-        Vector3 cPos = data.m_Go.transform.position;
-        Vector3 vec = data.m_vTarget - cPos;
+        Vector3 cPos = data.m_Go.transform.position;  //AI目前位置
+        Vector3 vec = data.m_vTarget - cPos;  //下一個要到的位置
         vec.y = 0.0f;
-        float fDist = vec.magnitude;
+        float fDist = vec.magnitude;  //下一個要到的位置長度
         data.m_fTempTurnForce = 0.0f;
         if (data.m_fProbeLength < fDist)
         {
             if(data.m_Speed > 0.01f)
             {
                 data.m_fMoveForce = -1.0f;
-            } 
-            
+            }            
             data.m_bMove = true;
             return false;
         }
@@ -235,7 +231,7 @@ public class SteeringBehavior
         {
             fDotF = -1.0f;
             data.m_vCurrentVector = -vec;
-            //  data.m_Go.transform.forward = -vec;
+            //data.m_Go.transform.forward = -vec;
             data.m_fTempTurnForce = 0.0f;
             data.m_fRot = 0.0f;
         }
@@ -249,7 +245,6 @@ public class SteeringBehavior
 
             if (fDotF > 0.0f)
             {
-
                 if (fDotR > 0.0f)
                 {
                     fDotR = 1.0f;
@@ -258,14 +253,11 @@ public class SteeringBehavior
                 {
                     fDotR = -1.0f;
                 }
-
             }
             Debug.Log(fDotR);
             data.m_fTempTurnForce = -fDotR;
 
-            // data.m_fTempTurnForce *= 0.1f;
-
-
+           // data.m_fTempTurnForce *= 0.1f;
         }
 
         data.m_fMoveForce = -fDotF;
@@ -273,7 +265,7 @@ public class SteeringBehavior
         return true;
     }
 
-    static public bool Seek(AIData data)
+    static public bool Seek(RabbitAIData data)
     {
         Vector3 cPos = data.m_Go.transform.position;
         Vector3 vec = data.m_vTarget - cPos;
@@ -343,10 +335,7 @@ public class SteeringBehavior
         } else
         {
             data.m_fMoveForce = 100.0f;
-        }
-
-
-       
+        }      
         data.m_bMove = true;
         return true;
     }

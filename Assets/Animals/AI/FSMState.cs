@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum eFSMTransition
 {
     NullTransition = 0,
-    Go_Idle,
-    Go_MoveTo,
-    Go_Chase,
-    Go_Attack,
-    Go_Dead,
+    Go_Idle,  //待命
+    Go_Wander,  //漫步
+    Go_Chase,  //被吸引
+    Go_Attack,  //攻擊
+    Go_Dead,  //死亡
+    Go_Runaway,  //逃跑
+   Go_MoveTo, //移動到
 }
 
 
@@ -17,16 +20,19 @@ public enum eFSMStateID
 {
     NullStateID = 0,
     IdleStateID,
-    MoveToStateID,
+    WanderStateID,
     ChaseStateID,
     AttackStateID,
     DeadStateID,
+    RunawayStateID,
+    MoveToStateID,
 }
 
-public class FSMState {
-    public eFSMStateID m_StateID;
-    public Dictionary<eFSMTransition, FSMState> m_Map;
-    public float m_fCurrentTime;
+public class FSMState
+{
+    public eFSMStateID m_StateID;  //目前狀態
+    public Dictionary<eFSMTransition, FSMState> m_Map;  
+    public float m_fCurrentTime;  
 
     public FSMState()
     {
@@ -34,7 +40,12 @@ public class FSMState {
         m_fCurrentTime = 0.0f;
         m_Map = new Dictionary<eFSMTransition, FSMState>();
     }
-
+    
+    /// <summary>
+    /// 狀態流向
+    /// </summary>
+    /// <param name="trans"></param>
+    /// <param name="toState"></param>
     public void AddTransition(eFSMTransition trans, FSMState toState)
     {
         if(m_Map.ContainsKey(trans))
@@ -52,7 +63,11 @@ public class FSMState {
         }
 
     }
-
+    /// <summary>
+    /// 要做的下個狀態
+    /// </summary>
+    /// <param name="trans"></param>
+    /// <returns></returns>
     public FSMState TransitionTo(eFSMTransition trans)
     {
         if (m_Map.ContainsKey(trans) == false)
@@ -62,22 +77,22 @@ public class FSMState {
         return m_Map[trans];
     }
 
-    public virtual void DoBeforeEnter(AIData data)
+    public virtual void DoBeforeEnter(RabbitAIData data)
     {
 
     }
 
-    public virtual void DoBeforeLeave(AIData data)
+    public virtual void DoBeforeLeave(RabbitAIData data)
     {
 
     }
 
-    public virtual void Do(AIData data)
+    public virtual void Do(RabbitAIData data)
     {
 
     }
 
-    public virtual void CheckCondition(AIData data)
+    public virtual void CheckCondition(RabbitAIData data)
     {
         
     }
@@ -98,26 +113,26 @@ public class FSMIdleState : FSMState
     }
 
 
-    public override void DoBeforeEnter(AIData data)
+    public override void DoBeforeEnter(RabbitAIData data)
     {
         m_fCurrentTime = 0.0f;
         m_fIdleTim = Random.Range(1.0f, 3.0f);
     }
 
-    public override void DoBeforeLeave(AIData data)
+    public override void DoBeforeLeave(RabbitAIData data)
     {
 
     }
 
-    public override void Do(AIData data)
+    public override void Do(RabbitAIData data)
     {
         m_fCurrentTime += Time.deltaTime;
     }
 
-    public override void CheckCondition(AIData data)
+    public override void CheckCondition(RabbitAIData data)
     {
         bool bAttack = false;
-        GameObject go = AIFunction.CheckEnemyInSight(data, ref bAttack);
+        GameObject go = RabbitAIFunction.CheckEnemyInSight(data, ref bAttack);
         if (go != null)
         {
             data.m_TargetObject = go;
@@ -152,7 +167,7 @@ public class FSMMoveToState : FSMState
     }
 
 
-    public override void DoBeforeEnter(AIData data)
+    public override void DoBeforeEnter(RabbitAIData data)
     {
         int iNewPt = Random.Range(0, m_WanderPoints.Length);
         if (m_iCurrentWanderPt == iNewPt)
@@ -164,12 +179,12 @@ public class FSMMoveToState : FSMState
         data.m_bMove = true;
     }
 
-    public override void DoBeforeLeave(AIData data)
+    public override void DoBeforeLeave(RabbitAIData data)
     {
 
     }
 
-    public override void Do(AIData data)
+    public override void Do(RabbitAIData data)
     {
         if (SteeringBehavior.CollisionAvoid(data) == false)
         {
@@ -179,10 +194,10 @@ public class FSMMoveToState : FSMState
         SteeringBehavior.Move(data);
     }
 
-    public override void CheckCondition(AIData data)
+    public override void CheckCondition(RabbitAIData data)
     {
         bool bAttack = false;
-        GameObject go = AIFunction.CheckEnemyInSight(data, ref bAttack);
+        GameObject go = RabbitAIFunction.CheckEnemyInSight(data, ref bAttack);
         if (go != null)
         {
             data.m_TargetObject = go;
@@ -212,17 +227,17 @@ public class FSMChaseState : FSMState
     }
 
 
-    public override void DoBeforeEnter(AIData data)
+    public override void DoBeforeEnter(RabbitAIData data)
     {
 
     }
 
-    public override void DoBeforeLeave(AIData data)
+    public override void DoBeforeLeave(RabbitAIData data)
     {
 
     }
 
-    public override void Do(AIData data)
+    public override void Do(RabbitAIData data)
     {
         data.m_vTarget = data.m_TargetObject.transform.position;
         if (SteeringBehavior.CollisionAvoid(data) == false)
@@ -233,10 +248,10 @@ public class FSMChaseState : FSMState
         SteeringBehavior.Move(data);
     }
 
-    public override void CheckCondition(AIData data)
+    public override void CheckCondition(RabbitAIData data)
     {
         bool bAttack = false;
-        bool bCheck = AIFunction.CheckTargetEnemyInSight(data, data.m_TargetObject, ref bAttack);
+        bool bCheck = RabbitAIFunction.CheckTargetEnemyInSight(data, data.m_TargetObject, ref bAttack);
         if (bCheck == false)
         {
             data.m_FSMSystem.PerformTransition(eFSMTransition.Go_Idle);
@@ -259,19 +274,19 @@ public class FSMAttackState : FSMState
     }
 
 
-    public override void DoBeforeEnter(AIData data)
+    public override void DoBeforeEnter(RabbitAIData data)
     {
         fAttackTime = Random.Range(1.0f, 3.0f);
         m_fCurrentTime = 0.0f;
     }
 
-    public override void DoBeforeLeave(AIData data)
+    public override void DoBeforeLeave(RabbitAIData data)
     {
 
     }
 
 
-    public override void Do(AIData data)
+    public override void Do(RabbitAIData data)
     {
         // Check Animation complete.
         //...
@@ -284,10 +299,10 @@ public class FSMAttackState : FSMState
         m_fCurrentTime += Time.deltaTime;
     }
 
-    public override void CheckCondition(AIData data)
+    public override void CheckCondition(RabbitAIData data)
     {
         bool bAttack = false;
-        bool bCheck = AIFunction.CheckTargetEnemyInSight(data, data.m_TargetObject, ref bAttack);
+        bool bCheck = RabbitAIFunction.CheckTargetEnemyInSight(data, data.m_TargetObject, ref bAttack);
         if (bCheck == false)
         {
             data.m_FSMSystem.PerformTransition(eFSMTransition.Go_Idle);
@@ -301,7 +316,60 @@ public class FSMAttackState : FSMState
     }
 }
 
+public class FSMWander : FSMState
+{
+    private float wanderTimer = 5f;
+    private Vector3 targerPoint;
+    private float timer;
 
+    public FSMWander()
+    {
+        m_StateID = eFSMStateID.WanderStateID;
+    }
+
+    public override void DoBeforeEnter(RabbitAIData data)
+    {
+        wanderTimer = Random.Range(3.0f, 5.0f);
+        m_fCurrentTime = 0.0f;
+        targerPoint = RandomNavSphere(data.m_vCurrentVector, data.m_fSight, -1);
+    }
+
+    public override void DoBeforeLeave(RabbitAIData data)
+    {
+
+    }
+
+    public override void Do(RabbitAIData data)
+    {
+        data.agent.SetDestination(targerPoint);
+        timer += Time.deltaTime;
+
+        if (timer >= wanderTimer)
+        {
+            targerPoint = RandomNavSphere(data.m_vCurrentVector, data.m_fSight, -1);
+            data.agent.SetDestination(targerPoint);
+            timer = 0;
+        }
+    }
+
+    public override void CheckCondition(RabbitAIData data)
+    {
+
+    }
+    public  Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    {
+        Vector3 randDirection = Random.insideUnitSphere * dist;
+
+        randDirection += origin;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+
+        return navHit.position;
+    }
+
+}
 
 public class FSMDeadState : FSMState
 {
@@ -311,22 +379,22 @@ public class FSMDeadState : FSMState
     }
 
 
-    public override void DoBeforeEnter(AIData data)
+    public override void DoBeforeEnter(RabbitAIData data)
     {
 
     }
 
-    public override void DoBeforeLeave(AIData data)
+    public override void DoBeforeLeave(RabbitAIData data)
     {
 
     }
 
-    public override void Do(AIData data)
+    public override void Do(RabbitAIData data)
     {
         Debug.Log("Do Dead State");
     }
 
-    public override void CheckCondition(AIData data)
+    public override void CheckCondition(RabbitAIData data)
     {
 
     }
