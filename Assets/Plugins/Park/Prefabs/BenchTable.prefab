@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   user: {fileID: 0}
+  players: []
+  userItem: {fileID: 0}
   items:
   - {fileID: 11400000, guid: 8bcb970e97a7983468a6c3490694bdff, type: 2}
   - {fileID: 11400000, guid: ffabb9e8539a2c2488aa563677c927b0, type: 2}
@@ -135,6 +137,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d3dca747a002b794cba5f74e07bee6a8, type: 2}
   - {fileID: 11400000, guid: 284e559dd908c594cae0bebb64fc0c80, type: 2}
   - {fileID: 11400000, guid: 63765b5cbc0f1214ab97af28dc86eaa1, type: 2}
+  isLeft: 1
   slotimage:
   - {fileID: 1950385652}
   - {fileID: 1754174003}
@@ -149,7 +152,6 @@ MonoBehaviour:
   log1: {fileID: 0}
   rope0: {fileID: 0}
   rope1: {fileID: 0}
-  userItem: {fileID: 0}
 --- !u!1 &100263590
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2882382087854002403, guid: 0ef1fb5e2349f4f46b28fdab72576b3f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.66
+      value: 0.9600019
       objectReference: {fileID: 0}
     - target: {fileID: 2882382087854002403, guid: 0ef1fb5e2349f4f46b28fdab72576b3f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -642,7 +644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2882382087854002403, guid: 0ef1fb5e2349f4f46b28fdab72576b3f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.66
+      value: 0.96
       objectReference: {fileID: 0}
     - target: {fileID: 2882382087854002403, guid: 0ef1fb5e2349f4f46b28fdab72576b3f, type: 3}
       propertyPath: m_LocalRotation.w
