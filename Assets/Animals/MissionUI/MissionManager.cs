@@ -37,7 +37,7 @@ public class MissionManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
-            AddMission(0);
+            AddMission();
         }
         else if(Input.GetKeyDown(KeyCode.M))
         {
@@ -45,11 +45,10 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    public void AddMission( int id  = 0 )
+    public void AddMission(  )
     {
         GameObject go = Resources.Load("Mission") as GameObject;
         missions.Add(Instantiate(go,transform));
-        missions[missions.Count - 1].GetComponent<MissionList>().id = id;
     }
 
     public void RemoveMission(int i)

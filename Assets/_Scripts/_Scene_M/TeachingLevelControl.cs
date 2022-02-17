@@ -89,9 +89,11 @@ public class TeachingLevelControl : MonoBehaviour
     GameObject newCircle;
     GameObject oldCircle;
     public GameObject tempTarget;
+    MissionManager missionManager;
 
     private void Start()
     {
+        missionManager = GameObject.Find("MissionCanvas").GetComponent<MissionManager>();
         startTeaching = false;
         playerMovements = new List<PlayerMovement>();
         Init();
@@ -270,12 +272,14 @@ public class TeachingLevelControl : MonoBehaviour
             DialogueProcess(10);
             Destroy(oldCircle);
             Destroy(newCircle);
+            missionManager.AddMission();
         }
         else if (checkPoint10 && getStarTest.collectTargets >= 2)//try again 11;
         {
             process10 = true;
             tipsCanvas.SetActive(false);
             completeImageUI.SetActive(true);
+            missionManager.RemoveMission(0);
         }
 
         if (levelOneControl.GetGameTime() <= 0.1f)//Fail

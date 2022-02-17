@@ -11,9 +11,6 @@ GameObject:
   - component: {fileID: 1573184057224899221}
   - component: {fileID: 1573184057224899219}
   - component: {fileID: 1573184057224899220}
-  - component: {fileID: 1573184057224899218}
-  - component: {fileID: 2438432282485302080}
-  - component: {fileID: 6166266488072780355}
   m_Layer: 5
   m_Name: Mission
   m_TagString: Untagged
@@ -81,53 +78,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1573184057224899218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573184057224899222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b27eaf033907074da7b3bd290735300, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mission: {fileID: 1573184057224899222}
-  missionBar: {fileID: 1573184058684560374}
-  missionAction: 0
-  id: 0
---- !u!95 &2438432282485302080
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573184057224899222}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 25f314a75a34d6f47b4c5ea6ccbb70f5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!225 &6166266488072780355
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573184057224899222}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &1573184057665684771
 GameObject:
   m_ObjectHideFlags: 0

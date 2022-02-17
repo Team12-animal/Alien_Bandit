@@ -8,7 +8,7 @@ public class AIMain : MonoBehaviour
 
     [SerializeField] private List<GameObject> m_Obstaclesgm;
     private List<Obstacle> m_Obstacles;
-    private List<GameObject> m_Player;
+    [SerializeField] private List<GameObject> m_Player;
     private List<GameObject> m_Wood;
     [SerializeField]private GameObject[] m_WanderPoints;
     [SerializeField] private List<GameObject> m_SceneRabbit;
