@@ -15,7 +15,6 @@ public class CircleFollowTarget : MonoBehaviour
         followTarget = teachingLevel.SettingFollowTarget();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (followTarget != null)

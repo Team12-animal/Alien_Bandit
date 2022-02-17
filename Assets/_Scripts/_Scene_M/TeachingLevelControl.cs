@@ -35,9 +35,9 @@ public class TeachingLevelControl : MonoBehaviour
     PlayerMovement tempPlayMoveMent = null;
 
     [Header("itemHolded")]
-    string chopHolded = "Chop ";
+    string chopHolded = "Chop";
     string woodHolded = "Log(Clone)";
-    string ropeHolded = "Rope_tut";
+    string ropeHolded = "Rope";
     string boxHolded = "Box(Clone)";
 
     [Header("ChangerUIText")]
@@ -87,8 +87,8 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] GameObject itemCircle;
     [SerializeField] GameObject rabbitCircle;
     [SerializeField] GameObject foxCircle;
-    GameObject newCircle;
-    GameObject oldCircle;
+    [SerializeField] GameObject newCircle;
+    [SerializeField] GameObject oldCircle;
     public GameObject tempTarget;
     MissionManager missionManager;
 
@@ -114,13 +114,14 @@ public class TeachingLevelControl : MonoBehaviour
         }
         else if (startTeaching)
         {
+
             CheckProcess();
         }
     }
 
     public GameObject SettingFollowTarget()
     {
-        if(tempTarget == winDoor[0])
+        if (tempTarget == winDoor[0])
         {
             return null;
         }
@@ -199,7 +200,7 @@ public class TeachingLevelControl : MonoBehaviour
 
     public void CheckProcess()
     {
-        bool checkPoint00 = !process00 && !process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10 &&!process11;
+        bool checkPoint00 = !process00 && !process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10 && !process11;
         bool checkPoint01 = process00 && !process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10 && !process11;
         bool checkPoint02 = process00 && process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10 && !process11;
         bool checkPoint03 = process00 && process01 && process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10 && !process11;
@@ -218,39 +219,52 @@ public class TeachingLevelControl : MonoBehaviour
             tempPlayMoveMent = CheckWhoTakeItem(chopHolded);
             DialogueProcess(1);
             ChangeFocusItemCircle(trees[5], itemCircle);
+            return;
         }
         else if (checkPoint01 && CheckSomeThingInactive(trees))//cut tree 02;
         {
             process01 = true;
             DialogueProcess(2);
             Destroy(newCircle);
+            return;
         }
         else if (checkPoint02 && tempPlayMoveMent.itemInhand == null && !chopInUse.used)//Put down the ax 03;
         {
             process02 = true;
             DialogueProcess(3);
+            return;
         }
         else if (checkPoint03 && CheckIfHolding(woodHolded))//Pick up wood 04;
         {
             process03 = true;
             DialogueProcess(4);
             ChangeFocusItemCircle(workingTable[0], itemCircle);
+            return;
         }
-        else if (checkPoint04 && craftingManager.CheckItemOnTable("Wood"))//craftingManager.CheckItemOnTable(wood)//take wood to workingTable 05; 
+        else if (checkPoint04 && craftingManager.CheckItemOnTable("Wood"))//take wood to workingTable 05; 
         {
             process04 = true;
             DialogueProcess(5);
             ChangeFocusItemCircle(ropes[0], itemCircle);
+            return;
         }
-        else if (checkPoint05 && craftingManager.CheckItemOnTable("Rope") && craftingManager.CheckItemOnTable("Wood"))//craftingManager.CheckItemOnTable(rope)//take rope to workingTable 06; 
+        else if (checkPoint05 && CheckIfHolding(ropeHolded) && craftingManager.CheckItemOnTable("Wood"))
+        {
+            Destroy(newCircle);
+        }
+        else if (checkPoint05 && craftingManager.CheckItemOnTable("Rope") && craftingManager.CheckItemOnTable("Wood"))//take rope to workingTable 06; 
         {
             process05 = true;
             DialogueProcess(6);
+            ChangeFocusItemCircle(workingTable[0], itemCircle);
+            return;
         }
         else if (checkPoint06 && !craftingManager.isTake)//use workingTable to creat a box 07;
         {
             process06 = true;
             DialogueProcess(7);
+            Destroy(newCircle);
+            return;
         }
         else if (checkPoint07 && CheckIfHolding("Box(Clone)"))//use box to ctach a rabbit 08;
         {
@@ -258,10 +272,11 @@ public class TeachingLevelControl : MonoBehaviour
             DialogueProcess(8);
             ChangeFocusItemCircle(rabbits[0], rabbitCircle);
             tempTarget = rabbits[0];
-            if(boxPrefab == null)
+            if (boxPrefab == null)
             {
                 boxController = GameObject.Find("Box(Clone)").GetComponent<BoxController>();
             }
+            return;
         }
         else if (checkPoint08 && boxController.animalCatched)//touch switch to open door 09;
         {
@@ -269,28 +284,32 @@ public class TeachingLevelControl : MonoBehaviour
             DialogueProcess(9);
             ChangeFocusItemCircle(doorOpeners[0], rabbitCircle);
             tempTarget = doorOpeners[0];
+            return;
         }
         else if (checkPoint09 && buttonSensor.GetPressedBool())//throw box in to the door 10;
         {
-            process08 = true;
+            process09 = true;
             DialogueProcess(10);
             ChangeFocusItemCircle(winDoor[0], rabbitCircle);
             tempTarget = winDoor[0];
+            return;
         }
-        else if (checkPoint10 && getStarTest.collectTargets >= 1)
+        else if (checkPoint10 && getStarTest.collectTargets >= 1)//try again 11;
         {
-            process09 = true;
+            process10 = true;
             DialogueProcess(11);
             Destroy(oldCircle);
             Destroy(newCircle);
             missionManager.AddMission();
+            return;
         }
-        else if (checkPoint11 && getStarTest.collectTargets >= 2)//try again 11;
+        else if (checkPoint11 && getStarTest.collectTargets >= 2)//complete 12
         {
-            process10 = true;
+            process11 = true;
             tipsCanvas.SetActive(false);
             completeImageUI.SetActive(true);
             missionManager.RemoveMission(0);
+            return;
         }
 
         if (levelOneControl.GetGameTime() <= 0.1f)//Fail
@@ -298,8 +317,11 @@ public class TeachingLevelControl : MonoBehaviour
             processFail = true;
             gameFailImageUI.SetActive(true);
             EventSystem.current.SetSelectedGameObject(eventStartCurrentButton);
-            Debug.LogError("Level 01 Fail");
+            return;
         }
+
+
+        
     }
 
     private void ChangeFocusItemCircle(GameObject target, GameObject circleType)
