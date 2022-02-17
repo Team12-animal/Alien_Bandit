@@ -1760,13 +1760,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2187076790127037126}
-  m_LocalRotation: {x: 0.13824768, y: -0.988653, z: 0.008137635, w: -0.058194786}
-  m_LocalPosition: {x: 0.256, y: 0.629, z: 0.093}
+  m_LocalRotation: {x: 0.6956478, y: -0.14169893, z: -0.054981016, w: 0.7021202}
+  m_LocalPosition: {x: 0.23, y: 0.617, z: 0.177}
   m_LocalScale: {x: 0.49999982, y: 0.5, z: 0.49999982}
   m_Children: []
   m_Father: {fileID: 2187076790391383691}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 173.263, z: -15.921}
+  m_LocalEulerAnglesHint: {x: 74.003, y: -91.665, z: -84.565}
 --- !u!1 &2187076790133780691
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,6 +2364,7 @@ MonoBehaviour:
   itemInhand: {fileID: 0}
   holdingPos: {fileID: 0}
   workingTable: {fileID: 0}
+  usingTable: 0
   targetItem: {fileID: 0}
   triggerItem: {fileID: 0}
 --- !u!114 &2187076790391383685
@@ -2378,6 +2379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6554064aff1efbd48986bdfc7ac6892a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hand: {fileID: 0}
   animator: {fileID: 0}
   delay: 2.1
 --- !u!114 &2187076790391383684

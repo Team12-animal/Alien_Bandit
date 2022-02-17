@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class AnimatorController : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject hand;
+
     [HideInInspector]
     public Animator animator;
     float horizotalInput;
     float verticalInput;
     bool Roling;
     int pid;
+
+    //crafting 
+    GameObject hammer;
 
     [Header("�վ�ʵe����ɶ�")]
     public float delay = 2.1f;
@@ -49,6 +55,7 @@ public class AnimatorController : MonoBehaviour
     private void Start()
     {
         pid = this.GetComponent<PlayerData>().pid;
+       
     }
 
     private void Update()
@@ -115,7 +122,7 @@ public class AnimatorController : MonoBehaviour
     }
 
     /// <summary>
-    /// �u�n�򲾰ʬ����ݭn�h��J���Input
+    /// set horizontal and veritfal value to animator
     /// </summary>
     /// <param name="newState"></param>
     /// <param name="horizontal"></param>
@@ -124,9 +131,17 @@ public class AnimatorController : MonoBehaviour
     {
         if (newState == Player_Run || newState == Player_HoldRockWalk || newState == Player_HoldWoodWalk || newState == Player_HoldChopWalk)
         {
+            Debug.Log("anima set float");
             animator.SetFloat(animHorizontalHash, horizontal);
             animator.SetFloat(animVerticalHash, vertical);
         }
+
+        if (newState == Player_SpeedRun)
+        {
+            animator.SetFloat(animHorizontalHash, 0.0f);
+            animator.SetFloat(animVerticalHash, 0.0f);
+        }
+
         Debug.Log("Move2" + newState + horizontal + "/" + vertical);
         ChangeAnimaEventState(newState);
     }
@@ -174,18 +189,20 @@ public class AnimatorController : MonoBehaviour
     }
     public void AnimaEventMixUsingTableToWalk()
     {
-        int random = Random.Range(0, 6);
-        if (random > 1)
-            ChangeAnimaEventState(Player_MixUsingTableToWalk);
-        else
-            ChangeAnimaEventState(Player_Cheer);
+        ChangeAnimaEventState(Player_Cheer);
+
+        //int random = Random.Range(0, 6);
+        //if (random > 1)
+        //    ChangeAnimaEventState(Player_MixUsingTableToWalk);
+        //else
+        //    ChangeAnimaEventState(Player_Cheer);
     }
 
     public void AnimaEventChopFinished()
     {
         ChangeAnimaEventState(Player_ChopFinished);
     }
-    
+
     public void AnimaEventSpeedRunToRun()
     {
         animator.SetFloat(animHorizontalHash, 0.0f);
@@ -215,7 +232,80 @@ public class AnimatorController : MonoBehaviour
     {
         animator.SetBool(animRoling, false);
     }
-    
+
+
+    bool holdingHammer = false;
+    Vector3 hammerOriPos;
+    public void AnimaEventHammerInhandToggle()
+    {
+        if(hammer == null)
+        {
+            hammer = GameObject.Find("Hammer");
+            hammerOriPos = hammer.transform.position;
+        }
+       
+        Debug.Log("hammerInhand");
+        if(hammer != null && hand != null)
+        {
+            if(holdingHammer == false)
+            {
+                hammer.transform.position = hand.transform.position;
+                hammer.transform.parent = hand.transform;
+                holdingHammer = true;
+            }
+            else
+            {
+                hammer.transform.parent = null;
+                hammer.transform.position = hammerOriPos;
+                holdingHammer = false;
+            }
+
+        }
+    }
+
     #endregion
 
+    public bool CheckAniPlayingOrNot()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PutDownRock))
+        {
+            float time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            Debug.Log("putdown" + time);
+        }
+        
+        bool allowMove =
+            StartIdelEnded()
+            &&!animator.GetCurrentAnimatorStateInfo(0).IsName(Player_UsingTable)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_Chopping)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PickUpChop)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PickUpRock)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PickUpWood)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_Fear)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_ChopFinished)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_ChopIdle)
+            && !(animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PutDownChop) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            && !(animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PutDownRock) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            && !(animator.GetCurrentAnimatorStateInfo(0).IsName(Player_PutDownWood) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            && !(animator.GetCurrentAnimatorStateInfo(0).IsName(Player_ThrowRock) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_Cheer)
+            && !animator.GetCurrentAnimatorStateInfo(0).IsName(Player_SpeedRun);
+
+        Debug.Log("allow move" + allowMove);
+        return allowMove;
+    }
+
+
+    /// <summary>
+    /// lock animation to idel while game start
+    /// </summary>
+    bool startIdelEnd = false;
+    private bool StartIdelEnded()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(Player_Idle) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.2f)
+        {
+            startIdelEnd = true;
+        }
+
+        return startIdelEnd;
+    }
 }

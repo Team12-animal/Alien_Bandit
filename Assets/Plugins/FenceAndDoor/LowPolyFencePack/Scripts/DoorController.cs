@@ -64,7 +64,7 @@ namespace BrokenVector.LowPolyFencePack
             }
             
             // animator settings
-            animator.playAutomatically = false;
+            animator.playAutomatically = true;
 
             // prepare animation clips
             openAnimation.legacy = true;
@@ -76,10 +76,18 @@ namespace BrokenVector.LowPolyFencePack
         void Start()
         {            
             // a little hack, to set the initial state
-            currentState = InitialState;
+            currentState = DoorState.Open;
             var clip = GetCurrentAnimation();
             animator[clip].speed = 9999;
             animator.Play(clip);
+            Debug.Log("door start" + clip.ToString());
+            CloseDoor();
+            currentState = DoorState.Closed;
+        }
+
+        private void Update()
+        {
+            Debug.Log("door status" + currentState);
         }
 
         /// <summary>

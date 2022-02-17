@@ -11,6 +11,10 @@ public class AnimalCatcher : MonoBehaviour
 
     public GameObject player;
 
+    //particlesystem for successful catch animal
+    public GameObject successEffect;
+    public GameObject spawnPos;
+
     private void Start()
     {
         getStar = this.GetComponent<GetStarTest>();
@@ -38,13 +42,16 @@ public class AnimalCatcher : MonoBehaviour
         data.catchedAmt += 1;
        
         getStar.collectTargets += 1;
-        MissionManager.Instance.RemoveMission(0);
+        //MissionManager.Instance.RemoveMission(0);
         Debug.Log("Catch!");
 
         animalInBox.SetActive(false);
         box.SetActive(false);
         GameObject.Destroy(animalInBox);
         GameObject.Destroy(box);
+
+        //play particle effect
+        Instantiate(successEffect, spawnPos.transform);
 
         data.item = null;
         pm.itemInhand = null;
