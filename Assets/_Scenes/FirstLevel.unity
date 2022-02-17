@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43661225, g: 0.501284, b: 0.585156, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.44223222, g: 0.5098348, b: 0.58425075, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6569,6 +6569,10 @@ PrefabInstance:
       propertyPath: instaniate
       value: 
       objectReference: {fileID: 218598351}
+    - target: {fileID: 4018365700655873947, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
+      propertyPath: usingTableEffect
+      value: 
+      objectReference: {fileID: 5867981369529447881}
     - target: {fileID: 4018365701568730940, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
@@ -18715,6 +18719,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UsingTableEffect
       objectReference: {fileID: 0}
+    - target: {fileID: 5866966174772413560, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -18759,8 +18767,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6029743049634033846, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030126676274382570, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
+--- !u!1 &5867981369529447881 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5866966174772413560, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
+  m_PrefabInstance: {fileID: 5867981369529447880}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7899327695176773105
 PrefabInstance:
   m_ObjectHideFlags: 0

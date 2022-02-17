@@ -257,6 +257,32 @@ public class AnimatorController : MonoBehaviour
         }
     }
 
+    //using table effect activtor toggle
+    public GameObject usingTableEffect;
+    private ParticleSystem system;
+    public void AnimaEventUsingEffectActivator()
+    {
+        if(usingTableEffect == null)
+        {
+            usingTableEffect = GameObject.Find("UsingTableEffect");
+            system = usingTableEffect.GetComponent<ParticleSystem>();
+        }
+
+        if (usingTableEffect != null)
+        {
+            if (system.isPlaying == true)
+            {
+                system.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+            }
+            else
+            {
+                system.Play(true);
+
+            }
+        }
+    }
+
     #endregion
 
     public bool CheckAniPlayingOrNot()
