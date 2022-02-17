@@ -14,11 +14,12 @@ public class TeachingLevelControl : MonoBehaviour
     bool process03 = false;//Pick up wood ; 
     bool process04 = false;//take wood to workingTable; 
     bool process05 = false;//take rope to workingTable; 
-    bool process06 = false;//use workingTable to creat a box; 
-    bool process07 = false;//use box to ctach a rabbit;
-    bool process08 = false;//touch switch to open door;
-    bool process09 = false;//throw box in to the door;
-    bool process10 = false;//try again;
+    bool process06 = false;//creat a box;
+    bool process07 = false;//use workingTable to creat a box; 
+    bool process08 = false;//use box to ctach a rabbit;
+    bool process09 = false;//touch switch to open door;
+    bool process10 = false;//throw box in to the door;
+    bool process11 = false;//try again;
     bool processFail = false;//Fail;
 
     [Header("Player States")]
@@ -75,7 +76,7 @@ public class TeachingLevelControl : MonoBehaviour
     GetStarTest getStarTest;
     [SerializeField] GameObject table;
     CraftingManager craftingManager;//this scripts under the table object
-    [SerializeField] GameObject boxPrefab;
+    GameObject boxPrefab;
     BoxController boxController;//this scripts under the boxPrefab object
     [SerializeField] GameObject switchPlace;
     ButtonSensor buttonSensor;//this scripts under the switchPlace object
@@ -190,7 +191,7 @@ public class TeachingLevelControl : MonoBehaviour
         SettingTargets(ropes, tempRops);
         SettingTargets(doorOpeners, tempDoorOpener);
         craftingManager = table.GetComponent<CraftingManager>();
-        boxController = boxPrefab.GetComponent<BoxController>();
+        //boxController = boxPrefab.GetComponent<BoxController>();
         buttonSensor = switchPlace.GetComponent<ButtonSensor>();
         getStarTest = GameObject.Find(goal).GetComponent<GetStarTest>();
         chopInUse = chop.GetComponent<ChopInUse>();
@@ -198,17 +199,18 @@ public class TeachingLevelControl : MonoBehaviour
 
     public void CheckProcess()
     {
-        bool checkPoint00 = !process00 && !process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
-        bool checkPoint01 = process00 && !process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
-        bool checkPoint02 = process00 && process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
-        bool checkPoint03 = process00 && process01 && process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
-        bool checkPoint04 = process00 && process01 && process02 && process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
-        bool checkPoint05 = process00 && process01 && process02 && process03 && process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10;
-        bool checkPoint06 = process00 && process01 && process02 && process03 && process04 && process05 && !process06 && !process07 && !process08 && !process09 && !process10;
-        bool checkPoint07 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && !process07 && !process08 && !process09 && !process10;
-        bool checkPoint08 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && !process08 && !process09 && !process10;
-        bool checkPoint09 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && process08 && !process09 && !process10;
-        bool checkPoint10 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && process08 && process09 && !process10;
+        bool checkPoint00 = !process00 && !process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10 &&!process11;
+        bool checkPoint01 = process00 && !process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10 && !process11;
+        bool checkPoint02 = process00 && process01 && !process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10 && !process11;
+        bool checkPoint03 = process00 && process01 && process02 && !process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10 && !process11;
+        bool checkPoint04 = process00 && process01 && process02 && process03 && !process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10 && !process11;
+        bool checkPoint05 = process00 && process01 && process02 && process03 && process04 && !process05 && !process06 && !process07 && !process08 && !process09 && !process10 && !process11;
+        bool checkPoint06 = process00 && process01 && process02 && process03 && process04 && process05 && !process06 && !process07 && !process08 && !process09 && !process10 && !process11;
+        bool checkPoint07 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && !process07 && !process08 && !process09 && !process10 && !process11;
+        bool checkPoint08 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && !process08 && !process09 && !process10 && !process11;
+        bool checkPoint09 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && process08 && !process09 && !process10 && !process11;
+        bool checkPoint10 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && process08 && process09 && !process10 && !process11;
+        bool checkPoint11 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && process08 && process09 && process10 && !process11;
 
         if (checkPoint00 && CheckIfHolding(chopHolded))//take the ax 01;
         {
@@ -234,47 +236,56 @@ public class TeachingLevelControl : MonoBehaviour
             DialogueProcess(4);
             ChangeFocusItemCircle(workingTable[0], itemCircle);
         }
-        else if (checkPoint04 && Input.GetKeyDown(KeyCode.Space))//craftingManager.CheckItemOnTable(wood)//take wood to workingTable 05; 
+        else if (checkPoint04 && craftingManager.CheckItemOnTable("Wood"))//craftingManager.CheckItemOnTable(wood)//take wood to workingTable 05; 
         {
             process04 = true;
             DialogueProcess(5);
             ChangeFocusItemCircle(ropes[0], itemCircle);
         }
-        else if (checkPoint05 && Input.GetKeyDown(KeyCode.Space))//craftingManager.CheckItemOnTable(rope)//take rope to workingTable 06; 
+        else if (checkPoint05 && craftingManager.CheckItemOnTable("Rope") && craftingManager.CheckItemOnTable("Wood"))//craftingManager.CheckItemOnTable(rope)//take rope to workingTable 06; 
         {
             process05 = true;
             DialogueProcess(6);
-            ChangeFocusItemCircle(rabbits[0], rabbitCircle);
-            tempTarget = rabbits[0];
         }
-        else if (checkPoint06 && CreatBox())//wait fuction to use//use workingTable to creat a box 07; 
+        else if (checkPoint06 && !craftingManager.isTake)//use workingTable to creat a box 07;
         {
             process06 = true;
             DialogueProcess(7);
         }
-        else if (checkPoint07 && boxController.animalCatched)//use box to ctach a rabbit 08;
+        else if (checkPoint07 && CheckIfHolding("Box(Clone)"))//use box to ctach a rabbit 08;
         {
             process07 = true;
             DialogueProcess(8);
-            ChangeFocusItemCircle(doorOpeners[0], rabbitCircle);
-            tempTarget = doorOpeners[0];
+            ChangeFocusItemCircle(rabbits[0], rabbitCircle);
+            tempTarget = rabbits[0];
+            if(boxPrefab == null)
+            {
+                boxController = GameObject.Find("Box(Clone)").GetComponent<BoxController>();
+            }
         }
-        else if (checkPoint08 && buttonSensor.GetPressedBool())//touch switch to open door 09;
+        else if (checkPoint08 && boxController.animalCatched)//touch switch to open door 09;
         {
             process08 = true;
             DialogueProcess(9);
+            ChangeFocusItemCircle(doorOpeners[0], rabbitCircle);
+            tempTarget = doorOpeners[0];
+        }
+        else if (checkPoint09 && buttonSensor.GetPressedBool())//throw box in to the door 10;
+        {
+            process08 = true;
+            DialogueProcess(10);
             ChangeFocusItemCircle(winDoor[0], rabbitCircle);
             tempTarget = winDoor[0];
         }
-        else if (checkPoint09 && getStarTest.collectTargets >= 1)//throw box in to the door 10;
+        else if (checkPoint10 && getStarTest.collectTargets >= 1)
         {
             process09 = true;
-            DialogueProcess(10);
+            DialogueProcess(11);
             Destroy(oldCircle);
             Destroy(newCircle);
             missionManager.AddMission();
         }
-        else if (checkPoint10 && getStarTest.collectTargets >= 2)//try again 11;
+        else if (checkPoint11 && getStarTest.collectTargets >= 2)//try again 11;
         {
             process10 = true;
             tipsCanvas.SetActive(false);
