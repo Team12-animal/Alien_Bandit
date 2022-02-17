@@ -48,11 +48,7 @@ public class AIMain : MonoBehaviour
             }
         }
         RandomArray();
-        for (int i = 0; i < 3; i++)
-        {
-            AddRabbit();
-        }
-
+        AddRabbit();
     }
 
     public List<GameObject> GetPlayerList()

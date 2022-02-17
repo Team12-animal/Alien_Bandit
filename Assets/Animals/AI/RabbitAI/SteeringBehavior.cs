@@ -207,18 +207,17 @@ public class SteeringBehavior
 
     static public bool Flee(RabbitAIData data)
     {
-        Vector3 cPos = data.m_Go.transform.position;
-        Vector3 vec = data.m_vTarget - cPos;
+        Vector3 cPos = data.m_Go.transform.position;  //AI目前位置
+        Vector3 vec = data.m_vTarget - cPos;  //下一個要到的位置
         vec.y = 0.0f;
-        float fDist = vec.magnitude;
+        float fDist = vec.magnitude;  //下一個要到的位置長度
         data.m_fTempTurnForce = 0.0f;
         if (data.m_fProbeLength < fDist)
         {
             if(data.m_Speed > 0.01f)
             {
                 data.m_fMoveForce = -1.0f;
-            } 
-            
+            }            
             data.m_bMove = true;
             return false;
         }
@@ -232,7 +231,7 @@ public class SteeringBehavior
         {
             fDotF = -1.0f;
             data.m_vCurrentVector = -vec;
-            data.m_Go.transform.forward = -vec;
+            //data.m_Go.transform.forward = -vec;
             data.m_fTempTurnForce = 0.0f;
             data.m_fRot = 0.0f;
         }
@@ -246,7 +245,6 @@ public class SteeringBehavior
 
             if (fDotF > 0.0f)
             {
-
                 if (fDotR > 0.0f)
                 {
                     fDotR = 1.0f;
@@ -255,14 +253,11 @@ public class SteeringBehavior
                 {
                     fDotR = -1.0f;
                 }
-
             }
             Debug.Log(fDotR);
             data.m_fTempTurnForce = -fDotR;
 
-            data.m_fTempTurnForce *= 0.1f;
-
-
+           // data.m_fTempTurnForce *= 0.1f;
         }
 
         data.m_fMoveForce = -fDotF;
