@@ -24,6 +24,7 @@ public class BoxController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("box trigger" + other.gameObject.name);
         if (beUsing == true && other.gameObject.tag == "Rabbit" && targetAnimal == null)
         {
             targetAnimal = other.gameObject;

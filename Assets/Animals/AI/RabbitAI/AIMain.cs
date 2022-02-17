@@ -10,7 +10,7 @@ public class AIMain : MonoBehaviour
     private List<Obstacle> m_Obstacles;
     private List<GameObject> m_Player;
     private List<GameObject> m_Wood;
-    private GameObject[] m_WanderPoints;
+    [SerializeField]private GameObject[] m_WanderPoints;
     [SerializeField] private List<GameObject> m_SceneRabbit;
     [SerializeField] private int[] randomArray;
     private int randtime;
@@ -72,7 +72,7 @@ public class AIMain : MonoBehaviour
 
     public void AddRabbit()
     {
-        if (randtime / 5 == 1)
+        if (randtime / m_WanderPoints.Length == 1)
         {
             RandomArray();
         }
@@ -101,7 +101,7 @@ public class AIMain : MonoBehaviour
     {
         randtime = 0;
         randomArray = new int[m_WanderPoints.Length];
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < m_WanderPoints.Length; i++)
         {
             randomArray[i] = Random.Range(0, m_WanderPoints.Length);
 

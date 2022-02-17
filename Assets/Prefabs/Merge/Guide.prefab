@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5555761440165397020}
-  - component: {fileID: 5555761440165396995}
+  - component: {fileID: 1107493596}
   m_Layer: 0
   m_Name: Guide
   m_TagString: Untagged
@@ -24,14 +24,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5555761440165396994}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5555761440165396995
+--- !u!114 &1107493596
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,34 +40,74 @@ MonoBehaviour:
   m_GameObject: {fileID: 5555761440165396994}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ead04afd0174db243a8624f8de412cb4, type: 3}
+  m_Script: {fileID: 11500000, guid: b7983e8e9d44c904080f1b7e838e2ea5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focusitemCircle: {fileID: 383525479118882661, guid: 4760f15b66d94e34da74851ca08f221a, type: 3}
-  focusRabbitCircle: {fileID: 1795741376356887800, guid: 1157214ff7f1f884ebc457e38a90943a, type: 3}
-  focusFoxCircle: {fileID: 5775928081762187682, guid: 7067a0f6b88eb34448796b616a11ba64, type: 3}
-  targetText: {fileID: 0}
-  dialogueText: {fileID: 0}
+  levelOneControl: {fileID: 0}
   tipsCanvas: {fileID: 0}
-  backgroundCanvas: {fileID: 0}
+  TargetText: {fileID: 0}
+  DialogueText: {fileID: 0}
+  ButtonTip: {fileID: 0}
+  completeImageUI: {fileID: 0}
+  gameFailImageUI: {fileID: 0}
+  eventStartCurrentButton: {fileID: 0}
   dialogue:
-    focusItem:
-    - TREE
-    - WOOD
-    - ROCK
-    - TABLE
-    - RABBIT
-    - FOX
-    - WINDOOR
-    - LOSEDOOR
+    focusItem: []
+    title:
+    - "\u65A7\u982D"
+    - "\u780D\u6A39"
+    - "\u653E\u4E0B\u65A7\u982D"
+    - "\u6728\u982D"
+    - "\u5DE5\u4F5C\u684C"
+    - "\u7E69\u5B50"
+    - "\u88FD\u4F5C\u7BB1\u5B50"
+    - "\u6293\u5154\u5B50"
+    - "\u9580\u958B\u95DC"
+    - "\u9001\u5154\u5B50\u56DE\u5BB6"
+    - "\u518D\u8A66\u8A66\u770B\u5427"
+    - "\u95DC\u5361\u5931\u6557"
     sentences:
-    - "\u780D\u6A39\uFF0C\u6709\u6728\u982D"
-    - "\u6728\u982D\uFF0C\u53EF\u4EE5\u5408\u6210\u7BB1\u5B50"
-    - "\u77F3\u982D\uFF0C\u53EF\u4EE5\u4E1F"
-    - "\u5DE5\u5177\u684C\uFF0C\u5408\u6210\u7BB1\u5B50\u7684\u5730\u65B9"
-    - "\u5154\u5B50\uFF0C\u8981\u6293"
-    - "\u72D0\u72F8\uFF0C\u5F88\u8ABF\u76AE"
-    - "\u5C07\u6293\u5230\u7684\u5154\u5B50\u9001\u9032\u53BB"
-    - "\u5982\u679C\u9580\u88AB\u7834\u58DE\u5C31\u8F38\u56C9"
-  levelTwoControl: {fileID: 0}
-  waittingTimeUI: {fileID: 0}
+    - "\u62FF\u8D77\u65A7\u982D!"
+    - "\u780D\u4E09\u4E0B\u53EF\u4EE5\u628A\u6A39\u6728\u780D\u5012"
+    - "\u653E\u4E0B\u624B\u4E2D\u7684\u65A7\u982D"
+    - "\u64BF\u8D77\u5730\u4E0A\u7684\u6728\u982D"
+    - "\u628A\u6728\u982D\u653E\u5230\u5DE5\u4F5C\u684C\uFF0C\u6E96\u5099\u88FD\u4F5C\u7BB1\u5B50\u5427"
+    - "\u505A\u5F97\u597D\uFF01\u73FE\u5728\u9084\u9700\u8981\u7E69\u5B50\uFF0C\u5C31\u53EF\u4EE5\u88FD\u4F5C\u7BB1\u5B50\u4E86"
+    - "\u505A\u51FA\u4F86\u7684\u7BB1\u5B50\u53EF\u4EE5\u7528\u4F86\u6293\u6355\u5154\u5B50"
+    - "\u5B8C\u7F8E\uFF01\u628A\u7BB1\u5B50\u5C0D\u6E96\u5154\u5B50\uFF0C\u628A\u5154\u5B50\u6293\u5230\u7BB1\u5B50\u88E1\u5427"
+    - "\u628A\u5154\u5B50\u9001\u56DE\u5BB6\uFF01\u8A18\u5F97\u8981\u8E29\u5728\u6309\u9215\u4E0A\u628A\u9580\u6253\u958B\u5594\uFF01"
+    - "\u4E1F\u9032\u53BB! "
+    - "\u518D\u6293\u4E00\u96BB\u5154\u5B50\uFF0C\u5728\u7B2C\u4E00\u95DC\u7372\u5F97\u4E09\u9846\u661F"
+    - "\u8D85\u904E\u6642\u9593\u4E86\uFF01"
+    buttonTip:
+    - <Shift>
+    - <Shift * 3>
+    - <Shift>
+    - <Shift>
+    - <Ctrl>
+    - <Shift>
+    - <Ctrl>
+    - <Ctrl>
+    - 
+    - "<\u9577\u6309Ctrl>"
+    - 
+    - 
+  rabbits:
+  - {fileID: 0}
+  - {fileID: 0}
+  trees:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  table: {fileID: 0}
+  boxPrefab: {fileID: 7296520087955823214, guid: a31a484d9d90b4ee49a33923bb5d1196, type: 3}
+  switchPlace: {fileID: 0}
+  chop: {fileID: 0}
+  itemCircle: {fileID: 383525479118882661, guid: 4760f15b66d94e34da74851ca08f221a, type: 3}
+  rabbitCircle: {fileID: 1795741376356887800, guid: 1157214ff7f1f884ebc457e38a90943a, type: 3}
+  foxCircle: {fileID: 5775928081762187682, guid: 7067a0f6b88eb34448796b616a11ba64, type: 3}
+  tempTarget: {fileID: 0}

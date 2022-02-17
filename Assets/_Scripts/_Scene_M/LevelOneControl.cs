@@ -55,10 +55,6 @@ public class LevelOneControl : MonoBehaviour
         WinGame(1);//1  means what level two stars state;
     }
 
-    public float GetGameTime()
-    {
-        return gamingTime;
-    }
 
     private void TimeSetting()
     {
