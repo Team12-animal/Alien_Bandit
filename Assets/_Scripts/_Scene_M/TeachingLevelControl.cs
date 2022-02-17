@@ -64,7 +64,7 @@ public class TeachingLevelControl : MonoBehaviour
     string goal = "Goal";
     List<GameObject> rocks;
     List<GameObject> woods;
-    [SerializeField]List<GameObject> rabbits;
+    [SerializeField] List<GameObject> rabbits;
     List<GameObject> fox;
     List<GameObject> workingTable;
     [SerializeField] List<GameObject> trees;
@@ -88,6 +88,7 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] GameObject foxCircle;
     GameObject newCircle;
     GameObject oldCircle;
+    public GameObject tempTarget;
 
     private void Start()
     {
@@ -112,6 +113,11 @@ public class TeachingLevelControl : MonoBehaviour
         {
             CheckProcess();
         }
+    }
+
+    public GameObject SettingFollowTarget()
+    {
+        return tempTarget;
     }
 
     public bool CheckSomeThingInactive(List<GameObject> gameObjects)
@@ -203,7 +209,7 @@ public class TeachingLevelControl : MonoBehaviour
             process00 = true;
             tempPlayMoveMent = CheckWhoTakeItem(chopHolded);
             DialogueProcess(1);
-            ChangeFocusItemCircle(trees[5],itemCircle);
+            ChangeFocusItemCircle(trees[5], itemCircle);
         }
         else if (checkPoint01 && CheckSomeThingInactive(trees))//cut tree 02;
         {
@@ -233,6 +239,7 @@ public class TeachingLevelControl : MonoBehaviour
             process05 = true;
             DialogueProcess(6);
             ChangeFocusItemCircle(rabbits[0], rabbitCircle);
+            tempTarget = rabbits[0];
         }
         else if (checkPoint06 && CreatBox())//wait fuction to use//use workingTable to creat a box 07; 
         {
@@ -274,7 +281,7 @@ public class TeachingLevelControl : MonoBehaviour
         }
     }
 
-    private void ChangeFocusItemCircle(GameObject target , GameObject circleType)
+    private void ChangeFocusItemCircle(GameObject target, GameObject circleType)
     {
         oldCircle = newCircle;
         CreatCircle(target, circleType);
