@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44223222, g: 0.5098348, b: 0.58425075, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.43661225, g: 0.501284, b: 0.585156, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1342923}
   - component: {fileID: 1342924}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(14)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   m_Component:
   - component: {fileID: 25128262}
   - component: {fileID: 25128263}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(13)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -1482,7 +1482,7 @@ GameObject:
   m_Component:
   - component: {fileID: 147868485}
   - component: {fileID: 147868486}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(15)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -2100,6 +2100,30 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 3964796614704163317, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3964796614704163317, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3964796614704163317, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3964796614704163317, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3964796614704163317, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3964796614704163317, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3964796614704163318, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -2246,7 +2270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3964796615413391735, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25.94
+      value: 15.94
       objectReference: {fileID: 0}
     - target: {fileID: 3964796615413391735, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2254,7 +2278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3964796615413391735, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.95
+      value: 19.9
       objectReference: {fileID: 0}
     - target: {fileID: 3964796615413391735, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2372,7 +2396,7 @@ GameObject:
   m_Component:
   - component: {fileID: 228073633}
   - component: {fileID: 228073634}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(9)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -2494,7 +2518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 233652888}
   - component: {fileID: 233652889}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(10)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -2722,7 +2746,7 @@ GameObject:
   m_Component:
   - component: {fileID: 293851074}
   - component: {fileID: 293851076}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(1) (2)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -3050,7 +3074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 364642138}
   - component: {fileID: 364642140}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(1)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -4465,7 +4489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 611742843}
   - component: {fileID: 611742844}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(7)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -4768,7 +4792,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633492354}
   serializedVersion: 2
-  m_Mass: 20
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -6561,38 +6585,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2059777122}
     m_Modifications:
-    - target: {fileID: 4017787899499382780, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967287
-      objectReference: {fileID: 0}
     - target: {fileID: 4018365700655873947, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
       propertyPath: instaniate
       value: 
       objectReference: {fileID: 218598351}
-    - target: {fileID: 4018365700655873947, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: usingTableEffect
-      value: 
-      objectReference: {fileID: 5867981369529447881}
-    - target: {fileID: 4018365701568730940, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4018365701568730940, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 87
-      objectReference: {fileID: 0}
-    - target: {fileID: 4018365701615092204, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 45.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4018365701615348994, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4018365701615348994, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967263
-      objectReference: {fileID: 0}
     - target: {fileID: 4018365701722396681, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -6641,138 +6637,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorkBench
       objectReference: {fileID: 0}
-    - target: {fileID: 4018365701722396682, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4018365701812614254, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4018365701812614254, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 87
-      objectReference: {fileID: 0}
-    - target: {fileID: 4018365702026650537, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4018365702026650537, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 87
-      objectReference: {fileID: 0}
-    - target: {fileID: 4150504647317611131, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4150504647317611131, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4150504647317611131, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967255
-      objectReference: {fileID: 0}
-    - target: {fileID: 4705898097083181147, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4705898097083181147, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967263
-      objectReference: {fileID: 0}
-    - target: {fileID: 5032774504554354785, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5032774504554354785, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967263
-      objectReference: {fileID: 0}
-    - target: {fileID: 5084933891571879531, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5084933891571879531, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967263
-      objectReference: {fileID: 0}
-    - target: {fileID: 5354843450999689968, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5354843450999689968, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967255
-      objectReference: {fileID: 0}
-    - target: {fileID: 5383805827774803046, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 5383805828343076838, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 5383805828951117794, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588928325490914496, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588928325490914496, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967255
-      objectReference: {fileID: 0}
-    - target: {fileID: 6635591591795506770, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6799924836190132006, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6799924836190132006, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6799924836190132006, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967255
-      objectReference: {fileID: 0}
-    - target: {fileID: 8049140922753760648, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8936084605427691247, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_Size.x
-      value: 6.79
-      objectReference: {fileID: 0}
-    - target: {fileID: 8936084605427691247, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_Size.y
-      value: 12.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8936084605427691247, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_Size.z
-      value: 1.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 8936084605427691247, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_Center.x
-      value: -0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 8936084605427691247, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_Center.y
-      value: 1.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 8936084605427691247, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_Center.z
-      value: 0.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 9066588327620327875, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25ae68021f6364c91928afbc478dde4d, type: 3}
 --- !u!1 &860722202
@@ -6785,7 +6649,7 @@ GameObject:
   m_Component:
   - component: {fileID: 860722203}
   - component: {fileID: 860722204}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(8)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -6829,7 +6693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 867208627}
   - component: {fileID: 867208628}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(6)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -7126,7 +6990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 901032656}
   - component: {fileID: 901032657}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(17)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -7773,7 +7637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 955944273}
   - component: {fileID: 955944274}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(4)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -7820,7 +7684,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7296520087955823200, guid: a31a484d9d90b4ee49a33923bb5d1196, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 39.44
+      value: 13.74
       objectReference: {fileID: 0}
     - target: {fileID: 7296520087955823200, guid: a31a484d9d90b4ee49a33923bb5d1196, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7828,7 +7692,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7296520087955823200, guid: a31a484d9d90b4ee49a33923bb5d1196, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.34
+      value: 24.6
       objectReference: {fileID: 0}
     - target: {fileID: 7296520087955823200, guid: a31a484d9d90b4ee49a33923bb5d1196, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8152,7 +8016,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1012351815}
   - component: {fileID: 1012351816}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(3)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -11801,16 +11665,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3893529773646206741, guid: f5d01e6dbc13445e3864e38b4a64d110, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.790945
+      objectReference: {fileID: 0}
+    - target: {fileID: 3893529773646206741, guid: f5d01e6dbc13445e3864e38b4a64d110, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.790945
+      objectReference: {fileID: 0}
+    - target: {fileID: 3893529773646206741, guid: f5d01e6dbc13445e3864e38b4a64d110, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.790945
+      objectReference: {fileID: 0}
+    - target: {fileID: 3893529773646206741, guid: f5d01e6dbc13445e3864e38b4a64d110, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 43.3
+      value: 16.31
       objectReference: {fileID: 0}
     - target: {fileID: 3893529773646206741, guid: f5d01e6dbc13445e3864e38b4a64d110, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.624
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 3893529773646206741, guid: f5d01e6dbc13445e3864e38b4a64d110, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.88
+      value: 23.73
       objectReference: {fileID: 0}
     - target: {fileID: 3893529773646206741, guid: f5d01e6dbc13445e3864e38b4a64d110, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12590,7 +12466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1512766100}
   - component: {fileID: 1512766101}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(18)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -13493,7 +13369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1574312734}
   - component: {fileID: 1574312735}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(2)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -13698,7 +13574,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1613292345}
   - component: {fileID: 1613292346}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(11)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -13819,7 +13695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1619129192}
   - component: {fileID: 1619129194}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(1) (1)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -15408,7 +15284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1839669221}
   - component: {fileID: 1839669222}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(12)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -16023,7 +15899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1915011693}
   - component: {fileID: 1915011694}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(5)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -17973,7 +17849,7 @@ GameObject:
   - component: {fileID: 2092612463}
   - component: {fileID: 2092612464}
   - component: {fileID: 2092612465}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: RiverCollider(16)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -18597,7 +18473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2882382087854002403, guid: 0ef1fb5e2349f4f46b28fdab72576b3f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.1760044
+      value: -3.74
       objectReference: {fileID: 0}
     - target: {fileID: 2882382087854002403, guid: 0ef1fb5e2349f4f46b28fdab72576b3f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18605,7 +18481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2882382087854002403, guid: 0ef1fb5e2349f4f46b28fdab72576b3f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.0091438
+      value: -12.96
       objectReference: {fileID: 0}
     - target: {fileID: 2882382087854002403, guid: 0ef1fb5e2349f4f46b28fdab72576b3f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -18708,80 +18584,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1af1464b1ee14c744a6a9d6d219ae26b, type: 3}
---- !u!1001 &5867981369529447880
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5866966174772413560, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_Name
-      value: UsingTableEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 5866966174772413560, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 25.906
-      objectReference: {fileID: 0}
-    - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.81404
-      objectReference: {fileID: 0}
-    - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 20.172
-      objectReference: {fileID: 0}
-    - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5872483704460138646, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6029743049634033846, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6030126676274382570, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
---- !u!1 &5867981369529447881 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5866966174772413560, guid: 5f6a8cfc547a0a54cbfb9330da502ace, type: 3}
-  m_PrefabInstance: {fileID: 5867981369529447880}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7899327695176773105
 PrefabInstance:
   m_ObjectHideFlags: 0

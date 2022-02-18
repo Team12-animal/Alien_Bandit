@@ -525,6 +525,7 @@ public class PlayerMovement : MonoBehaviour
         {
             aniClip = "ThrowRock";
         }
+
         targetItem = null;
         return aniClip;
     }
@@ -648,18 +649,24 @@ public class PlayerMovement : MonoBehaviour
         }
 
         targetItem.transform.position = holdingPos.position;
-        targetItem.transform.forward = holdingPos.forward;
+        targetItem.transform.rotation = holdingPos.rotation;
         targetItem.transform.SetParent(holdingPos);
         Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
         targetRG.isKinematic = true;
         itemInhand = targetItem;
+
+        if (itemInhand.tag == "Box")
+        {
+            itemInhand.GetComponent<BoxController>().touchingGround = false;
+        }
 
         if (itemInhand.tag == "RockModel")
         {
             itemInhand.GetComponent<RockMovement>().beUsing = true;
         }
     }
-     
+    
+    //remove item from player, and then turn off kinematic and open collider
     private void RemoveItem()
     {
         if (data.item == null)
@@ -677,7 +684,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(itemInhand.tag == "Box")
         {
-            itemInhand.GetComponent<BoxController>().beUsing = false;
+            itemInhand.GetComponent<BoxController>().touchingGround = true;
         }
 
         if (itemInhand.tag == "RockModel")
@@ -690,7 +697,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     float inputf = 0.0f;
-    float force = 100.0f;
+    float force = 1000.0f;
 
     private void ThrowAway()
     {
@@ -704,20 +711,20 @@ public class PlayerMovement : MonoBehaviour
         targetRG.isKinematic = false;
 
         inputf = input.pressTimeSaver / 0.2f;
-        force *= inputf;
+        float realForce = force * inputf;
 
-        if (force > 6000.0f)
+        if (realForce > 5000.0f)
         {
-            force = 6000.0f;
+            realForce = 5000.0f;
         }
 
-        if (force <= 1000.0f)
+        if (realForce <= 1800.0f)
         {
-            force = 1000.0f;
+            realForce = 1800.0f;
         }
 
         //??item???l?O
-        targetRG.AddForce(this.transform.forward * force, ForceMode.Impulse);
+        targetRG.AddForce(this.transform.forward * realForce, ForceMode.Impulse);
 
         foreach (Transform child in itemInhand.transform)
         {
@@ -726,7 +733,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (itemInhand.tag == "Box")
         {
-            itemInhand.GetComponent<BoxController>().beUsing = false;
+            itemInhand.GetComponent<BoxController>().touchingGround = true;
         }
 
         if (itemInhand.tag == "RockModel")
@@ -737,7 +744,7 @@ public class PlayerMovement : MonoBehaviour
         itemInhand = null;
         UpdatePlayerData();
 
-        Debug.Log("ThrowAway" + force);
+        Debug.Log("ThrowAway" + realForce);
     }
 
     //inactive item while put it on table
