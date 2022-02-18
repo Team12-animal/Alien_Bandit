@@ -5,37 +5,32 @@ using UnityEngine;
 public class AIMain : MonoBehaviour
 {
     public static AIMain m_Instance;
-
-    private List<GameObject> m_Obstaclesgm;
     private List<Obstacle> m_Obstacles;
     private List<GameObject> m_Player;
-    private GameObject[] m_WanderPoints;
-    private List<GameObject> m_SceneRabbit;
-    private int[] randomArray;
+    [SerializeField]private GameObject[] m_WanderPoints;
+    [SerializeField]private List<GameObject> m_SceneRabbit;
+    [SerializeField]private int[] randomArray;
     private int randtime;
-
+    private GameObject go;
     private void Awake()
     {
         m_Instance = this;
+        go = Resources.Load("RabbitAI") as GameObject;
     }
 
     // Use this for initialization
     void Start()
     {
         m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");
-
-        m_Obstaclesgm = new List<GameObject>();
         m_Obstacles = new List<Obstacle>();
-        GameObject[] gosgm = GameObject.FindGameObjectsWithTag("Obstacle");
-        if (gosgm != null || gosgm.Length > 0)
+        GameObject[] gos = GameObject.FindGameObjectsWithTag("Obstacle");
+        if (gos != null || gos.Length > 0)
         {
-            foreach (GameObject go in gosgm)
+            foreach (GameObject go in gos)
             {
-                m_Obstaclesgm.Add(go);
                 m_Obstacles.Add(go.GetComponent<Obstacle>());
             }
         }
-        m_Obstacles = new List<Obstacle>();
 
         m_Player = new List<GameObject>();
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -47,7 +42,11 @@ public class AIMain : MonoBehaviour
             }
         }
         RandomArray();
-        AddRabbit();
+        for (int i = 0; i < 3; i++)
+        {
+            AddRabbit();
+        }
+
     }
 
     public List<GameObject> GetPlayerList()
@@ -57,11 +56,6 @@ public class AIMain : MonoBehaviour
     public GameObject GetPlayers(int i)
     {
         return m_Player[i];
-    }
-
-    public List<GameObject> GetObstaclesgm()
-    {
-        return m_Obstaclesgm;
     }
 
     public List<Obstacle> GetObstacles()
@@ -75,9 +69,10 @@ public class AIMain : MonoBehaviour
         {
             RandomArray();
         }
-        GameObject go = Resources.Load("RabbitAI") as GameObject;
         Vector3 Pos = m_WanderPoints[randomArray[randtime]].transform.position;
-        m_SceneRabbit.Add(Instantiate(go, Pos, new Quaternion(0, 0, 0, 0)));
+        Quaternion Rot = Quaternion.Euler(0f, Random.Range(0, 361), 0f);      
+        GameObject rago = Instantiate(go, Pos, Rot, this.transform);
+        m_SceneRabbit.Add(rago);
         randtime += 1;
     }
 
@@ -85,7 +80,7 @@ public class AIMain : MonoBehaviour
     {
         Destroy(go.gameObject);
         m_SceneRabbit.Remove(go);
-        AddRabbit();
+        StartCoroutine(WaitTimeAddRabbit(5f));     
     }
 
     private void Update()
@@ -114,5 +109,9 @@ public class AIMain : MonoBehaviour
             }
         }
     }
-
+    IEnumerator WaitTimeAddRabbit(float time)
+    {
+        yield return new WaitForSeconds(time);
+        AddRabbit();
+    }
 }

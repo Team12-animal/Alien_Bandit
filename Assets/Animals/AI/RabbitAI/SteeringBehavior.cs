@@ -125,14 +125,14 @@ public class SteeringBehavior
     static public bool CollisionAvoid(RabbitAIData data)
     {
         List<Obstacle> m_AvoidTargets = AIMain.m_Instance.GetObstacles();
-        Transform ct = data.m_Go.transform;
-        Vector3 cPos = ct.position;
-        Vector3 cForward = ct.forward;
-        data.m_vCurrentVector = cForward;
+        Transform ct = data.m_Go.transform;  //AI的位置向量
+        Vector3 cPos = ct.position;    //AI的位置
+        Vector3 cForward = ct.forward;  //AI的朝向
+        data.m_vCurrentVector = cForward;  
         Vector3 vec;
         float fFinalDotDist;
         float fFinalProjDist;
-        Vector3 vFinalVec = Vector3.forward;
+        Vector3 vFinalVec = Vector3.forward; //(0,0,1)
         Obstacle oFinal = null;
         float fDist = 0.0f;
         float fDot = 0.0f;

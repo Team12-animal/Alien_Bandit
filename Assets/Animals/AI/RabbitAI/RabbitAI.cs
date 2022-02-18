@@ -135,11 +135,12 @@ public class RabbitAI : MonoBehaviour
         //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
         if (m_eCurrentState == eFSMState.Idle)
         {
+
             if (attackWood != null)
             {
                 m_eCurrentState = eFSMState.Attack;
             }
-
+            m_Data.m_fMaxSpeed = 0.04f;
             m_Am.SetInteger("State", 0);
             bool bAttack = false;
             m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);  //偵測範圍內有玩家
@@ -159,6 +160,7 @@ public class RabbitAI : MonoBehaviour
                     m_Data.agent.enabled = false;
                     m_eCurrentState = eFSMState.Chase;   //逃跑
                     m_Am.SetInteger("State", 3);
+                    m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
                     if (SteeringBehavior.CollisionAvoid(m_Data) == false)
                     {
                         SteeringBehavior.Flee(m_Data);
@@ -286,23 +288,56 @@ public class RabbitAI : MonoBehaviour
         }
         else if (m_eCurrentState == eFSMState.Attack)
         {
-            m_Am.SetInteger("State",2);
+            bool bAttack = false;
+            m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);  //偵測範圍內有玩家
+            if (m_CurrentEnemyTarget != null)   //如果有玩家的話
+            {
+                m_Data.m_TargetObject = m_CurrentEnemyTarget;  //傳給AIData目標物
+                if (bAttack)  //在警戒範圍內便會移動到兔子洞
+                {
+                    m_Data.agent.enabled = true;
+                    m_Data.agent.updateRotation = true;
+                    m_Data.m_vTarget = CheckCloseHole().transform.position;  //將目標位置改為最近兔子洞
+                    m_Am.SetInteger("State", 3);
+                    m_eCurrentState = eFSMState.MoveToTarget;
+                }
+                else
+                {
+                    m_Data.agent.enabled = false;
+                    m_eCurrentState = eFSMState.Chase;   //逃跑
+                    m_Am.SetInteger("State", 3);
+                    m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
+                    Debug.LogError(SteeringBehavior.CollisionAvoid(m_Data));
+                    if (SteeringBehavior.CollisionAvoid(m_Data) == false)
+                    {
+                        SteeringBehavior.Flee(m_Data);
+                    }
+                    SteeringBehavior.Move(m_Data);
+                }
+                return;
+            }
             if (attackWood == null)
             {
                 m_eCurrentState = eFSMState.Idle;
                 return;
             }
-            if (m_fCurrentTime > m_Data.m_fAttackTime)
+            else
             {
-                Debug.LogError(m_Am.GetCurrentAnimatorStateInfo(0).IsName("Idle"));
-                m_fCurrentTime = 0.0f;
-                if (m_Am.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                m_Data.m_fMaxSpeed = 0.01f;
+                m_Data.m_vTarget = attackWood.transform.position - new Vector3(0.8f, 0.8f, 0.8f);
+                if (SteeringBehavior.CollisionAvoid(m_Data) == false)
                 {
-                    Debug.LogError(m_Am.GetCurrentAnimatorStateInfo(0).IsName("Idle"));
+                    SteeringBehavior.Seek(m_Data);
+                }
+                SteeringBehavior.Move(m_Data);             
+                transform.rotation = Quaternion.Lerp(this.transform.rotation, attackWood.transform.rotation, 0.05f);
+
+                float dist =(transform.position-m_Data.m_vTarget).magnitude ;
+                if (dist<1)
+                {
                     m_Am.SetInteger("State", 2);
                 }
             }
-            m_fCurrentTime += Time.deltaTime;
         }
     }
 
@@ -354,15 +389,32 @@ public class RabbitAI : MonoBehaviour
         Gizmos.DrawWireSphere(this.transform.position, m_Data.m_fSight);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.transform.position, m_Data.m_fAttackRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(this.transform.position, m_Data.m_fRadius);
+        Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * this.m_Data.m_fProbeLength);
+        Gizmos.color = Color.yellow;
+        Vector3 vLeftStart = this.transform.position - this.transform.right * m_Data.m_fRadius;
+        Vector3 vLeftEnd = vLeftStart + this.transform.forward * m_Data.m_fProbeLength;
+        Gizmos.DrawLine(vLeftStart, vLeftEnd);
+        Vector3 vRightStart = this.transform.position + this.transform.right * m_Data.m_fRadius;
+        Vector3 vRightEnd = vRightStart + this.transform.forward * m_Data.m_fProbeLength;
+        Gizmos.DrawLine(vRightStart, vRightEnd);
+        Gizmos.DrawLine(vLeftEnd, vRightEnd);
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Wood")
         {
-            attackWood = other.gameObject;
-            m_Data.m_TargetObject = attackWood;
-            m_Data.m_vTarget = attackWood.transform.position - new Vector3(0,0,1.3f);         
+            if (m_eCurrentState == eFSMState.Wander || m_eCurrentState == eFSMState.Idle)
+            {
+                attackWood = other.gameObject;
+                m_Data.m_TargetObject = attackWood;
+                Vector3 dist = transform.position - attackWood.transform.position;
+                Debug.LogError(dist);
+                m_Data.m_vTarget = attackWood.transform.position - new Vector3(0.8f, 0.8f, 0.8f);
+            }
         }
     }
     private void OnTriggerExit(Collider other)
@@ -371,5 +423,10 @@ public class RabbitAI : MonoBehaviour
         {
             attackWood = null;
         }
+    }
+
+    public void  EnterHole()
+    {
+        AIMain.m_Instance.RemoveRabbit(this.gameObject);
     }
 }
