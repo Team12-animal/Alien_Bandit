@@ -129,17 +129,11 @@ public class AnimatorController : MonoBehaviour
     /// <param name="vertical"></param>
     public void ChangeAnimationState(string newState, float horizontal, float vertical)
     {
-        if (newState == Player_Run || newState == Player_HoldRockWalk || newState == Player_HoldWoodWalk || newState == Player_HoldChopWalk)
+        if (newState == Player_Run || newState == Player_HoldRockWalk || newState == Player_HoldWoodWalk || newState == Player_HoldChopWalk || newState == Player_SpeedRun)
         {
             Debug.Log("anima set float");
             animator.SetFloat(animHorizontalHash, horizontal);
             animator.SetFloat(animVerticalHash, vertical);
-        }
-
-        if (newState == Player_SpeedRun)
-        {
-            animator.SetFloat(animHorizontalHash, 0.0f);
-            animator.SetFloat(animVerticalHash, 0.0f);
         }
 
         Debug.Log("Move2" + newState + horizontal + "/" + vertical);
@@ -235,13 +229,13 @@ public class AnimatorController : MonoBehaviour
 
 
     bool holdingHammer = false;
-    Vector3 hammerOriPos;
+    Transform hammerOriTrans;
     public void AnimaEventHammerInhandToggle()
     {
         if(hammer == null)
         {
             hammer = GameObject.Find("Hammer");
-            hammerOriPos = hammer.transform.position;
+            hammerOriTrans = hammer.transform;
         }
        
         Debug.Log("hammerInhand");
@@ -256,10 +250,37 @@ public class AnimatorController : MonoBehaviour
             else
             {
                 hammer.transform.parent = null;
-                hammer.transform.position = hammerOriPos;
+                hammer.transform.position = hammerOriTrans.position;
+                hammer.transform.rotation = hammerOriTrans.rotation;
                 holdingHammer = false;
             }
 
+        }
+    }
+
+    //using table effect activtor toggle
+    public GameObject usingTableEffect;
+    private ParticleSystem system;
+    public void AnimaEventUsingEffectActivator()
+    {
+        if(usingTableEffect == null)
+        {
+            usingTableEffect = GameObject.Find("UsingTableEffect");
+            system = usingTableEffect.GetComponent<ParticleSystem>();
+        }
+
+        if (usingTableEffect != null)
+        {
+            if (system.isPlaying == true)
+            {
+                system.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+            }
+            else
+            {
+                system.Play(true);
+
+            }
         }
     }
 

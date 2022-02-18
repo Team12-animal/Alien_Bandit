@@ -22,7 +22,7 @@ public class InputController : MonoBehaviour
     bool takePressed;
     bool takePressUp;
     float holdDownStartTime = 0f;
-    [SerializeField] float pressedTime = 0.2f;
+    [SerializeField] float pressedTime;
     [SerializeField] bool inTreeArea;
 
     private void Awake()
@@ -200,7 +200,10 @@ public class InputController : MonoBehaviour
 
             if (allowSpeedRun)
             {
+
                 remainDashTime = pm.Dash(remainDashTime);
+                aniClip = "SpeedRun";
+                anim.ChangeAnimationState(aniClip, 0, 0);
             }
             else
             {
