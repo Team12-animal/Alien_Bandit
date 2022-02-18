@@ -16,7 +16,7 @@ public class ChangeRoleSkin : MonoBehaviour
 
     public void ChangeSkin(string buttonName)
     {
-        if (Input.GetButtonDown(buttonName) || Input.GetKeyDown(KeyCode.Joystick1Button8))
+        if (Input.GetButtonDown(buttonName) || Input.GetKeyDown(KeyCode.JoystickButton8))
         {
             roleSkins[currentSkin].SetActive(false);
             if (currentSkin < roleSkins.Length - 1)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,16 @@ public class LevelOneControl : MonoBehaviour
     InputController input03 = new InputController();
     InputController input04 = new InputController();
 
+    [Header("ContinueUISetting")]
+    float waittingTimeToShowContinueUI = 3.0f;
+    [SerializeField] GameObject continueUI;
+    [SerializeField] List<GameObject> levelOneStars;
+    [SerializeField] List<GameObject> showStars;
     [SerializeField] List<GameObject> player = new List<GameObject>();
+    [SerializeField] bool player01CheckToContinue;
+    [SerializeField] bool player02CheckToContinue;
+    [SerializeField] bool player03CheckToContinue;
+    [SerializeField] bool player04CheckToContinue;
 
     //is player win the game?
     public bool isWin;
@@ -39,10 +49,21 @@ public class LevelOneControl : MonoBehaviour
         doorDestroied = false;
         isWin = false;
         gameWinUI.SetActive(false);
+        continueUI.SetActive(false);
+        waittingTimeToShowContinueUI = 3.0f;
+        UpdateStarsStates updateStarsStates = new UpdateStarsStates();
+        levelOneStars[0] = GameObject.Find(updateStarsStates.star01);
+        levelOneStars[1] = GameObject.Find(updateStarsStates.star02);
+        levelOneStars[2] = GameObject.Find(updateStarsStates.star03);
     }
 
     private void Update()
     {
+        //CheckPlayerPressContinue(SceneController.instance.selected01, "Use1", "Take1", player01CheckToContinue);
+        //CheckPlayerPressContinue(SceneController.instance.selected02, "Use2", "Take2", player02CheckToContinue);
+        //CheckPlayerPressContinue(SceneController.instance.selected03, "Use3", "Take3", player03CheckToContinue);
+        //CheckPlayerPressContinue(SceneController.instance.selected04, "Use4", "Take4", player04CheckToContinue);
+
         if (Input.GetButtonDown(KeyCode.Escape.ToString()))
         {
             SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
@@ -85,7 +106,7 @@ public class LevelOneControl : MonoBehaviour
         }
         else if (waittingTime < 1.2f)
         {
-            waittingTimeText.text = "GO!";                
+            waittingTimeText.text = "GO!";
         }
 
         waittingTime -= Time.deltaTime;
@@ -124,6 +145,117 @@ public class LevelOneControl : MonoBehaviour
 
             // can't control players;
             GameOverSetting(input01, input02, input03, input04);
+
+            //Wait for 3S to show Continue UI;
+            waittingTimeToShowContinueUI -= Time.deltaTime;
+            if (waittingTimeToShowContinueUI <= 0.0f)
+            {
+                waittingTimeToShowContinueUI = 0.0f;
+                continueUI.SetActive(true);
+                for (int i = 0; i < levelOneStars.Count; i++)
+                {
+                    showStars[i].GetComponent<RawImage>().color = levelOneStars[i].GetComponent<RawImage>().color;
+                }
+                //Reset Players Position to MainMenu;
+                //if (SceneController.instance.player01)
+                //{
+                //    SceneController.instance.MainPlayer(SceneController.instance.player01);
+                //}
+                //if (SceneController.instance.player02)
+                //{
+                //    SceneController.instance.MainPlayer(SceneController.instance.player02);
+                //}
+                //if (SceneController.instance.player03)
+                //{
+                //    SceneController.instance.MainPlayer(SceneController.instance.player03);
+                //}
+                //if (SceneController.instance.player04)
+                //{
+                //    SceneController.instance.MainPlayer(SceneController.instance.player04);
+                //}
+                //Show Stars animations;
+
+                //Wait every players pressed confirm button to continue;
+                int PlayerCount = Convert.ToInt32(SceneController.instance.selected01) + Convert.ToInt32(SceneController.instance.selected02) + Convert.ToInt32(SceneController.instance.selected03) + Convert.ToInt32(SceneController.instance.selected04);
+                //1000; 1
+                bool onePlayer1000 = SceneController.instance.selected01 && !SceneController.instance.selected02 && !SceneController.instance.selected03 && !SceneController.instance.selected04;
+                //1100; 2
+                bool twoPlayerType1100 = SceneController.instance.selected01 && SceneController.instance.selected02 && !SceneController.instance.selected03 && !SceneController.instance.selected04;
+                //1010; 2
+                bool twoPlayerType1010 = SceneController.instance.selected01 && !SceneController.instance.selected02 && SceneController.instance.selected03 && !SceneController.instance.selected04;
+                //1001; 2
+                bool twoPlayerTpye1001 = SceneController.instance.selected01 && !SceneController.instance.selected02 && !SceneController.instance.selected03 && SceneController.instance.selected04;
+                //1110; 3
+                bool threePlayerType1110 = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && !SceneController.instance.selected04;
+                //1011; 3
+                bool threePlayerType1101 = SceneController.instance.selected01 && !SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
+                //1111; 4
+                bool fourPlayer = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
+
+                //CheckPlayerPressContinue(SceneController.instance.selected01, "Use1", "Take1", player01CheckToContinue);
+                //CheckPlayerPressContinue(SceneController.instance.selected02, "Use2", "Take2", player02CheckToContinue);
+                //CheckPlayerPressContinue(SceneController.instance.selected03, "Use3", "Take3", player03CheckToContinue);
+                //CheckPlayerPressContinue(SceneController.instance.selected04, "Use4", "Take4", player04CheckToContinue);
+
+                //switch (PlayerCount)
+                //{
+                //    case 1:
+                //        if (onePlayer1000 && player01CheckToContinue)
+                //        {
+                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                //            SceneController.instance.LoadLevel(2);
+                //        }
+                //        break;
+                //    case 2:
+                //        if (twoPlayerType1100 && player01CheckToContinue && player02CheckToContinue)
+                //        {
+                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                //            SceneController.instance.LoadLevel(2);
+                //        }
+                //        else if (twoPlayerType1010 && player01CheckToContinue && player03CheckToContinue)
+                //        {
+                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                //            SceneController.instance.LoadLevel(2);
+                //        }
+                //        else if (twoPlayerTpye1001 && player01CheckToContinue && player04CheckToContinue)
+                //        {
+                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                //            SceneController.instance.LoadLevel(2);
+                //        }
+                //        break;
+                //    case 3:
+                //        if (threePlayerType1110 && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue)
+                //        {
+                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                //            SceneController.instance.LoadLevel(2);
+                //        }
+                //        else if (threePlayerType1101 && player01CheckToContinue && player02CheckToContinue && player04CheckToContinue)
+                //        {
+                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                //            SceneController.instance.LoadLevel(2);
+                //        }
+                //        break;
+                //    case 4:
+                //        if (fourPlayer && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue && player04CheckToContinue)
+                //        {
+                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                //            SceneController.instance.LoadLevel(2);
+                //        }
+                //        break;
+                //}
+            }
+        }
+    }
+
+    private void CheckPlayerPressContinue(bool playerChosed, string checkButton, string cancelButton, bool result)
+    {
+        if (playerChosed && Input.GetButtonDown(checkButton))
+        {
+            result = true;
+        }
+        else if (playerChosed && Input.GetButtonDown(cancelButton))
+        {
+            result = false;
         }
     }
 
@@ -177,9 +309,9 @@ public class LevelOneControl : MonoBehaviour
     [SerializeField] float endOthersEventTime = 90.0f;
     public void TriggerSceneEvents()
     {
-        int creatOrNot = Random.Range(0, 6);
+        int creatOrNot = UnityEngine.Random.Range(0, 6);
         //random a event to creat;
-        int sceneEvent = Random.Range((int)MessionEvents.SceneEvent.TorbadoEvent, (int)MessionEvents.SceneEvent.EndCounts);
+        int sceneEvent = UnityEngine.Random.Range((int)MessionEvents.SceneEvent.TorbadoEvent, (int)MessionEvents.SceneEvent.EndCounts);
 
         if (gamingTime <= startOthersEventTime && creatOrNot > 0 && createdOthers == false && gamingTime > endOthersEventTime)
         {
