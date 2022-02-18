@@ -16,12 +16,19 @@ public class AIMain : MonoBehaviour
     {
         m_Instance = this;
         go = Resources.Load("RabbitAI") as GameObject;
+
+        m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");
+        RandomArray();
+        for (int i = 0; i < 3; i++)
+        {
+            AddRabbit();
+        }
     }
 
     // Use this for initialization
     void Start()
     {
-        m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");
+       
         m_Obstacles = new List<Obstacle>();
         GameObject[] gos = GameObject.FindGameObjectsWithTag("Obstacle");
         if (gos != null || gos.Length > 0)
@@ -40,11 +47,6 @@ public class AIMain : MonoBehaviour
             {
                 m_Player.Add(go);
             }
-        }
-        RandomArray();
-        for (int i = 0; i < 3; i++)
-        {
-            AddRabbit();
         }
 
     }

@@ -95,6 +95,8 @@ public class TeachingLevelControl : MonoBehaviour
     private void Start()
     {
         missionManager = GameObject.Find("MissionCanvas").GetComponent<MissionManager>();
+        GameObject[] tempRabbits = GameObject.FindGameObjectsWithTag(rabbitsTag);
+        SettingTargets(rabbits, tempRabbits);
         startTeaching = false;
         playerMovements = new List<PlayerMovement>();
         Init();
