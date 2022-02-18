@@ -276,11 +276,11 @@ public class PlayerMovement : MonoBehaviour
         {
             triggerItem = other.GetComponent<RockTrigger>().targetRock;
         }
-        else if (other.tag == "Wood" || other.tag == "Chop" || other.tag == "Bucket" || other.tag == "Box" || other.tag == "WorkingTable" || other.tag == "Rope")
+        else if (other.tag == "Wood" || other.tag == "Chop" || other.tag == "Bucket" || other.tag == "Box" || other.tag == "Rope")
         {
             triggerItem = other.gameObject;
         }
-        else if (other.tag == "Tree")
+        else if (other.tag == "Tree" || other.tag == "WorkingTable")
         {
             return;
         }
@@ -581,7 +581,7 @@ public class PlayerMovement : MonoBehaviour
     bool readyToUseBench = false;
     public string UseBench()
     {
-        if(usingTable && triggerItem != null && tableCM.isCraft == true)
+        if(usingTable && tableCM.isCraft == true)
         {
             FindWorkTable();
             FaceTarget(workingTable);
@@ -625,7 +625,7 @@ public class PlayerMovement : MonoBehaviour
         
         float fDotD = Vector3.Dot(this.transform.forward, dirToItem);
 
-        if (fDotD < 0.5f)
+        if (fDotD < 0.3f)
         {
             temp = Vector3.Slerp(this.transform.forward, dirToItem, 1.0f);
             temp.y = this.transform.forward.y;

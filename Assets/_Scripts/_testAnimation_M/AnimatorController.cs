@@ -229,29 +229,36 @@ public class AnimatorController : MonoBehaviour
 
 
     bool holdingHammer = false;
-    Transform hammerOriTrans;
+    Vector3 oriPos;
+    Quaternion oriRot;
+    GameObject workingTable;
+
     public void AnimaEventHammerInhandToggle()
     {
-        if(hammer == null)
+        if(hammer == null || workingTable == null)
         {
             hammer = GameObject.Find("Hammer");
-            hammerOriTrans = hammer.transform;
+            oriPos = hammer.transform.position;
+            oriRot = hammer.transform.rotation;
+            workingTable = GameObject.Find("WorkBench");
         }
        
         Debug.Log("hammerInhand");
         if(hammer != null && hand != null)
         {
-            if(holdingHammer == false)
+            if (holdingHammer == false)
             {
                 hammer.transform.position = hand.transform.position;
+                hammer.transform.forward = hand.transform.forward;
+                hammer.transform.Rotate(new Vector3(0.0f, 180.0f, 90.0f));
                 hammer.transform.parent = hand.transform;
                 holdingHammer = true;
             }
             else
             {
-                hammer.transform.parent = null;
-                hammer.transform.position = hammerOriTrans.position;
-                hammer.transform.rotation = hammerOriTrans.rotation;
+                hammer.transform.parent = workingTable.transform;
+                hammer.transform.position = oriPos;
+                hammer.transform.rotation = oriRot;
                 holdingHammer = false;
             }
 

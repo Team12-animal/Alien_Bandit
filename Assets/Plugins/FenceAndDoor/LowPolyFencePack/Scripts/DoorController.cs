@@ -76,7 +76,7 @@ namespace BrokenVector.LowPolyFencePack
         void Start()
         {            
             // a little hack, to set the initial state
-            currentState = DoorState.Open;
+            currentState = DoorState.Closed;
             var clip = GetCurrentAnimation();
             animator[clip].speed = 9999;
             animator.Play(clip);
