@@ -51,7 +51,7 @@ public class TreesController : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSecondsRealtime(20);
+            yield return new WaitForSecondsRealtime(30);
         }
     }
 

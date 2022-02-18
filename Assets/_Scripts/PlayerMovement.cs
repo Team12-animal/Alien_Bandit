@@ -405,25 +405,33 @@ public class PlayerMovement : MonoBehaviour
         return aniName;
     }
 
-    int hitTime = 0;
+    GameObject tree;
+    TreeSensor ts;
 
     //???????e?????? ?????????M???F(??animation event)
     public void AnimaEventSpawnStumpAndLog()
     {
-        if (hitTime < 2)
+        if (data.tree != null && tree != data.tree)
         {
-            hitTime += 1;
+            tree = data.tree;
+            ts = tree.GetComponent<TreeSensor>();
         }
-        else
+
+        if (ts != null && ts.hittenTime < 2)
         {
-            GameObject tree = data.tree;
+            ts.hittenTime += 1;
+
+        }
+        else if (ts != null)
+        {  
             Vector3 spawnPos;
             Vector3 treePos = tree.transform.position;
             treePos.y += 10.0f;
             Vector3 spawnDir = -tree.transform.up;
             RaycastHit hit;
 
-            //hide tree
+            //reset tree data and hide tree
+            ts.hittenTime = 0;
             tree.SetActive(false);
 
             //spawn stump and log on treePos
@@ -446,10 +454,11 @@ public class PlayerMovement : MonoBehaviour
                 log.transform.position = temp;
             }
 
-            hitTime = 0;
             data.tree = null;
             data.inTree = false;
         }
+
+        Debug.Log("spawn tree" + ts.hittenTime);
    }
 
 

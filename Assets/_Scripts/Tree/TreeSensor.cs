@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TreeSensor : MonoBehaviour
 {
+    public int hittenTime = 0;
+    
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
