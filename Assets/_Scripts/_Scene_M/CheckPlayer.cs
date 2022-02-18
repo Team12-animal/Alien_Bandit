@@ -188,7 +188,7 @@ public class CheckPlayer : MonoBehaviour
                 rightTraingle02.GetComponent<Image>().color = normalColor;
             }
         }
-        if (outerFrameP3.activeInHierarchy && Input.GetButtonDown("Horizontal3") && confirm03 && eventSystem03.currentSelectedGameObject == checkSelectButton03)//Change player03 skin
+        if (outerFrameP3.activeInHierarchy && Input.GetAxisRaw("Horizontal3")!=0 && confirm03 && eventSystem03.currentSelectedGameObject == checkSelectButton03)//Change player03 skin
         {
             SceneController.instance.player03.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal3");
             float horizontal = Input.GetAxisRaw("Horizontal3");
@@ -209,7 +209,7 @@ public class CheckPlayer : MonoBehaviour
                 rightTraingle03.GetComponent<Image>().color = normalColor;
             }
         }
-        if (outerFrameP4.activeInHierarchy && Input.GetButtonDown("Horizontal4") && confirm04 && eventSystem04.currentSelectedGameObject == checkSelectButton04)//Change player04 skin
+        if (outerFrameP4.activeInHierarchy && Input.GetAxisRaw("Horizontal4")!=0 && confirm04 && eventSystem04.currentSelectedGameObject == checkSelectButton04)//Change player04 skin
         {
             SceneController.instance.player04.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal4");
             float horizontal = Input.GetAxisRaw("Horizontal4");

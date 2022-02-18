@@ -8,12 +8,12 @@ public class UpdateStarsStates : MonoBehaviour
 {
     [SerializeField] List<GameObject> starts; // UI Show Stars
     [SerializeField] List<GameObject> dataStarts;//SceneManager save data
-    string star01 = "DataStarRawImageLevelOne1";
-    string star02 = "DataStarRawImageLevelOne2";
-    string star03 = "DataStarRawImageLevelOne3";
-    string star04 = "DataStarRawImageLevelTwo4";
-    string star05 = "DataStarRawImageLevelTwo5";
-    string star06 = "DataStarRawImageLevelTwo6";
+    public string star01 { get; private set; } = "DataStarRawImageLevelOne1";
+    public string star02 { get; private set; } = "DataStarRawImageLevelOne2";
+    public string star03 { get; private set; } = "DataStarRawImageLevelOne3";
+    public string star04 { get; private set; } = "DataStarRawImageLevelTwo4";
+    public string star05 { get; private set; } = "DataStarRawImageLevelTwo5";
+    public string star06 { get; private set; } = "DataStarRawImageLevelTwo6";
 
     public void Awake()
     {
@@ -23,7 +23,7 @@ public class UpdateStarsStates : MonoBehaviour
         dataStarts.Add(GameObject.Find(star04));
         dataStarts.Add(GameObject.Find(star05));
         dataStarts.Add(GameObject.Find(star06));
-        for (int i = 0; i < dataStarts.Count; i++)
+        for (int i = 0; i < starts.Count; i++)
         {
             starts[i].GetComponent<RawImage>().color = dataStarts[i].GetComponent<RawImage>().color;
         }

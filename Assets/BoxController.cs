@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class BoxController : MonoBehaviour
 {
     public bool firstCreated = false;
@@ -40,6 +40,8 @@ public class BoxController : MonoBehaviour
         {
             targetAnimal = other.gameObject;
             ac = targetAnimal.GetComponent(typeof(Collider)) as Collider;
+            targetAnimal.GetComponent<RabbitAI>().enabled = false;
+            targetAnimal.GetComponent<NavMeshAgent>().enabled = false;
             ac.enabled = false;
             targetAnimal.transform.position = contentSpot.transform.position;
             targetAnimal.transform.up = contentSpot.transform.up;

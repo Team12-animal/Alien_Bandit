@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ChangeRoleSkin : MonoBehaviour
 {
@@ -15,12 +16,12 @@ public class ChangeRoleSkin : MonoBehaviour
 
     public void ChangeSkin(string buttonName)
     {
-        if (Input.GetButtonDown(buttonName))
+        if (Input.GetButtonDown(buttonName) || Input.GetKeyDown(KeyCode.JoystickButton8))
         {
             roleSkins[currentSkin].SetActive(false);
-            if(currentSkin < roleSkins.Length-1)
+            if (currentSkin < roleSkins.Length - 1)
             {
-                roleSkins[currentSkin+1].SetActive(true);
+                roleSkins[currentSkin + 1].SetActive(true);
                 currentSkin++;
             }
             else if (currentSkin == 18)
