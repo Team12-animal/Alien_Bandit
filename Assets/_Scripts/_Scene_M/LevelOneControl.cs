@@ -30,10 +30,14 @@ public class LevelOneControl : MonoBehaviour
     [SerializeField] List<GameObject> levelOneStars;
     [SerializeField] List<GameObject> showStars;
     [SerializeField] List<GameObject> player = new List<GameObject>();
-    [SerializeField] bool player01CheckToContinue;
-    [SerializeField] bool player02CheckToContinue;
-    [SerializeField] bool player03CheckToContinue;
-    [SerializeField] bool player04CheckToContinue;
+    bool player01CheckToContinue;
+    bool player02CheckToContinue;
+    bool player03CheckToContinue;
+    bool player04CheckToContinue;
+    [SerializeField] GameObject player02RawImage;
+    [SerializeField] GameObject player03RawImage;
+    [SerializeField] GameObject player04RawImage;
+
 
     //is player win the game?
     public bool isWin;
@@ -55,15 +59,13 @@ public class LevelOneControl : MonoBehaviour
         levelOneStars[0] = GameObject.Find(updateStarsStates.star01);
         levelOneStars[1] = GameObject.Find(updateStarsStates.star02);
         levelOneStars[2] = GameObject.Find(updateStarsStates.star03);
+        player02RawImage.SetActive(true);
+        player03RawImage.SetActive(true);
+        player04RawImage.SetActive(true);
     }
 
     private void Update()
     {
-        //CheckPlayerPressContinue(SceneController.instance.selected01, "Use1", "Take1", player01CheckToContinue);
-        //CheckPlayerPressContinue(SceneController.instance.selected02, "Use2", "Take2", player02CheckToContinue);
-        //CheckPlayerPressContinue(SceneController.instance.selected03, "Use3", "Take3", player03CheckToContinue);
-        //CheckPlayerPressContinue(SceneController.instance.selected04, "Use4", "Take4", player04CheckToContinue);
-
         if (Input.GetButtonDown(KeyCode.Escape.ToString()))
         {
             SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
@@ -151,11 +153,14 @@ public class LevelOneControl : MonoBehaviour
             if (waittingTimeToShowContinueUI <= 0.0f)
             {
                 waittingTimeToShowContinueUI = 0.0f;
-                continueUI.SetActive(true);
-                for (int i = 0; i < levelOneStars.Count; i++)
+                if (!continueUI.activeInHierarchy)
                 {
-                    showStars[i].GetComponent<RawImage>().color = levelOneStars[i].GetComponent<RawImage>().color;
+                    for (int i = 0; i < levelOneStars.Count; i++)
+                    {
+                        showStars[i].GetComponent<RawImage>().color = levelOneStars[i].GetComponent<RawImage>().color;
+                    }
                 }
+                continueUI.SetActive(true);
                 //Reset Players Position to MainMenu;
                 //if (SceneController.instance.player01)
                 //{
@@ -165,13 +170,25 @@ public class LevelOneControl : MonoBehaviour
                 //{
                 //    SceneController.instance.MainPlayer(SceneController.instance.player02);
                 //}
+                //else
+                //{
+                //    player02RawImage.SetActive(false);
+                //}
                 //if (SceneController.instance.player03)
                 //{
                 //    SceneController.instance.MainPlayer(SceneController.instance.player03);
                 //}
+                //else
+                //{
+                //    player03RawImage.SetActive(false);
+                //}
                 //if (SceneController.instance.player04)
                 //{
                 //    SceneController.instance.MainPlayer(SceneController.instance.player04);
+                //}
+                //else
+                //{
+                //    player04RawImage.SetActive(true);
                 //}
                 //Show Stars animations;
 
@@ -192,62 +209,62 @@ public class LevelOneControl : MonoBehaviour
                 //1111; 4
                 bool fourPlayer = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
 
-                //CheckPlayerPressContinue(SceneController.instance.selected01, "Use1", "Take1", player01CheckToContinue);
-                //CheckPlayerPressContinue(SceneController.instance.selected02, "Use2", "Take2", player02CheckToContinue);
-                //CheckPlayerPressContinue(SceneController.instance.selected03, "Use3", "Take3", player03CheckToContinue);
-                //CheckPlayerPressContinue(SceneController.instance.selected04, "Use4", "Take4", player04CheckToContinue);
+                CheckPlayerPressContinue(SceneController.instance.selected01, "Use1", "Take1", ref player01CheckToContinue);
+                CheckPlayerPressContinue(SceneController.instance.selected02, "Use2", "Take2", ref player02CheckToContinue);
+                CheckPlayerPressContinue(SceneController.instance.selected03, "Use3", "Take3", ref player03CheckToContinue);
+                CheckPlayerPressContinue(SceneController.instance.selected04, "Use4", "Take4", ref player04CheckToContinue);
 
-                //switch (PlayerCount)
-                //{
-                //    case 1:
-                //        if (onePlayer1000 && player01CheckToContinue)
-                //        {
-                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                //            SceneController.instance.LoadLevel(2);
-                //        }
-                //        break;
-                //    case 2:
-                //        if (twoPlayerType1100 && player01CheckToContinue && player02CheckToContinue)
-                //        {
-                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                //            SceneController.instance.LoadLevel(2);
-                //        }
-                //        else if (twoPlayerType1010 && player01CheckToContinue && player03CheckToContinue)
-                //        {
-                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                //            SceneController.instance.LoadLevel(2);
-                //        }
-                //        else if (twoPlayerTpye1001 && player01CheckToContinue && player04CheckToContinue)
-                //        {
-                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                //            SceneController.instance.LoadLevel(2);
-                //        }
-                //        break;
-                //    case 3:
-                //        if (threePlayerType1110 && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue)
-                //        {
-                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                //            SceneController.instance.LoadLevel(2);
-                //        }
-                //        else if (threePlayerType1101 && player01CheckToContinue && player02CheckToContinue && player04CheckToContinue)
-                //        {
-                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                //            SceneController.instance.LoadLevel(2);
-                //        }
-                //        break;
-                //    case 4:
-                //        if (fourPlayer && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue && player04CheckToContinue)
-                //        {
-                //            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                //            SceneController.instance.LoadLevel(2);
-                //        }
-                //        break;
-                //}
+                switch (PlayerCount)
+                {
+                    case 1:
+                        if (onePlayer1000 && player01CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(2);
+                        }
+                        break;
+                    case 2:
+                        if (twoPlayerType1100 && player01CheckToContinue && player02CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(2);
+                        }
+                        else if (twoPlayerType1010 && player01CheckToContinue && player03CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(2);
+                        }
+                        else if (twoPlayerTpye1001 && player01CheckToContinue && player04CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(2);
+                        }
+                        break;
+                    case 3:
+                        if (threePlayerType1110 && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(2);
+                        }
+                        else if (threePlayerType1101 && player01CheckToContinue && player02CheckToContinue && player04CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(2);
+                        }
+                        break;
+                    case 4:
+                        if (fourPlayer && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue && player04CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(2);
+                        }
+                        break;
+                }
             }
         }
     }
 
-    private void CheckPlayerPressContinue(bool playerChosed, string checkButton, string cancelButton, bool result)
+    private void CheckPlayerPressContinue(bool playerChosed, string checkButton, string cancelButton, ref bool result)
     {
         if (playerChosed && Input.GetButtonDown(checkButton))
         {
