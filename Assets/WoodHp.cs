@@ -44,7 +44,11 @@ public class WoodHp : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        int attack = other.gameObject.GetComponent<Animator>().GetInteger("State");
+        int attack=0;
+        if (other.gameObject.GetComponent<Animator>() != null)
+        {
+            attack = other.gameObject.GetComponent<Animator>().GetInteger("State");
+        }     
         if (other.tag == "Rabbit" && attack == 2)
         {
             hp.fillAmount -= 0.1f * Time.deltaTime;

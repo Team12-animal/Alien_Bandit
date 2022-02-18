@@ -140,7 +140,7 @@ public class RabbitAI : MonoBehaviour
             {
                 m_eCurrentState = eFSMState.Attack;
             }
-            m_Data.m_fMaxSpeed = 0.04f;
+            m_Data.m_fMaxSpeed = 0.09f;
             m_Am.SetInteger("State", 0);
             bool bAttack = false;
             m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);  //°»´ú½d³ò¤º¦³ª±®a
@@ -412,7 +412,6 @@ public class RabbitAI : MonoBehaviour
                 attackWood = other.gameObject;
                 m_Data.m_TargetObject = attackWood;
                 Vector3 dist = transform.position - attackWood.transform.position;
-                Debug.LogError(dist);
                 m_Data.m_vTarget = attackWood.transform.position - new Vector3(0.8f, 0.8f, 0.8f);
             }
         }
