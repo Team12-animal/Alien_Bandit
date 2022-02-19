@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43661225, g: 0.501284, b: 0.585156, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.43665266, g: 0.5013119, b: 0.585155, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -108,8 +108,8 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 15
-    agentClimb: 0.1
+    agentSlope: 30
+    agentClimb: 0.5
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -829,7 +829,7 @@ GameObject:
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 4294967287
   m_IsActive: 1
 --- !u!154 &78788368
 TerrainCollider:
@@ -1451,7 +1451,7 @@ GameObject:
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 4294967287
   m_IsActive: 1
 --- !u!154 &155558925
 TerrainCollider:
@@ -6635,6 +6635,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 151030, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 151030, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 469914, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -6906,7 +6914,7 @@ GameObject:
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 4294967287
   m_IsActive: 1
 --- !u!154 &757769935
 TerrainCollider:
@@ -7055,6 +7063,14 @@ PrefabInstance:
     - target: {fileID: 159288, guid: d7be01913fd43c542a7c03fa290742fa, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 159288, guid: d7be01913fd43c542a7c03fa290742fa, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 159288, guid: d7be01913fd43c542a7c03fa290742fa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 456372, guid: d7be01913fd43c542a7c03fa290742fa, type: 3}
       propertyPath: m_RootOrder
@@ -7546,6 +7562,14 @@ PrefabInstance:
     - target: {fileID: 1197048385328406, guid: 797710b9cddb52647aa5e2345461502f, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1197048385328406, guid: 797710b9cddb52647aa5e2345461502f, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1197048385328406, guid: 797710b9cddb52647aa5e2345461502f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4050830807347228, guid: 797710b9cddb52647aa5e2345461502f, type: 3}
       propertyPath: m_RootOrder
@@ -19517,6 +19541,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 119986, guid: 80e74acf412f1f7419369c6003532087, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 119986, guid: 80e74acf412f1f7419369c6003532087, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 478454, guid: 80e74acf412f1f7419369c6003532087, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -20499,7 +20531,7 @@ GameObject:
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 4294967287
   m_IsActive: 1
 --- !u!154 &1192738106
 TerrainCollider:
@@ -20804,7 +20836,7 @@ GameObject:
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 4294967287
   m_IsActive: 1
 --- !u!154 &1210278559
 TerrainCollider:
@@ -23259,7 +23291,7 @@ GameObject:
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 4294967287
   m_IsActive: 1
 --- !u!154 &1439607054
 TerrainCollider:
@@ -24300,7 +24332,7 @@ GameObject:
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 4294967287
   m_IsActive: 1
 --- !u!154 &1518344177
 TerrainCollider:
@@ -24905,7 +24937,7 @@ GameObject:
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 4294967287
   m_IsActive: 1
 --- !u!154 &1539784394
 TerrainCollider:
@@ -32174,6 +32206,14 @@ PrefabInstance:
     - target: {fileID: 157830, guid: 62e60247eb7840d418f372425884878d, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 157830, guid: 62e60247eb7840d418f372425884878d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 157830, guid: 62e60247eb7840d418f372425884878d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 458554, guid: 62e60247eb7840d418f372425884878d, type: 3}
       propertyPath: m_RootOrder
