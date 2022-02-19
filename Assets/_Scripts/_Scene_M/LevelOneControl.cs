@@ -91,30 +91,26 @@ public class LevelOneControl : MonoBehaviour
     /// </summary>
     private void TimeSettingAndAllowPlayerMoving()
     {
-        if(waittingTime < -1.0f)
-        {
-            return;
-        }
         if (waittingTime <= 0.0f)
         {
-            waittingTime = -0.9f;
             waittingTimeUI.gameObject.SetActive(false);
-            if (SceneController.instance.selected01)
+            if (SceneController.instance.selected01 && waittingTime >-2.0f)
             {
                 SceneController.instance.StartMove(players[0]);
             }
-            if (SceneController.instance.selected02)
+            if (SceneController.instance.selected02 && waittingTime > -2.0f)
             {
                 SceneController.instance.StartMove(players[1]);
             }
-            if (SceneController.instance.selected03)
+            if (SceneController.instance.selected03 && waittingTime > -2.0f)
             {
                 SceneController.instance.StartMove(players[2]);
             }
-            if (SceneController.instance.selected04)
+            if (SceneController.instance.selected04 && waittingTime > -2.0f)
             {
                 SceneController.instance.StartMove(players[3]);
             }
+            waittingTime = -3.0f;
             waittingTimeUI.gameObject.SetActive(false);
             if (!isWin && !doorDestroied)
             {
@@ -135,7 +131,6 @@ public class LevelOneControl : MonoBehaviour
         int minute = (int)gamingTime / 60;
         int second = (int)gamingTime - minute * 60;
         text.text = string.Format("{0:D2}:{1:D2}", minute, second);
-
         return time;
     }
 

@@ -48,7 +48,6 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] Text ButtonTip;
     [SerializeField] GameObject completeImageUI;
     [SerializeField] GameObject gameFailImageUI;
-    [SerializeField] GameObject eventStartCurrentButton;
     [SerializeField] Dialogue dialogue;
 
     [Header("Item States")]
@@ -91,6 +90,9 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] GameObject oldCircle;
     public GameObject tempTarget;
     MissionManager missionManager;
+
+    [Header("TimeSet")]
+    float timeTowait = 3.0f;
 
     private void Start()
     {
@@ -318,7 +320,12 @@ public class TeachingLevelControl : MonoBehaviour
         {
             processFail = true;
             gameFailImageUI.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(eventStartCurrentButton);
+            timeTowait -= Time.deltaTime;
+            if(timeTowait <= 0.0f)
+            {
+                SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                SceneController.instance.LoadLevel(0);
+            }
             return;
         }
     }
