@@ -321,9 +321,6 @@ public class TeachingLevelControl : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(eventStartCurrentButton);
             return;
         }
-
-
-        
     }
 
     private void ChangeFocusItemCircle(GameObject target, GameObject circleType)
@@ -419,6 +416,10 @@ public class TeachingLevelControl : MonoBehaviour
 
     public void CreatCircle(GameObject target, GameObject circleType)
     {
+        if(target == null)
+        {
+            return;
+        }
         Vector3 offset = new Vector3(0f, 3f, -3f);
         GameObject temp = Instantiate(circleType, target.transform.position + offset, Quaternion.Euler(40.0f, 0f, 0f));
         newCircle = temp;

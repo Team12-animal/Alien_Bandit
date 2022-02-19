@@ -764,4 +764,9 @@ public class PlayerMovement : MonoBehaviour
             itemInhand.SetActive(false);
         }
     }
+
+    public Transform GetHoldingPos()
+    {
+        return holdingPos;
+    }
 }

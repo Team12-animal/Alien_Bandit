@@ -142,6 +142,7 @@ public class SceneController : MonoBehaviour
         GetPlayerState(player);
         tempRigibody.useGravity = true;
         tempRoleSkin.enabled = false;
+        //tempInput.enabled = true;
         string defaultAnimator = "CharacterControllerTest_Male_withItem";
         GetAnimator(player).runtimeAnimatorController = Resources.Load(defaultAnimator) as RuntimeAnimatorController;
 
@@ -171,6 +172,13 @@ public class SceneController : MonoBehaviour
         tempInput.enabled = false;
         tempRigibody.useGravity = false;
         tempRoleSkin.enabled = true;
+
+        //find child and Destory it
+        foreach (Transform child in tempPlayerMovement.GetHoldingPos())
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
         GetAnimator(player);
         //wired
         tempAnim.ChangeAnimationState(tempAnim.Player_DanceType18, 0f, 0f);
