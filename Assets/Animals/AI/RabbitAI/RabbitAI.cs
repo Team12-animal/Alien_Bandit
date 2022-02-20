@@ -307,7 +307,7 @@ public class RabbitAI : MonoBehaviour
                     m_eCurrentState = eFSMState.Chase;   //°k¶]
                     m_Am.SetInteger("State", 3);
                     m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
-                    Debug.LogError(SteeringBehavior.CollisionAvoid(m_Data));
+                    //Debug.LogError(SteeringBehavior.CollisionAvoid(m_Data));
                     if (SteeringBehavior.CollisionAvoid(m_Data) == false)
                     {
                         SteeringBehavior.Flee(m_Data);

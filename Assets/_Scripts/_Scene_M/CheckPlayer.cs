@@ -75,11 +75,11 @@ public class CheckPlayer : MonoBehaviour
     [SerializeField] GameObject player02;
     [SerializeField] GameObject player03;
     [SerializeField] GameObject player04;
-    string menuDance01 = "CharacterControllerTest_Male_MainMenu01";
-    string menuDance02 = "CharacterControllerTest_Male_MainMenu02";
-    string menuDance03 = "CharacterControllerTest_Male_MainMenu03";
-    string menuDance04 = "CharacterControllerTest_Male_MainMenu04";
-    string withItemAnimator = "CharacterControllerTest_Male_withItem";
+    public string menuDance01 { get; private set; } = "CharacterControllerTest_Male_MainMenu01";
+    public string menuDance02 { get; private set; } = "CharacterControllerTest_Male_MainMenu02";
+    public string menuDance03 { get; private set; } = "CharacterControllerTest_Male_MainMenu03";
+    public string menuDance04 { get; private set; } = "CharacterControllerTest_Male_MainMenu04";
+    public string withItemAnimator { get; private set; } = "CharacterControllerTest_Male_withItem";
 
 
     private void Awake()
@@ -188,7 +188,7 @@ public class CheckPlayer : MonoBehaviour
                 rightTraingle02.GetComponent<Image>().color = normalColor;
             }
         }
-        if (outerFrameP3.activeInHierarchy && Input.GetAxisRaw("Horizontal3")!=0 && confirm03 && eventSystem03.currentSelectedGameObject == checkSelectButton03)//Change player03 skin
+        if (outerFrameP3.activeInHierarchy && Input.GetAxisRaw("Horizontal3") != 0 && confirm03 && eventSystem03.currentSelectedGameObject == checkSelectButton03)//Change player03 skin
         {
             SceneController.instance.player03.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal3");
             float horizontal = Input.GetAxisRaw("Horizontal3");
@@ -209,7 +209,7 @@ public class CheckPlayer : MonoBehaviour
                 rightTraingle03.GetComponent<Image>().color = normalColor;
             }
         }
-        if (outerFrameP4.activeInHierarchy && Input.GetAxisRaw("Horizontal4")!=0 && confirm04 && eventSystem04.currentSelectedGameObject == checkSelectButton04)//Change player04 skin
+        if (outerFrameP4.activeInHierarchy && Input.GetAxisRaw("Horizontal4") != 0 && confirm04 && eventSystem04.currentSelectedGameObject == checkSelectButton04)//Change player04 skin
         {
             SceneController.instance.player04.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal4");
             float horizontal = Input.GetAxisRaw("Horizontal4");
@@ -330,7 +330,7 @@ public class CheckPlayer : MonoBehaviour
         {
             confirm02 = false;
             checkSelectButton02.SetActive(false);
-            ChangePlayerAnimator(player02,withItemAnimator);
+            ChangePlayerAnimator(player02, withItemAnimator);
         }
         else if (confirmBool == confirmName03)
         {
@@ -514,7 +514,7 @@ public class CheckPlayer : MonoBehaviour
     }
     #endregion
 
-    private void ChangePlayerAnimator(GameObject player, string animatorName)
+    public void ChangePlayerAnimator(GameObject player, string animatorName)
     {
         AnimatorController anim02 = player.GetComponent<AnimatorController>();
         anim02.animator = player.GetComponent<Animator>();
