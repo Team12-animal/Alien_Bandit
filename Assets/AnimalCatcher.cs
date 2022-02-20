@@ -42,7 +42,7 @@ public class AnimalCatcher : MonoBehaviour
         data.catchedAmt += 1;
        
         getStar.collectTargets += 1;
-        //MissionManager.Instance.RemoveMission(0);
+        AIMain.m_Instance.AddRabbit();
         Debug.Log("Catch!");
 
         animalInBox.SetActive(false);

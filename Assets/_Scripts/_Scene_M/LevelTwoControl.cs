@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,16 +6,17 @@ using UnityEngine.UI;
 
 public class LevelTwoControl : MonoBehaviour
 {
-    [Header("遊戲開始時間倒數")]
-    [SerializeField] float waittingTime = 6.0f;
-    [SerializeField] Text waittingTimeText;
-    [SerializeField] Canvas waittingTimeUI;
+    [Header("Waitting before star game play")]
+    [SerializeField] float waittingTime = 3.0f;
+    [SerializeField] GameObject readyImage;
+    [SerializeField] Sprite goImage;
+    [SerializeField] GameObject waittingTimeUI;
 
-    [Header("遊戲進行期間")]
+    [Header("Gaming")]
     [SerializeField] float gamingTime = 180.0f;
     [SerializeField] Text gamingTimeText;
 
-    [Header("遊戲結束")]
+    [Header("End Game")]
     [SerializeField] GameObject[] gameOverUIText;
     [SerializeField] GameObject gameWinUI;
     public bool doorDestroied = false;
@@ -23,14 +25,34 @@ public class LevelTwoControl : MonoBehaviour
     InputController input03 = new InputController();
     InputController input04 = new InputController();
 
-    [SerializeField] List<GameObject> player = new List<GameObject>();
+    [Header("ContinueUISetting")]
+    float waittingTimeToShowContinueUI = 3.0f;
+    [SerializeField] GameObject continueUI;
+    [SerializeField] GameObject[] levelTwoStars;
+    [SerializeField] List<GameObject> showStars;
+    [SerializeField] List<GameObject> players = new List<GameObject>();
+    bool player01CheckToContinue;
+    bool player02CheckToContinue;
+    bool player03CheckToContinue;
+    bool player04CheckToContinue;
+    [SerializeField] GameObject player02RawImage;
+    [SerializeField] GameObject player03RawImage;
+    [SerializeField] GameObject player04RawImage;
+    [SerializeField] GameObject player01ReadyImage;
+    [SerializeField] GameObject player02ReadyImage;
+    [SerializeField] GameObject player03ReadyImage;
+    [SerializeField] GameObject player04ReadyImage;
+
+    MissionManager missionManager;
 
     //is player win the game?
     public bool isWin;
 
     private void Start()
     {
-        SceneController.instance.GetPlayer(player);
+        //Setting Players who are in game
+        SceneController.instance.GetPlayer(players);
+        //Setting Game UI and time
         for (int i = 0; i < gameOverUIText.Length; i++)
         {
             gameOverUIText[i].gameObject.SetActive(false);
@@ -39,6 +61,24 @@ public class LevelTwoControl : MonoBehaviour
         doorDestroied = false;
         isWin = false;
         gameWinUI.SetActive(false);
+        continueUI.SetActive(false);
+        waittingTimeToShowContinueUI = 3.0f;
+        //Setting stars
+        levelTwoStars = new GameObject[3];
+        UpdateStarsStates updateStarsStates = new UpdateStarsStates();
+        levelTwoStars[0] = GameObject.Find(updateStarsStates.star04);
+        levelTwoStars[1] = GameObject.Find(updateStarsStates.star05);
+        levelTwoStars[2] = GameObject.Find(updateStarsStates.star06);
+        //Setting Continue UI
+        player02RawImage.SetActive(true);
+        player03RawImage.SetActive(true);
+        player04RawImage.SetActive(true);
+        player01ReadyImage.SetActive(false);
+        player02ReadyImage.SetActive(false);
+        player03ReadyImage.SetActive(false);
+        player04ReadyImage.SetActive(false);
+        missionManager = GameObject.Find("MissionCanvas").GetComponent<MissionManager>();
+        missionManager.AddMission();
     }
 
     private void Update()
@@ -47,35 +87,38 @@ public class LevelTwoControl : MonoBehaviour
         {
             SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
             SceneController.instance.LoadLevel(0);
-            LevelLoader.instance.LoadLevel(0);
+            //LevelLoader.instance.LoadLevel(0);
         }
-        TimeSetting();
+        TimeSettingAndAllowPlayerMoving();
         GameOver();
-        TriggerSceneEvents();
+        //TriggerSceneEvents();
         WinGame(2);//2  means what level two stars state;
     }
-
-    private void TimeSetting()
+    /// <summary>
+    /// When waitting time go up , allow player moving
+    /// </summary>
+    private void TimeSettingAndAllowPlayerMoving()
     {
-        if (waittingTime <= 0f)
+        if (waittingTime <= 0.0f)
         {
             waittingTimeUI.gameObject.SetActive(false);
-            if (SceneController.instance.selected01)
+            if (SceneController.instance.selected01 && waittingTime > -2.0f)
             {
-                SceneController.instance.StartMove(player[0]);
+                SceneController.instance.StartMove(players[0]);
             }
-            if (SceneController.instance.selected02)
+            if (SceneController.instance.selected02 && waittingTime > -2.0f)
             {
-                SceneController.instance.StartMove(player[1]);
+                SceneController.instance.StartMove(players[1]);
             }
-            if (SceneController.instance.selected03)
+            if (SceneController.instance.selected03 && waittingTime > -2.0f)
             {
-                SceneController.instance.StartMove(player[2]);
+                SceneController.instance.StartMove(players[2]);
             }
-            if (SceneController.instance.selected04)
+            if (SceneController.instance.selected04 && waittingTime > -2.0f)
             {
-                SceneController.instance.StartMove(player[3]);
+                SceneController.instance.StartMove(players[3]);
             }
+            waittingTime = -3.0f;
             waittingTimeUI.gameObject.SetActive(false);
             if (!isWin && !doorDestroied)
             {
@@ -84,7 +127,7 @@ public class LevelTwoControl : MonoBehaviour
         }
         else if (waittingTime < 1.2f)
         {
-            waittingTimeText.text = "GO!";
+            readyImage.GetComponent<Image>().sprite = goImage;
         }
         waittingTime -= Time.deltaTime;
     }
@@ -96,16 +139,15 @@ public class LevelTwoControl : MonoBehaviour
         int minute = (int)gamingTime / 60;
         int second = (int)gamingTime - minute * 60;
         text.text = string.Format("{0:D2}:{1:D2}", minute, second);
-
         return time;
     }
 
     public void GameOver()
     {
-        input01 = player[0].GetComponent<InputController>();
-        input02 = player[1].GetComponent<InputController>();
-        input03 = player[2].GetComponent<InputController>();
-        input04 = player[3].GetComponent<InputController>();
+        input01 = players[0].GetComponent<InputController>();
+        input02 = players[1].GetComponent<InputController>();
+        input03 = players[2].GetComponent<InputController>();
+        input04 = players[3].GetComponent<InputController>();
         if (gamingTime <= 0.0f || doorDestroied)
         {
             GameOverSetting(input01, input02, input03, input04);
@@ -120,8 +162,147 @@ public class LevelTwoControl : MonoBehaviour
             //need to creat win UI;
             gameWinUI.SetActive(true);
 
-            // can't control players;
+            //can't control players;
             GameOverSetting(input01, input02, input03, input04);
+
+            //Wait a little seconds to show Continue UI;
+            waittingTimeToShowContinueUI -= Time.deltaTime;
+            if (waittingTimeToShowContinueUI <= 0.0f)
+            {
+                waittingTimeToShowContinueUI = 0.0f;
+                if (!continueUI.activeInHierarchy)
+                {
+                    for (int i = 0; i < levelTwoStars.Length; i++)
+                    {
+                        showStars[i].GetComponent<RawImage>().color = levelTwoStars[i].GetComponent<RawImage>().color;
+                    }
+                }
+                continueUI.SetActive(true);
+                //Reset Players Position to MainMenu;
+                if (SceneController.instance.selected01)
+                {
+                    //Set player position to MainMenu position because using the same rawImage;
+                    SceneController.instance.MainPlayer(SceneController.instance.player01);
+                    //Change Animator to Dance Type;
+                    CheckPlayer tempPlayer = new CheckPlayer();
+                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player01, tempPlayer.menuDance01);
+                }
+                if (SceneController.instance.selected02)
+                {
+                    SceneController.instance.MainPlayer(SceneController.instance.player02);
+                    CheckPlayer tempPlayer = new CheckPlayer();
+                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player02, tempPlayer.menuDance02);
+                }
+                else
+                {
+                    player02RawImage.SetActive(false);
+                }
+                if (SceneController.instance.selected03)
+                {
+                    SceneController.instance.MainPlayer(SceneController.instance.player03);
+                    CheckPlayer tempPlayer = new CheckPlayer();
+                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player03, tempPlayer.menuDance03);
+                }
+                else
+                {
+                    player03RawImage.SetActive(false);
+                }
+                if (SceneController.instance.selected04)
+                {
+                    SceneController.instance.MainPlayer(SceneController.instance.player04);
+                    CheckPlayer tempPlayer = new CheckPlayer();
+                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player04, tempPlayer.menuDance04);
+                }
+                else
+                {
+                    player04RawImage.SetActive(false);
+                }
+                //Show Stars animations;
+
+                //Wait every players pressed confirm button to continue;
+                //PlayerCount =how many players in game
+                int PlayerCount = Convert.ToInt32(SceneController.instance.selected01) + Convert.ToInt32(SceneController.instance.selected02) + Convert.ToInt32(SceneController.instance.selected03) + Convert.ToInt32(SceneController.instance.selected04);
+                //1000; 1
+                bool onePlayer1000 = SceneController.instance.selected01 && !SceneController.instance.selected02 && !SceneController.instance.selected03 && !SceneController.instance.selected04;
+                //1100; 2
+                bool twoPlayerType1100 = SceneController.instance.selected01 && SceneController.instance.selected02 && !SceneController.instance.selected03 && !SceneController.instance.selected04;
+                //1010; 2
+                bool twoPlayerType1010 = SceneController.instance.selected01 && !SceneController.instance.selected02 && SceneController.instance.selected03 && !SceneController.instance.selected04;
+                //1001; 2
+                bool twoPlayerTpye1001 = SceneController.instance.selected01 && !SceneController.instance.selected02 && !SceneController.instance.selected03 && SceneController.instance.selected04;
+                //1110; 3
+                bool threePlayerType1110 = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && !SceneController.instance.selected04;
+                //1011; 3
+                bool threePlayerType1101 = SceneController.instance.selected01 && !SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
+                //1111; 4
+                bool fourPlayer = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
+
+                CheckPlayerPressContinue(SceneController.instance.selected01, "Use1", "Take1", ref player01CheckToContinue, player01ReadyImage);
+                CheckPlayerPressContinue(SceneController.instance.selected02, "Use2", "Take2", ref player02CheckToContinue, player02ReadyImage);
+                CheckPlayerPressContinue(SceneController.instance.selected03, "Use3", "Take3", ref player03CheckToContinue, player03ReadyImage);
+                CheckPlayerPressContinue(SceneController.instance.selected04, "Use4", "Take4", ref player04CheckToContinue, player04ReadyImage);
+
+                switch (PlayerCount)
+                {
+                    case 1:
+                        if (onePlayer1000 && player01CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(0);
+                        }
+                        break;
+                    case 2:
+                        if (twoPlayerType1100 && player01CheckToContinue && player02CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(0);
+                        }
+                        else if (twoPlayerType1010 && player01CheckToContinue && player03CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(0);
+                        }
+                        else if (twoPlayerTpye1001 && player01CheckToContinue && player04CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(0);
+                        }
+                        break;
+                    case 3:
+                        if (threePlayerType1110 && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(0);
+                        }
+                        else if (threePlayerType1101 && player01CheckToContinue && player02CheckToContinue && player04CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(0);
+                        }
+                        break;
+                    case 4:
+                        if (fourPlayer && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue && player04CheckToContinue)
+                        {
+                            SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                            SceneController.instance.LoadLevel(0);
+                        }
+                        break;
+                }
+            }
+        }
+    }
+
+    private void CheckPlayerPressContinue(bool playerChosed, string checkButton, string cancelButton, ref bool result, GameObject image)
+    {
+        if (playerChosed && Input.GetButtonDown(checkButton))
+        {
+            image.SetActive(true);
+            result = true;
+        }
+        else if (playerChosed && Input.GetButtonDown(cancelButton))
+        {
+            image.SetActive(false);
+            result = false;
         }
     }
 
@@ -175,9 +356,9 @@ public class LevelTwoControl : MonoBehaviour
     [SerializeField] float endOthersEventTime = 90.0f;
     public void TriggerSceneEvents()
     {
-        int creatOrNot = Random.Range(0, 6);
+        int creatOrNot = UnityEngine.Random.Range(0, 6);
         //random a event to creat;
-        int sceneEvent = Random.Range((int)MessionEvents.SceneEvent.TorbadoEvent, (int)MessionEvents.SceneEvent.EndCounts);
+        int sceneEvent = UnityEngine.Random.Range((int)MessionEvents.SceneEvent.TorbadoEvent, (int)MessionEvents.SceneEvent.EndCounts);
 
         if (gamingTime <= startOthersEventTime && creatOrNot > 0 && createdOthers == false && gamingTime > endOthersEventTime)
         {
@@ -217,5 +398,17 @@ public class LevelTwoControl : MonoBehaviour
             Debug.LogWarning("EndOthersEvent");
             createdOthers = false;
         }
+    }
+
+    //for treeController
+    public float GetGameTime()
+    {
+        return gamingTime;
+    }
+
+    //for treeController
+    public bool WinOrNot()
+    {
+        return isWin;
     }
 }

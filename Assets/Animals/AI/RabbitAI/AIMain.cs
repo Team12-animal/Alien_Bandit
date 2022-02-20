@@ -6,10 +6,10 @@ public class AIMain : MonoBehaviour
 {
     public static AIMain m_Instance;
     private List<Obstacle> m_Obstacles;
-    private List<GameObject> m_Player;
+    [SerializeField] private List<GameObject> m_Player;
     [SerializeField]private GameObject[] m_WanderPoints;
     [SerializeField]private List<GameObject> m_SceneRabbit;
-    [SerializeField]private int[] randomArray;
+    private int[] randomArray;
     private int randtime;
     private GameObject go;
     private void Awake()
@@ -28,7 +28,7 @@ public class AIMain : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-       
+
         m_Obstacles = new List<Obstacle>();
         GameObject[] gos = GameObject.FindGameObjectsWithTag("Obstacle");
         if (gos != null || gos.Length > 0)
@@ -45,8 +45,13 @@ public class AIMain : MonoBehaviour
         {
             foreach (GameObject go in players)
             {
+                Debug.LogError("Add Player");
                 m_Player.Add(go);
             }
+        }
+        else
+        {
+            Debug.LogError("No Player");
         }
 
     }
@@ -71,18 +76,23 @@ public class AIMain : MonoBehaviour
         {
             RandomArray();
         }
+        Debug.LogError("¦A¥[¤@°¦");
         Vector3 Pos = m_WanderPoints[randomArray[randtime]].transform.position;
-        Quaternion Rot = Quaternion.Euler(0f, Random.Range(0, 361), 0f);      
+        Quaternion Rot = Quaternion.Euler(0f, Random.Range(0, 361), 0f);
         GameObject rago = Instantiate(go, Pos, Rot, this.transform);
-        m_SceneRabbit.Add(rago);
-        randtime += 1;
+        Debug.LogError(rago.name);
+        if (rago != null)
+        {
+            m_SceneRabbit.Add(rago);
+            randtime += 1;
+        }
     }
 
     public void RemoveRabbit(GameObject go)
     {
         Destroy(go.gameObject);
         m_SceneRabbit.Remove(go);
-        StartCoroutine(WaitTimeAddRabbit(5f));     
+        StartCoroutine(WaitTimeAddRabbit(5f));
     }
 
     private void Update()
