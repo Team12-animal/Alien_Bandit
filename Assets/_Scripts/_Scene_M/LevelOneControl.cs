@@ -244,43 +244,43 @@ public class LevelOneControl : MonoBehaviour
                         if (onePlayer1000 && player01CheckToContinue)
                         {
                             SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                            SceneController.instance.LoadLevel(2);
+                            SceneController.instance.LoadLevel(0);
                         }
                         break;
                     case 2:
                         if (twoPlayerType1100 && player01CheckToContinue && player02CheckToContinue)
                         {
                             SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                            SceneController.instance.LoadLevel(2);
+                            SceneController.instance.LoadLevel(0);
                         }
                         else if (twoPlayerType1010 && player01CheckToContinue && player03CheckToContinue)
                         {
                             SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                            SceneController.instance.LoadLevel(2);
+                            SceneController.instance.LoadLevel(0);
                         }
                         else if (twoPlayerTpye1001 && player01CheckToContinue && player04CheckToContinue)
                         {
                             SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                            SceneController.instance.LoadLevel(2);
+                            SceneController.instance.LoadLevel(0);
                         }
                         break;
                     case 3:
                         if (threePlayerType1110 && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue)
                         {
                             SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                            SceneController.instance.LoadLevel(2);
+                            SceneController.instance.LoadLevel(0);
                         }
                         else if (threePlayerType1101 && player01CheckToContinue && player02CheckToContinue && player04CheckToContinue)
                         {
                             SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                            SceneController.instance.LoadLevel(2);
+                            SceneController.instance.LoadLevel(0);
                         }
                         break;
                     case 4:
                         if (fourPlayer && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue && player04CheckToContinue)
                         {
                             SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                            SceneController.instance.LoadLevel(2);
+                            SceneController.instance.LoadLevel(0);
                         }
                         break;
                 }
