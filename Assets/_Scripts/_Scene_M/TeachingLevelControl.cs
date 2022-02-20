@@ -274,9 +274,9 @@ public class TeachingLevelControl : MonoBehaviour
         {
             process07 = true;
             DialogueProcess(8);
-            GameObject tempRabbits = GameObject.FindGameObjectWithTag(rabbitsTag);
-            ChangeFocusItemCircle(tempRabbits, rabbitCircle);
-            tempTarget = tempRabbits;
+            GameObject tempRabbit = GameObject.FindGameObjectWithTag(rabbitsTag);
+            ChangeFocusItemCircle(tempRabbit, rabbitCircle);
+            tempTarget = tempRabbit;
             if (boxPrefab == null)
             {
                 boxController = GameObject.Find("Box(Clone)").GetComponent<BoxController>();

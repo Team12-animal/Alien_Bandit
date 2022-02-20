@@ -78,7 +78,10 @@ public class LevelTwoControl : MonoBehaviour
         player03ReadyImage.SetActive(false);
         player04ReadyImage.SetActive(false);
         missionManager = GameObject.Find("MissionCanvas").GetComponent<MissionManager>();
-        missionManager.AddMission();
+        for (int i = 0; i < 5; i++)
+        {
+            missionManager.AddMission();
+        }
     }
 
     private void Update()
