@@ -132,6 +132,7 @@ public class RabbitAI : MonoBehaviour
 
     private void CheckPlayerInSight()
     {
+        Debug.LogError("偵測到玩家");
         bool bAttack = false;
         m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);
         if (m_CurrentEnemyTarget != null) //偵測範圍內有玩家

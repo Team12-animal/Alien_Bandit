@@ -7,8 +7,8 @@ public class AIMain : MonoBehaviour
     public static AIMain m_Instance;
     private List<Obstacle> m_Obstacles;
     [SerializeField] private List<GameObject> m_Player;
-    private GameObject[] m_WanderPoints;
-    private List<GameObject> m_SceneRabbit;
+    [SerializeField]private GameObject[] m_WanderPoints;
+    [SerializeField]private List<GameObject> m_SceneRabbit;
     private int[] randomArray;
     private int randtime;
     private GameObject go;
@@ -80,8 +80,12 @@ public class AIMain : MonoBehaviour
         Vector3 Pos = m_WanderPoints[randomArray[randtime]].transform.position;
         Quaternion Rot = Quaternion.Euler(0f, Random.Range(0, 361), 0f);
         GameObject rago = Instantiate(go, Pos, Rot, this.transform);
-        m_SceneRabbit.Add(rago);
-        randtime += 1;
+        Debug.LogError(rago.name);
+        if (rago != null)
+        {
+            m_SceneRabbit.Add(rago);
+            randtime += 1;
+        }
     }
 
     public void RemoveRabbit(GameObject go)
