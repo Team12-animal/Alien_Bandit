@@ -70,7 +70,7 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] List<GameObject> trees;
     List<GameObject> winDoor;
     List<GameObject> loseDoor;
-    List<GameObject> ropes;
+    [SerializeField]List<GameObject> ropes;
     List<GameObject> doorOpeners;
     GetStarTest getStarTest;
     [SerializeField] GameObject table;
@@ -118,7 +118,6 @@ public class TeachingLevelControl : MonoBehaviour
         }
         else if (startTeaching)
         {
-
             CheckProcess();
         }
     }
@@ -184,7 +183,6 @@ public class TeachingLevelControl : MonoBehaviour
         //GameObject[] tempTrees = GameObject.FindGameObjectsWithTag(treeTag);
         GameObject[] tempWinDoor = GameObject.FindGameObjectsWithTag(winDoorTag);
         GameObject[] tempLoseDoor = GameObject.FindGameObjectsWithTag(loseDoorTag);
-        GameObject[] tempRops = GameObject.FindGameObjectsWithTag(ropeTag);
         GameObject[] tempDoorOpener = GameObject.FindGameObjectsWithTag(doorOpenerTag);
         SettingTargets(rocks, tempRocks);
         SettingTargets(woods, tempWoods);
@@ -193,7 +191,6 @@ public class TeachingLevelControl : MonoBehaviour
         SettingTargets(workingTable, tempWorkingTable);
         SettingTargets(winDoor, tempWinDoor);
         SettingTargets(loseDoor, tempLoseDoor);
-        SettingTargets(ropes, tempRops);
         SettingTargets(doorOpeners, tempDoorOpener);
         craftingManager = table.GetComponent<CraftingManager>();
         //boxController = boxPrefab.GetComponent<BoxController>();
@@ -249,6 +246,8 @@ public class TeachingLevelControl : MonoBehaviour
         {
             process04 = true;
             DialogueProcess(5);
+             GameObject[] tempRops = GameObject.FindGameObjectsWithTag(ropeTag);
+             SettingTargets(ropes, tempRops);
             ChangeFocusItemCircle(ropes[0], itemCircle);
             return;
         }
