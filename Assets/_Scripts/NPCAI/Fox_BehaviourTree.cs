@@ -97,7 +97,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         {
             case (int)FoxStatus.Safe:
                 Debug.Log("npc safe");
-                BreakBoxAndStealRabbit();
+                BreakItem();
                 break;
 
             case (int)FoxStatus.Alert:
@@ -105,6 +105,7 @@ public class Fox_BehaviourTree : MonoBehaviour
                 break;
 
             case (int)FoxStatus.Attacked:
+
                 break;
 
             case (int)FoxStatus.Home:
@@ -182,7 +183,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     }
 
     #region fox behaviour tree
-    private void BreakBoxAndStealRabbit()
+    private void BreakItem()
     {
         Debug.Log("npc break box");
         if(arriveTarget == false)
@@ -200,7 +201,6 @@ public class Fox_BehaviourTree : MonoBehaviour
         {
             Debug.Log("npc arrive");
             BreakTarget(target);
-            StealRabbit(target);
             status = (int)FoxStatus.Home;
         }
     }
@@ -208,6 +208,50 @@ public class Fox_BehaviourTree : MonoBehaviour
     private void Alert(GameObject player)
     {
         AlertPlayer(effectPlayer);
+    }
+
+
+    int left = 0;
+    int right = 1;
+
+    private void AvoidAttack()
+    {
+        if(effectPlayer == null)
+        {
+            return;
+        }
+
+        Vector3 pPos = effectPlayer.transform.position;
+        Vector3 pF = effectPlayer.transform.forward;
+        Vector3 foxPos = this.transform.position;
+
+        Vector3 dir = foxPos - pPos;
+        float pFDotDir = Vector3.Dot(pF, dir);
+
+        if(pFDotDir > 0.7f) //fox in effectPlayer attackable area
+        {
+            int randomDir = Random.Range(0, 1);
+            Vector3 targetDir;
+
+            if(randomDir == right) //escape to right side
+            {
+                targetDir = effectPlayer.transform.right;
+                targetDir.y = foxPos.y; //move on x-z
+            }
+            else
+            {
+                targetDir = -effectPlayer.transform.right;
+                targetDir.y = foxPos.y;
+            }
+
+            Vector3 newDir = targetDir + this.transform.forward;
+            this.transform.forward = Vector3.Slerp(this.transform.forward, newDir, 0.8f);
+            this.transform.position += this.transform.forward * data.jumpSpeed;
+        }
+        else
+        {
+            this.transform.position += this.transform.forward * data.m_fMaxSpeed;
+        }
     }
 
     private void GoHome()
@@ -227,7 +271,26 @@ public class Fox_BehaviourTree : MonoBehaviour
     #region steering behaviour
     private void AlertPlayer(GameObject player)
     {
+        if (effectPlayer == null)
+        {
+            return;
+        }
 
+        Vector3 pPos = effectPlayer.transform.position;
+        Vector3 pF = effectPlayer.transform.forward;
+        Vector3 foxPos = this.transform.position;
+
+        Vector3 dir = foxPos - pPos;
+        float pFDotDir = Vector3.Dot(pF, dir);
+
+        if (pFDotDir > -0.3f) //fox in front of effectPlayer
+        {
+            RotateAround(effectPlayer);
+        }
+        else
+        {
+            BreakItem();
+        }
     }
     #endregion
 
@@ -235,17 +298,35 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void BreakTarget(GameObject target)
     {
+        if (target.tag == "box")
+        {
+            GameObject animalCatched = target.GetComponent<BoxController>().targetAnimal;
+
+            if (animalCatched != null)
+            {
+                animalCatched.transform.parent = null;
+            }
+        }
+
         target.SetActive(false);
     }
 
-    private void StealRabbit(GameObject target)
-    {
-        GameObject prey;
+    public float angularSpeed;
+    float radius = 0.0f;
+    float angle;
 
-        if (target.tag == "box")
+    private void RotateAround(GameObject target)
+    {
+        if(radius == 0.0f)
         {
-            prey = target.GetComponent<BoxController>().targetAnimal;
+            radius = (this.transform.position - target.transform.position).magnitude;
         }
+
+        angle += (angularSpeed * Time.deltaTime) % 360;
+        float posX = radius * Mathf.Sin(angle * Mathf.Deg2Rad);
+        float posZ = radius * Mathf.Cos(angle * Mathf.Deg2Rad);
+
+        this.transform.position = new Vector3(posX, 0, posZ) + target.transform.position;
     }
 
     #endregion

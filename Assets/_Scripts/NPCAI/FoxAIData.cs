@@ -9,6 +9,9 @@ public class FoxAIData : NpcAIData
     public GameObject target;
     public GameObject BirthPos;
 
+    //speed for special movement
+    public float jumpSpeed;
+
     //dist to player to enter alert status
     private float alertDist;
 
