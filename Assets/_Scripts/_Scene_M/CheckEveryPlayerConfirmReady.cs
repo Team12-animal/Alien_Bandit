@@ -18,7 +18,7 @@ public class CheckEveryPlayerConfirmReady : MonoBehaviour
     bool player02CheckToContinue;
     bool player03CheckToContinue;
     bool player04CheckToContinue;
-    [SerializeField] bool cancelContinue;
+    bool cancelContinue;
     [SerializeField] GameObject cancelContinueImage;
 
     private void Start()

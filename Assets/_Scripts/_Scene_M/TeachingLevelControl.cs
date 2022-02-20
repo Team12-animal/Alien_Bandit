@@ -274,8 +274,9 @@ public class TeachingLevelControl : MonoBehaviour
         {
             process07 = true;
             DialogueProcess(8);
-            ChangeFocusItemCircle(rabbits[0], rabbitCircle);
-            tempTarget = rabbits[0];
+            GameObject tempRabbits = GameObject.FindGameObjectWithTag(rabbitsTag);
+            ChangeFocusItemCircle(tempRabbits, rabbitCircle);
+            tempTarget = tempRabbits;
             if (boxPrefab == null)
             {
                 boxController = GameObject.Find("Box(Clone)").GetComponent<BoxController>();
@@ -321,7 +322,7 @@ public class TeachingLevelControl : MonoBehaviour
             processFail = true;
             gameFailImageUI.SetActive(true);
             timeTowait -= Time.deltaTime;
-            if(timeTowait <= 0.0f)
+            if (timeTowait <= 0.0f)
             {
                 SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
                 SceneController.instance.LoadLevel(0);
@@ -423,7 +424,7 @@ public class TeachingLevelControl : MonoBehaviour
 
     public void CreatCircle(GameObject target, GameObject circleType)
     {
-        if(target == null)
+        if (target == null)
         {
             return;
         }
