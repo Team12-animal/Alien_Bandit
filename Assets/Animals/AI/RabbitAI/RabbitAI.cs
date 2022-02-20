@@ -198,7 +198,7 @@ public class RabbitAI : MonoBehaviour
                 m_eCurrentState = eFSMState.Attack;
                 return;
             }
-            m_fIdleTime = Random.Range(3.0f, 4.0f);  //漫步停留時間為隨機3～4秒
+            m_fIdleTime = Random.Range(2.0f, 3.0f);  //漫步停留時間為隨機3～4秒
             CheckPlayerInSight();
             m_Data.agent.enabled = true;
             m_Data.agent.updateRotation = true;
@@ -279,7 +279,6 @@ public class RabbitAI : MonoBehaviour
                 m_Data.m_fMaxSpeed = 0.01f;
                 transform.rotation = Quaternion.Lerp(this.transform.rotation, attackWood.transform.rotation, 0.05f);
                 float dist = (transform.position - m_Data.m_vTarget).magnitude;
-                Debug.LogError(dist);
                 if (dist < 1.5f)
                 {
                     transform.forward = attackWood.transform.position;
