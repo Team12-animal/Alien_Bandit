@@ -129,6 +129,37 @@ public class RabbitAI : MonoBehaviour
         return false;
     }
 
+
+    private void CheckPlayerInSight()
+    {
+        bool bAttack = false;
+        m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);
+        if (m_CurrentEnemyTarget != null) //偵測範圍內有玩家
+        {
+            m_Data.m_TargetObject = m_CurrentEnemyTarget;
+            if (bAttack)  //在警戒範圍內
+            {
+                m_Data.agent.enabled = true;
+                m_Data.agent.updateRotation = true;
+                m_Data.m_vTarget = CheckCloseHole().transform.position;
+                m_Am.SetInteger("State", 3);
+                m_eCurrentState = eFSMState.MoveToTarget;
+            }
+            else
+            {
+                m_Data.agent.enabled = false;
+                m_eCurrentState = eFSMState.Chase;   //逃跑
+                m_Am.SetInteger("State", 3);
+                m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
+                if (SteeringBehavior.CollisionAvoid(m_Data) == false)
+                {
+                    SteeringBehavior.Flee(m_Data);
+                }
+                SteeringBehavior.Move(m_Data);
+            }
+            return;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -139,36 +170,11 @@ public class RabbitAI : MonoBehaviour
             if (attackWood != null)
             {
                 m_eCurrentState = eFSMState.Attack;
+                return;
             }
             m_Data.m_fMaxSpeed = 0.09f;
             m_Am.SetInteger("State", 0);
-            bool bAttack = false;
-            m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);  //偵測範圍內有玩家
-            if (m_CurrentEnemyTarget != null)   //如果有玩家的話
-            {
-                m_Data.m_TargetObject = m_CurrentEnemyTarget;  //傳給AIData目標物
-                if (bAttack)  //在警戒範圍內便會移動到兔子洞
-                {
-                    m_Data.agent.enabled = true;
-                    m_Data.agent.updateRotation = true;
-                    m_Data.m_vTarget = CheckCloseHole().transform.position;  //將目標位置改為最近兔子洞
-                    m_Am.SetInteger("State", 3);
-                    m_eCurrentState = eFSMState.MoveToTarget;
-                }
-                else
-                {
-                    m_Data.agent.enabled = false;
-                    m_eCurrentState = eFSMState.Chase;   //逃跑
-                    m_Am.SetInteger("State", 3);
-                    m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
-                    if (SteeringBehavior.CollisionAvoid(m_Data) == false)
-                    {
-                        SteeringBehavior.Flee(m_Data);
-                    }
-                    SteeringBehavior.Move(m_Data);
-                }
-                return;
-            }
+            CheckPlayerInSight();
             // Wait to move.           
             if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
             {
@@ -190,42 +196,16 @@ public class RabbitAI : MonoBehaviour
             if (attackWood != null)
             {
                 m_eCurrentState = eFSMState.Attack;
-            }
-            bool bAttack = false;
-            m_fIdleTime = Random.Range(2.0f, 3.0f);  //漫步停留時間為隨機2～3秒
-            m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);
-            if (m_CurrentEnemyTarget != null) //偵測範圍內有玩家
-            {
-                m_Data.m_TargetObject = m_CurrentEnemyTarget;
-                if (bAttack)  //在警戒範圍內
-                {
-                    m_Data.agent.enabled = true;
-                    m_Data.agent.updateRotation = true;
-                    m_Data.m_vTarget = CheckCloseHole().transform.position;
-                    m_Am.SetInteger("State", 3);
-                    m_eCurrentState = eFSMState.MoveToTarget;
-                }
-                else
-                {
-                    m_Data.agent.enabled = false;
-                    m_eCurrentState = eFSMState.Chase;   //逃跑
-                    m_Am.SetInteger("State", 3);
-                    m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
-                    if (SteeringBehavior.CollisionAvoid(m_Data) == false)
-                    {
-                        SteeringBehavior.Flee(m_Data);
-                    }
-                    SteeringBehavior.Move(m_Data);
-                }
                 return;
             }
-
+            m_fIdleTime = Random.Range(3.0f, 4.0f);  //漫步停留時間為隨機3～4秒
+            CheckPlayerInSight();
             m_Data.agent.enabled = true;
             m_Data.agent.updateRotation = true;
             m_Data.agent.SetDestination(m_Data.m_vTarget);  //AI移動到隨機目標點
             Vector3 newPos = (m_Data.m_vTarget - transform.position); //到目標點的向量
             float dis = newPos.magnitude;  //距離長度
-            if (dis < 0.1f || (m_fCurrentTime > m_fIdleTime))  //若小於0.1f便回到IDLE狀態 (到達) Or 若超過停留時間便中斷並進入IDLE狀態 (未到達)
+            if (dis < 0.3f || (m_fCurrentTime > m_fIdleTime))  //若小於0.1f便回到IDLE狀態 (到達) Or 若超過停留時間便中斷並進入IDLE狀態 (未到達)
             {
                 m_Data.agent.updateRotation = false;
                 m_Data.agent.SetDestination(transform.position);  //將位置調整為當前位置(避免平移)
@@ -288,34 +268,7 @@ public class RabbitAI : MonoBehaviour
         }
         else if (m_eCurrentState == eFSMState.Attack)
         {
-            bool bAttack = false;
-            m_CurrentEnemyTarget = CheckEnemyInSight(ref bAttack);  //偵測範圍內有玩家
-            if (m_CurrentEnemyTarget != null)   //如果有玩家的話
-            {
-                m_Data.m_TargetObject = m_CurrentEnemyTarget;  //傳給AIData目標物
-                if (bAttack)  //在警戒範圍內便會移動到兔子洞
-                {
-                    m_Data.agent.enabled = true;
-                    m_Data.agent.updateRotation = true;
-                    m_Data.m_vTarget = CheckCloseHole().transform.position;  //將目標位置改為最近兔子洞
-                    m_Am.SetInteger("State", 3);
-                    m_eCurrentState = eFSMState.MoveToTarget;
-                }
-                else
-                {
-                    m_Data.agent.enabled = false;
-                    m_eCurrentState = eFSMState.Chase;   //逃跑
-                    m_Am.SetInteger("State", 3);
-                    m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
-                    //Debug.LogError(SteeringBehavior.CollisionAvoid(m_Data));
-                    if (SteeringBehavior.CollisionAvoid(m_Data) == false)
-                    {
-                        SteeringBehavior.Flee(m_Data);
-                    }
-                    SteeringBehavior.Move(m_Data);
-                }
-                return;
-            }
+            CheckPlayerInSight();
             if (attackWood == null)
             {
                 m_eCurrentState = eFSMState.Idle;
@@ -324,18 +277,19 @@ public class RabbitAI : MonoBehaviour
             else
             {
                 m_Data.m_fMaxSpeed = 0.01f;
-                m_Data.m_vTarget = attackWood.transform.position - new Vector3(0.8f, 0.8f, 0.8f);
-                if (SteeringBehavior.CollisionAvoid(m_Data) == false)
-                {
-                    SteeringBehavior.Seek(m_Data);
-                }
-                SteeringBehavior.Move(m_Data);             
                 transform.rotation = Quaternion.Lerp(this.transform.rotation, attackWood.transform.rotation, 0.05f);
-
-                float dist =(transform.position-m_Data.m_vTarget).magnitude ;
-                if (dist<1)
+                float dist = (transform.position - m_Data.m_vTarget).magnitude;
+                Debug.LogError(dist);
+                if (dist < 1.5f)
                 {
+                    transform.forward = attackWood.transform.position;
                     m_Am.SetInteger("State", 2);
+                }
+                else
+                {
+                    m_Data.m_vTarget = attackWood.transform.position - new Vector3(0f, 0f, 1f);
+                    SteeringBehavior.Seek(m_Data);
+                    SteeringBehavior.Move(m_Data);
                 }
             }
         }
@@ -344,7 +298,7 @@ public class RabbitAI : MonoBehaviour
     public Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
 
-        Vector3 randDirection = Random.insideUnitCircle * dist;
+        Vector3 randDirection = Random.insideUnitSphere * (dist + 1);
 
         randDirection += origin;
 
@@ -410,9 +364,6 @@ public class RabbitAI : MonoBehaviour
             if (m_eCurrentState == eFSMState.Wander || m_eCurrentState == eFSMState.Idle)
             {
                 attackWood = other.gameObject;
-                m_Data.m_TargetObject = attackWood;
-                Vector3 dist = transform.position - attackWood.transform.position;
-                m_Data.m_vTarget = attackWood.transform.position - new Vector3(0.8f, 0.8f, 0.8f);
             }
         }
     }
@@ -424,7 +375,7 @@ public class RabbitAI : MonoBehaviour
         }
     }
 
-    public void  EnterHole()
+    public void EnterHole()
     {
         AIMain.m_Instance.RemoveRabbit(this.gameObject);
     }

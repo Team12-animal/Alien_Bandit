@@ -28,17 +28,13 @@ public class WoodHp : MonoBehaviour
     {
         if (other.tag == "Rabbit")
         {
-
             if (hpGo == null)
             {
                 hpGo = Resources.Load("WoodHp") as GameObject;
                 hpGo = Instantiate(hpGo, canvas.transform);
                 hpGo.transform.position = this.transform.position + new Vector3(0, 1.5f, 0);
                 hp = hpGo.GetComponent<Image>();
-            }
-            else
-            {
-                hpGo.SetActive(true);
+                hpGo.SetActive(false);
             }
         }
     }
@@ -51,6 +47,7 @@ public class WoodHp : MonoBehaviour
         }     
         if (other.tag == "Rabbit" && attack == 2)
         {
+            hpGo.SetActive(true);
             hp.fillAmount -= 0.1f * Time.deltaTime;
             if (hp.fillAmount <= 0)
             {
