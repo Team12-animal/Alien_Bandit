@@ -45,7 +45,6 @@ public class AIMain : MonoBehaviour
         {
             foreach (GameObject go in players)
             {
-                Debug.LogError("Add Player");
                 m_Player.Add(go);
             }
         }
@@ -76,11 +75,9 @@ public class AIMain : MonoBehaviour
         {
             RandomArray();
         }
-        Debug.LogError("¦A¥[¤@°¦");
         Vector3 Pos = m_WanderPoints[randomArray[randtime]].transform.position;
         Quaternion Rot = Quaternion.Euler(0f, Random.Range(0, 361), 0f);
         GameObject rago = Instantiate(go, Pos, Rot, this.transform);
-        Debug.LogError(rago.name);
         if (rago != null)
         {
             m_SceneRabbit.Add(rago);

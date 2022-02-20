@@ -43,7 +43,6 @@ public class AnimalCatcher : MonoBehaviour
        
         getStar.collectTargets += 1;
         AIMain.m_Instance.AddRabbit();
-        MissionManager.Instance.RemoveMission(0);
         Debug.Log("Catch!");
 
         animalInBox.SetActive(false);
@@ -56,5 +55,6 @@ public class AnimalCatcher : MonoBehaviour
 
         data.item = null;
         pm.itemInhand = null;
+        MissionManager.Instance.RemoveMission(0);
     }
 }
