@@ -12,7 +12,7 @@ public class WoodHp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canvas = GameObject.Find("Canvas");
+        canvas = GameObject.Find("TrianglePlayer");
         target = Camera.main.transform;
     }
 

@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2882382087854002403}
   - component: {fileID: 2882382087854002413}
   - component: {fileID: 19246377435877895}
+  - component: {fileID: 7429112707233436791}
   m_Layer: 0
-  m_Name: Rope
+  m_Name: rope
   m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,6 +63,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 1, z: 2.5}
   m_Center: {x: 0, y: 0.4, z: 0}
+--- !u!208 &7429112707233436791
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2882382087854002414}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.1, y: 0.05, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.3, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &2882382087034564900
 PrefabInstance:
   m_ObjectHideFlags: 0
