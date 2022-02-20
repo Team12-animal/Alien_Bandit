@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SteeringBehavior
 {
-    static public void Move(RabbitAIData data)
+    static public void Move(NpcAIData data)
     {
         if (data.m_bMove == false)
         {
@@ -72,7 +72,7 @@ public class SteeringBehavior
         t.position = cPos;
     }
 
-    static public bool CheckCollision(RabbitAIData data)
+    static public bool CheckCollision(NpcAIData data)
     {
         List<Obstacle> m_AvoidTargets = AIMain.m_Instance.GetObstacles();
         if (m_AvoidTargets == null)
@@ -122,7 +122,7 @@ public class SteeringBehavior
     }
 
 
-    static public bool CollisionAvoid(RabbitAIData data)
+    static public bool CollisionAvoid(NpcAIData data)
     {
         List<Obstacle> m_AvoidTargets = AIMain.m_Instance.GetObstacles();
         Transform ct = data.m_Go.transform;  //AI的位置向量
@@ -207,7 +207,7 @@ public class SteeringBehavior
         return false;
     }
 
-    static public bool Flee(RabbitAIData data)
+    static public bool Flee(NpcAIData data)
     {
         Vector3 cPos = data.m_Go.transform.position;  //AI目前位置
         Vector3 vec = data.m_vTarget - cPos;  //下一個要到的位置
@@ -267,7 +267,7 @@ public class SteeringBehavior
 
     }
 
-    static public bool Seek(RabbitAIData data)
+    static public bool Seek(NpcAIData data)
     {
         Vector3 cPos = data.m_Go.transform.position;
         Vector3 vec = data.m_vTarget - cPos;
