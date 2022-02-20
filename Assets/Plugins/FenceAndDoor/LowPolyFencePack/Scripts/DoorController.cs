@@ -64,7 +64,7 @@ namespace BrokenVector.LowPolyFencePack
             }
             
             // animator settings
-            animator.playAutomatically = true;
+            animator.playAutomatically = false;
 
             // prepare animation clips
             openAnimation.legacy = true;
