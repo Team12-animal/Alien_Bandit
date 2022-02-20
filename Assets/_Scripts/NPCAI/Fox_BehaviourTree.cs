@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class Fox_BehaviourTree : MonoBehaviour
 {
+    //init data
+    public FoxAIData data;
     [SerializeField]
     private GameObject target;
-    private Fox_AIData data;
     private int status;
-    private float maxSpeed;
-    private float maxRot;
-    private float movingForce;
-    private float turningForce;
-
     private float alertDist;
-    private float probeLength;
 
     //real speed and rot
-    private float speed;
-    private float rot;
+    public float movingForce;
+    public float turningForce;
+    public float speed;
+    public float rot;
+    private Vector3 currentF;
 
     //players on the field
     private GameObject p1;
@@ -45,19 +43,16 @@ public class Fox_BehaviourTree : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        data = this.gameObject.GetComponent<Fox_AIData>();
+        data = this.gameObject.GetComponent<FoxAIData>();
         DataInit();
         PlayerInit();
     }
 
     private void DataInit()
     {
-        target = data.dirTarget;
+        target = data.target;
         status = (int)data.status;
-        maxSpeed = data.realSpeed;
-        maxRot = data.realRot;
         alertDist = data.alertDist;
-        probeLength = data.probeLength;
     }
 
     private void PlayerInit()
@@ -94,11 +89,12 @@ public class Fox_BehaviourTree : MonoBehaviour
     {
         Debug.Log("npc update");
         FindEffectPlayer();
+        UpdateTargetPosition();
 
         switch (status)
         {
             case (int)FoxStatus.Safe:
-                BreakBoxAndStealRabbit(target);
+                BreakBoxAndStealRabbit();
                 break;
 
             case (int)FoxStatus.Alert:
@@ -122,39 +118,34 @@ public class Fox_BehaviourTree : MonoBehaviour
         data.status = status;
     }
 
+    private void UpdateTargetPosition()
+    {
+        data.m_vTarget = target.transform.position;
+    }
 
-    GameObject comparedPlayer;
-    float comparedDist = 10000.0f;
-
+    GameObject nearestPlayer;
+    float nearestDis = 10000.0f;
+    float tempDist;
     private void FindEffectPlayer()
     {
         //reset compareData;
-        comparedDist = 10000.0f;
-        comparedPlayer = null;
+        nearestDis = 10000.0f;
+        nearestPlayer = null;
 
+        //find the nearest player
         foreach (GameObject p in players)
         {
-            float tempDist = (p.transform.position - this.transform.position).magnitude;
+            tempDist = (p.transform.position - this.transform.position).magnitude;
 
-            if (tempDist < alertDist && tempDist < comparedDist)
+            if (tempDist <= alertDist && tempDist <= nearestDis)
             {
-                comparedPlayer = p;
-                comparedDist = tempDist;
+                nearestPlayer = p;
+                nearestDis = tempDist;
             }
         }
 
-        Debug.Log("npc find p" + comparedPlayer.name);
-        if(comparedPlayer == null)
-        {
-            effectPlayer = null;
-        }
-        else
-        {
-            effectPlayer = comparedPlayer;
-        }
-
+        effectPlayer = nearestPlayer;
         CheckAndChangeStatus();
-
 
         if (effectPlayer != null)
         {
@@ -185,13 +176,13 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     #region fox behaviour tree
 
-    private void BreakBoxAndStealRabbit(GameObject target)
+    private void BreakBoxAndStealRabbit()
     {
         if(arriveTarget == false)
         {
             if (AvoidCollision() == false)
             {
-                arriveTarget = Seek(target);
+                //arriveTarget = SteeringBehavior.Seek(data);
             }
 
             Move();
@@ -217,8 +208,9 @@ public class Fox_BehaviourTree : MonoBehaviour
     private void Move()
     {
         Vector3 npcPos = this.transform.position;
-        Vector3 vf = this.transform.forward;
+        Vector3 vOrif = this.transform.forward;
         Vector3 vr = this.transform.right;
+        Vector3 vf = currentF;
 
         //maximum and minimum of turningforce
         if (turningForce > maxRot)
@@ -247,6 +239,9 @@ public class Fox_BehaviourTree : MonoBehaviour
         {
             speed = maxSpeed;
         }
+
+        this.transform.position += this.transform.forward * speed;
+        Debug.Log("npc new pos" + this.transform.position);
     }
 
     private bool Seek(GameObject target)
@@ -269,6 +264,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         //fox's moving and turning force
         Vector3 vf = this.transform.forward;
         Vector3 vr = this.transform.right;
+        currentF = vf;
 
         //get forward force
         float dotF = Vector3.Dot(vf, dir);
@@ -277,8 +273,9 @@ public class Fox_BehaviourTree : MonoBehaviour
         if (dotF > 0.96f)
         {
             dotF = 1.0f;
-            this.transform.forward = dir;
+            currentF = dir;
             turningForce = 0.0f;
+            rot = 0.0f;
         }
         else
         {
@@ -327,7 +324,6 @@ public class Fox_BehaviourTree : MonoBehaviour
         {
             movingForce = 100.0f;
         }
-
         return false;
     }
 
