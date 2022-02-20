@@ -20,12 +20,12 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
-  m_AmbientEquatorColor: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 1}
+  m_AmbientSkyColor: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
+  m_AmbientEquatorColor: {r: 0, g: 0.26415092, b: 0.17734767, a: 1}
   m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 1
-  m_SubtractiveShadowColor: {r: 0.28627452, g: 0.2627451, b: 0.34117648, a: 1}
+  m_SubtractiveShadowColor: {r: 0.5840735, g: 0.56350124, b: 0.6320754, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 2bd8959f5fbd3644aa33af1a155fc147, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -35,10 +35,10 @@ RenderSettings:
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 0.505
+  m_ReflectionIntensity: 0.536
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43661225, g: 0.501284, b: 0.585156, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.4489684, g: 0.5152656, b: 0.60124564, a: 0.536}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: f68d221fe8fc386449cd41ba8d9fff85, type: 2}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 1ed5a36c36be84146af0e283fb999856, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -6312,7 +6312,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0.54901963, g: 0.49803922, b: 0.41960785, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 1.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -6321,8 +6321,8 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0
+    m_Strength: 0.712
+    m_Bias: 0.019
     m_NormalBias: 0.71
     m_NearPlane: 0.1
     m_CullingMatrixOverride:
