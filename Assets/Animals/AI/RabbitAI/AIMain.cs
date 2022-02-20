@@ -5,6 +5,7 @@ using UnityEngine;
 public class AIMain : MonoBehaviour
 {
     public static AIMain m_Instance;
+    [SerializeField]
     private List<Obstacle> m_Obstacles;
     [SerializeField] private List<GameObject> m_Player;
     [SerializeField]private GameObject[] m_WanderPoints;
@@ -72,6 +73,11 @@ public class AIMain : MonoBehaviour
 
     public void AddRabbit()
     {
+        if(m_WanderPoints.Length < 1)
+        {
+            return;
+        }
+
         if (randtime / m_WanderPoints.Length == 1)
         {
             RandomArray();

@@ -164,6 +164,8 @@ public class RabbitAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        m_Data.arriveDist = m_Data.m_Speed + 0.001f;
+
         //Debug.LogError("Current State " + m_eCurrentState);  //¦L¥X·í«eª¬ºA
         if (m_eCurrentState == eFSMState.Idle)
         {

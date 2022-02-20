@@ -7,7 +7,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     //init data
     public FoxAIData data;
     [SerializeField]
-    private GameObject target;
+    public GameObject target;
     private int status;
     private float alertDist;
 
@@ -29,6 +29,8 @@ public class Fox_BehaviourTree : MonoBehaviour
     public GameObject effectPlayer;
     public bool holdingRockOrBox;
 
+    public float maxSpeed;
+    public float maxRot;
     //seek ended or not
     public bool arriveTarget = false;
 
@@ -43,16 +45,16 @@ public class Fox_BehaviourTree : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        data = this.gameObject.GetComponent<FoxAIData>();
         DataInit();
         PlayerInit();
     }
 
     private void DataInit()
     {
-        target = data.target;
+        data.target = target;
+        data.m_Go = this.gameObject;
         status = (int)data.status;
-        alertDist = data.alertDist;
+        alertDist = data.m_fRadius;
     }
 
     private void PlayerInit()
@@ -94,6 +96,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         switch (status)
         {
             case (int)FoxStatus.Safe:
+                Debug.Log("npc safe");
                 BreakBoxAndStealRabbit();
                 break;
 
@@ -105,6 +108,7 @@ public class Fox_BehaviourTree : MonoBehaviour
                 break;
 
             case (int)FoxStatus.Home:
+                GoHome();
                 break;
 
         }
@@ -120,7 +124,10 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void UpdateTargetPosition()
     {
-        data.m_vTarget = target.transform.position;
+        if (target != null)
+        {
+            data.m_vTarget = target.transform.position;
+        }
     }
 
     GameObject nearestPlayer;
@@ -145,7 +152,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
 
         effectPlayer = nearestPlayer;
-        CheckAndChangeStatus();
+        AlertSafeToggle();
 
         if (effectPlayer != null)
         {
@@ -161,7 +168,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
     }
 
-    private void CheckAndChangeStatus()
+    private void AlertSafeToggle()
     {
         if (effectPlayer == null)
         {
@@ -175,17 +182,19 @@ public class Fox_BehaviourTree : MonoBehaviour
     }
 
     #region fox behaviour tree
-
     private void BreakBoxAndStealRabbit()
     {
+        Debug.Log("npc break box");
         if(arriveTarget == false)
         {
-            if (AvoidCollision() == false)
+            Debug.Log("npc break box2");
+            if (SteeringBehavior.CollisionAvoid(data) == false)
             {
-                //arriveTarget = SteeringBehavior.Seek(data);
+                Debug.Log("npc break box3");
+                arriveTarget = SteeringBehavior.Seek(data);
             }
 
-            Move();
+            SteeringBehavior.Move(data);
         }
         else
         {
@@ -198,153 +207,55 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void Alert(GameObject player)
     {
+        AlertPlayer(effectPlayer);
+    }
 
+    private void GoHome()
+    {
+        target = data.BirthPos;
+        data.m_vTarget = target.transform.position;
+        bool arriveHome = SteeringBehavior.Seek(data);
+
+        if (arriveHome)
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     #endregion
 
     #region steering behaviour
-
-    private void Move()
+    private void AlertPlayer(GameObject player)
     {
-        Vector3 npcPos = this.transform.position;
-        Vector3 vOrif = this.transform.forward;
-        Vector3 vr = this.transform.right;
-        Vector3 vf = currentF;
 
-        //maximum and minimum of turningforce
-        if (turningForce > maxRot)
-        {
-            turningForce = maxRot;
-        }
-        else if (turningForce < -maxRot)
-        {
-            turningForce = -maxRot;
-        }
-
-        //get new forward
-        vf += vr * turningForce;
-        vf.Normalize();
-        this.transform.forward = vf;
-
-        //get new speed
-        speed += movingForce * Time.deltaTime;
-
-        //maximum and minmum of speed
-        if (speed < 0.1f)
-        {
-            speed = 0.1f;
-        }
-        else if (speed > maxSpeed)
-        {
-            speed = maxSpeed;
-        }
-
-        this.transform.position += this.transform.forward * speed;
-        Debug.Log("npc new pos" + this.transform.position);
     }
-
-    private bool Seek(GameObject target)
-    {
-        Vector3 npcPos = this.transform.position;
-        Vector3 dir = target.transform.position - npcPos;
-        dir.y = 0.0f;
-        float dist = dir.magnitude;
-
-        //arrive target
-        if (dist < 0.2f)
-        {
-            speed = 0.0f;
-            rot = 0.0f;
-            return true;
-        }
-
-        dir.Normalize();
-
-        //fox's moving and turning force
-        Vector3 vf = this.transform.forward;
-        Vector3 vr = this.transform.right;
-        currentF = vf;
-
-        //get forward force
-        float dotF = Vector3.Dot(vf, dir);
-
-
-        if (dotF > 0.96f)
-        {
-            dotF = 1.0f;
-            currentF = dir;
-            turningForce = 0.0f;
-            rot = 0.0f;
-        }
-        else
-        {
-            if (dotF < -1.0f)
-            {
-                dotF = -1.0f;
-            }
-
-            //get turning force
-            float dotR = Vector3.Dot(vr, dir);
-
-            if (dotF < 0.0f) //target is behind NPC
-            {
-                if (dotR > 0.0f) // target is on the right side
-                {
-                    dotR = 1.0f; //turn fully right
-                }
-                else
-                {
-                    dotR = -1.0f; // turn fully left
-                }
-            }
-
-            //turning less and less
-            if (dist < 3.0f)
-            {
-                dotR *= (dist / 3.0f + 1.0f);
-            }
-
-            turningForce = dotR;
-        }
-
-        //slow done
-        if(dist < 3.0f)
-        {
-            if(speed > 0.1f)
-            {
-                movingForce = -(1.0f - dist / 0.3f) * 5.0f;
-            }
-            else
-            {
-                movingForce = dotF * 100.0f;
-            }
-        }
-        else
-        {
-            movingForce = 100.0f;
-        }
-        return false;
-    }
-
-    private bool AvoidCollision()
-    {
-        return false;
-    }
-
     #endregion
 
     #region other behaviour
 
     private void BreakTarget(GameObject target)
     {
-        
+        target.SetActive(false);
     }
 
     private void StealRabbit(GameObject target)
     {
+        GameObject prey;
 
+        if (target.tag == "box")
+        {
+            prey = target.GetComponent<BoxController>().targetAnimal;
+        }
     }
 
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(this.transform.position, data.m_fRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * data.m_fProbeLength);
+    }
 }

@@ -273,16 +273,27 @@ public class SteeringBehavior
         Vector3 vec = data.m_vTarget - cPos;
         vec.y = 0.0f;
         float fDist = vec.magnitude;
-        if (fDist < data.m_Speed + 0.001f)
+        if (fDist < data.arriveDist)
         {
-            Vector3 vFinal = data.m_vTarget;
-            vFinal.y = cPos.y;
-            data.m_Go.transform.position = vFinal;
-            data.m_fMoveForce = 0.0f;
-            data.m_fTempTurnForce = 0.0f;
-            data.m_Speed = 0.0f;
-            data.m_bMove = false;
-            return false;
+            if(data.m_Go.tag == "Rabbit")
+            {
+                Vector3 vFinal = data.m_vTarget;
+                vFinal.y = cPos.y;
+                data.m_Go.transform.position = vFinal;
+                data.m_fMoveForce = 0.0f;
+                data.m_fTempTurnForce = 0.0f;
+                data.m_Speed = 0.0f;
+                data.m_bMove = false;
+            }
+
+            if(data.m_Go.tag == "Fox")
+            {
+                data.m_fMoveForce = 0.0f;
+                data.m_fTempTurnForce = 0.0f;
+                data.m_Speed = 0.0f;
+                data.m_bMove = false;
+            }
+            return true;
         }
         Vector3 vf = data.m_Go.transform.forward;
         Vector3 vr = data.m_Go.transform.right;
@@ -343,6 +354,6 @@ public class SteeringBehavior
             data.m_fMoveForce = 100.0f;
         }
         data.m_bMove = true;
-        return true;
+        return false;
     }
 }

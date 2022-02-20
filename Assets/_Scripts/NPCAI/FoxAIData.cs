@@ -2,19 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class FoxAIData : NpcAIData
 {
-    //dist to player to enter alert status
-    public float alertDist;
+    //birth data
     public GameObject target;
+    public GameObject BirthPos;
+
+    //dist to player to enter alert status
+    private float alertDist;
 
     //fox status for behaviour tree
-    public int status = (int)FoxStatus.Safe;   
+    public FoxStatus Status = FoxStatus.Safe;
+    [HideInInspector]
+    public int status = (int)FoxStatus.Safe;
+
     public enum FoxStatus
     {
         Safe,
         Alert,
         Attacked,
         Home
+    }
+
+    public void UpdateStatus()
+    {
+        Status = (FoxStatus)status;
     }
 }
