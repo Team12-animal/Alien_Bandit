@@ -3990,7 +3990,11 @@ PrefabInstance:
     - target: {fileID: 523668885, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
       propertyPath: levelOne
       value: 
-      objectReference: {fileID: 1919580629}
+      objectReference: {fileID: 0}
+    - target: {fileID: 523668885, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
+      propertyPath: levelTwo
+      value: 
+      objectReference: {fileID: 1919580633}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ad8812903a70904f96d2fb56031ca18, type: 3}
 --- !u!1001 &526982116
@@ -4980,9 +4984,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 1879644540}
     m_Modifications:
     - target: {fileID: 1221769084598528480, guid: 9b69dfadd9a47c54a808a70e5f4389f8, type: 3}
+      propertyPath: targetAmt
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1221769084598528480, guid: 9b69dfadd9a47c54a808a70e5f4389f8, type: 3}
       propertyPath: levelOneControl
       value: 
-      objectReference: {fileID: 1919580629}
+      objectReference: {fileID: 0}
     - target: {fileID: 1221769084598528480, guid: 9b69dfadd9a47c54a808a70e5f4389f8, type: 3}
       propertyPath: levelTwoControl
       value: 
@@ -5040,6 +5048,11 @@ PrefabInstance:
 --- !u!4 &642693681 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1221769084598528483, guid: 9b69dfadd9a47c54a808a70e5f4389f8, type: 3}
+  m_PrefabInstance: {fileID: 642693680}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &642693682 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1221769084598528485, guid: 9b69dfadd9a47c54a808a70e5f4389f8, type: 3}
   m_PrefabInstance: {fileID: 642693680}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &647877440 stripped
@@ -8282,9 +8295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df4cd119a4f27204786127305b4259b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_WanderPoints: []
-  m_SceneRabbit: []
-  randomArray: 
 --- !u!1001 &982618051
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18495,7 +18505,7 @@ PrefabInstance:
     - target: {fileID: 2004668817848437538, guid: f25180a0f107e994083bff3fee0144ab, type: 3}
       propertyPath: goal
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 642693682}
     - target: {fileID: 2004668817848437538, guid: f25180a0f107e994083bff3fee0144ab, type: 3}
       propertyPath: goalDoor
       value: 
