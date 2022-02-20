@@ -23,6 +23,9 @@ public class CheckPlayer : MonoBehaviour
     [SerializeField] GameObject checkUI;
     [SerializeField] GameObject skinUI;
     [SerializeField] GameObject levelUI;
+    [SerializeField] GameObject continueUI01;
+    [SerializeField] GameObject continueUI02;
+    [SerializeField] GameObject continueUI03;
     [SerializeField] GameObject mainMenuNewGameButton;
     [SerializeField] GameObject checkPlayerUIStartButton;
     [SerializeField] GameObject chooseRoleUIStartButton;
@@ -86,6 +89,7 @@ public class CheckPlayer : MonoBehaviour
     {
         FindPlayers();
         SetUpFirstCurrentSelectedButton();
+        CloseContinueUI();
     }
 
     void Update()
@@ -364,6 +368,22 @@ public class CheckPlayer : MonoBehaviour
         eventSystem01.SetSelectedGameObject(chooseLevelStartButton);
     }
 
+    public void OpenContinueUI(int number)
+    {
+        switch (number)
+        {
+            case 1:
+                continueUI01.SetActive(true);
+                break;
+            case 2:
+                continueUI02.SetActive(true);
+                break;
+            case 3:
+                continueUI03.SetActive(true);
+                break;
+        }
+    }
+
     public void CloseCheckPlayerUI()
     {
         checkUI.SetActive(false);
@@ -382,6 +402,13 @@ public class CheckPlayer : MonoBehaviour
     {
         levelUI.SetActive(false);
         eventSystem01.SetSelectedGameObject(chooseRoleUIStartButton);
+    }
+
+    public void CloseContinueUI()
+    {
+        continueUI01.SetActive(false);
+        continueUI02.SetActive(false);
+        //continueUI03.SetActive(false);
     }
 
     public void ShowPlayerRawImages()
