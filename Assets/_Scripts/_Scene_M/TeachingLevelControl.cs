@@ -324,8 +324,8 @@ public class TeachingLevelControl : MonoBehaviour
             timeTowait -= Time.deltaTime;
             if (timeTowait <= 0.0f)
             {
-                SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                SceneController.instance.LoadLevel(0);
+                //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                //SceneController.instance.LoadLevel(0);
             }
             return;
         }
