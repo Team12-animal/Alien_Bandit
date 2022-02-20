@@ -75,7 +75,6 @@ public class LevelOneControl : MonoBehaviour
         player02ReadyImage.SetActive(false);
         player03ReadyImage.SetActive(false);
         player04ReadyImage.SetActive(false);
-
     }
 
     private void Update()
@@ -99,7 +98,7 @@ public class LevelOneControl : MonoBehaviour
         if (waittingTime <= 0.0f)
         {
             waittingTimeUI.gameObject.SetActive(false);
-            if (SceneController.instance.selected01 && waittingTime >-2.0f)
+            if (SceneController.instance.selected01 && waittingTime > -2.0f)
             {
                 SceneController.instance.StartMove(players[0]);
             }
@@ -234,10 +233,10 @@ public class LevelOneControl : MonoBehaviour
                 //1111; 4
                 bool fourPlayer = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
 
-                CheckPlayerPressContinue(SceneController.instance.selected01, "Use1", "Take1", ref player01CheckToContinue,player01ReadyImage);
-                CheckPlayerPressContinue(SceneController.instance.selected02, "Use2", "Take2", ref player02CheckToContinue,player02ReadyImage);
-                CheckPlayerPressContinue(SceneController.instance.selected03, "Use3", "Take3", ref player03CheckToContinue,player03ReadyImage);
-                CheckPlayerPressContinue(SceneController.instance.selected04, "Use4", "Take4", ref player04CheckToContinue,player04ReadyImage);
+                CheckPlayerPressContinue(SceneController.instance.selected01, "Use1", "Take1", ref player01CheckToContinue, player01ReadyImage);
+                CheckPlayerPressContinue(SceneController.instance.selected02, "Use2", "Take2", ref player02CheckToContinue, player02ReadyImage);
+                CheckPlayerPressContinue(SceneController.instance.selected03, "Use3", "Take3", ref player03CheckToContinue, player03ReadyImage);
+                CheckPlayerPressContinue(SceneController.instance.selected04, "Use4", "Take4", ref player04CheckToContinue, player04ReadyImage);
 
                 switch (PlayerCount)
                 {
@@ -289,7 +288,7 @@ public class LevelOneControl : MonoBehaviour
         }
     }
 
-    private void CheckPlayerPressContinue(bool playerChosed, string checkButton, string cancelButton, ref bool result,GameObject image)
+    private void CheckPlayerPressContinue(bool playerChosed, string checkButton, string cancelButton, ref bool result, GameObject image)
     {
         if (playerChosed && Input.GetButtonDown(checkButton))
         {
