@@ -71,6 +71,11 @@ public class LevelOneControl : MonoBehaviour
         player02RawImage.SetActive(true);
         player03RawImage.SetActive(true);
         player04RawImage.SetActive(true);
+        player01ReadyImage.SetActive(false);
+        player02ReadyImage.SetActive(false);
+        player03ReadyImage.SetActive(false);
+        player04ReadyImage.SetActive(false);
+
     }
 
     private void Update()
