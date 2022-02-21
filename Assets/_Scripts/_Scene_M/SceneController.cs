@@ -129,7 +129,7 @@ public class SceneController : MonoBehaviour
     ChangeRoleSkin tempRoleSkin;
     AnimatorController tempAnim;
     PlayerMovement tempPlayerMovement;
-    
+
     [SerializeField] Vector3 mainPosition01 = new Vector3(30.0f, 30.0f, 30.0f);
     [SerializeField] Vector3 mainPosition02 = new Vector3(36.0f, 30.0f, 30.0f);
     [SerializeField] Vector3 mainPosition03 = new Vector3(42.0f, 30.0f, 30.0f);

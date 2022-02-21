@@ -2,8 +2,6 @@
 
 using UnityEngine;
 using UnityEditor;
-using Boxophobic.StyledGUI;
-using Boxophobic.Utils;
 
 public class SkyboxExtendedHub : EditorWindow
 {
@@ -40,7 +38,7 @@ public class SkyboxExtendedHub : EditorWindow
             }
         }
 
-        assetVersion = SettingsUtils.LoadSettingsData(assetFolder + "/Core/Editor/Version.asset", -99);
+       //assetVersion = SettingsUtils.LoadSettingsData(assetFolder + "/Core/Editor/Version.asset", -99);
         bannerVersion = assetVersion.ToString();
         bannerVersion = bannerVersion.Insert(1, ".");
         bannerVersion = bannerVersion.Insert(3, ".");
@@ -52,7 +50,7 @@ public class SkyboxExtendedHub : EditorWindow
 
     void OnGUI()
     {
-        StyledGUI.DrawWindowBanner(bannerColor, bannerText, helpURL);
+        //StyledGUI.DrawWindowBanner(bannerColor, bannerText, helpURL);
 
         GUILayout.BeginHorizontal();
         GUILayout.Space(20);
