@@ -9,9 +9,8 @@ public class GetStarTest : MonoBehaviour
     
     public int collectRabbits; //catched rabbit amount
     public int collectRaccoons; //catched raccoon amount
+    public int collectLittleRaccoons; //
     public int collectPigs; //catched pig amount
-
-    public int targetAmt;
 
     private void Awake()
     {
@@ -19,64 +18,4 @@ public class GetStarTest : MonoBehaviour
         collectRaccoons = 0;
         collectPigs = 0;
     }
-
-    private void Update()
-    {
-        CheckCollectAmt();
-    }
-
-    private void CheckCollectAmt()
-    {
-        if(collectTargets == targetAmt)
-        {
-            if(levelOneControl != null)
-            {
-                levelOneControl.isWin = true;
-            }
-
-            if (levelTwoControl != null)
-            {
-                levelTwoControl.isWin = true;
-            }
-        }
-    }
-
-
-    /// <summary>
-    /// for testing
-    /// </summary>
-    /// <param name="collision"></param>
-    /// 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.collider.CompareTag("Player"))
-    //    {
-    //        if (collectTargets == 1)
-    //        {
-    //            if (levelOneControl == null)
-    //                return;
-    //            else
-    //                levelOneControl.isWin = true;
-    //        }
-    //        collectTargets++;
-    //    }
-    //    if (collision.collider.CompareTag("Player"))
-    //    {
-    //        if (collectTargets == 1)
-    //        {
-    //            if (levelTwoControl == null)
-    //                return;
-    //            else
-    //                levelTwoControl.isWin = true;
-    //        }
-    //        collectTargets++;
-    //    }
-    //}
-
-    //private void Update()
-    //{
-        
-    //}
-
-    //private void 
 }
