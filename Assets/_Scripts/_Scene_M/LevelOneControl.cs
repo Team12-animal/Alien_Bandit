@@ -450,13 +450,13 @@ public class LevelOneControl : LevelControl
     }
 
     //for treeController
-    public float GetGameTime()
+    public override float GetGameTime()
     {
         return gamingTime;
     }
 
     //for treeController
-    public bool WinOrNot()
+    public override bool WinOrNot()
     {
         return isWin;
     }

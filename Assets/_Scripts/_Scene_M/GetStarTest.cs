@@ -17,22 +17,22 @@ public class GetStarTest : MonoBehaviour
 
     private void Update()
     {
-        if(levelOneControl == null)
-        {
-            return;
-        }
-        else
-        {
-            CheckCollectAmt();
-        }
+        CheckCollectAmt();
     }
 
     private void CheckCollectAmt()
     {
         if(collectTargets == targetAmt)
         {
-            levelOneControl.isWin = true;
-            levelTwoControl.isWin = true;
+            if(levelOneControl != null)
+            {
+                levelOneControl.isWin = true;
+            }
+
+            if (levelTwoControl != null)
+            {
+                levelTwoControl.isWin = true;
+            }
         }
     }
 

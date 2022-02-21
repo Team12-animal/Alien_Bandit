@@ -8,7 +8,7 @@ public class TreesController : MonoBehaviour
     private int oriTreeAmt;
 
     private GameObject levelController;
-    private LevelOneControl lv1;
+    private LevelControl lv;
 
     private void Awake()
     {
@@ -16,15 +16,21 @@ public class TreesController : MonoBehaviour
         oriTreeAmt = trees.Length;
 
         levelController = GameObject.Find("LevelControl");
-        if(levelController != null)
-        {
-            lv1 = levelController.GetComponent<LevelOneControl>();
-        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        if (levelController != null)
+        {
+            lv = levelController.GetComponent<LevelOneControl>();
+
+            if (lv.isActiveAndEnabled != true)
+            {
+                lv = levelController.GetComponent<LevelTwoControl>();
+            }
+        }
+
         StartCoroutine(GrowTrees());
     }
 
@@ -32,10 +38,8 @@ public class TreesController : MonoBehaviour
     {
         yield return new WaitWhile(() => { return checkTreeAmt() < oriTreeAmt; });
 
-        while (lv1.GetGameTime() >= 0.0f && lv1.WinOrNot() == false)
+        while (lv.GetGameTime() >= 0.0f && lv.WinOrNot() == false)
         {
-            Debug.Log("grow new tree");
-
             if (checkTreeAmt() < oriTreeAmt)
             {
                 int i = Random.Range(0, oriTreeAmt - 1);
