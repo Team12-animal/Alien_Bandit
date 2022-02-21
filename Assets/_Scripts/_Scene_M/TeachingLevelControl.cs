@@ -70,7 +70,7 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] List<GameObject> trees;
     List<GameObject> winDoor;
     List<GameObject> loseDoor;
-    [SerializeField]List<GameObject> ropes;
+    [SerializeField] List<GameObject> ropes;
     List<GameObject> doorOpeners;
     GetStarTest getStarTest;
     [SerializeField] GameObject table;
@@ -90,7 +90,7 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] GameObject oldCircle;
     public GameObject tempTarget;
     MissionManager missionManager;
-    [SerializeField] List<GameObject> saveRabbitCircles;
+    List<GameObject> saveRabbitCircles;
 
     [Header("TimeSet")]
     float timeTowait = 3.0f;
@@ -239,8 +239,8 @@ public class TeachingLevelControl : MonoBehaviour
         {
             process04 = true;
             DialogueProcess(5);
-             GameObject[] tempRops = GameObject.FindGameObjectsWithTag(ropeTag);
-             SettingTargets(ropes, tempRops);
+            GameObject[] tempRops = GameObject.FindGameObjectsWithTag(ropeTag);
+            SettingTargets(ropes, tempRops);
             ChangeFocusItemCircle(ropes[0], itemCircle);
             return;
         }
@@ -271,6 +271,7 @@ public class TeachingLevelControl : MonoBehaviour
             for (int i = 0; i < tempRabbits.Length; i++)
             {
                 GameObject temp = CreatFollowCircle(tempRabbits[i], rabbitCircle);
+                saveRabbitCircles = new List<GameObject>();
                 saveRabbitCircles.Add(temp);
                 tempTarget = tempRabbits[i];
             }
