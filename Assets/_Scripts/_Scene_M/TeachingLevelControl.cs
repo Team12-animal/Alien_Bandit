@@ -105,6 +105,7 @@ public class TeachingLevelControl : MonoBehaviour
         Init();
         completeImageUI.SetActive(false);
         gameFailImageUI.SetActive(false);
+        saveRabbitCircles = new List<GameObject>();
     }
 
     private void Update()
@@ -271,7 +272,6 @@ public class TeachingLevelControl : MonoBehaviour
             for (int i = 0; i < tempRabbits.Length; i++)
             {
                 GameObject temp = CreatFollowCircle(tempRabbits[i], rabbitCircle);
-                saveRabbitCircles = new List<GameObject>();
                 saveRabbitCircles.Add(temp);
                 tempTarget = tempRabbits[i];
             }
