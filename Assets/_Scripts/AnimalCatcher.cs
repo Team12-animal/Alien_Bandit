@@ -41,7 +41,7 @@ public class AnimalCatcher : MonoBehaviour
         PlayerMovement pm = player.GetComponent<PlayerMovement>();
         data.catchedAmt += 1;
        
-        getStar.collectTargets += 1;
+        getStar.collectRabbits += 1;
         AIMain.m_Instance.AddRabbit();
         Debug.Log("Catch!");
 

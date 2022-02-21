@@ -8,14 +8,15 @@ public class Fox_BehaviourTree : MonoBehaviour
     public FoxAIData data;
     [SerializeField]
     public GameObject target;
+    public GameObject birthPos;
     private int status;
     private float alertDist;
 
     //real speed and rot
-    public float movingForce;
-    public float turningForce;
-    public float speed;
-    public float rot;
+    private float movingForce;
+    private float turningForce;
+    private float speed;
+    private float rot;
     private Vector3 currentF;
 
     //players on the field
@@ -30,8 +31,8 @@ public class Fox_BehaviourTree : MonoBehaviour
     public GameObject effectPlayer;
     public bool holdingRockOrBox;
 
-    public float maxSpeed;
-    public float maxRot;
+    private float maxSpeed;
+    private float maxRot;
     
     //seek ended or not
     public bool arriveTarget = false;
@@ -52,6 +53,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     private void DataInit()
     {
         data.target = target;
+        data.birthPos = birthPos;
         data.m_Go = this.gameObject;
         status = (int)data.status;
         alertDist = data.m_fRadius;
@@ -221,7 +223,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         {
             Debug.Log("npc arrive");
             BreakTarget(target);
-            status = (int)FoxAIData.FoxStatus.Home;
+            missionComplete = true;
         }
     }
 
@@ -301,11 +303,13 @@ public class Fox_BehaviourTree : MonoBehaviour
     {
         target = data.birthPos;
         data.m_vTarget = target.transform.position;
+
         bool arriveHome = SteeringBehavior.Seek(data);
 
         if (arriveHome)
         {
             this.gameObject.SetActive(false);
+            GameObject.Destroy(this.gameObject);
         }
     }
 
