@@ -5,7 +5,8 @@ using UnityEngine;
 public class AIMain : MonoBehaviour
 {
     public static AIMain m_Instance;
-    private List<Obstacle> m_Obstacles;
+    [SerializeField] private List<GameObject> m_ObstaclesGo;
+    [SerializeField] private List<Obstacle> m_Obstacles;
     [SerializeField] private List<GameObject> m_Player;
     [SerializeField]private GameObject[] m_WanderPoints;
     [SerializeField]private List<GameObject> m_SceneRabbit;
@@ -28,7 +29,7 @@ public class AIMain : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        m_ObstaclesGo = new List<GameObject>();
         m_Obstacles = new List<Obstacle>();
         GameObject[] gos = GameObject.FindGameObjectsWithTag("Obstacle");
         if (gos != null || gos.Length > 0)
@@ -36,6 +37,7 @@ public class AIMain : MonoBehaviour
             foreach (GameObject go in gos)
             {
                 m_Obstacles.Add(go.GetComponent<Obstacle>());
+                m_ObstaclesGo.Add(go.gameObject);
             }
         }
 
