@@ -7,7 +7,7 @@ public class FoxAIData : NpcAIData
 {
     //birth data
     public GameObject target;
-    public GameObject BirthPos;
+    public GameObject birthPos;
 
     //speed for special movement
     public float jumpSpeed;
@@ -28,8 +28,9 @@ public class FoxAIData : NpcAIData
         Home
     }
 
-    public void UpdateStatus()
+    public void UpdateStatus(int newStatus)
     {
+        status = newStatus;
         Status = (FoxStatus)status;
     }
 }

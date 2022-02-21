@@ -23,6 +23,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     private GameObject p2;
     private GameObject p3;
     private GameObject p4;
+    private AnimatorController ac;
 
     [SerializeField] public List<GameObject> players;
     [SerializeField]
@@ -31,16 +32,15 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     public float maxSpeed;
     public float maxRot;
+    
     //seek ended or not
     public bool arriveTarget = false;
 
-    public enum FoxStatus
-    {
-        Safe,
-        Alert,
-        Attacked,
-        Home
-    }
+    //mission complete or not
+    public bool missionComplete = false;
+
+    //player Action
+    public bool pAttact = false;
 
     // Start is called before the first frame update
     void Start()
@@ -91,24 +91,29 @@ public class Fox_BehaviourTree : MonoBehaviour
     {
         Debug.Log("npc update");
         FindEffectPlayer();
-        UpdateTargetPosition();
+        if (!missionComplete)
+        {
+            UpdateTargetPosition();
+        }
+
+        CheckStatusAndUpdate();
 
         switch (status)
         {
-            case (int)FoxStatus.Safe:
+            case (int)FoxAIData.FoxStatus.Safe:
                 Debug.Log("npc safe");
                 BreakItem();
                 break;
 
-            case (int)FoxStatus.Alert:
+            case (int)FoxAIData.FoxStatus.Alert:
                 Alert(effectPlayer);
                 break;
 
-            case (int)FoxStatus.Attacked:
+            case (int)FoxAIData.FoxStatus.Attacked:
 
                 break;
 
-            case (int)FoxStatus.Home:
+            case (int)FoxAIData.FoxStatus.Home:
                 GoHome();
                 break;
 
@@ -131,11 +136,48 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
     }
 
+    private void CheckStatusAndUpdate()
+    {
+        if(effectPlayer == null)
+        {
+            if(!missionComplete)
+            {
+                status = (int)FoxAIData.FoxStatus.Safe;
+            }
+
+            if (missionComplete)
+            {
+                status = (int)FoxAIData.FoxStatus.Home;
+            }
+        }
+
+        if(effectPlayer != null)
+        {
+            if(ac.ThorowingOrNot() == false)
+            {
+                status = (int)FoxAIData.FoxStatus.Alert;
+            }
+            else
+            {
+                status = (int)FoxAIData.FoxStatus.Attacked;
+            }
+        }
+
+        data.UpdateStatus(status);
+    }
+
     GameObject nearestPlayer;
     float nearestDis = 10000.0f;
     float tempDist;
+    GameObject oriEffectPlayer;
     private void FindEffectPlayer()
     {
+        //save original effectPlayer
+        if(effectPlayer != null)
+        {
+            oriEffectPlayer = effectPlayer;
+        }
+
         //reset compareData;
         nearestDis = 10000.0f;
         nearestPlayer = null;
@@ -153,32 +195,10 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
 
         effectPlayer = nearestPlayer;
-        AlertSafeToggle();
 
-        if (effectPlayer != null)
+        if(effectPlayer != null && effectPlayer != oriEffectPlayer)
         {
-            GameObject item = effectPlayer.GetComponent<PlayerData>().item;
-            if (item != null && (item.tag == "RockModel" || item.tag == "Box"))
-            {
-                holdingRockOrBox = true;
-            }
-            else
-            {
-                holdingRockOrBox = false;
-            }
-        }
-    }
-
-    private void AlertSafeToggle()
-    {
-        if (effectPlayer == null)
-        {
-            status = (int)FoxStatus.Safe;
-        }
-
-        if (effectPlayer != null && status != (int)FoxStatus.Alert)
-        {
-            status = (int)FoxStatus.Alert;
+            ac = effectPlayer.GetComponent<AnimatorController>();
         }
     }
 
@@ -201,7 +221,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         {
             Debug.Log("npc arrive");
             BreakTarget(target);
-            status = (int)FoxStatus.Home;
+            status = (int)FoxAIData.FoxStatus.Home;
         }
     }
 
@@ -210,6 +230,29 @@ public class Fox_BehaviourTree : MonoBehaviour
         AlertPlayer(effectPlayer);
     }
 
+    private void AlertPlayer(GameObject player)
+    {
+        if (effectPlayer == null)
+        {
+            return;
+        }
+
+        Vector3 pPos = effectPlayer.transform.position;
+        Vector3 pF = effectPlayer.transform.forward;
+        Vector3 foxPos = this.transform.position;
+
+        Vector3 dir = foxPos - pPos;
+        float pFDotDir = Vector3.Dot(pF, dir);
+
+        if (pFDotDir > -0.3f) //fox in front of effectPlayer
+        {
+            RotateAround(effectPlayer);
+        }
+        else
+        {
+            BreakItem();
+        }
+    }
 
     int left = 0;
     int right = 1;
@@ -256,7 +299,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void GoHome()
     {
-        target = data.BirthPos;
+        target = data.birthPos;
         data.m_vTarget = target.transform.position;
         bool arriveHome = SteeringBehavior.Seek(data);
 
@@ -266,32 +309,6 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
     }
 
-    #endregion
-
-    #region steering behaviour
-    private void AlertPlayer(GameObject player)
-    {
-        if (effectPlayer == null)
-        {
-            return;
-        }
-
-        Vector3 pPos = effectPlayer.transform.position;
-        Vector3 pF = effectPlayer.transform.forward;
-        Vector3 foxPos = this.transform.position;
-
-        Vector3 dir = foxPos - pPos;
-        float pFDotDir = Vector3.Dot(pF, dir);
-
-        if (pFDotDir > -0.3f) //fox in front of effectPlayer
-        {
-            RotateAround(effectPlayer);
-        }
-        else
-        {
-            BreakItem();
-        }
-    }
     #endregion
 
     #region other behaviour

@@ -291,6 +291,26 @@ public class AnimatorController : MonoBehaviour
         }
     }
 
+    //if throwing or not > for npcAI
+    private bool throwing = false;
+
+    public void AnimaEventThrowingToggle()
+    {
+        if (!throwing)
+        {
+            throwing = true;
+        }
+        else
+        {
+            throwing = false;
+        }
+    }
+
+    public bool ThorowingOrNot()
+    {
+        return throwing;
+    }
+
     #endregion
 
     public bool CheckAniPlayingOrNot()

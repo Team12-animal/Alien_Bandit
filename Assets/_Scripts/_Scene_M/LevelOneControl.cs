@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelOneControl : MonoBehaviour
+public class LevelOneControl : LevelControl
 {
     [Header("Waitting before star game play")]
     [SerializeField] float waittingTime = 3.0f;
