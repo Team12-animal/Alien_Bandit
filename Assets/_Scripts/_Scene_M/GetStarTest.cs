@@ -32,6 +32,7 @@ public class GetStarTest : MonoBehaviour
         if(collectTargets == targetAmt)
         {
             levelOneControl.isWin = true;
+            levelTwoControl.isWin = true;
         }
     }
 

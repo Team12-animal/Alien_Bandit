@@ -70,7 +70,7 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] List<GameObject> trees;
     List<GameObject> winDoor;
     List<GameObject> loseDoor;
-    List<GameObject> ropes;
+    [SerializeField]List<GameObject> ropes;
     List<GameObject> doorOpeners;
     GetStarTest getStarTest;
     [SerializeField] GameObject table;
@@ -118,7 +118,6 @@ public class TeachingLevelControl : MonoBehaviour
         }
         else if (startTeaching)
         {
-
             CheckProcess();
         }
     }
@@ -184,7 +183,6 @@ public class TeachingLevelControl : MonoBehaviour
         //GameObject[] tempTrees = GameObject.FindGameObjectsWithTag(treeTag);
         GameObject[] tempWinDoor = GameObject.FindGameObjectsWithTag(winDoorTag);
         GameObject[] tempLoseDoor = GameObject.FindGameObjectsWithTag(loseDoorTag);
-        GameObject[] tempRops = GameObject.FindGameObjectsWithTag(ropeTag);
         GameObject[] tempDoorOpener = GameObject.FindGameObjectsWithTag(doorOpenerTag);
         SettingTargets(rocks, tempRocks);
         SettingTargets(woods, tempWoods);
@@ -193,7 +191,6 @@ public class TeachingLevelControl : MonoBehaviour
         SettingTargets(workingTable, tempWorkingTable);
         SettingTargets(winDoor, tempWinDoor);
         SettingTargets(loseDoor, tempLoseDoor);
-        SettingTargets(ropes, tempRops);
         SettingTargets(doorOpeners, tempDoorOpener);
         craftingManager = table.GetComponent<CraftingManager>();
         //boxController = boxPrefab.GetComponent<BoxController>();
@@ -249,6 +246,8 @@ public class TeachingLevelControl : MonoBehaviour
         {
             process04 = true;
             DialogueProcess(5);
+             GameObject[] tempRops = GameObject.FindGameObjectsWithTag(ropeTag);
+             SettingTargets(ropes, tempRops);
             ChangeFocusItemCircle(ropes[0], itemCircle);
             return;
         }
@@ -274,8 +273,9 @@ public class TeachingLevelControl : MonoBehaviour
         {
             process07 = true;
             DialogueProcess(8);
-            ChangeFocusItemCircle(rabbits[0], rabbitCircle);
-            tempTarget = rabbits[0];
+            GameObject tempRabbit = GameObject.FindGameObjectWithTag(rabbitsTag);
+            ChangeFocusItemCircle(tempRabbit, rabbitCircle);
+            tempTarget = tempRabbit;
             if (boxPrefab == null)
             {
                 boxController = GameObject.Find("Box(Clone)").GetComponent<BoxController>();
@@ -321,10 +321,10 @@ public class TeachingLevelControl : MonoBehaviour
             processFail = true;
             gameFailImageUI.SetActive(true);
             timeTowait -= Time.deltaTime;
-            if(timeTowait <= 0.0f)
+            if (timeTowait <= 0.0f)
             {
-                SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                SceneController.instance.LoadLevel(0);
+                //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                //SceneController.instance.LoadLevel(0);
             }
             return;
         }
@@ -423,7 +423,7 @@ public class TeachingLevelControl : MonoBehaviour
 
     public void CreatCircle(GameObject target, GameObject circleType)
     {
-        if(target == null)
+        if (target == null)
         {
             return;
         }

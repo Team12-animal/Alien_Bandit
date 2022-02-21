@@ -74,13 +74,13 @@ namespace BrokenVector.LowPolyFencePack
         }
 
         void Start()
-        {            
+        {
             // a little hack, to set the initial state
             currentState = DoorState.Closed;
             var clip = GetCurrentAnimation();
             animator[clip].speed = 9999;
             animator.Play(clip);
-            Debug.Log("door start" + clip.ToString());
+            Debug.Log("door start" + clip.ToString() + animator.IsPlaying(clip));
             CloseDoor();
             currentState = DoorState.Closed;
         }
