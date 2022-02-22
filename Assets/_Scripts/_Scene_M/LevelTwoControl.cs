@@ -151,7 +151,7 @@ public class LevelTwoControl : MonoBehaviour
             }
             waittingTime = -3.0f;
             waittingTimeUI.gameObject.SetActive(false);
-            if (!isWin && !doorDestroied)
+            if (!isWin)// && !doorDestroied
             {
                 gamingTime = SetTime(gamingTime, gamingTimeText);
             }
@@ -179,7 +179,7 @@ public class LevelTwoControl : MonoBehaviour
         input02 = players[1].GetComponent<InputController>();
         input03 = players[2].GetComponent<InputController>();
         input04 = players[3].GetComponent<InputController>();
-        if (gamingTime <= 0.0f || doorDestroied)
+        if (gamingTime <= 0.0f)// || doorDestroied
         {
             GameOverSetting(input01, input02, input03, input04);
             // can't control players;
