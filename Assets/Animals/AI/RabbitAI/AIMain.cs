@@ -4,32 +4,56 @@ using UnityEngine;
 
 public class AIMain : MonoBehaviour
 {
-    public static AIMain m_Instance;
-    [SerializeField] private List<GameObject> m_ObstaclesGo;
+    private static AIMain Instance;
+    //[SerializeField] private List<GameObject> m_ObstaclesGo;
     [SerializeField] private List<Obstacle> m_Obstacles;
     [SerializeField] private List<GameObject> m_Player;
-    [SerializeField]private GameObject[] m_WanderPoints;
-    [SerializeField]private List<GameObject> m_SceneRabbit;
+    [SerializeField] private GameObject[] m_WanderPoints;
+    [SerializeField] private List<GameObject> m_SceneRabbit = new List<GameObject>();
     private int[] randomArray;
     private int randtime;
     private GameObject go;
+
+    public static AIMain m_Instance
+    {
+        get
+        {
+            if (Instance != null)
+            {
+                return Instance;      // 已經註冊的Singleton物件
+            }
+            Instance = FindObjectOfType<AIMain>();
+            //尋找已經在Scene的Singleton物件:
+            if (Instance != null)
+            {
+                return Instance;
+            }
+            GameObject AIMainObject = new GameObject("AIMain");
+            Instance = AIMainObject.AddComponent<AIMain>();   // 實時創建Singleton物件
+            return Instance;
+        }
+    }
     private void Awake()
     {
-        m_Instance = this;
+        Instance = this;
         go = Resources.Load("RabbitAI") as GameObject;
 
         m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");
-        RandomArray();
-        for (int i = 0; i < 3; i++)
+        if (m_WanderPoints.Length != 0)
         {
-            AddRabbit();
+            RandomArray();
+            for (int i = 0; i < 3; i++)
+            {
+                AddRabbit();
+            }
         }
+
     }
 
     // Use this for initialization
     void Start()
     {
-        m_ObstaclesGo = new List<GameObject>();
+        //m_ObstaclesGo = new List<GameObject>();
         m_Obstacles = new List<Obstacle>();
         GameObject[] gos = GameObject.FindGameObjectsWithTag("Obstacle");
         if (gos != null || gos.Length > 0)
@@ -37,7 +61,7 @@ public class AIMain : MonoBehaviour
             foreach (GameObject go in gos)
             {
                 m_Obstacles.Add(go.GetComponent<Obstacle>());
-                m_ObstaclesGo.Add(go.gameObject);
+                //m_ObstaclesGo.Add(go.gameObject);
             }
         }
 
