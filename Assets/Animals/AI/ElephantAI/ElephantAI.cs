@@ -12,17 +12,22 @@ public class ElephantAI : MonoBehaviour
     }
 
     private ElephantState currentState;
-    [SerializeField]
-    private RabbitAIData data;
     private float currentTime;
     private float stateTime;
     private GameObject currentTarget;
+    private Vector3 currentPos;
     private Animator animator;
-    private Rigidbody currentRigi;
+    private NavMeshAgent agent;
+    private Quaternion rotate;
+
     void Start()
     {
-        currentRigi = GetComponent<Rigidbody>();
+        currentState = ElephantState.Idle;
+        currentTarget = null;
+        currentPos = new Vector3(0, 0, 0);
         animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
     }
     void Update()
     {
@@ -41,34 +46,37 @@ public class ElephantAI : MonoBehaviour
     private void IdleState()
     {
 
-        stateTime = Random.Range(3f,5f);
+        stateTime = Random.Range(3f, 5f);
         currentTime += Time.deltaTime;
         if (currentTime > stateTime)
         {
             currentTime = 0;
             currentState = ElephantState.Wander;
             animator.SetInteger("State", 1);
-            data.m_vTarget = RandomNavSphere(transform.position, data.m_fSight, -1);
-            Debug.LogError(data.m_vTarget);
+            currentPos = RandomNavSphere(transform.position, 50, -1);
+            agent.SetDestination(currentPos);
+            Vector3 dist =  currentPos - transform.position;
+            rotate = Quaternion.LookRotation(dist);
         }
     }
     private void WanderState()
     {
-        data.agent.SetDestination(data.m_vTarget);
-        float dist = (transform.position - data.m_vTarget).magnitude;
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotate, 0.001f);
+        float dist = (transform.position - currentPos).magnitude;
 
         if (dist < 1f)
         {
             currentTime = 0;
             currentState = ElephantState.Idle;
-            animator.SetInteger("State",0);
+            animator.SetInteger("State", 0);
         }
+
     }
 
-    private Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
 
-        Vector3 randDirection = Random.insideUnitSphere * (dist + 1);
+        Vector3 randDirection = Random.insideUnitSphere * dist;
 
         randDirection += origin;
 
