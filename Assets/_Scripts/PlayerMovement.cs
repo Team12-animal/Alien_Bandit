@@ -45,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
     private GameObject wtRight;
     public bool usingTable = false;
 
+    //chop
+    GameObject chop;
+    ChopInUse chopInUse;
+
     void Start()
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -700,7 +704,13 @@ public class PlayerMovement : MonoBehaviour
             itemInhand.GetComponent<RockMovement>().touchingGround = true;
         }
 
+        if (itemInhand.tag == "Chop")
+        {
+            itemInhand.GetComponent<ChopInUse>().BackToHome();
+        }
+
         itemInhand = null;
+        Debug.Log("drop item " + itemInhand == null);
         UpdatePlayerData();
     }
 
