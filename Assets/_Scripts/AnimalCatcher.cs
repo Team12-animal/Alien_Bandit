@@ -96,6 +96,5 @@ public class AnimalCatcher : MonoBehaviour
 
         data.item = null;
         pm.itemInhand = null;
-        MissionManager.Instance.RemoveMission(0);
     }
 }

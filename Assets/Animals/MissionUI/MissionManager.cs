@@ -55,7 +55,6 @@ public class MissionManager : MonoBehaviour
     {
         Destroy(missions[i]);
         missions.RemoveAt(i);
-
     }
 
     public void RemoveMission(GameObject go)
