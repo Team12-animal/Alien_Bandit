@@ -499,16 +499,17 @@ MonoBehaviour:
     m_fRot: 0.1
     m_fMaxRot: 0.2
     m_Go: {fileID: 6605799889360882253}
-    m_fSight: 6
-    m_fAttackRange: 2.5
-    m_fAttackTime: 1
-    m_TargetObject: {fileID: 3964796615413391712, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
+    arriveDist: 0
     m_vTarget: {x: 0, y: 0, z: 0}
     m_vCurrentVector: {x: 0, y: 0, z: 0}
     m_fTempTurnForce: 0
     m_fMoveForce: 0
     m_bMove: 0
     m_bCol: 0
+    m_fSight: 6
+    m_fAttackRange: 2.5
+    m_fAttackTime: 1
+    m_TargetObject: {fileID: 3964796615413391712, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
     agent: {fileID: 7899327696254469028}
     iscatched: 0
 --- !u!195 &7899327696254469028
