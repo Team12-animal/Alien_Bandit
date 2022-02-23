@@ -142,6 +142,7 @@ public class SteeringBehavior
         float fMinDist = 10000.0f;
         for (int i = 0; i < iCount; i++)
         {
+            Debug.LogWarning(m_AvoidTargets[i]+ "-" + cPos);
             vec = m_AvoidTargets[i].transform.position - cPos;
             vec.y = 0.0f;
             fDist = vec.magnitude;
