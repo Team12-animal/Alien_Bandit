@@ -668,7 +668,6 @@ public class PlayerMovement : MonoBehaviour
         {
             itemInhand.GetComponent<BoxController>().touchingGround = false;
         }
-
         if (itemInhand.tag == "RockModel")
         {
             itemInhand.GetComponent<RockMovement>().beUsing = true;

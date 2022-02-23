@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class BoxController : MonoBehaviour
+public class BagController : MonoBehaviour
 {
     public bool firstCreated = false;
     public bool beUsing;
@@ -16,7 +16,7 @@ public class BoxController : MonoBehaviour
 
     private void Awake()
     {
-        contentSpot = this.transform.Find("Box").Find("ContentSpot").gameObject;
+        contentSpot = this.transform.Find("Bag").Find("ContentSpot").gameObject;
         rb = this.gameObject.GetComponent<Rigidbody>();
     }
 
@@ -35,13 +35,12 @@ public class BoxController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("box trigger" + other.gameObject.name);
-        if (beUsing == true && other.gameObject.tag == "Rabbit" && targetAnimal == null)
+        if (beUsing == true && other.gameObject.tag == "Raccoon" && targetAnimal == null)
         {
             targetAnimal = other.gameObject;
             ac = targetAnimal.GetComponent(typeof(Collider)) as Collider;
-            targetAnimal.GetComponent<RabbitAI>().enabled = false;
-            targetAnimal.GetComponent<NavMeshAgent>().enabled = false;
+            //targetAnimal.GetComponent<RabbitAI>().enabled = false;
+            //targetAnimal.GetComponent<NavMeshAgent>().enabled = false;
             ac.enabled = false;
             targetAnimal.transform.position = contentSpot.transform.position;
             targetAnimal.transform.up = contentSpot.transform.up;
