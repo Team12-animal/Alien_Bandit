@@ -94,6 +94,7 @@ public class TeachingLevelControl : MonoBehaviour
 
     [Header("TimeSet")]
     float timeTowait = 3.0f;
+    [SerializeField] GameObject doorGoal;
 
     private void Start()
     {
@@ -303,7 +304,7 @@ public class TeachingLevelControl : MonoBehaviour
             tempTarget = winDoor[0];
             return;
         }
-        else if (checkPoint10 && getStarTest.collectRabbits >= 1)//try again 11;
+        else if (checkPoint10 && doorGoal.GetComponent<AnimalCatcher>().GetRabbitCount() >= 1)//try again 11;
         {
             process10 = true;
             DialogueProcess(11);
@@ -312,7 +313,7 @@ public class TeachingLevelControl : MonoBehaviour
             missionManager.AddMission();
             return;
         }
-        else if (checkPoint11 && getStarTest.collectRabbits >= 2)//complete 12
+        else if (checkPoint11 && doorGoal.GetComponent<AnimalCatcher>().GetRabbitCount() >= 2)//complete 12
         {
             process11 = true;
             tipsCanvas.SetActive(false);

@@ -14,10 +14,10 @@ public class AnimalCatcher : MonoBehaviour
     public GameObject successEffect;
     public GameObject spawnPos;
 
-    private int collectRabbits; //catched rabbit amount
-    private int collectRaccoons; //catched raccoon amount
-    private int collectLittleRaccoons; //
-    private int collectPigs; //catched pig amount
+    public int collectRabbits; //catched rabbit amount
+    public int collectRaccoons; //catched raccoon amount
+    public int collectLittleRaccoons; //
+    public int collectPigs; //catched pig amount
 
     GameObject levelController;
     LevelControl lv;
@@ -47,6 +47,7 @@ public class AnimalCatcher : MonoBehaviour
             {
                 SendAnimalToHome(box);
             }
+            Debug.LogWarning("ADD+1");
         }
     }
 
@@ -96,5 +97,10 @@ public class AnimalCatcher : MonoBehaviour
 
         data.item = null;
         pm.itemInhand = null;
+    }
+
+    public int GetRabbitCount()
+    {
+        return collectRabbits;
     }
 }

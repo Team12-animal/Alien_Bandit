@@ -77,6 +77,8 @@ public class LevelOneControl : LevelControl
         player02ReadyImage.SetActive(false);
         player03ReadyImage.SetActive(false);
         player04ReadyImage.SetActive(false);
+
+        AddScoreData();
     }
 
     private void Update()
@@ -91,6 +93,7 @@ public class LevelOneControl : LevelControl
         GameOver();
         //TriggerSceneEvents();
         WinGame(1);//1  means what level two stars state;
+
     }
     /// <summary>
     /// When waitting time go up , allow player moving
@@ -373,16 +376,16 @@ public class LevelOneControl : LevelControl
     public void WinGame(int level)
     {
         Color yellow = new Color(1, 1, 1, 1);
-        if (isWin == true && gamingTime > 90.0f)//score >= 10
+        if (isWin == true && GetTotalScroe() == 30 )//score >= 10
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 3, yellow);
             GameOver();
         }
-        else if (isWin == true && gamingTime >= 60.0f)//score >= 20
+        else if (isWin == true && GetTotalScroe() == 60)//score >= 20
         {
             //Saving data;
-            SaveStarsState.instance.SaveDate(level, 2, yellow);
+            SaveStarsState.instance.SaveDate(level, 3, yellow);
             GameOver();
         }
         else if (isWin == true && gamingTime > 0.0f)//complete teachLevel
