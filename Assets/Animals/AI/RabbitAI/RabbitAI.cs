@@ -26,6 +26,8 @@ public class RabbitAI : MonoBehaviour
     private Animator m_Am;              //AI的動畫狀態機
     private List<GameObject> players;
     private GameObject attackWood;
+    private GameObject dangerAnimal;
+    private bool isDanger = false;
     // Use this for initialization
     public void Start()
     {
@@ -160,6 +162,7 @@ public class RabbitAI : MonoBehaviour
             return;
         }
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -177,6 +180,21 @@ public class RabbitAI : MonoBehaviour
             m_Data.m_fMaxSpeed = 0.09f;
             m_Am.SetInteger("State", 0);
             CheckPlayerInSight();
+            if (isDanger)
+            {
+                bool bAttack = false;
+                dangerAnimal = GameObject.Find("Fox");
+                bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
+                if (danger)
+                {
+                    m_Data.agent.enabled = true;
+                    m_Data.agent.updateRotation = true;
+                    m_Data.m_vTarget = CheckCloseHole().transform.position;
+                    m_Am.SetInteger("State", 3);
+                    m_eCurrentState = eFSMState.MoveToTarget;
+                    return;
+                }
+            }
             // Wait to move.           
             if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
             {
@@ -202,6 +220,21 @@ public class RabbitAI : MonoBehaviour
             }
             m_fIdleTime = Random.Range(2.0f, 3.0f);  //漫步停留時間為隨機3～4秒
             CheckPlayerInSight();
+            if (isDanger)
+            {
+                bool bAttack = false;
+                dangerAnimal = GameObject.Find("Fox");
+                bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
+                if (danger)
+                {
+                    m_Data.agent.enabled = true;
+                    m_Data.agent.updateRotation = true;
+                    m_Data.m_vTarget = CheckCloseHole().transform.position;
+                    m_Am.SetInteger("State", 3);
+                    m_eCurrentState = eFSMState.MoveToTarget;
+                    return;
+                }
+            }
             m_Data.agent.enabled = true;
             m_Data.agent.updateRotation = true;
             m_Data.agent.SetDestination(m_Data.m_vTarget);  //AI移動到隨機目標點
@@ -271,6 +304,21 @@ public class RabbitAI : MonoBehaviour
         else if (m_eCurrentState == eFSMState.Attack)
         {
             CheckPlayerInSight();
+            if (isDanger)
+            {
+                bool bAttack = false;
+                dangerAnimal = GameObject.Find("Fox");
+                bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
+                if (danger)
+                {
+                    m_Data.agent.enabled = true;
+                    m_Data.agent.updateRotation = true;
+                    m_Data.m_vTarget = CheckCloseHole().transform.position;
+                    m_Am.SetInteger("State", 3);
+                    m_eCurrentState = eFSMState.MoveToTarget;
+                    return;
+                }
+            }
             if (attackWood == null)
             {
                 m_eCurrentState = eFSMState.Idle;
@@ -307,6 +355,10 @@ public class RabbitAI : MonoBehaviour
 
         NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
 
+        if(navHit.distance == Mathf.Infinity)
+        {
+            NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+        }
         return navHit.position;
     }
 
