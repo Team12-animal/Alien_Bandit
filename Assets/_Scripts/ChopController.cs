@@ -15,7 +15,6 @@ public class ChopController : MonoBehaviour
 
     public void BackToOriPlace()
     {
-        Debug.Log("chop back home");
         this.transform.position = oriPos;
         this.transform.rotation = oriRot;
     }
