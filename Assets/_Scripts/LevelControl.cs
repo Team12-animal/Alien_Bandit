@@ -14,11 +14,9 @@ public class LevelControl : MonoBehaviour
     private readonly int littleRaccoon = 3;
     private readonly int pig = 4;
 
-    public Dictionary<int, int> scoreList;
+    public Dictionary<int, int> scoreList  = new Dictionary<int, int>();
     private void AddScoreData()
     {
-        scoreList = new Dictionary<int, int>();
-
         scoreList.Add(rabbit, 30);
         scoreList.Add(raccoon, 15);
         scoreList.Add(littleRaccoon, 125);
@@ -48,6 +46,7 @@ public class LevelControl : MonoBehaviour
 
     private int AddScore(int type)
     {
+        Debug.Log("add score" + type);
         if (scoreList.ContainsKey(type))
         {
             scoreChangeOrNot = true;
