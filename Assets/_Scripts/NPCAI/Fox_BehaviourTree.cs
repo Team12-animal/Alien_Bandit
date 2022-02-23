@@ -12,6 +12,9 @@ public class Fox_BehaviourTree : MonoBehaviour
     private int status;
     private float alertDist;
 
+    //rock
+    public bool hitten = false;
+
     //real speed and rot
     private float movingForce;
     private float turningForce;
@@ -97,7 +100,17 @@ public class Fox_BehaviourTree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!fAC.AllowToMove())
+        if (missionComplete)
+        {
+            target = data.birthPos;
+            data.m_vTarget = target.transform.position;
+        }
+
+        if (status == (int)FoxAIData.FoxStatus.Attacked)
+        {
+            Hurt();
+        }
+        else if (!fAC.AllowToMove())
         {
             return;
         }
@@ -110,6 +123,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
 
         CheckStatusAndUpdate();
+        SetY();
 
         switch (status)
         {
@@ -121,7 +135,7 @@ public class Fox_BehaviourTree : MonoBehaviour
                 Alert(effectPlayers);
                 break;
 
-            case (int)FoxAIData.FoxStatus.Attacked:
+            case (int)FoxAIData.FoxStatus.AvoidAttack:
                 AvoidAttack();
                 break;
 
@@ -150,6 +164,20 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void CheckStatusAndUpdate()
     {
+        if(hitten == true)
+        {
+            status = (int)FoxAIData.FoxStatus.Attacked;
+            data.UpdateStatus(status);
+            return;
+        }
+
+        if(fAC.BreakingOrNot() == true)
+        {
+            status = (int)FoxAIData.FoxStatus.Safe;
+            data.UpdateStatus(status);
+            return;
+        }
+
         if(effectPlayers.Count == 0)
         {
             if(!missionComplete)
@@ -171,7 +199,7 @@ public class Fox_BehaviourTree : MonoBehaviour
             }
             else
             {
-                status = (int)FoxAIData.FoxStatus.Attacked;
+                status = (int)FoxAIData.FoxStatus.AvoidAttack;
             }
         }
 
@@ -231,7 +259,7 @@ public class Fox_BehaviourTree : MonoBehaviour
             }
 
             SteeringBehavior.Move(data);
-            fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce, data.m_fMoveForce);
+            fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 10, data.m_fMoveForce * 10);
         }
         else
         {
@@ -251,29 +279,10 @@ public class Fox_BehaviourTree : MonoBehaviour
             return;
         }
 
-        //if (players.Count == 1 && nearestPlayer != null) // fox walk around player
-        //{
-        //    Vector3 pPos = nearestPlayer.transform.position;
-        //    Vector3 pF = nearestPlayer.transform.forward;
-        //    Vector3 foxPos = this.transform.position;
-
-        //    Vector3 dir = foxPos - pPos;
-        //    float pFDotDir = Vector3.Dot(pF, dir);
-
-        //    if (pFDotDir > -0.3f) //fox in front of effectPlayer
-        //    {
-        //        RotateAround(nearestPlayer);
-        //    }
-        //    else
-        //    {
-        //        BreakItem();
-        //    }
-        //}
-
         if (players.Count > 0)
         {
             AvoidPlayerAndRun(players);
-            fAC.ChangeAndPlayAnimation(fAC.trotTrigger, data.m_fTempTurnForce, data.m_fMoveForce);
+            fAC.ChangeAndPlayAnimation(fAC.trotTrigger, data.m_fTempTurnForce * 10, data.m_fMoveForce * 10);
         }
     }
 
@@ -325,7 +334,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         else
         {
             SteeringBehavior.Move(data);
-            fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce, data.m_fMoveForce);
+            fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 10, data.m_fMoveForce * 10);
         }
     }
 
@@ -431,19 +440,20 @@ public class Fox_BehaviourTree : MonoBehaviour
         this.transform.position += this.transform.forward * data.m_fMaxSpeed;
     }
 
+    private void Hurt()
+    {
+        fAC.ChangeAndPlayAnimation(fAC.attacked, 0, 0);
+    }
+
     bool arriveHome = false;
     private void GoHome()
     {
-        target = data.birthPos;
-        data.m_vTarget = target.transform.position;
-
         MoveToBirthPos();
-        fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce, data.m_fMoveForce);
+        fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 10, data.m_fMoveForce * 10);
 
         if (arriveHome)
         {
             this.gameObject.SetActive(false);
-            GameObject.Destroy(this.gameObject);
         }
     }
 
@@ -475,29 +485,27 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         target.SetActive(false);
         missionComplete = true;
-
-        Debug.Log("npc break target" + missionComplete);
-    }
-
-    public float angularSpeed;
-    float radius = 0.0f;
-    float angle;
-
-    private void RotateAround(GameObject target)
-    {
-        if(radius == 0.0f)
-        {
-            radius = (this.transform.position - target.transform.position).magnitude;
-        }
-
-        angle += (angularSpeed * Time.deltaTime) % 360;
-        float posX = radius * Mathf.Sin(angle * Mathf.Deg2Rad);
-        float posZ = radius * Mathf.Cos(angle * Mathf.Deg2Rad);
-
-        this.transform.position = new Vector3(posX, 0, posZ) + target.transform.position;
     }
 
     #endregion
+
+    private void SetY()
+    {
+        Vector3 newPos;
+        newPos = this.transform.position;
+        
+        Vector3 from = this.transform.position;
+        from.y += 5.0f;
+        from.z -= 0.5f;
+        Vector3 dir = -this.transform.up;
+
+        RaycastHit hit;
+        if(Physics.Raycast(from, dir, out hit, Mathf.Infinity, 1 << 7))
+        {
+            newPos.y = hit.point.y;
+            this.transform.position = newPos;
+        }
+    }
 
     private void OnDrawGizmos()
     {
@@ -506,5 +514,22 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * data.m_fProbeLength);
+
+        Vector3 from = this.transform.position;
+        from.y += 5.0f;
+        from.z -= 2.0f;
+        Vector3 dir = -this.transform.up;
+        Gizmos.color = Color.black;
+        Gizmos.DrawLine(from, from + (dir * 5));
+
+    }
+
+    public void AniEventTurnhittenToFalse()
+    {
+        if (hitten == true)
+        {
+            hitten = false;
+            missionComplete = true;
+        }
     }
 }

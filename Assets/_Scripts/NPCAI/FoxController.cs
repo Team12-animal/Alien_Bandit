@@ -6,6 +6,7 @@ public class FoxController : MonoBehaviour
 {
     [SerializeField]
     List<GameObject> birthPoses;
+    [SerializeField]
     List<GameObject> breakableItems;
 
     GameObject target;
@@ -35,18 +36,19 @@ public class FoxController : MonoBehaviour
 
     IEnumerator CheckBreakableItems()
     {
-        //while (lv.GetGameTime() >= 0.0f && lv.WinOrNot() == false)
-        //{
-        Debug.Log("fox generate");
+        yield return new WaitForSeconds(0);
+
+        while (true)
+        {
             breakableItems = FindBreakableItems();
 
             if (breakableItems.Count > 0 && GameObject.FindGameObjectsWithTag("Fox").Length == 0)
             {
                 GenNewFox();
             }
-            
-            yield return new WaitForSeconds(1);
-        //}
+
+            yield return new WaitForSeconds(40);
+        }
     }
 
     private List<GameObject> FindBreakableItems()
@@ -145,6 +147,7 @@ public class FoxController : MonoBehaviour
         GameObject fox = GameObject.Instantiate(prefab) as GameObject;
         fox.SetActive(true);
         fox.transform.position = birthPos.transform.position;
+        fox.transform.forward = birthPos.transform.forward;
 
         Fox_BehaviourTree behaviour = fox.GetComponent<Fox_BehaviourTree>();
         behaviour.target = target;
