@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BreakDoor : MonoBehaviour
 {
-    [SerializeField] List<GameObject> players;
+    List<GameObject> players;
     [SerializeField] GameObject originDoor;
     [SerializeField] GameObject breakDoor;
-    [SerializeField] Vector3 setPosition = new Vector3(18.98f, -0.36f, 17.7f);
+    [SerializeField] Transform setPosition;/* = new Vector3(18.98f, -0.36f, 17.7f);*/
     [SerializeField] LevelOneControl levelOne;
     [SerializeField] LevelTwoControl levelTwo;
 
@@ -21,7 +21,7 @@ public class BreakDoor : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(originDoor);
-            Instantiate(breakDoor, setPosition,Quaternion.identity);
+            Instantiate(breakDoor, setPosition.position,Quaternion.identity);
             if(levelOne != null)
             {
                 levelOne.doorDestroied = true;

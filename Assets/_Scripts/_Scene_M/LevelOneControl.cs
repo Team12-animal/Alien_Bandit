@@ -118,7 +118,7 @@ public class LevelOneControl : LevelControl
             }
             waittingTime = -3.0f;
             waittingTimeUI.gameObject.SetActive(false);
-            if (!isWin && !doorDestroied)
+            if (!isWin)//&& !doorDestroied
             {
                 gamingTime = SetTime(gamingTime, gamingTimeText);
             }
@@ -146,7 +146,7 @@ public class LevelOneControl : LevelControl
         input02 = players[1].GetComponent<InputController>();
         input03 = players[2].GetComponent<InputController>();
         input04 = players[3].GetComponent<InputController>();
-        if (gamingTime <= 0.0f || doorDestroied)
+        if (gamingTime <= 0.0f)// || doorDestroied
         {
             GameOverSetting(input01, input02, input03, input04);
             // can't control players;
@@ -373,19 +373,19 @@ public class LevelOneControl : LevelControl
     public void WinGame(int level)
     {
         Color yellow = new Color(1, 1, 1, 1);
-        if (isWin == true && gamingTime > 90.0f)
+        if (isWin == true && gamingTime > 90.0f)//score >= 10
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 3, yellow);
             GameOver();
         }
-        else if (isWin == true && gamingTime >= 60.0f)
+        else if (isWin == true && gamingTime >= 60.0f)//score >= 20
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 2, yellow);
             GameOver();
         }
-        else if (isWin == true && gamingTime > 0.0f)
+        else if (isWin == true && gamingTime > 0.0f)//complete teachLevel
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 1, yellow);
