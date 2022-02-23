@@ -305,6 +305,12 @@ public class RabbitAI : MonoBehaviour
 
         NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
 
+        if(navHit.distance == Mathf.Infinity)
+        {
+            NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+        }
+        Debug.LogError("navHit.positio:" + navHit.position + "navHit.distance:" + navHit.distance);
+
         return navHit.position;
     }
 

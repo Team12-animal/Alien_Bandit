@@ -42,7 +42,7 @@ public class AIMain : MonoBehaviour
         if (m_WanderPoints.Length != 0)
         {
             RandomArray();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
                 AddRabbit();
             }
