@@ -38,7 +38,7 @@ public class TreesController : MonoBehaviour
     {
         yield return new WaitWhile(() => { return checkTreeAmt() < oriTreeAmt; });
 
-        while (lv.GetGameTime() >= 0.0f && lv.WinOrNot() == false)
+        while (lv.GetGameTime() >= 0.0f)
         {
             if (checkTreeAmt() < oriTreeAmt)
             {

@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7127305331944307998, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.760033
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7127305331944307998, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -145,23 +145,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7127305331944307998, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.980648
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7127305331944307998, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.47011608
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7127305331944307998, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7127305331944307998, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.88260466
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7127305331944307998, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7127305331944307998, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -169,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7127305331944307998, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 123.916
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7127305331944307998, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -477,7 +477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7184368334580505706, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
@@ -486,6 +486,26 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7125713674895692902, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
   m_PrefabInstance: {fileID: 6371110064227011346}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &-1546540700435679050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4217942161584807796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c0efe40359e04915b67cf9b1bd296c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  trotTrigger: Trot
+  runTrigger: Run
+  jumpTrigger: Jump
+  breaking: Fox_Dig
+  attacked: Fox_Damaged
+  stun: Fox_Stun
+  jump: Fox_Jump_InPlace
 --- !u!114 &878989953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,9 +522,9 @@ MonoBehaviour:
     m_fRadius: 6
     m_fProbeLength: 2
     m_Speed: 0
-    m_fMaxSpeed: 0.04
+    m_fMaxSpeed: 0.5
     m_fRot: 0
-    m_fMaxRot: 0.2
+    m_fMaxRot: 0.8
     m_Go: {fileID: 0}
     arriveDist: 4
     m_vTarget: {x: 0, y: 0, z: 0}
@@ -515,24 +535,17 @@ MonoBehaviour:
     m_bCol: 0
     target: {fileID: 0}
     birthPos: {fileID: 0}
-    jumpSpeed: 0
+    jumpSpeed: 0.7
     Status: 0
     status: 0
   target: {fileID: 0}
   birthPos: {fileID: 0}
-  movingForce: 0
-  turningForce: 0
-  speed: 0
-  rot: 0
   players: []
-  effectPlayer: {fileID: 0}
+  effectPlayers: []
+  nearestPlayer: {fileID: 0}
   holdingRockOrBox: 0
-  maxSpeed: 0
-  maxRot: 0
-  arriveTarget: 0
-  missionComplete: 0
   pAttact: 0
-  angularSpeed: 0
+  angularSpeed: 0.7
 --- !u!114 &878989954
 MonoBehaviour:
   m_ObjectHideFlags: 0

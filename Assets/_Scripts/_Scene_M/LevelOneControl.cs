@@ -454,10 +454,4 @@ public class LevelOneControl : LevelControl
     {
         return gamingTime;
     }
-
-    //for treeController
-    public override bool WinOrNot()
-    {
-        return isWin;
-    }
 }

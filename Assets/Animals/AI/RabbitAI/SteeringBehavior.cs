@@ -356,4 +356,89 @@ public class SteeringBehavior
         data.m_bMove = true;
         return false;
     }
+
+    static public bool PlayerAvoid(NpcAIData data, List<GameObject> players)
+    {
+        List<GameObject> m_AvoidTargets = players;
+        float radius = 2.0f;
+        float probe = data.m_fRadius;
+        Transform ct = data.m_Go.transform;  //AI的位置向量
+        Vector3 cPos = ct.position;    //AI的位置
+        Vector3 cForward = ct.forward;  //AI的朝向
+        data.m_vCurrentVector = cForward;
+        Vector3 vec;
+        float fFinalDotDist;
+        float fFinalProjDist;
+        Vector3 vFinalVec = Vector3.forward; //(0,0,1)
+        GameObject oFinal = null;
+        float fDist = 0.0f;
+        float fDot = 0.0f;
+        float fFinalDot = 0.0f;
+        int iCount = m_AvoidTargets.Count;
+
+        float fMinDist = 10000.0f;
+        for (int i = 0; i < iCount; i++)
+        {
+            vec = m_AvoidTargets[i].transform.position - cPos;
+            vec.y = 0.0f;
+            fDist = vec.magnitude;
+            if (fDist > probe + radius)
+            {
+                continue;
+            }
+
+            vec.Normalize();
+            fDot = Vector3.Dot(vec, cForward);
+            if (fDot < 0)
+            {
+                continue;
+            }
+            else if (fDot > 1.0f)
+            {
+                fDot = 1.0f;
+            }
+
+            float fProjDist = fDist * fDot;
+            float fDotDist = Mathf.Sqrt(fDist * fDist - fProjDist * fProjDist);
+            if (fDotDist > radius + data.m_fRadius)
+            {
+                continue;
+            }
+            if (fDist < fMinDist)
+            {
+                fMinDist = fDist;
+                fFinalDotDist = fDotDist;
+                fFinalProjDist = fProjDist;
+                vFinalVec = vec;
+                oFinal = m_AvoidTargets[i];
+                fFinalDot = fDot;
+            }
+        }
+
+        if (oFinal != null)
+        {
+            Vector3 vCross = Vector3.Cross(cForward, vFinalVec);
+            float fTurnMag = Mathf.Sqrt(1.0f - fFinalDot * fFinalDot);
+            if (vCross.y > 0.0f)
+            {
+                fTurnMag = -fTurnMag;
+            }
+            data.m_fTempTurnForce = fTurnMag;
+
+            float fTotalLen = probe + radius;
+            float fRatio = fMinDist / fTotalLen;
+            if (fRatio > 1.0f)
+            {
+                fRatio = 1.0f;
+            }
+            fRatio = 1.0f - fRatio;
+            data.m_fMoveForce = -fRatio;
+            data.m_bCol = true;
+            data.m_bMove = true;
+            return true;
+        }
+        data.m_bCol = false;
+        return false;
+    }
 }
+
