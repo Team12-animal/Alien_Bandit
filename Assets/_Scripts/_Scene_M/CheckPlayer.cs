@@ -302,6 +302,10 @@ public class CheckPlayer : MonoBehaviour
         confirm02 = false;
         confirm03 = false;
         confirm04 = false;
+        SceneController.instance.selected01 = false;
+        SceneController.instance.selected02 = false;
+        SceneController.instance.selected03 = false;
+        SceneController.instance.selected04 = false;
     }
 
     public void ConfirmSkin(string confirmBool)

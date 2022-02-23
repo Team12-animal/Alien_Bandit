@@ -70,7 +70,7 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] List<GameObject> trees;
     List<GameObject> winDoor;
     List<GameObject> loseDoor;
-    [SerializeField]List<GameObject> ropes;
+    [SerializeField] List<GameObject> ropes;
     List<GameObject> doorOpeners;
     GetStarTest getStarTest;
     [SerializeField] GameObject table;
@@ -90,6 +90,7 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] GameObject oldCircle;
     public GameObject tempTarget;
     MissionManager missionManager;
+    List<GameObject> saveRabbitCircles;
 
     [Header("TimeSet")]
     float timeTowait = 3.0f;
@@ -104,6 +105,7 @@ public class TeachingLevelControl : MonoBehaviour
         Init();
         completeImageUI.SetActive(false);
         gameFailImageUI.SetActive(false);
+        saveRabbitCircles = new List<GameObject>();
     }
 
     private void Update()
@@ -120,15 +122,6 @@ public class TeachingLevelControl : MonoBehaviour
         {
             CheckProcess();
         }
-    }
-
-    public GameObject SettingFollowTarget()
-    {
-        if (tempTarget == winDoor[0])
-        {
-            return null;
-        }
-        return tempTarget;
     }
 
     public bool CheckSomeThingInactive(List<GameObject> gameObjects)
@@ -214,6 +207,7 @@ public class TeachingLevelControl : MonoBehaviour
         bool checkPoint10 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && process08 && process09 && !process10 && !process11;
         bool checkPoint11 = process00 && process01 && process02 && process03 && process04 && process05 && process06 && process07 && process08 && process09 && process10 && !process11;
 
+
         if (checkPoint00 && CheckIfHolding(chopHolded))//take the ax 01;
         {
             process00 = true;
@@ -246,8 +240,8 @@ public class TeachingLevelControl : MonoBehaviour
         {
             process04 = true;
             DialogueProcess(5);
-             GameObject[] tempRops = GameObject.FindGameObjectsWithTag(ropeTag);
-             SettingTargets(ropes, tempRops);
+            GameObject[] tempRops = GameObject.FindGameObjectsWithTag(ropeTag);
+            SettingTargets(ropes, tempRops);
             ChangeFocusItemCircle(ropes[0], itemCircle);
             return;
         }
@@ -273,9 +267,15 @@ public class TeachingLevelControl : MonoBehaviour
         {
             process07 = true;
             DialogueProcess(8);
-            GameObject tempRabbit = GameObject.FindGameObjectWithTag(rabbitsTag);
-            ChangeFocusItemCircle(tempRabbit, rabbitCircle);
-            tempTarget = tempRabbit;
+            GameObject[] tempRabbits = GameObject.FindGameObjectsWithTag(rabbitsTag);
+            //Creat Rabbit circles
+            for (int i = 0; i < tempRabbits.Length; i++)
+            {
+                GameObject temp = CreatFollowCircle(tempRabbits[i], rabbitCircle);
+                saveRabbitCircles.Add(temp);
+                tempTarget = tempRabbits[i];
+            }
+
             if (boxPrefab == null)
             {
                 boxController = GameObject.Find("Box(Clone)").GetComponent<BoxController>();
@@ -287,6 +287,11 @@ public class TeachingLevelControl : MonoBehaviour
             process08 = true;
             DialogueProcess(9);
             ChangeFocusItemCircle(doorOpeners[0], rabbitCircle);
+            //Destroy Rabbit circles
+            for (int i = 0; i < saveRabbitCircles.Count; i++)
+            {
+                Destroy(saveRabbitCircles[i]);
+            }
             tempTarget = doorOpeners[0];
             return;
         }
@@ -430,5 +435,17 @@ public class TeachingLevelControl : MonoBehaviour
         Vector3 offset = new Vector3(0f, 3f, -3f);
         GameObject temp = Instantiate(circleType, target.transform.position + offset, Quaternion.Euler(40.0f, 0f, 0f));
         newCircle = temp;
+    }
+
+    public GameObject CreatFollowCircle(GameObject target, GameObject circleType)
+    {
+        if (target == null)
+        {
+            return null;
+        }
+        Vector3 offset = new Vector3(0f, 3f, -3f);
+        GameObject temp = Instantiate(circleType, target.transform.position + offset, Quaternion.Euler(40.0f, 0f, 0f));
+        temp.GetComponent<CircleFollowTarget>().followTarget = target;
+        return temp;
     }
 }

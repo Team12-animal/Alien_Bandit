@@ -12,11 +12,11 @@ namespace Boxophobic.StyledGUI
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            a = (StyledBanner)attribute;
+            //a = (StyledBanner)attribute;
 
-            var bannerColor = new Color(a.colorR, a.colorG, a.colorB);
+            //var bannerColor = new Color(a.colorR, a.colorG, a.colorB);
 
-            StyledGUI.DrawInspectorBanner(bannerColor, a.title, a.helpURL);
+            //StyledGUI.DrawInspectorBanner(bannerColor, a.title, a.helpURL);
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
