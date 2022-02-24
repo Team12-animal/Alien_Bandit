@@ -33,7 +33,8 @@ public class GetStarTest : MonoBehaviour
 
         if (collectRabbits >= 2)
         {
-            levelOneControl.isWin = true;
+            if (levelOneControl != null)
+                levelOneControl.isWin = true;
         }
     }
 }
