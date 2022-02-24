@@ -441,16 +441,16 @@ public class LevelOneControl : LevelControl
     public void WinGame(int level)
     {
         Color yellow = new Color(1, 1, 1, 1);
-        if (isWin == true && GetTotalScroe() == 30)//score >= 10
+        if (isWin == true && GetTotalScroe() == 60)//score >= 10
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 3, yellow);
             GameOver();
         }
-        else if (isWin == true && GetTotalScroe() == 60)//score >= 20
+        else if (isWin == true && GetTotalScroe() == 30)//score >= 20
         {
             //Saving data;
-            SaveStarsState.instance.SaveDate(level, 3, yellow);
+            SaveStarsState.instance.SaveDate(level, 1, yellow);
             GameOver();
         }
         else if (isWin == true && gamingTime > 0.0f)//complete teachLevel
