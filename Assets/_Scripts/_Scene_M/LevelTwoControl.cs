@@ -194,61 +194,6 @@ public class LevelTwoControl : LevelControl
             waittingLoad -= Time.deltaTime;
             if (waittingLoad <= 0.0f)
             {
-                continueUI.SetActive(true);
-                //Reset Players Position to MainMenu;
-                if (SceneController.instance.selected01)
-                {
-                    //Set player position to MainMenu position because using the same rawImage;
-                    SceneController.instance.MainPlayer(SceneController.instance.player01);
-                    //Change Animator to Dance Type;
-                    CheckPlayer tempPlayer = new CheckPlayer();
-                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player01, tempPlayer.menuDance01);
-                }
-                if (SceneController.instance.selected02)
-                {
-                    SceneController.instance.MainPlayer(SceneController.instance.player02);
-                    CheckPlayer tempPlayer = new CheckPlayer();
-                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player02, tempPlayer.menuDance02);
-                }
-                else
-                {
-                    player02RawImage.SetActive(false);
-                }
-                if (SceneController.instance.selected03)
-                {
-                    SceneController.instance.MainPlayer(SceneController.instance.player03);
-                    CheckPlayer tempPlayer = new CheckPlayer();
-                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player03, tempPlayer.menuDance03);
-                }
-                else
-                {
-                    player03RawImage.SetActive(false);
-                }
-                if (SceneController.instance.selected04)
-                {
-                    SceneController.instance.MainPlayer(SceneController.instance.player04);
-                    CheckPlayer tempPlayer = new CheckPlayer();
-                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player04, tempPlayer.menuDance04);
-                }
-                else
-                {
-                    player04RawImage.SetActive(false);
-                }
-                CheckEveryPlayerPressedContinueButton();
-            }
-        }
-        else if (isWin)
-        {
-            //need to creat win UI;
-            gameWinUI.SetActive(true);
-
-            //can't control players;
-            GameOverSetting(input01, input02, input03, input04);
-
-            //Wait a little seconds to show Continue UI;
-            waittingTimeToShowContinueUI -= Time.deltaTime;
-            if (waittingTimeToShowContinueUI <= 0.0f)
-            {
                 waittingTimeToShowContinueUI = 0.0f;
                 if (!continueUI.activeInHierarchy)
                 {
@@ -297,11 +242,74 @@ public class LevelTwoControl : LevelControl
                 {
                     player04RawImage.SetActive(false);
                 }
-                //Show Stars animations;
-
                 CheckEveryPlayerPressedContinueButton();
             }
         }
+        //else if (isWin)
+        //{
+        //    //need to creat win UI;
+        //    gameWinUI.SetActive(true);
+
+        //    //can't control players;
+        //    GameOverSetting(input01, input02, input03, input04);
+
+        //    //Wait a little seconds to show Continue UI;
+        //    waittingTimeToShowContinueUI -= Time.deltaTime;
+        //    if (waittingTimeToShowContinueUI <= 0.0f)
+        //    {
+        //        waittingTimeToShowContinueUI = 0.0f;
+        //        if (!continueUI.activeInHierarchy)
+        //        {
+        //            for (int i = 0; i < levelTwoStars.Length; i++)
+        //            {
+        //                showStars[i].GetComponent<RawImage>().color = levelTwoStars[i].GetComponent<RawImage>().color;
+        //            }
+        //        }
+        //        continueUI.SetActive(true);
+        //        //Reset Players Position to MainMenu;
+        //        if (SceneController.instance.selected01)
+        //        {
+        //            //Set player position to MainMenu position because using the same rawImage;
+        //            SceneController.instance.MainPlayer(SceneController.instance.player01);
+        //            //Change Animator to Dance Type;
+        //            CheckPlayer tempPlayer = new CheckPlayer();
+        //            tempPlayer.ChangePlayerAnimator(SceneController.instance.player01, tempPlayer.menuDance01);
+        //        }
+        //        if (SceneController.instance.selected02)
+        //        {
+        //            SceneController.instance.MainPlayer(SceneController.instance.player02);
+        //            CheckPlayer tempPlayer = new CheckPlayer();
+        //            tempPlayer.ChangePlayerAnimator(SceneController.instance.player02, tempPlayer.menuDance02);
+        //        }
+        //        else
+        //        {
+        //            player02RawImage.SetActive(false);
+        //        }
+        //        if (SceneController.instance.selected03)
+        //        {
+        //            SceneController.instance.MainPlayer(SceneController.instance.player03);
+        //            CheckPlayer tempPlayer = new CheckPlayer();
+        //            tempPlayer.ChangePlayerAnimator(SceneController.instance.player03, tempPlayer.menuDance03);
+        //        }
+        //        else
+        //        {
+        //            player03RawImage.SetActive(false);
+        //        }
+        //        if (SceneController.instance.selected04)
+        //        {
+        //            SceneController.instance.MainPlayer(SceneController.instance.player04);
+        //            CheckPlayer tempPlayer = new CheckPlayer();
+        //            tempPlayer.ChangePlayerAnimator(SceneController.instance.player04, tempPlayer.menuDance04);
+        //        }
+        //        else
+        //        {
+        //            player04RawImage.SetActive(false);
+        //        }
+        //        //Show Stars animations;
+
+        //        CheckEveryPlayerPressedContinueButton();
+        //    }
+        //}
     }
 
     private void CheckEveryPlayerPressedContinueButton()
@@ -340,6 +348,7 @@ public class LevelTwoControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -351,6 +360,7 @@ public class LevelTwoControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -360,6 +370,7 @@ public class LevelTwoControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -369,6 +380,7 @@ public class LevelTwoControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -380,6 +392,7 @@ public class LevelTwoControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -389,6 +402,7 @@ public class LevelTwoControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -398,6 +412,7 @@ public class LevelTwoControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -409,6 +424,7 @@ public class LevelTwoControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -448,19 +464,19 @@ public class LevelTwoControl : LevelControl
     public void WinGame(int level)
     {
         Color yellow = new Color(1, 1, 1, 1);
-        if (isWin == true && GetTotalScroe() == 700)
+        if (GetTotalScroe() == 90)
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 3, yellow);
             GameOver();
         }
-        else if (isWin == true && GetTotalScroe() == 500)
+        else if (GetTotalScroe() == 60)
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 2, yellow);
             GameOver();
         }
-        else if (isWin == true && GetTotalScroe() == 300)
+        else if (GetTotalScroe() == 30)
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 1, yellow);
@@ -556,5 +572,34 @@ public class LevelTwoControl : LevelControl
         SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
         SceneController.instance.LoadLevel(sceneIndex);
         levelUI.SetActive(false);
+    }
+
+    private static void DestroyObjectOnDontDestroyOnLoadOnjects()
+    {
+        var go = new GameObject("Sacrificial Lamb");
+        DontDestroyOnLoad(go);
+
+        foreach (var child in go.scene.GetRootGameObjects())
+        {
+            switch (child.tag)
+            {
+                case "Chop":
+                    Destroy(child.gameObject);
+                    break;
+                case "Box":
+                    Destroy(child.gameObject);
+                    break;
+                case "RockModel":
+                    Destroy(child.gameObject);
+                    break;
+                case "Rope":
+                    Destroy(child.gameObject);
+                    break;
+                case "Wood":
+                    Destroy(child.gameObject);
+                    break;
+            }
+        }
+        Destroy(go.gameObject);
     }
 }

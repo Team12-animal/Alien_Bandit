@@ -47,7 +47,6 @@ public class AnimalCatcher : MonoBehaviour
             {
                 SendAnimalToHome(box);
             }
-            Debug.LogWarning("ADD+1");
         }
     }
 

@@ -109,5 +109,6 @@ public class SaveStarsState : MonoBehaviour
         Color normal = new Color(0.2f, 0.2f, 0.2f, 1.0f);
         SaveDate(1, 3, normal);
         SaveDate(2, 3, normal);
+        LoadDate();
     }
 }
