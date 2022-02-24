@@ -36,7 +36,7 @@ public class LevelOneControl : LevelControl
     [SerializeField] GameObject continueUI;
     GameObject[] levelOneStars;
     [SerializeField] List<GameObject> showStars;
-    [SerializeField] List<GameObject> players = new List<GameObject>();
+    [HideInInspector] [SerializeField] List<GameObject> players = new List<GameObject>();
     bool player01CheckToContinue;
     bool player02CheckToContinue;
     bool player03CheckToContinue;

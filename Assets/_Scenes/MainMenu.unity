@@ -7368,17 +7368,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 165932555}
   m_CullTransparentMesh: 1
---- !u!114 &171193213 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1145177637583448530, guid: e020d4f2b34a90e4e8cd15992029fc64, type: 3}
-  m_PrefabInstance: {fileID: 1145177636129089651}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958619894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &177577202
 GameObject:
   m_ObjectHideFlags: 0
@@ -17211,6 +17200,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1178010042}
     m_Modifications:
+    - target: {fileID: 4656914006941076392, guid: f8f9e730dd61fce428690988367281d9, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656914006941076392, guid: f8f9e730dd61fce428690988367281d9, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656914006941076392, guid: f8f9e730dd61fce428690988367281d9, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4656914006941076393, guid: f8f9e730dd61fce428690988367281d9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -25441,6 +25442,14 @@ MonoBehaviour:
   player02: {fileID: 1093815328}
   player03: {fileID: 877490337}
   player04: {fileID: 593578705}
+  stars:
+  - {fileID: 1112791557}
+  - {fileID: 815490986}
+  - {fileID: 1804950399}
+  - {fileID: 1958619894}
+  - {fileID: 143387927}
+  - {fileID: 2007430692}
+  dataStarts: []
 --- !u!1 &609865192 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4067021796462647781, guid: b4a3a5d8ad3494f4fb9f0821db4d42f7, type: 3}
@@ -26340,17 +26349,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &689199005 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5136066076151933909, guid: f8de2bccbec18864489342d2891d0725, type: 3}
-  m_PrefabInstance: {fileID: 5136066075921212280}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2007430692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &692699280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4025478222779210, guid: d19dd43872ee43b4896d75d23e9db9e6, type: 3}
@@ -40066,17 +40064,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4458312218162336, guid: 72aa2807f4924be41808b0652e1a3be6, type: 3}
   m_PrefabInstance: {fileID: 2069445231}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1375047885 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 455179590232211716, guid: c3819b41c65fb1548847cc4727145207, type: 3}
-  m_PrefabInstance: {fileID: 455179590035127747}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143387927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1378474191
 GameObject:
   m_ObjectHideFlags: 0
@@ -43556,7 +43543,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1672794090}
-  - component: {fileID: 1672794089}
   m_Layer: 0
   m_Name: StarManager
   m_TagString: Untagged
@@ -43564,26 +43550,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1672794089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672794088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 300f4902235c8c14b8951909174e66ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imagesLevelOne:
-  - {fileID: 1691290807}
-  - {fileID: 1842511755}
-  - {fileID: 2115658974}
-  imagesLevelTwo:
-  - {fileID: 171193213}
-  - {fileID: 1375047885}
-  - {fileID: 689199005}
 --- !u!4 &1672794090
 Transform:
   m_ObjectHideFlags: 0
@@ -43817,17 +43783,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aca4c69ba2792044da19860502518138, type: 3}
---- !u!114 &1691290807 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4656914006941076392, guid: f8f9e730dd61fce428690988367281d9, type: 3}
-  m_PrefabInstance: {fileID: 4656914007746003577}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1112791557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1703086724 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4959245837571292, guid: d94026bdff771e24d8adcfa505894699, type: 3}
@@ -55547,17 +55502,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ca2fa2809968cf47852232e5d4a6e43, type: 3}
---- !u!114 &1842511755 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8217156224149499279, guid: c8f5bd6868cc8c04fabf2faf4e31d693, type: 3}
-  m_PrefabInstance: {fileID: 8217156224321027819}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 815490986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1842665167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3964796614937036289, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
@@ -73963,9 +73907,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 854394184}
-        m_TargetAssemblyTypeName: SaveStarsState, Assembly-CSharp
-        m_MethodName: NewGame
+      - m_Target: {fileID: 605161559}
+        m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
+        m_MethodName: NewGameResetStars
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -75181,17 +75125,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2115115243}
   m_Mesh: {fileID: 4300054, guid: 43fd3e8d43e912548876e99850c753fc, type: 3}
---- !u!114 &2115658974 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4234658511727049550, guid: ed973df8a5af07641804e5367df686be, type: 3}
-  m_PrefabInstance: {fileID: 4234658511482024458}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804950399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2120860166 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3964796614250356224, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}

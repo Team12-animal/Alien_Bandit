@@ -64,13 +64,13 @@ public class TeachingLevelControl : MonoBehaviour
     string goal = "Goal";
     List<GameObject> rocks;
     List<GameObject> woods;
-    [SerializeField] List<GameObject> rabbits;
+    [HideInInspector][SerializeField] List<GameObject> rabbits;
     List<GameObject> fox;
     List<GameObject> workingTable;
     [SerializeField] List<GameObject> trees;
     List<GameObject> winDoor;
     List<GameObject> loseDoor;
-    [SerializeField] List<GameObject> ropes;
+    [HideInInspector] [SerializeField] List<GameObject> ropes;
     List<GameObject> doorOpeners;
     GetStarTest getStarTest;
     [SerializeField] GameObject table;
@@ -86,9 +86,9 @@ public class TeachingLevelControl : MonoBehaviour
     [SerializeField] GameObject itemCircle;
     [SerializeField] GameObject rabbitCircle;
     [SerializeField] GameObject foxCircle;
-    [SerializeField] GameObject newCircle;
-    [SerializeField] GameObject oldCircle;
-    public GameObject tempTarget;
+    [HideInInspector] [SerializeField] GameObject newCircle;
+    [HideInInspector] [SerializeField] GameObject oldCircle;
+    [HideInInspector] public GameObject tempTarget;
     MissionManager missionManager;
     List<GameObject> saveRabbitCircles;
 

@@ -81,7 +81,7 @@ public class CheckPlayer : MonoBehaviour
 
     [Header("Stars")]
     [SerializeField] List<GameObject> stars;
-    [SerializeField] List<GameObject> dataStarts;
+    [HideInInspector][SerializeField] List<GameObject> dataStarts;
 
     public string menuDance01 { get; private set; } = "CharacterControllerTest_Male_MainMenu01";
     public string menuDance02 { get; private set; } = "CharacterControllerTest_Male_MainMenu02";
@@ -571,7 +571,7 @@ public class CheckPlayer : MonoBehaviour
         dataStarts.Add(GameObject.Find(updateStars.star04));
         dataStarts.Add(GameObject.Find(updateStars.star05));
         dataStarts.Add(GameObject.Find(updateStars.star06));
-        for (int i = 0; i < stars.Count; i++)
+        for (int i = 0; i < dataStarts.Count; i++)
         {
             stars[i].GetComponent<RawImage>().color = dataStarts[i].GetComponent<RawImage>().color;
         }
