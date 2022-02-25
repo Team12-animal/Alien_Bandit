@@ -284,18 +284,15 @@ public class CraftingManager : MonoBehaviour
             {
                 for (int i = 0; i < a.mixId.Count; i++)
                 {
-                    Debug.LogError("287:"+i);
                     //?Y?????i?X????Item?K???X?j??
                     if (a.mixId[i] == craft)
                     {
-                        Debug.LogError("290True" + i);
                         isCraft = true;
                         craftItem = a;
                         return;
                     }
                     else
                     {
-                        Debug.LogError("297False"+i);
                         isCraft = false;
                     }
                 }

@@ -25,7 +25,7 @@ public class FoxController : MonoBehaviour
         {
             lv = levelController.GetComponent<LevelOneControl>();
 
-            if (lv.isActiveAndEnabled != true)
+            if (lv == null || lv.isActiveAndEnabled != true)
             {
                 lv = levelController.GetComponent<LevelTwoControl>();
             }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LevelTwoControl : LevelControl
+public class LevelThirdControl : LevelControl
 {
     [Header("Waitting before star game play")]
     [SerializeField] float waittingTime = 3.0f;
@@ -86,7 +86,7 @@ public class LevelTwoControl : LevelControl
         player04ReadyImage.SetActive(false);
         missionManager = GameObject.Find("MissionCanvas").GetComponent<MissionManager>();
         missionManager.AddMission();
-        //missionManager.AddMission(1);
+        missionManager.AddMission(1);
         gameFailUI.SetActive(false);
         levelUI.SetActive(false);
 
