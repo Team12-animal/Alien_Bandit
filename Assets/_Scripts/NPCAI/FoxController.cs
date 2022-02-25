@@ -46,7 +46,7 @@ public class FoxController : MonoBehaviour
 
     IEnumerator CheckBreakableItems()
     {
-        yield return new WaitForSeconds(0);
+        yield return new WaitForSeconds(20);
 
         while (true)
         {
@@ -58,7 +58,7 @@ public class FoxController : MonoBehaviour
                 GenNewFox();
             }
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(50);
         }
     }
 
