@@ -25,7 +25,7 @@ public class RaccoonAI : MonoBehaviour
     {
         currentState = CurrentState.Idle;
         m_fCurrentTime = 0.0f;
-        m_fIdleTime = Random.Range(3.0f, 5.0f);
+        m_fIdleTime = Random.Range(0.5f, 3.0f);
         m_Am = GetComponent<Animator>();
         players = AIMain.m_Instance.GetPlayerList();
     }
@@ -111,7 +111,7 @@ public class RaccoonAI : MonoBehaviour
         }
         else if (currentState == CurrentState.Walk)
         {
-            m_fIdleTime = Random.Range(4.0f, 5.0f);  //漫步停留時間為隨機3～4秒
+            m_fIdleTime = Random.Range(3.0f, 6.0f);  //漫步停留時間為隨機3～4秒
             if (!(lastPos == transform.position))
             {
                 m_Am.SetInteger("State", 1);

@@ -852,7 +852,7 @@ GameObject:
   - component: {fileID: 3520995699928186517}
   - component: {fileID: 3520995699928186519}
   - component: {fileID: 3520995699928186516}
-  - component: {fileID: 3520995699928186518}
+  - component: {fileID: 880879680364573645}
   m_Layer: 20
   m_Name: RaccoonAI
   m_TagString: Untagged
@@ -950,39 +950,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3520995699928186518
-MonoBehaviour:
+--- !u!136 &880879680364573645
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3520995699928186514}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f055cd2da716b6040af9907a73421e85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Data:
-    m_fRadius: 1
-    m_fProbeLength: 6
-    m_Speed: 0
-    m_fMaxSpeed: 0.04
-    m_fRot: 0.1
-    m_fMaxRot: 0.2
-    m_Go: {fileID: 0}
-    arriveDist: 0
-    m_vTarget: {x: 0, y: 0, z: 0}
-    m_vCurrentVector: {x: 0, y: 0, z: 0}
-    m_fTempTurnForce: 0
-    m_fMoveForce: 0
-    m_bMove: 0
-    m_bCol: 0
-    m_fSight: 6
-    m_fAttackRange: 2.5
-    m_fAttackTime: 1
-    m_TargetObject: {fileID: 3964796615413391712, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
-    agent: {fileID: 0}
-    iscatched: 0
+  m_Radius: 0.3
+  m_Height: 1
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.3, z: 0.1}
 --- !u!1 &3521021873960008370
 GameObject:
   m_ObjectHideFlags: 0
