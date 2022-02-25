@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LevelOneControl : LevelControl
@@ -20,6 +21,9 @@ public class LevelOneControl : LevelControl
     [SerializeField] GameObject[] gameOverUIText;
     [SerializeField] GameObject gameWinUI;
     [SerializeField] GameObject gameFailUI;
+    [SerializeField] GameObject levelUI;
+    [SerializeField] GameObject chooseLevelUIStartButtonLevel02;
+    [SerializeField] GameObject chooseLevelUIStartButtonLevel01;
 
     public bool doorDestroied = false;
     InputController input01 = new InputController();
@@ -32,7 +36,7 @@ public class LevelOneControl : LevelControl
     [SerializeField] GameObject continueUI;
     GameObject[] levelOneStars;
     [SerializeField] List<GameObject> showStars;
-    [SerializeField] List<GameObject> players = new List<GameObject>();
+    [HideInInspector] [SerializeField] List<GameObject> players = new List<GameObject>();
     bool player01CheckToContinue;
     bool player02CheckToContinue;
     bool player03CheckToContinue;
@@ -52,6 +56,7 @@ public class LevelOneControl : LevelControl
     {
         //Setting Players who are in game
         SceneController.instance.GetPlayer(players);
+        SettingPlayerPosition();
         //Setting Game UI and time
         for (int i = 0; i < gameOverUIText.Length; i++)
         {
@@ -77,6 +82,29 @@ public class LevelOneControl : LevelControl
         player02ReadyImage.SetActive(false);
         player03ReadyImage.SetActive(false);
         player04ReadyImage.SetActive(false);
+        levelUI.SetActive(false);
+
+        AddScoreData();
+    }
+
+    private static void SettingPlayerPosition()
+    {
+        if (SceneController.instance.selected01)
+        {
+            SceneController.instance.SetPlayer(SceneController.instance.player01);
+        }
+        if (SceneController.instance.selected02)
+        {
+            SceneController.instance.SetPlayer(SceneController.instance.player02);
+        }
+        if (SceneController.instance.selected03)
+        {
+            SceneController.instance.SetPlayer(SceneController.instance.player03);
+        }
+        if (SceneController.instance.selected04)
+        {
+            SceneController.instance.SetPlayer(SceneController.instance.player04);
+        }
     }
 
     private void Update()
@@ -91,6 +119,7 @@ public class LevelOneControl : LevelControl
         GameOver();
         //TriggerSceneEvents();
         WinGame(1);//1  means what level two stars state;
+
     }
     /// <summary>
     /// When waitting time go up , allow player moving
@@ -283,8 +312,10 @@ public class LevelOneControl : LevelControl
         bool twoPlayerTpye1001 = SceneController.instance.selected01 && !SceneController.instance.selected02 && !SceneController.instance.selected03 && SceneController.instance.selected04;
         //1110; 3
         bool threePlayerType1110 = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && !SceneController.instance.selected04;
-        //1011; 3
-        bool threePlayerType1101 = SceneController.instance.selected01 && !SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
+        //1101; 3
+        bool threePlayerType1101 = SceneController.instance.selected01 && SceneController.instance.selected02 && !SceneController.instance.selected03 && SceneController.instance.selected04;
+        //1011 ;3
+        bool threePlayerType1011 = SceneController.instance.selected01 && !SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
         //1111; 4
         bool fourPlayer = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
 
@@ -298,44 +329,89 @@ public class LevelOneControl : LevelControl
             case 1:
                 if (onePlayer1000 && player01CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        OpenLevelUI();
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                    }
                 }
                 break;
             case 2:
                 if (twoPlayerType1100 && player01CheckToContinue && player02CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 else if (twoPlayerType1010 && player01CheckToContinue && player03CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 else if (twoPlayerTpye1001 && player01CheckToContinue && player04CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 break;
             case 3:
                 if (threePlayerType1110 && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 else if (threePlayerType1101 && player01CheckToContinue && player02CheckToContinue && player04CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
+                }
+                else if (threePlayerType1011 && player01CheckToContinue && player03CheckToContinue && player04CheckToContinue)
+                {
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 break;
             case 4:
                 if (fourPlayer && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue && player04CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 break;
         }
@@ -373,22 +449,22 @@ public class LevelOneControl : LevelControl
     public void WinGame(int level)
     {
         Color yellow = new Color(1, 1, 1, 1);
-        if (isWin == true && gamingTime > 90.0f)//score >= 10
+        if (isWin == true && GetTotalScroe() == 60)//score >= 10
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 3, yellow);
             GameOver();
         }
-        else if (isWin == true && gamingTime >= 60.0f)//score >= 20
+        else if (isWin == true && GetTotalScroe() == 30)//score >= 20
         {
             //Saving data;
-            SaveStarsState.instance.SaveDate(level, 2, yellow);
+            SaveStarsState.instance.SaveDate(level, 1, yellow);
             GameOver();
         }
         else if (isWin == true && gamingTime > 0.0f)//complete teachLevel
         {
             //Saving data;
-            SaveStarsState.instance.SaveDate(level, 1, yellow);
+            SaveStarsState.instance.SaveDate(level, 3, yellow);
             GameOver();
         }
     }
@@ -453,5 +529,56 @@ public class LevelOneControl : LevelControl
     public override float GetGameTime()
     {
         return gamingTime;
+    }
+
+    public void OpenLevelUI()
+    {
+        levelUI.SetActive(true);
+        if (isWin)
+        {
+            EventSystem.current.SetSelectedGameObject(chooseLevelUIStartButtonLevel02);
+        }
+        else
+        {
+            EventSystem.current.SetSelectedGameObject(chooseLevelUIStartButtonLevel01);
+        }
+    }
+    public void CloseLevelUI()
+    {
+        levelUI.SetActive(false);
+    }
+    public void LoadSecneLevel(int sceneIndex)
+    {
+        SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+        SceneController.instance.LoadLevel(sceneIndex);
+        levelUI.SetActive(false);
+    }
+    private static void DestroyObjectOnDontDestroyOnLoadOnjects()
+    {
+        var go = new GameObject("Sacrificial Lamb");
+        DontDestroyOnLoad(go);
+
+        foreach (var child in go.scene.GetRootGameObjects())
+        {
+            switch (child.tag)
+            {
+                case "Chop":
+                    Destroy(child.gameObject);
+                    break;
+                case "Box":
+                    Destroy(child.gameObject);
+                    break;
+                case "RockModel":
+                    Destroy(child.gameObject);
+                    break;
+                case "Rope":
+                    Destroy(child.gameObject);
+                    break;
+                case "Wood":
+                    Destroy(child.gameObject);
+                    break;
+            }
+        }
+        Destroy(go.gameObject);
     }
 }

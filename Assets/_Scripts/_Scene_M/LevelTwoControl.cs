@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LevelTwoControl : LevelControl
@@ -20,6 +21,9 @@ public class LevelTwoControl : LevelControl
     [SerializeField] GameObject[] gameOverUIText;
     [SerializeField] GameObject gameWinUI;
     [SerializeField] GameObject gameFailUI;
+    [SerializeField] GameObject levelUI;
+    [SerializeField] GameObject chooseLevelUIStartButtonLevel03;
+    [SerializeField] GameObject chooseLevelUIStartButtonLevel02;
     float waittingLoad = 3.0f;
     public bool doorDestroied = false;
     InputController input01 = new InputController();
@@ -32,7 +36,7 @@ public class LevelTwoControl : LevelControl
     [SerializeField] GameObject continueUI;
     [SerializeField] GameObject[] levelTwoStars;
     [SerializeField] List<GameObject> showStars;
-    [SerializeField] List<GameObject> players = new List<GameObject>();
+    [HideInInspector] [SerializeField] List<GameObject> players = new List<GameObject>();
     bool player01CheckToContinue;
     bool player02CheckToContinue;
     bool player03CheckToContinue;
@@ -54,6 +58,7 @@ public class LevelTwoControl : LevelControl
     {
         //Setting Players who are in game
         SceneController.instance.GetPlayer(players);
+        SettingPlayerPosition();
         //Setting Game UI and time
         for (int i = 0; i < gameOverUIText.Length; i++)
         {
@@ -82,6 +87,29 @@ public class LevelTwoControl : LevelControl
         missionManager = GameObject.Find("MissionCanvas").GetComponent<MissionManager>();
         missionManager.AddMission();
         gameFailUI.SetActive(false);
+        levelUI.SetActive(false);
+
+        AddScoreData();
+    }
+
+    private static void SettingPlayerPosition()
+    {
+        if (SceneController.instance.selected01)
+        {
+            SceneController.instance.SetPlayer(SceneController.instance.player01);
+        }
+        if (SceneController.instance.selected02)
+        {
+            SceneController.instance.SetPlayer(SceneController.instance.player02);
+        }
+        if (SceneController.instance.selected03)
+        {
+            SceneController.instance.SetPlayer(SceneController.instance.player03);
+        }
+        if (SceneController.instance.selected04)
+        {
+            SceneController.instance.SetPlayer(SceneController.instance.player04);
+        }
     }
 
     private void Update()
@@ -163,61 +191,6 @@ public class LevelTwoControl : LevelControl
             waittingLoad -= Time.deltaTime;
             if (waittingLoad <= 0.0f)
             {
-                continueUI.SetActive(true);
-                //Reset Players Position to MainMenu;
-                if (SceneController.instance.selected01)
-                {
-                    //Set player position to MainMenu position because using the same rawImage;
-                    SceneController.instance.MainPlayer(SceneController.instance.player01);
-                    //Change Animator to Dance Type;
-                    CheckPlayer tempPlayer = new CheckPlayer();
-                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player01, tempPlayer.menuDance01);
-                }
-                if (SceneController.instance.selected02)
-                {
-                    SceneController.instance.MainPlayer(SceneController.instance.player02);
-                    CheckPlayer tempPlayer = new CheckPlayer();
-                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player02, tempPlayer.menuDance02);
-                }
-                else
-                {
-                    player02RawImage.SetActive(false);
-                }
-                if (SceneController.instance.selected03)
-                {
-                    SceneController.instance.MainPlayer(SceneController.instance.player03);
-                    CheckPlayer tempPlayer = new CheckPlayer();
-                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player03, tempPlayer.menuDance03);
-                }
-                else
-                {
-                    player03RawImage.SetActive(false);
-                }
-                if (SceneController.instance.selected04)
-                {
-                    SceneController.instance.MainPlayer(SceneController.instance.player04);
-                    CheckPlayer tempPlayer = new CheckPlayer();
-                    tempPlayer.ChangePlayerAnimator(SceneController.instance.player04, tempPlayer.menuDance04);
-                }
-                else
-                {
-                    player04RawImage.SetActive(false);
-                }
-                CheckEveryPlayerPressedContinueButton();
-            }
-        }
-        else if (isWin)
-        {
-            //need to creat win UI;
-            gameWinUI.SetActive(true);
-
-            //can't control players;
-            GameOverSetting(input01, input02, input03, input04);
-
-            //Wait a little seconds to show Continue UI;
-            waittingTimeToShowContinueUI -= Time.deltaTime;
-            if (waittingTimeToShowContinueUI <= 0.0f)
-            {
                 waittingTimeToShowContinueUI = 0.0f;
                 if (!continueUI.activeInHierarchy)
                 {
@@ -266,11 +239,74 @@ public class LevelTwoControl : LevelControl
                 {
                     player04RawImage.SetActive(false);
                 }
-                //Show Stars animations;
-
                 CheckEveryPlayerPressedContinueButton();
             }
         }
+        //else if (isWin)
+        //{
+        //    //need to creat win UI;
+        //    gameWinUI.SetActive(true);
+
+        //    //can't control players;
+        //    GameOverSetting(input01, input02, input03, input04);
+
+        //    //Wait a little seconds to show Continue UI;
+        //    waittingTimeToShowContinueUI -= Time.deltaTime;
+        //    if (waittingTimeToShowContinueUI <= 0.0f)
+        //    {
+        //        waittingTimeToShowContinueUI = 0.0f;
+        //        if (!continueUI.activeInHierarchy)
+        //        {
+        //            for (int i = 0; i < levelTwoStars.Length; i++)
+        //            {
+        //                showStars[i].GetComponent<RawImage>().color = levelTwoStars[i].GetComponent<RawImage>().color;
+        //            }
+        //        }
+        //        continueUI.SetActive(true);
+        //        //Reset Players Position to MainMenu;
+        //        if (SceneController.instance.selected01)
+        //        {
+        //            //Set player position to MainMenu position because using the same rawImage;
+        //            SceneController.instance.MainPlayer(SceneController.instance.player01);
+        //            //Change Animator to Dance Type;
+        //            CheckPlayer tempPlayer = new CheckPlayer();
+        //            tempPlayer.ChangePlayerAnimator(SceneController.instance.player01, tempPlayer.menuDance01);
+        //        }
+        //        if (SceneController.instance.selected02)
+        //        {
+        //            SceneController.instance.MainPlayer(SceneController.instance.player02);
+        //            CheckPlayer tempPlayer = new CheckPlayer();
+        //            tempPlayer.ChangePlayerAnimator(SceneController.instance.player02, tempPlayer.menuDance02);
+        //        }
+        //        else
+        //        {
+        //            player02RawImage.SetActive(false);
+        //        }
+        //        if (SceneController.instance.selected03)
+        //        {
+        //            SceneController.instance.MainPlayer(SceneController.instance.player03);
+        //            CheckPlayer tempPlayer = new CheckPlayer();
+        //            tempPlayer.ChangePlayerAnimator(SceneController.instance.player03, tempPlayer.menuDance03);
+        //        }
+        //        else
+        //        {
+        //            player03RawImage.SetActive(false);
+        //        }
+        //        if (SceneController.instance.selected04)
+        //        {
+        //            SceneController.instance.MainPlayer(SceneController.instance.player04);
+        //            CheckPlayer tempPlayer = new CheckPlayer();
+        //            tempPlayer.ChangePlayerAnimator(SceneController.instance.player04, tempPlayer.menuDance04);
+        //        }
+        //        else
+        //        {
+        //            player04RawImage.SetActive(false);
+        //        }
+        //        //Show Stars animations;
+
+        //        CheckEveryPlayerPressedContinueButton();
+        //    }
+        //}
     }
 
     private void CheckEveryPlayerPressedContinueButton()
@@ -288,8 +324,10 @@ public class LevelTwoControl : LevelControl
         bool twoPlayerTpye1001 = SceneController.instance.selected01 && !SceneController.instance.selected02 && !SceneController.instance.selected03 && SceneController.instance.selected04;
         //1110; 3
         bool threePlayerType1110 = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && !SceneController.instance.selected04;
-        //1011; 3
-        bool threePlayerType1101 = SceneController.instance.selected01 && !SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
+        //1101; 3
+        bool threePlayerType1101 = SceneController.instance.selected01 && SceneController.instance.selected02 && !SceneController.instance.selected03 && SceneController.instance.selected04;
+        //1011
+        bool threePlayerType1011 = SceneController.instance.selected01 && !SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
         //1111; 4
         bool fourPlayer = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
 
@@ -303,44 +341,89 @@ public class LevelTwoControl : LevelControl
             case 1:
                 if (onePlayer1000 && player01CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 break;
             case 2:
                 if (twoPlayerType1100 && player01CheckToContinue && player02CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 else if (twoPlayerType1010 && player01CheckToContinue && player03CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 else if (twoPlayerTpye1001 && player01CheckToContinue && player04CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 break;
             case 3:
                 if (threePlayerType1110 && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 else if (threePlayerType1101 && player01CheckToContinue && player02CheckToContinue && player04CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
+                }
+                else if (threePlayerType1011 && player01CheckToContinue && player03CheckToContinue && player04CheckToContinue)
+                {
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 break;
             case 4:
                 if (fourPlayer && player01CheckToContinue && player02CheckToContinue && player03CheckToContinue && player04CheckToContinue)
                 {
-                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
-                    SceneController.instance.LoadLevel(0);
+                    //SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    //SceneController.instance.LoadLevel(0);
+                    if (!levelUI.activeInHierarchy)
+                    {
+                        DestroyObjectOnDontDestroyOnLoadOnjects();
+                        OpenLevelUI();
+                    }
                 }
                 break;
         }
@@ -378,19 +461,19 @@ public class LevelTwoControl : LevelControl
     public void WinGame(int level)
     {
         Color yellow = new Color(1, 1, 1, 1);
-        if (isWin == true && gamingTime > 90.0f)
+        if (GetTotalScroe() == 90)
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 3, yellow);
             GameOver();
         }
-        else if (isWin == true && gamingTime >= 60.0f)
+        else if (GetTotalScroe() == 60)
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 2, yellow);
             GameOver();
         }
-        else if (isWin == true && gamingTime > 0.0f)
+        else if (GetTotalScroe() == 30)
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 1, yellow);
@@ -455,8 +538,65 @@ public class LevelTwoControl : LevelControl
     }
 
     //for treeController
-    public override float GetGameTime()
+    public float GetGameTime()
     {
         return gamingTime;
+    }
+
+    //for treeController
+    public bool WinOrNot()
+    {
+        return isWin;
+    }
+    public void OpenLevelUI()
+    {
+        levelUI.SetActive(true);
+        if (isWin)
+        {
+            EventSystem.current.SetSelectedGameObject(chooseLevelUIStartButtonLevel03);
+        }
+        else
+        {
+            EventSystem.current.SetSelectedGameObject(chooseLevelUIStartButtonLevel02);
+        }
+    }
+    public void CloseLevelUI()
+    {
+        levelUI.SetActive(false);
+    }
+    public void LoadSecneLevel(int sceneIndex)
+    {
+        SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+        SceneController.instance.LoadLevel(sceneIndex);
+        levelUI.SetActive(false);
+    }
+
+    private static void DestroyObjectOnDontDestroyOnLoadOnjects()
+    {
+        var go = new GameObject("Sacrificial Lamb");
+        DontDestroyOnLoad(go);
+
+        foreach (var child in go.scene.GetRootGameObjects())
+        {
+            switch (child.tag)
+            {
+                case "Chop":
+                    Destroy(child.gameObject);
+                    break;
+                case "Box":
+                    Destroy(child.gameObject);
+                    break;
+                case "RockModel":
+                    Destroy(child.gameObject);
+                    break;
+                case "Rope":
+                    Destroy(child.gameObject);
+                    break;
+                case "Wood":
+                    Destroy(child.gameObject);
+                    break;
+            }
+        }
+        Destroy(go.gameObject);
     }
 }

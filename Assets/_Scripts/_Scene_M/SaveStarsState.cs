@@ -61,9 +61,7 @@ public class SaveStarsState : MonoBehaviour
     public void SaveDate(int level, int number, Color color)
     {
         LevelOneStar levelOneStar = new LevelOneStar();
-        levelOneStar.Init();
         LevelTwoStar levelTwoStar = new LevelTwoStar();
-        levelTwoStar.Init();
         switch (level)
         {
             case 1:
@@ -81,7 +79,8 @@ public class SaveStarsState : MonoBehaviour
                 }
                 break;
         }
-
+        levelOneStar.Init();
+        levelTwoStar.Init();
         string json01 = JsonUtility.ToJson(levelOneStar);
         string json02 = JsonUtility.ToJson(levelTwoStar);
         File.WriteAllText(Application.streamingAssetsPath + saveLevelOneName, json01);
@@ -109,5 +108,6 @@ public class SaveStarsState : MonoBehaviour
         Color normal = new Color(0.2f, 0.2f, 0.2f, 1.0f);
         SaveDate(1, 3, normal);
         SaveDate(2, 3, normal);
+        LoadDate();
     }
 }
