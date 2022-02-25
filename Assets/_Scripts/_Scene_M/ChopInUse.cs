@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ChopInUse : MonoBehaviour
 {
+    public GameObject chopPos;
     public bool used;
 
     private void OnTriggerStay(Collider other)
@@ -16,5 +17,11 @@ public class ChopInUse : MonoBehaviour
         {
             used = false;
         }
+    }
+
+    public void BackToHome()
+    {
+        this.transform.position = chopPos.transform.position;
+        this.transform.rotation = chopPos.transform.rotation;
     }
 }

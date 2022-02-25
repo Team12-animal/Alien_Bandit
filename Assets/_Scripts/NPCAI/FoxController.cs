@@ -6,6 +6,7 @@ public class FoxController : MonoBehaviour
 {
     [SerializeField]
     List<GameObject> birthPoses;
+    [SerializeField]
     List<GameObject> breakableItems;
 
     GameObject target;
@@ -30,23 +31,35 @@ public class FoxController : MonoBehaviour
             }
         }
 
+        LoadFox();
         StartCoroutine(CheckBreakableItems());
     }
 
+    private void Update()
+    {
+        if (fox.activeSelf == true && behaviour.IsTargetUsing())
+        {
+            behaviour.data.target = SetTarget();
+        }
+    }
+
+
     IEnumerator CheckBreakableItems()
     {
-        //while (lv.GetGameTime() >= 0.0f && lv.WinOrNot() == false)
-        //{
-        Debug.Log("fox generate");
+        yield return new WaitForSeconds(20);
+
+        while (true)
+        {
+            Debug.Log("fox coroutine");
             breakableItems = FindBreakableItems();
 
-            if (breakableItems.Count > 0 && GameObject.FindGameObjectsWithTag("Fox").Length == 0)
+            if (breakableItems.Count > 0 && fox.activeSelf == false)
             {
                 GenNewFox();
             }
-            
-            yield return new WaitForSeconds(1);
-        //}
+
+            yield return new WaitForSeconds(50);
+        }
     }
 
     private List<GameObject> FindBreakableItems()
@@ -78,6 +91,8 @@ public class FoxController : MonoBehaviour
     {
         int maxI = breakableItems.Count - 1;
         int i = Random.Range(0, maxI);
+
+        Debug.Log("setTarget" + i);
 
         if (breakableItems != null)
         {
@@ -139,15 +154,40 @@ public class FoxController : MonoBehaviour
         SpawnFox(target, birthPos);
     }
 
-    private void SpawnFox(GameObject target, GameObject birthPos)
+    GameObject fox;
+    Fox_BehaviourTree behaviour;
+    FoxAIData foxData;
+
+    private void LoadFox()
     {
         var prefab = Resources.Load<GameObject>("FoxAI");
-        GameObject fox = GameObject.Instantiate(prefab) as GameObject;
-        fox.SetActive(true);
-        fox.transform.position = birthPos.transform.position;
+        fox = GameObject.Instantiate(prefab) as GameObject;
+       
+        behaviour = fox.GetComponent<Fox_BehaviourTree>();
+        foxData = behaviour.data;
 
-        Fox_BehaviourTree behaviour = fox.GetComponent<Fox_BehaviourTree>();
+        if (behaviour == null || foxData == null)
+        {
+            Debug.Log("behaviour or foxdata null");
+        }
+
+        fox.SetActive(false);
+    }
+
+    private void SpawnFox(GameObject target, GameObject birthPos)
+    {
+        fox.SetActive(true);
+
+        fox.transform.position = birthPos.transform.position;
+        fox.transform.forward = birthPos.transform.forward;
+
         behaviour.target = target;
+        foxData.target = target;
         behaviour.birthPos = birthPos;
+        foxData.UpdateStatus(0);
+
+        behaviour.missionComplete = false;
+
+        Debug.Log("foxspawn" + target.name + birthPos.name);
     }
 }

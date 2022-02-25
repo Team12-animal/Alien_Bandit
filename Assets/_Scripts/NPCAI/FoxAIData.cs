@@ -22,15 +22,21 @@ public class FoxAIData : NpcAIData
 
     public enum FoxStatus
     {
-        Safe,
-        Alert,
-        Attacked,
-        Home
+        Safe, // do mission
+        Alert, // player enter alert area
+        AvoidAttack, // nearest player throw out the rock
+        Attacked, // hit by rock or box
+        Home // mission complete, back to birthPos
     }
 
     public void UpdateStatus(int newStatus)
     {
         status = newStatus;
         Status = (FoxStatus)status;
+    }
+
+    public void SetTarget(Vector3 target)
+    {
+        m_vTarget = target;
     }
 }

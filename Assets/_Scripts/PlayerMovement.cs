@@ -45,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
     private GameObject wtRight;
     public bool usingTable = false;
 
+    //chop
+    GameObject chop;
+    ChopInUse chopInUse;
+
     void Start()
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -625,7 +629,7 @@ public class PlayerMovement : MonoBehaviour
         
         float fDotD = Vector3.Dot(this.transform.forward, dirToItem);
 
-        if (fDotD < 0.3f)
+        if (fDotD < 0.1f)
         {
             temp = Vector3.Slerp(this.transform.forward, dirToItem, 1.0f);
             temp.y = this.transform.forward.y;
@@ -670,7 +674,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (itemInhand.tag == "RockModel")
         {
-            itemInhand.GetComponent<RockMovement>().beUsing = true;
+            itemInhand.GetComponent<RockMovement>().touchingGround = false;
         }
     }
     
@@ -697,10 +701,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (itemInhand.tag == "RockModel")
         {
-            itemInhand.GetComponent<RockMovement>().beUsing = false;
+            itemInhand.GetComponent<RockMovement>().touchingGround = true;
+        }
+
+        if (itemInhand.tag == "Chop")
+        {
+            itemInhand.GetComponent<ChopInUse>().BackToHome();
         }
 
         itemInhand = null;
+        Debug.Log("drop item " + itemInhand == null);
         UpdatePlayerData();
     }
 
@@ -746,7 +756,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (itemInhand.tag == "RockModel")
         {
-            itemInhand.GetComponent<RockMovement>().beUsing = false;
+            itemInhand.GetComponent<RockMovement>().touchingGround = true;
         }
 
         itemInhand = null;

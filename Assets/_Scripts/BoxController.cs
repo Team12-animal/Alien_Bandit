@@ -40,9 +40,9 @@ public class BoxController : MonoBehaviour
         {
             targetAnimal = other.gameObject;
             ac = targetAnimal.GetComponent(typeof(Collider)) as Collider;
+            ac.enabled = false;
             targetAnimal.GetComponent<RabbitAI>().enabled = false;
             targetAnimal.GetComponent<NavMeshAgent>().enabled = false;
-            ac.enabled = false;
             targetAnimal.transform.position = contentSpot.transform.position;
             targetAnimal.transform.up = contentSpot.transform.up;
             targetAnimal.transform.parent = contentSpot.gameObject.transform;

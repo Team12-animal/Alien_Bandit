@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BrokenVector.LowPolyFencePack;
 
 public class ButtonSensor : MonoBehaviour
 {
     public GameObject goalDoor;
     private GameObject player;
     private GameObject button;
-    private DoorController dc;
+    private NewDoorController dc;
     private Collider doorCollider;
     public GameObject goal;
     private Collider goalTrigger;
@@ -18,9 +17,30 @@ public class ButtonSensor : MonoBehaviour
     private void Awake()
     {
         button = this.transform.Find("Button").gameObject;
-        dc = goalDoor.GetComponent<DoorController>();
+        dc = goalDoor.GetComponent<NewDoorController>();
         doorCollider = goalDoor.GetComponent(typeof(Collider)) as Collider;
         goalTrigger = goal.GetComponent(typeof(Collider)) as Collider;
+    }
+
+    private void Update()
+    {
+        if (waiting == true)
+        {
+            waitingEnd = Countdown(startTime, 5);
+
+            if (waitingEnd == true)
+            {
+                Vector3 bPos = button.transform.position;
+                bPos.y += 0.2f;
+                button.transform.position = bPos;
+                dc.ToggleDoor();
+                player = null;
+                doorCollider.enabled = true;
+                goalTrigger.enabled = false;
+                pressed = false;
+                waiting = false;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,6 +63,10 @@ public class ButtonSensor : MonoBehaviour
         }
     }
 
+    bool waiting = false;
+    bool waitingEnd = false;
+    float startTime;
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player" && pressed == true)
@@ -51,15 +75,24 @@ public class ButtonSensor : MonoBehaviour
 
             if (playerOnButton == 0)
             {
-                Vector3 bPos = button.transform.position;
-                bPos.y += 0.2f;
-                button.transform.position = bPos;
-                dc.ToggleDoor();
-                player = null;
-                doorCollider.enabled = true;
-                goalTrigger.enabled = false;
-                pressed = false;
+                if (waiting == false)
+                {
+                    waiting = true;
+                    startTime = Time.time;
+                }
             }
+        }
+    }
+
+    private bool Countdown(float startTime, float waitTime)
+    {
+        if (Time.time >= (startTime + waitTime))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

@@ -8,19 +8,22 @@ public class FoxAnimatorController : MonoBehaviour
     public Animator animator;
 
     //parameters
-    int turnForceHash;
-    int moveForceHash;
-    public string trotTrigger = "Trot";
-    public string runTrigger = "Run";
-    public string jumpTrigger = "Jump";
+    [HideInInspector] int turnForceHash;
+    [HideInInspector] int moveForceHash;
+    [HideInInspector] public string trotTrigger = "Trot";
+    [HideInInspector] public string runTrigger = "Run";
+    [HideInInspector] public string jumpTrigger = "Jump";
+
 
     //animation name
-    public string breaking = "Fox_Dig";
-    public string attacked = "Fox_Damaged";
-    public string stun = "Fox_Stun";
-    public string jump = "Fox_Jump_InPlace";
+    [HideInInspector] public string breaking = "Fox_Dig";
+    [HideInInspector] public string attacked = "Fox_Damaged";
+    [HideInInspector] public string stun = "Fox_Stun";
+    [HideInInspector] public string jump = "Fox_Jump_InPlace";
     
     private string currentState;
+
+    public GameObject meshes;
 
     private void Start()
     {
@@ -33,9 +36,11 @@ public class FoxAnimatorController : MonoBehaviour
 
     public void ChangeAndPlayAnimation(string state, float turnForce, float moveForce)
     {
-        Debug.Log("npc play animation" + state);
+        Debug.Log("npc play animation" + turnForce + " / " + moveForce);
         if(state == currentState)
         {
+            animator.SetFloat(turnForceHash, turnForce);
+            animator.SetFloat(moveForceHash, moveForce);
             return;
         }
 
@@ -43,32 +48,30 @@ public class FoxAnimatorController : MonoBehaviour
        
         if (state == trotTrigger)
         {
-            animator.SetTrigger(trotTrigger);
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
-
+            animator.SetTrigger(trotTrigger);
         }
 
         if (state == runTrigger)
         {
-            animator.SetTrigger(runTrigger);
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
-
+            animator.SetTrigger(runTrigger);
         }
 
         if (state == jumpTrigger)
         {
-            animator.SetTrigger(jumpTrigger);
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
+            animator.SetTrigger(jumpTrigger);
         }
 
         if (state == breaking || state == attacked)
         {
-            animator.Play(state);
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
+            animator.Play(state);
         }
     }
 
@@ -104,9 +107,20 @@ public class FoxAnimatorController : MonoBehaviour
         }
     }
 
+    private bool CheckAnimaPlayingOrNot()
+    {
+        bool animaPlaying = animator.GetCurrentAnimatorStateInfo(0).IsName("Fox Crawl")
+                            || animator.GetCurrentAnimatorStateInfo(0).IsName(breaking)
+                            || animator.GetCurrentAnimatorStateInfo(0).IsName(attacked)
+                            || animator.GetCurrentAnimatorStateInfo(0).IsName(stun);
+
+        return animaPlaying;
+    }
+    
+
     public bool AllowToMove()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Fox Crawl") || animator.GetCurrentAnimatorStateInfo(0).IsName(breaking) || animator.GetCurrentAnimatorStateInfo(0).IsName(attacked) || animator.GetCurrentAnimatorStateInfo(0).IsName(stun))
+        if (CheckAnimaPlayingOrNot() == true)
         {
             return false;
         }
@@ -116,9 +130,33 @@ public class FoxAnimatorController : MonoBehaviour
         }
     }
 
-    public void AnimaEventBreakToRun()
+    public void AnimaEventToRun()
     {
-        Debug.Log("npc break to run");
+        Debug.Log("npc back to run");
         ChangeAndPlayAnimation(runTrigger, 1, 1);
+    }
+
+    public bool BreakingOrNot()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(breaking))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private void OpenMeshToggle()
+    {
+        if (meshes.activeSelf == true)
+        {
+            meshes.SetActive(false);
+        }
+        else
+        {
+            meshes.SetActive(true);
+        }
     }
 }

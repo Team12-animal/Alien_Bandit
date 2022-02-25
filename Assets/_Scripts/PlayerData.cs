@@ -30,7 +30,7 @@ public class PlayerData : MonoBehaviour
     private void Update()
     {
         AdjustSpeed();
-        BoxStatusReturn();
+        BoxAndRockStatusReturn();
     }
 
     private void AdjustSpeed()
@@ -47,13 +47,25 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-    private void BoxStatusReturn()
+    private void BoxAndRockStatusReturn()
     {
-        if(item != null && item.tag == "Box")
+        if(item != null)
         {
-            BoxController bc = item.GetComponent<BoxController>();
-            bc.beUsing = true;
-            bc.user = this.gameObject;
+            if (item.tag == "Box")
+            {
+                BoxController bc = item.GetComponent<BoxController>();
+                bc.beUsing = true;
+                bc.user = this.gameObject;
+            }
+
+            if (item.tag == "RockModel")
+            {
+                RockMovement rm = item.GetComponent<RockMovement>();
+                rm.beUsing = true;
+
+                Debug.Log("rock check" + rm.beUsing);
+            }
         }
     }
+
 }
