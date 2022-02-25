@@ -35,15 +35,6 @@ public class FoxController : MonoBehaviour
         StartCoroutine(CheckBreakableItems());
     }
 
-    private void Update()
-    {
-        if (fox.activeSelf == true && behaviour.IsTargetUsing())
-        {
-            behaviour.data.target = SetTarget();
-        }
-    }
-
-
     IEnumerator CheckBreakableItems()
     {
         yield return new WaitForSeconds(20);
@@ -67,6 +58,7 @@ public class FoxController : MonoBehaviour
         List<GameObject> breakableItems = new List<GameObject>();
         GameObject[] boxes = GameObject.FindGameObjectsWithTag("Box");
         GameObject[] ropes = GameObject.FindGameObjectsWithTag("Rope");
+        GameObject[] bags = GameObject.FindGameObjectsWithTag("Bag");
 
         if (boxes.Length > 0)
         {
@@ -81,6 +73,14 @@ public class FoxController : MonoBehaviour
             foreach (GameObject rope in ropes)
             {
                 breakableItems.Add(rope);
+            }
+        }
+
+        if (bags.Length > 0)
+        {
+            foreach (GameObject bag in bags)
+            {
+                breakableItems.Add(bag);
             }
         }
 

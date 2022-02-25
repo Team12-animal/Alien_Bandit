@@ -14,7 +14,8 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     //target
     private BoxController boxC;
-    private bool targetUsed;
+    private RopeController ropeC;
+    private BagController bagC;
 
     //rock
     public bool hitten = false;
@@ -69,7 +70,16 @@ public class Fox_BehaviourTree : MonoBehaviour
         if (target.tag == "Box")
         {
             boxC = target.GetComponent<BoxController>();
-            targetUsed = boxC.beUsing;
+        }
+
+        if (target.tag == "Bag")
+        {
+            bagC = target.GetComponent<BagController>();
+        }
+
+        if (target.tag == "Rope")
+        {
+            ropeC = target.GetComponent<RopeController>();
         }
 
         //AStar
@@ -131,7 +141,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (missionComplete || target == null)
+        if (missionComplete)
         {
             target = data.birthPos;
             data.m_vTarget = target.transform.position;
@@ -558,15 +568,5 @@ public class Fox_BehaviourTree : MonoBehaviour
             target = data.birthPos;
             data.m_vTarget = target.transform.position;
         }
-
-        if (target.tag == "Box" && boxC.beUsing == true)
-        {
-            targetUsed = true;
-        }
-    }
-
-    public bool IsTargetUsing()
-    {
-        return targetUsed;
     }
 }

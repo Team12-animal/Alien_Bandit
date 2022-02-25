@@ -145,7 +145,7 @@ public class InputController : MonoBehaviour
             {
                 string itemInhand = data.item.gameObject.tag;
 
-                if(takePressTimer >= 0.2f && (itemInhand == "RockModel" || itemInhand == "Box"))
+                if(takePressTimer >= 0.2f && (itemInhand == "RockModel" || itemInhand == "Box" || itemInhand == "Bag"))
                 {
                     aniClip = pm.Throw(takePressTimer);
                 }

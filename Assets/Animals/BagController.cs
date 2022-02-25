@@ -42,6 +42,7 @@ public class BagController : MonoBehaviour
             //targetAnimal.GetComponent<RabbitAI>().enabled = false;
             //targetAnimal.GetComponent<NavMeshAgent>().enabled = false;
             ac.enabled = false;
+            this.transform.Find("Racoon Poly Art").gameObject.SetActive(false);
             targetAnimal.transform.position = contentSpot.transform.position;
             targetAnimal.transform.up = contentSpot.transform.up;
             targetAnimal.transform.parent = contentSpot.gameObject.transform;
