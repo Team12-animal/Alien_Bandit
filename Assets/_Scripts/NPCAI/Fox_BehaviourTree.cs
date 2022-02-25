@@ -12,6 +12,10 @@ public class Fox_BehaviourTree : MonoBehaviour
     private int status;
     private float alertDist;
 
+    //target
+    private BoxController boxC;
+    private bool targetUsed;
+
     //rock
     public bool hitten = false;
 
@@ -61,6 +65,12 @@ public class Fox_BehaviourTree : MonoBehaviour
         PlayerInit();
 
         fAC = this.GetComponent<FoxAnimatorController>();
+
+        if (target.tag == "Box")
+        {
+            boxC = target.GetComponent<BoxController>();
+            targetUsed = boxC.beUsing;
+        }
 
         //AStar
         WPTerrain wpt = new WPTerrain();
@@ -118,7 +128,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (missionComplete)
+        if (missionComplete || target == null)
         {
             target = data.birthPos;
             data.m_vTarget = target.transform.position;
@@ -475,6 +485,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
 
         target.SetActive(false);
+        GameObject.Destroy(target);
         missionComplete = true;
     }
 
@@ -538,5 +549,24 @@ public class Fox_BehaviourTree : MonoBehaviour
             hitten = false;
             missionComplete = true;
         }
+    }
+
+    private void SetTarget()
+    {
+        if (missionComplete)
+        {
+            target = data.birthPos;
+            data.m_vTarget = target.transform.position;
+        }
+
+        if (target.tag == "Box" && boxC.beUsing == true)
+        {
+            targetUsed = true;
+        }
+    }
+
+    public bool IsTargetUsing()
+    {
+        return targetUsed;
     }
 }

@@ -158,9 +158,8 @@ public class AStar
                 nNode.parent = cNode;
                 openList.Add(nNode);
 
-                Debug.Log("astar n " + nNode.go.name);
+                Debug.Log(openList.Count + "astar n " + nNode.go.name);
             }
-
             cNode.nodeState = PathNodeState.NODE_CLOSED;
         }
 
