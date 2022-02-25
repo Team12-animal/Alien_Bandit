@@ -86,6 +86,7 @@ public class LevelTwoControl : LevelControl
         player04ReadyImage.SetActive(false);
         missionManager = GameObject.Find("MissionCanvas").GetComponent<MissionManager>();
         missionManager.AddMission();
+        missionManager.AddMission(1);
         gameFailUI.SetActive(false);
         levelUI.SetActive(false);
 

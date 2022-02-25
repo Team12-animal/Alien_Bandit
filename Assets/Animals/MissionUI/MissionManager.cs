@@ -6,6 +6,7 @@ public class MissionManager : MonoBehaviour
 {
     public List<GameObject> missions;
     private static MissionManager s_Instance;
+    private List<GameObject> Go;
     public static MissionManager Instance
     {
         get
@@ -30,6 +31,8 @@ public class MissionManager : MonoBehaviour
     void Start()
     {
         missions = new List<GameObject>();
+        Go[0] = Resources.Load("Mission") as GameObject;
+        Go[1] = Resources.Load("Mission2") as GameObject;
     }
 
     // Update is called once per frame
@@ -39,16 +42,15 @@ public class MissionManager : MonoBehaviour
         {
             AddMission();
         }
-        else if(Input.GetKeyDown(KeyCode.M))
+        else if (Input.GetKeyDown(KeyCode.M))
         {
             RemoveMission(0);
         }
     }
 
-    public void AddMission(  )
+    public void AddMission(int i = 0)
     {
-        GameObject go = Resources.Load("Mission") as GameObject;
-        missions.Add(Instantiate(go,transform));
+        missions.Add(Instantiate(Go[i], transform));
     }
 
     public void RemoveMission(int i)
