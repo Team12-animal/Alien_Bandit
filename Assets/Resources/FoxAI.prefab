@@ -8,12 +8,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 878989953, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
+      propertyPath: data.jumpSpeed
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 878989953, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: data.m_fMaxRot
-      value: 0.1
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 878989953, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
+      propertyPath: data.arriveDist
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 878989953, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: data.m_fMaxSpeed
-      value: 0.07
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 878989953, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
+      propertyPath: data.m_fProbeLength
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7125713674895692902, guid: c9f467e264c70774ca344b2ecada686b, type: 3}
       propertyPath: m_Name

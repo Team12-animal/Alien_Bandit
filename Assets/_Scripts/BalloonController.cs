@@ -80,7 +80,6 @@ public class BalloonController : MonoBehaviour
 
             if (balloon == null)
             {
-                Debug.Log(countTime + "balloon time" + Time.time);
                 if (Time.time > countTime + frequency)
                 {
                     ChosePath();

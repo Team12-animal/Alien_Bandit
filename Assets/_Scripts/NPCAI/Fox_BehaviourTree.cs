@@ -46,7 +46,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     private bool arriveTarget = false;
 
     //mission complete or not
-    private bool missionComplete = false;
+    public bool missionComplete = false;
 
     //player Action
     public bool pAttact = false;
@@ -83,6 +83,9 @@ public class Fox_BehaviourTree : MonoBehaviour
         aStarPerfoming = AStar.instance.PerformAStar(this.transform.position, data.target.transform.position);
         currentPathPt = 0;
 
+        arriveTarget = false;
+        missionComplete = false;
+        pAttact = false;
 
         Debug.Log("astar a" + aStarPerfoming);
     }
@@ -326,7 +329,7 @@ public class Fox_BehaviourTree : MonoBehaviour
             }
 
             SteeringBehavior.Move(data);
-            fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 10, data.m_fMoveForce * 10);
+            fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 5, data.m_Speed * 10);
         }
         else
         {
@@ -349,7 +352,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         if (players.Count > 0)
         {
             AvoidPlayerAndRun(players);
-            fAC.ChangeAndPlayAnimation(fAC.trotTrigger, data.m_fTempTurnForce * 10, data.m_fMoveForce * 10);
+            fAC.ChangeAndPlayAnimation(fAC.trotTrigger, data.m_fTempTurnForce * 5, data.m_Speed * 10);
         }
     }
 
@@ -401,7 +404,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         else
         {
             SteeringBehavior.Move(data);
-            fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 10, data.m_fMoveForce * 10);
+            fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 5, data.m_Speed * 10);
         }
     }
 
@@ -424,7 +427,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     private void GoHome()
     {
         MoveToBirthPos();
-        fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 10, data.m_fMoveForce * 10);
+        fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 5, data.m_Speed * 10);
 
         if (arriveHome)
         {
@@ -434,9 +437,6 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void MoveToBirthPos()
     {
-        aStarPerfoming = AStar.instance.PerformAStar(this.transform.position, data.target.transform.position);
-        currentPathPt = 0;
-
         if (aStarPerfoming)
         {
             List<Vector3> path = AStar.instance.GetPath();
@@ -498,7 +498,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         Vector3 from = this.transform.position;
         from.y += 5.0f;
-        from.z -= 0.5f;
+        from.z -= 1.0f;
         Vector3 dir = -this.transform.up;
 
         RaycastHit hit;

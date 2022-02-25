@@ -39,6 +39,8 @@ public class FoxAnimatorController : MonoBehaviour
         Debug.Log("npc play animation" + turnForce + " / " + moveForce);
         if(state == currentState)
         {
+            animator.SetFloat(turnForceHash, turnForce);
+            animator.SetFloat(moveForceHash, moveForce);
             return;
         }
 
@@ -46,32 +48,30 @@ public class FoxAnimatorController : MonoBehaviour
        
         if (state == trotTrigger)
         {
-            animator.SetTrigger(trotTrigger);
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
-
+            animator.SetTrigger(trotTrigger);
         }
 
         if (state == runTrigger)
         {
-            animator.SetTrigger(runTrigger);
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
-
+            animator.SetTrigger(runTrigger);
         }
 
         if (state == jumpTrigger)
         {
-            animator.SetTrigger(jumpTrigger);
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
+            animator.SetTrigger(jumpTrigger);
         }
 
         if (state == breaking || state == attacked)
         {
-            animator.Play(state);
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
+            animator.Play(state);
         }
     }
 

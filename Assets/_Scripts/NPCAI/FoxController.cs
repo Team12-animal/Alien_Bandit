@@ -92,6 +92,8 @@ public class FoxController : MonoBehaviour
         int maxI = breakableItems.Count - 1;
         int i = Random.Range(0, maxI);
 
+        Debug.Log("setTarget" + i);
+
         if (breakableItems != null)
         {
             return breakableItems[i];
@@ -160,10 +162,16 @@ public class FoxController : MonoBehaviour
     {
         var prefab = Resources.Load<GameObject>("FoxAI");
         fox = GameObject.Instantiate(prefab) as GameObject;
-        fox.SetActive(false);
-
+       
         behaviour = fox.GetComponent<Fox_BehaviourTree>();
         foxData = behaviour.data;
+
+        if (behaviour == null || foxData == null)
+        {
+            Debug.Log("behaviour or foxdata null");
+        }
+
+        fox.SetActive(false);
     }
 
     private void SpawnFox(GameObject target, GameObject birthPos)
@@ -174,7 +182,12 @@ public class FoxController : MonoBehaviour
         fox.transform.forward = birthPos.transform.forward;
 
         behaviour.target = target;
+        foxData.target = target;
         behaviour.birthPos = birthPos;
         foxData.UpdateStatus(0);
+
+        behaviour.missionComplete = false;
+
+        Debug.Log("foxspawn" + target.name + birthPos.name);
     }
 }
