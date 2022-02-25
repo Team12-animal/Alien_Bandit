@@ -58,7 +58,7 @@ public class FoxController : MonoBehaviour
                 GenNewFox();
             }
 
-            yield return new WaitForSeconds(50);
+            yield return new WaitForSeconds(1000);
         }
     }
 
