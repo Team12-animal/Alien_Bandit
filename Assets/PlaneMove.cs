@@ -7,6 +7,7 @@ public class PlaneMove : MonoBehaviour
 
     public Vector3[] point;
     int currentPoint = 0;
+    public float speed = 0.001f;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,7 @@ public class PlaneMove : MonoBehaviour
     {
         if (currentPoint == 0)
         {
-            transform.position = Vector3.Lerp(transform.position, point[1], 0.01f);
+            transform.position = Vector3.Lerp(transform.position, point[1], speed);
             float dist = (transform.position - point[1]).magnitude;
             if (dist < 0.1f)
             {
@@ -33,7 +34,7 @@ public class PlaneMove : MonoBehaviour
         }
         else
         {
-            transform.position = Vector3.Lerp(transform.position, point[0], 0.005f);
+            transform.position = Vector3.Lerp(transform.position, point[0], speed);
             float dist = (transform.position - point[0]).magnitude;
             if (dist < 0.1f)
             {
