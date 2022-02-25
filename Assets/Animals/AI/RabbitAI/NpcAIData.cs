@@ -5,27 +5,27 @@ using UnityEngine.AI;
 
 public class NpcAIData
 {
-    public float m_fRadius;  //偵測半徑
-    public float m_fProbeLength;  //探針長度
-    public float m_Speed;  //移動速度
-    public float m_fMaxSpeed;  //最大移動速度
-    public float m_fRot;  //旋轉速度
-    public float m_fMaxRot;  //最大旋轉速度
+    public float m_fRadius;  //?????b?|
+    public float m_fProbeLength;  //???w????
+    public float m_Speed;  //?????t??
+    public float m_fMaxSpeed;  //???j?????t??
+    public float m_fRot;  //?????t??
+    public float m_fMaxRot;  //???j?????t??
     public GameObject m_Go;  //Self
     public float arriveDist; //&target dist to stop
 
+    
+    public Vector3 m_vTarget;  //?n???????????????m
     [HideInInspector]
-    public Vector3 m_vTarget;  //要移動到的目標位置
+    public Vector3 m_vCurrentVector;  //???e???m
     [HideInInspector]
-    public Vector3 m_vCurrentVector;  //當前位置
+    public float m_fTempTurnForce;  //?I?[?????t??
     [HideInInspector]
-    public float m_fTempTurnForce;  //施加旋轉速度
+    public float m_fMoveForce;  //?I?[?????t??
     [HideInInspector]
-    public float m_fMoveForce;  //施加移動速度
-    [HideInInspector]
-    public bool m_bMove;  //是否可以移動
+    public bool m_bMove;  //?O?_?i?H????
 
     [HideInInspector]
-    public bool m_bCol;  //是否有障礙物
+    public bool m_bCol;  //?O?_????????
 }
 

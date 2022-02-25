@@ -37,7 +37,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private float maxSpeed;
     private float maxRot;
-    
+
     //seek ended or not
     private bool arriveTarget = false;
 
@@ -50,6 +50,10 @@ public class Fox_BehaviourTree : MonoBehaviour
     //fox animator
     private FoxAnimatorController fAC;
 
+    //AStar
+    public bool aStarPerfoming = false;
+    int currentPathPt = -1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +61,20 @@ public class Fox_BehaviourTree : MonoBehaviour
         PlayerInit();
 
         fAC = this.GetComponent<FoxAnimatorController>();
+
+        //AStar
+        WPTerrain wpt = new WPTerrain();
+        wpt.Init();
+
+        AStar aStar = new AStar();
+        aStar.Init(wpt);
+
+        //astar
+        aStarPerfoming = AStar.instance.PerformAStar(this.transform.position, data.target.transform.position);
+        currentPathPt = 0;
+
+
+        Debug.Log("astar a" + aStarPerfoming);
     }
 
     private void DataInit()
@@ -116,11 +134,14 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
 
         FindEffectPlayer();
+        UpdateTargetPosition();
 
-        if (!missionComplete)
-        {
-            UpdateTargetPosition();
-        }
+        //if (targetPosChange)
+        //{
+        //    //astar
+        //    aStarPerfoming = AStar.instance.PerformAStar(this.transform.position, data.target.transform.position);
+        //    currentPathPt = 0;
+        //}
 
         CheckStatusAndUpdate();
         SetY();
@@ -154,33 +175,46 @@ public class Fox_BehaviourTree : MonoBehaviour
         data.status = status;
     }
 
+    public bool targetPosChange = false;
+    Vector3 oriTPos;
+
     private void UpdateTargetPosition()
     {
         if (target != null)
         {
-            data.m_vTarget = target.transform.position;
+            if( oriTPos != target.transform.position)
+            {
+                data.m_vTarget = target.transform.position;
+                oriTPos = target.transform.position;
+                targetPosChange = true;
+            }
+            else
+            {
+                targetPosChange = false;
+            }
+
         }
     }
 
     private void CheckStatusAndUpdate()
     {
-        if(hitten == true)
+        if (hitten == true)
         {
             status = (int)FoxAIData.FoxStatus.Attacked;
             data.UpdateStatus(status);
             return;
         }
 
-        if(fAC.BreakingOrNot() == true)
+        if (fAC.BreakingOrNot() == true)
         {
             status = (int)FoxAIData.FoxStatus.Safe;
             data.UpdateStatus(status);
             return;
         }
 
-        if(effectPlayers.Count == 0)
+        if (effectPlayers.Count == 0)
         {
-            if(!missionComplete)
+            if (!missionComplete)
             {
                 status = (int)FoxAIData.FoxStatus.Safe;
             }
@@ -191,9 +225,9 @@ public class Fox_BehaviourTree : MonoBehaviour
             }
         }
 
-        if(effectPlayers.Count > 0)
+        if (effectPlayers.Count > 0)
         {
-            if(pAC.ThorowingOrNot() == false)
+            if (pAC.ThorowingOrNot() == false)
             {
                 status = (int)FoxAIData.FoxStatus.Alert;
             }
@@ -213,7 +247,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     private void FindEffectPlayer()
     {
         //save original effectPlayer
-        if(nearestPlayer != null)
+        if (nearestPlayer != null)
         {
             oriEffectPlayer = nearestPlayer;
         }
@@ -242,7 +276,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         nearestPlayer = tempPlayer;
 
-        if(nearestPlayer != null && nearestPlayer != oriEffectPlayer)
+        if (nearestPlayer != null && nearestPlayer != oriEffectPlayer)
         {
             pAC = nearestPlayer.GetComponent<AnimatorController>();
         }
@@ -251,7 +285,30 @@ public class Fox_BehaviourTree : MonoBehaviour
     #region fox behaviour tree
     private void BreakItem()
     {
-        if(arriveTarget == false)
+        if (aStarPerfoming)
+        {
+            List<Vector3> path = AStar.instance.GetPath();
+            int final = path.Count - 1;
+
+            for (int i = final; i >= currentPathPt; i--)
+            {
+                Vector3 sPos = path[i];
+                Vector3 cPos = this.transform.position;
+
+                if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                {
+                    continue;
+                }
+
+                currentPathPt = i;
+                data.SetTarget(sPos);
+                break;
+            }
+
+            Debug.Log("Doing AStar");
+        }
+
+        if (arriveTarget == false)
         {
             if (SteeringBehavior.CollisionAvoid(data) == false)
             {
@@ -292,7 +349,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void AvoidAttack()
     {
-        if(nearestPlayer == null)
+        if (nearestPlayer == null)
         {
             return;
         }
@@ -348,98 +405,6 @@ public class Fox_BehaviourTree : MonoBehaviour
         SteeringBehavior.Move(data);
     }
 
-    private bool AvoidCollision(List<GameObject> players)
-    {
-        Debug.Log("npc avoid collision");
-        Vector3 foxPos = this.transform.position;
-        Vector3 foxF = this.transform.forward;
-        Vector3 vec;
-        float finalDotDist;
-        float finalProjDist;
-        Vector3 finalVec = Vector3.forward;
-        GameObject final = null;
-        float dist = 0.0f;
-        float dotf = 0.0f;
-        float finalDot = 0.0f;
-        int playerAmt = players.Count;
-
-        float minDist = 10000.0f;
-        for (int i = 0; i < playerAmt; i++)
-        {
-            vec = players[i].transform.position - foxPos;
-            vec.y = 0.0f;
-            dist = vec.magnitude;
-
-            if(dist > data.m_fProbeLength + 2.0f)
-            {
-                continue;
-            }
-
-            vec.Normalize();
-            dotf = Vector3.Dot(vec, foxF);
-
-            if (dotf < 0)
-            {
-                continue;
-            }
-            else if (finalDot > 1.0f)
-            {
-                dotf = 1.0f;
-            }
-
-            float projDist = dist * dotf;
-            float dotDist = Mathf.Sqrt(dist * dist - projDist * projDist);
-            if (dotDist > 2.0f + data.m_fRadius)
-            {
-                continue;
-            }
-
-            if (dist < minDist)
-            {
-                minDist = dist;
-                finalDotDist = dotDist;
-                finalProjDist = projDist;
-                finalVec = vec;
-                final = players[i];
-                finalDot = dotf;
-            }
-        }
-
-        if (final != null)
-        {
-            Vector3 cross = Vector3.Cross(foxF, finalVec);
-            float turnMag = Mathf.Sqrt(1.0f - finalDot * finalDot);
-
-            if (cross.y > 0.0f)
-            {
-                turnMag = -turnMag;
-            }
-
-            data.m_fTempTurnForce = turnMag;
-            float TotalLen = data.m_fProbeLength + 2.0f;
-            float ratio = minDist / TotalLen;
-
-            if(ratio > 1.0f)
-            {
-                ratio = 1.0f;
-            }
-
-            ratio = 1.0f - ratio;
-            data.m_fMoveForce = -ratio;
-            data.m_bCol = true;
-            data.m_bMove = false;
-            return true;
-        }
-
-        data.m_bCol = false;
-        return false;
-    }
-
-    private void MoveForward()
-    {
-        this.transform.position += this.transform.forward * data.m_fMaxSpeed;
-    }
-
     private void Hurt()
     {
         fAC.ChangeAndPlayAnimation(fAC.attacked, 0, 0);
@@ -459,6 +424,32 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void MoveToBirthPos()
     {
+        aStarPerfoming = AStar.instance.PerformAStar(this.transform.position, data.target.transform.position);
+        currentPathPt = 0;
+
+        if (aStarPerfoming)
+        {
+            List<Vector3> path = AStar.instance.GetPath();
+            int final = path.Count - 1;
+
+            for (int i = final; i >= currentPathPt; i--)
+            {
+                Vector3 sPos = path[i];
+                Vector3 cPos = this.transform.position;
+
+                if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                {
+                    continue;
+                }
+
+                currentPathPt = i;
+                data.SetTarget(sPos);
+                break;
+            }
+
+            Debug.Log("Doing AStar");
+        }
+
         if (SteeringBehavior.CollisionAvoid(data) == false)
         {
             arriveHome = SteeringBehavior.Seek(data);
@@ -493,14 +484,14 @@ public class Fox_BehaviourTree : MonoBehaviour
     {
         Vector3 newPos;
         newPos = this.transform.position;
-        
+
         Vector3 from = this.transform.position;
         from.y += 5.0f;
         from.z -= 0.5f;
         Vector3 dir = -this.transform.up;
 
         RaycastHit hit;
-        if(Physics.Raycast(from, dir, out hit, Mathf.Infinity, 1 << 7))
+        if (Physics.Raycast(from, dir, out hit, Mathf.Infinity, 1 << 7))
         {
             newPos.y = hit.point.y;
             this.transform.position = newPos;
@@ -521,6 +512,22 @@ public class Fox_BehaviourTree : MonoBehaviour
         Vector3 dir = -this.transform.up;
         Gizmos.color = Color.black;
         Gizmos.DrawLine(from, from + (dir * 5));
+
+        if (aStarPerfoming)
+        {
+            List<Vector3> path = AStar.instance.GetPath();
+            Gizmos.color = Color.blue;
+            int iCount = path.Count - 1;
+            int i;
+            for (i = 0; i < iCount; i++)
+            {
+                Vector3 sPos = path[i];
+                sPos.y += 1.0f;
+                Vector3 ePos = path[i + 1];
+                ePos.y += 1.0f;
+                Gizmos.DrawLine(sPos, ePos);
+            }
+        }
 
     }
 

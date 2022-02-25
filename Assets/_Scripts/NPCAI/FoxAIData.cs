@@ -34,4 +34,9 @@ public class FoxAIData : NpcAIData
         status = newStatus;
         Status = (FoxStatus)status;
     }
+
+    public void SetTarget(Vector3 target)
+    {
+        m_vTarget = target;
+    }
 }
