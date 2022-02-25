@@ -48,8 +48,8 @@ public class LevelControl : MonoBehaviour
         totalScore += addScore;
 
         int[] result = new int[] { addScore, totalScore };
-        //addScoreText.text = addScore.ToString();
-        //ScoreUIAnimation();
+        addScoreText.text = addScore.ToString();
+        ScoreUIAnimation();
         return result;
     }
 
