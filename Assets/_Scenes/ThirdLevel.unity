@@ -8514,6 +8514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missions: []
+  Go: []
 --- !u!114 &513986108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8936,6 +8937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 4
   beUsing: 0
+  touchingGround: 0
 --- !u!135 &566819975
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9678,6 +9680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 4
   beUsing: 0
+  touchingGround: 0
 --- !u!135 &633492357
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10084,6 +10087,7 @@ Transform:
   - {fileID: 899363417}
   - {fileID: 263667003}
   - {fileID: 154065976}
+  - {fileID: 2123146621}
   m_Father: {fileID: 1268722048}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13326,6 +13330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 4
   beUsing: 0
+  touchingGround: 0
 --- !u!54 &1011740912
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13582,6 +13587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 4
   beUsing: 0
+  touchingGround: 0
 --- !u!135 &1021850118
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -14442,6 +14448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 4
   beUsing: 0
+  touchingGround: 0
 --- !u!135 &1104539817
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -28342,6 +28349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 4
   beUsing: 0
+  touchingGround: 0
 --- !u!135 &1499154869
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -31342,6 +31350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missions: []
+  Go: []
 --- !u!114 &1919580633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33270,6 +33279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 4
   beUsing: 0
+  touchingGround: 0
 --- !u!135 &2104621837
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -33315,6 +33325,51 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1 &2123146620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2123146621}
+  - component: {fileID: 2123146622}
+  m_Layer: 15
+  m_Name: RiverCollider(1) (26)
+  m_TagString: Obstacle
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2123146621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2123146620}
+  m_LocalRotation: {x: -0, y: 0.7575509, z: -0, w: 0.6527762}
+  m_LocalPosition: {x: 15.47, y: -4.62, z: 23.68}
+  m_LocalScale: {x: 0.23122863, y: 0.97820735, z: 0.6356391}
+  m_Children: []
+  m_Father: {fileID: 666568527}
+  m_RootOrder: 56
+  m_LocalEulerAnglesHint: {x: 0, y: 98.498, z: 0}
+--- !u!114 &2123146622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2123146620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32101fa9215d98f4d994f781aa5af321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fRadius: 8
+  m_eState: -1
 --- !u!1001 &2123884927
 PrefabInstance:
   m_ObjectHideFlags: 0
