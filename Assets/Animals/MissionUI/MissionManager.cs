@@ -6,7 +6,7 @@ public class MissionManager : MonoBehaviour
 {
     public List<GameObject> missions;
     private static MissionManager s_Instance;
-    private List<GameObject> Go;
+    public  List<GameObject> Go;
     public static MissionManager Instance
     {
         get
@@ -31,8 +31,8 @@ public class MissionManager : MonoBehaviour
     void Start()
     {
         missions = new List<GameObject>();
-        Go[0] = Resources.Load("Mission") as GameObject;
-        Go[1] = Resources.Load("Mission2") as GameObject;
+        Go.Add(Resources.Load("Mission") as GameObject);
+        Go.Add(Resources.Load("Mission2") as GameObject);
     }
 
     // Update is called once per frame
