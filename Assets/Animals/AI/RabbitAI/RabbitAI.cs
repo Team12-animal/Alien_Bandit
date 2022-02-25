@@ -28,6 +28,7 @@ public class RabbitAI : MonoBehaviour
     private GameObject attackWood;
     private GameObject dangerAnimal;
     private bool isDanger = false;
+    Vector3 lastPos;
     // Use this for initialization
     public void Start()
     {
@@ -204,7 +205,7 @@ public class RabbitAI : MonoBehaviour
                 m_Data.m_vTarget = RandomNavSphere(transform.position, m_Data.m_fSight, -1);  //在視野範圍內隨機位置
                 m_eCurrentState = eFSMState.Wander;
                 m_Am.applyRootMotion = false;
-                m_Am.SetInteger("State", 1);
+                lastPos = transform.position;
             }
             else
             {
@@ -218,7 +219,7 @@ public class RabbitAI : MonoBehaviour
                 m_eCurrentState = eFSMState.Attack;
                 return;
             }
-            m_fIdleTime = Random.Range(2.0f, 3.0f);  //漫步停留時間為隨機3～4秒
+            m_fIdleTime = Random.Range(4.0f, 5.0f);  //漫步停留時間為隨機3～4秒
             CheckPlayerInSight();
             if (isDanger)
             {
@@ -235,6 +236,12 @@ public class RabbitAI : MonoBehaviour
                     return;
                 }
             }
+            
+            if (!(lastPos == transform.position))
+            {
+                m_Am.SetInteger("State",1);
+            }
+            lastPos = transform.position;
             m_Data.agent.enabled = true;
             m_Data.agent.updateRotation = true;
             m_Data.agent.SetDestination(m_Data.m_vTarget);  //AI移動到隨機目標點
@@ -246,7 +253,7 @@ public class RabbitAI : MonoBehaviour
                 m_Data.agent.SetDestination(transform.position);  //將位置調整為當前位置(避免平移)
                 m_eCurrentState = eFSMState.Idle;
                 m_fCurrentTime = 0.0f;
-                m_fIdleTime = Random.Range(2.0f, 3.0f);
+                m_fIdleTime = Random.Range(1.0f, 3.0f);
                 m_Data.m_bMove = false;
 
             }
@@ -347,7 +354,7 @@ public class RabbitAI : MonoBehaviour
     public Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
 
-        Vector3 randDirection = Random.insideUnitSphere * (dist + 1);
+        Vector3 randDirection = Random.insideUnitSphere * (dist + 5);
 
         randDirection += origin;
 

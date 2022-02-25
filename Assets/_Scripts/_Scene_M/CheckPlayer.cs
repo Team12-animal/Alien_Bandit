@@ -78,6 +78,11 @@ public class CheckPlayer : MonoBehaviour
     [SerializeField] GameObject player02;
     [SerializeField] GameObject player03;
     [SerializeField] GameObject player04;
+
+    [Header("Stars")]
+    [SerializeField] List<GameObject> stars;
+    [HideInInspector][SerializeField] List<GameObject> dataStarts;
+
     public string menuDance01 { get; private set; } = "CharacterControllerTest_Male_MainMenu01";
     public string menuDance02 { get; private set; } = "CharacterControllerTest_Male_MainMenu02";
     public string menuDance03 { get; private set; } = "CharacterControllerTest_Male_MainMenu03";
@@ -551,5 +556,24 @@ public class CheckPlayer : MonoBehaviour
         anim02.animator = player.GetComponent<Animator>();
         anim02.Init();
         anim02.animator.runtimeAnimatorController = Resources.Load(animatorName) as RuntimeAnimatorController;
+    }
+
+    public void NewGameResetStars()
+    {
+        Color normal = new Color(0.2f, 0.2f, 0.2f, 1.0f);
+        SaveStarsState.instance.SaveDate(1, 3, normal);
+        SaveStarsState.instance.SaveDate(2, 3, normal);
+        SaveStarsState.instance.LoadDate();
+        UpdateStarsStates updateStars = new UpdateStarsStates();
+        dataStarts.Add(GameObject.Find(updateStars.star01));
+        dataStarts.Add(GameObject.Find(updateStars.star02));
+        dataStarts.Add(GameObject.Find(updateStars.star03));
+        dataStarts.Add(GameObject.Find(updateStars.star04));
+        dataStarts.Add(GameObject.Find(updateStars.star05));
+        dataStarts.Add(GameObject.Find(updateStars.star06));
+        for (int i = 0; i < dataStarts.Count; i++)
+        {
+            stars[i].GetComponent<RawImage>().color = dataStarts[i].GetComponent<RawImage>().color;
+        }
     }
 }
