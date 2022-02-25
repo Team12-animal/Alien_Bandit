@@ -253,7 +253,7 @@ public class RabbitAI : MonoBehaviour
                 m_Data.agent.SetDestination(transform.position);  //將位置調整為當前位置(避免平移)
                 m_eCurrentState = eFSMState.Idle;
                 m_fCurrentTime = 0.0f;
-                m_fIdleTime = Random.Range(2.0f, 4.0f);
+                m_fIdleTime = Random.Range(1.0f, 3.0f);
                 m_Data.m_bMove = false;
 
             }
