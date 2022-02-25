@@ -235,8 +235,7 @@ public class RabbitAI : MonoBehaviour
                     m_eCurrentState = eFSMState.MoveToTarget;
                     return;
                 }
-            }
-            
+            }           
             if (!(lastPos == transform.position))
             {
                 m_Am.SetInteger("State",1);
@@ -255,7 +254,6 @@ public class RabbitAI : MonoBehaviour
                 m_fCurrentTime = 0.0f;
                 m_fIdleTime = Random.Range(1.0f, 3.0f);
                 m_Data.m_bMove = false;
-
             }
             else
             {
