@@ -37,7 +37,7 @@ public class FoxController : MonoBehaviour
 
     IEnumerator CheckBreakableItems()
     {
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(0);
 
         while (true)
         {
@@ -49,7 +49,7 @@ public class FoxController : MonoBehaviour
                 GenNewFox();
             }
 
-            yield return new WaitForSeconds(1000);
+            yield return new WaitForSeconds(1);
         }
     }
 
@@ -176,17 +176,14 @@ public class FoxController : MonoBehaviour
 
     private void SpawnFox(GameObject target, GameObject birthPos)
     {
-        fox.SetActive(true);
-
         fox.transform.position = birthPos.transform.position;
         fox.transform.forward = birthPos.transform.forward;
 
-        behaviour.target = target;
         foxData.target = target;
-        behaviour.birthPos = birthPos;
-        foxData.UpdateStatus(0);
+        foxData.birthPos = birthPos;
+        foxData.UpdateStatus((int)FoxAIData.FoxStatus.Safe);
 
-        behaviour.missionComplete = false;
+        fox.SetActive(true);
 
         Debug.Log("foxspawn" + target.name + birthPos.name);
     }

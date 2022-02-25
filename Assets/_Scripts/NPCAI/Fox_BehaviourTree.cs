@@ -62,25 +62,26 @@ public class Fox_BehaviourTree : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DataInit();
-        PlayerInit();
+        //Debug.Log("fox init");
+        //DataInit();
+        //PlayerInit();
 
-        fAC = this.GetComponent<FoxAnimatorController>();
+       
 
-        if (target.tag == "Box")
-        {
-            boxC = target.GetComponent<BoxController>();
-        }
+        //if (target.tag == "Box")
+        //{
+        //    boxC = target.GetComponent<BoxController>();
+        //}
 
-        if (target.tag == "Bag")
-        {
-            bagC = target.GetComponent<BagController>();
-        }
+        //if (target.tag == "Bag")
+        //{
+        //    bagC = target.GetComponent<BagController>();
+        //}
 
-        if (target.tag == "Rope")
-        {
-            ropeC = target.GetComponent<RopeController>();
-        }
+        //if (target.tag == "Rope")
+        //{
+        //    ropeC = target.GetComponent<RopeController>();
+        //}
 
         //AStar
         WPTerrain wpt = new WPTerrain();
@@ -93,20 +94,48 @@ public class Fox_BehaviourTree : MonoBehaviour
         aStarPerfoming = AStar.instance.PerformAStar(this.transform.position, data.target.transform.position);
         currentPathPt = 0;
 
-        arriveTarget = false;
-        missionComplete = false;
-        pAttact = false;
-
         Debug.Log("astar a" + aStarPerfoming);
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("fox init");
+        DataInit();
+        PlayerInit();
+
+        fAC = this.GetComponent<FoxAnimatorController>();
+
+        if (data.target != null)
+        {
+            if (data.target.tag == "Box")
+            {
+                boxC = data.target.GetComponent<BoxController>();
+            }
+
+            if (data.target.tag == "Bag")
+            {
+                bagC = data.target.GetComponent<BagController>();
+            }
+
+            if (data.target.tag == "Rope")
+            {
+                ropeC = data.target.GetComponent<RopeController>();
+            }
+        }
     }
 
     private void DataInit()
     {
-        data.target = target;
-        data.birthPos = birthPos;
+        target = data.target;
+        birthPos = data.birthPos;
         data.m_Go = this.gameObject;
         status = (int)data.status;
         alertDist = data.m_fRadius;
+
+        missionComplete = false;
+        arriveTarget = false;
+        arriveHome = false;
+        pAttact = false;
     }
 
     private void PlayerInit()
@@ -141,9 +170,13 @@ public class Fox_BehaviourTree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (missionComplete)
+        FindEffectPlayer();
+        CheckStatusAndUpdate();
+
+        if (status == (int)FoxAIData.FoxStatus.Home)
         {
             target = data.birthPos;
+            data.target = target;
             data.m_vTarget = target.transform.position;
         }
 
@@ -156,17 +189,8 @@ public class Fox_BehaviourTree : MonoBehaviour
             return;
         }
 
-        FindEffectPlayer();
+        
         UpdateTargetPosition();
-
-        //if (targetPosChange)
-        //{
-        //    //astar
-        //    aStarPerfoming = AStar.instance.PerformAStar(this.transform.position, data.target.transform.position);
-        //    currentPathPt = 0;
-        //}
-
-        CheckStatusAndUpdate();
         SetY();
 
         switch (status)
@@ -242,7 +266,7 @@ public class Fox_BehaviourTree : MonoBehaviour
                 status = (int)FoxAIData.FoxStatus.Safe;
             }
 
-            if (missionComplete)
+            if (missionComplete || CheckUsingTarget() == true)
             {
                 status = (int)FoxAIData.FoxStatus.Home;
             }
@@ -262,6 +286,17 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         data.UpdateStatus(status);
     }
+
+    private bool CheckUsingTarget()
+    {
+        bool result;
+        result = (boxC != null && boxC.beUsing == true) ||
+                 (ropeC != null && ropeC.beUsing == true) ||
+                 (bagC != null && bagC.beUsing == true);
+
+        return result;
+    }
+
 
     GameObject tempPlayer;
     float nearestDist = 10000.0f;
@@ -441,6 +476,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         if (arriveHome)
         {
+            fAC.ChangeAndPlayAnimation(fAC.idle, 0, 0);
             this.gameObject.SetActive(false);
         }
     }

@@ -20,7 +20,9 @@ public class FoxAnimatorController : MonoBehaviour
     [HideInInspector] public string attacked = "Fox_Damaged";
     [HideInInspector] public string stun = "Fox_Stun";
     [HideInInspector] public string jump = "Fox_Jump_InPlace";
-    
+    [HideInInspector] public string idle = "Idle";
+
+
     private string currentState;
 
     public GameObject meshes;
@@ -36,7 +38,7 @@ public class FoxAnimatorController : MonoBehaviour
 
     public void ChangeAndPlayAnimation(string state, float turnForce, float moveForce)
     {
-        Debug.Log("npc play animation" + turnForce + " / " + moveForce);
+        Debug.Log("npc play animation" +state + turnForce + " / " + moveForce);
         if(state == currentState)
         {
             animator.SetFloat(turnForceHash, turnForce);
@@ -67,7 +69,7 @@ public class FoxAnimatorController : MonoBehaviour
             animator.SetTrigger(jumpTrigger);
         }
 
-        if (state == breaking || state == attacked)
+        if (state == breaking || state == attacked || state == idle)
         {
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
