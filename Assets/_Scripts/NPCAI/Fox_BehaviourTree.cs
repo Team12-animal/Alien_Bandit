@@ -516,6 +516,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         target.SetActive(false);
         GameObject.Destroy(target);
+        target = null;
         missionComplete = true;
     }
 

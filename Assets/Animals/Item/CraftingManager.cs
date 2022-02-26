@@ -338,6 +338,7 @@ public class CraftingManager : MonoBehaviour
         for (int i = 0; i < craftGameObjects.Count; i++)
         {
             Destroy(craftGameObjects[i]);
+            craftGameObjects[i] = null;
         }
         craftItems.Clear();
         craftGameObjects.Clear();
