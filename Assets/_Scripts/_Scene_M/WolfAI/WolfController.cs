@@ -78,7 +78,7 @@ public class WolfController : MonoBehaviour
             restTime += Time.deltaTime;
         }
 
-        if(transform.position.y >= 30.74f)
+        if(transform.position.y >= 30.74f || transform.position.y <= -30.74f)
         {
             Destroy(gameObject);
         }
