@@ -16,7 +16,7 @@ public class FoxController : MonoBehaviour
     private LevelControl lv;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         levelController = GameObject.Find("LevelControl");
 
@@ -37,7 +37,7 @@ public class FoxController : MonoBehaviour
 
     IEnumerator CheckBreakableItems()
     {
-        yield return new WaitForSeconds(0);
+        yield return new WaitForSeconds(5);
 
         while (true)
         {
@@ -49,7 +49,7 @@ public class FoxController : MonoBehaviour
                 GenNewFox();
             }
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(30);
         }
     }
 
@@ -64,7 +64,10 @@ public class FoxController : MonoBehaviour
         {
             foreach (GameObject box in boxes)
             {
-                breakableItems.Add(box);
+                if (box.GetComponent<BoxController>().beUsing == false)
+                {
+                    breakableItems.Add(box);
+                }
             }
         }
 
@@ -72,7 +75,10 @@ public class FoxController : MonoBehaviour
         {
             foreach (GameObject rope in ropes)
             {
-                breakableItems.Add(rope);
+                if (rope.GetComponent<RopeController>().beUsing == false)
+                {
+                    breakableItems.Add(rope);
+                }
             }
         }
 
@@ -80,7 +86,10 @@ public class FoxController : MonoBehaviour
         {
             foreach (GameObject bag in bags)
             {
-                breakableItems.Add(bag);
+                if (bag.GetComponent<BagController>().beUsing == false)
+                {
+                    breakableItems.Add(bag);
+                }
             }
         }
 

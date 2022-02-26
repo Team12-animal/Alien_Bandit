@@ -62,27 +62,6 @@ public class Fox_BehaviourTree : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Debug.Log("fox init");
-        //DataInit();
-        //PlayerInit();
-
-       
-
-        //if (target.tag == "Box")
-        //{
-        //    boxC = target.GetComponent<BoxController>();
-        //}
-
-        //if (target.tag == "Bag")
-        //{
-        //    bagC = target.GetComponent<BagController>();
-        //}
-
-        //if (target.tag == "Rope")
-        //{
-        //    ropeC = target.GetComponent<RopeController>();
-        //}
-
         //AStar
         WPTerrain wpt = new WPTerrain();
         wpt.Init();
@@ -99,7 +78,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("fox init");
+        Debug.Log("fox init onenable");
         DataInit();
         PlayerInit();
 
@@ -177,7 +156,11 @@ public class Fox_BehaviourTree : MonoBehaviour
         {
             target = data.birthPos;
             data.target = target;
-            data.m_vTarget = target.transform.position;
+
+            if (target != null && target.activeSelf == true)
+            {
+                data.m_vTarget = target.transform.position;
+            }
         }
 
         if (status == (int)FoxAIData.FoxStatus.Attacked)
@@ -290,7 +273,8 @@ public class Fox_BehaviourTree : MonoBehaviour
     private bool CheckUsingTarget()
     {
         bool result;
-        result = (boxC != null && boxC.beUsing == true) ||
+        result = target == null || target.activeSelf == false ||
+                 (boxC != null && boxC.beUsing == true) ||
                  (ropeC != null && ropeC.beUsing == true) ||
                  (bagC != null && bagC.beUsing == true);
 
