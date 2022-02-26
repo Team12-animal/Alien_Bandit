@@ -76,6 +76,7 @@ public class LevelControl : MonoBehaviour
     public void TotalScoreUI()
     {
         scoreText.text = totalScore.ToString();
+        Debug.LogWarning($"totalScore{totalScore}");
     }
 
     public int GetTotalScroe()

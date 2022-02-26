@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class LevelTwoControl : LevelControl
 {
+    public int level;
     [Header("Waitting before star game play")]
     [SerializeField] float waittingTime = 3.0f;
     [SerializeField] GameObject readyImage;
@@ -18,7 +19,7 @@ public class LevelTwoControl : LevelControl
     [SerializeField] Text gamingTimeText;
 
     [Header("End Game")]
-    [SerializeField] GameObject[] gameOverUIText;
+    GameObject[] gameOverUIText;
     [SerializeField] GameObject gameWinUI;
     [SerializeField] GameObject gameFailUI;
     [SerializeField] GameObject levelUI;
@@ -60,10 +61,10 @@ public class LevelTwoControl : LevelControl
         SceneController.instance.GetPlayer(players);
         SettingPlayerPosition();
         //Setting Game UI and time
-        for (int i = 0; i < gameOverUIText.Length; i++)
-        {
-            gameOverUIText[i].gameObject.SetActive(false);
-        }
+        //for (int i = 0; i < gameOverUIText.Length; i++)
+        //{
+        //    gameOverUIText[i].gameObject.SetActive(false);
+        //}
         gamingTime = 180.0f;
         doorDestroied = false;
         isWin = false;
@@ -73,9 +74,19 @@ public class LevelTwoControl : LevelControl
         //Setting stars
         levelTwoStars = new GameObject[3];
         UpdateStarsStates updateStarsStates = new UpdateStarsStates();
-        levelTwoStars[0] = GameObject.Find(updateStarsStates.star04);
-        levelTwoStars[1] = GameObject.Find(updateStarsStates.star05);
-        levelTwoStars[2] = GameObject.Find(updateStarsStates.star06);
+        switch (level)
+        {
+            case 2:
+                levelTwoStars[0] = GameObject.Find(updateStarsStates.star04);
+                levelTwoStars[1] = GameObject.Find(updateStarsStates.star05);
+                levelTwoStars[2] = GameObject.Find(updateStarsStates.star06);
+                break;
+            case 3:
+                levelTwoStars[0] = GameObject.Find(updateStarsStates.star07);
+                levelTwoStars[1] = GameObject.Find(updateStarsStates.star08);
+                levelTwoStars[2] = GameObject.Find(updateStarsStates.star09);
+                break;
+        }
         //Setting Continue UI
         player02RawImage.SetActive(true);
         player03RawImage.SetActive(true);
@@ -124,7 +135,7 @@ public class LevelTwoControl : LevelControl
         TimeSettingAndAllowPlayerMoving();
         GameOver();
         //TriggerSceneEvents();
-        WinGame(2);//2  means what level two stars state;
+        WinGame(level);
     }
     /// <summary>
     /// When waitting time go up , allow player moving

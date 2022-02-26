@@ -78,10 +78,10 @@ public class WolfController : MonoBehaviour
             restTime += Time.deltaTime;
         }
 
-        if(transform.position.y >= 30.74f || transform.position.y <= -30.74f)
-        {
-            Destroy(gameObject);
-        }
+        //if(transform.position.y >= 30.74f || transform.position.y <= -30.74f)
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 
     #region AnimationEvents
@@ -103,7 +103,7 @@ public class WolfController : MonoBehaviour
 
     public void AddForceToFinalJump()
     {
-        Vector3 go = transform.forward * 240.0f + transform.up * 2700.0f;
+        Vector3 go = transform.forward * 600.0f + transform.up * 2700.0f;
         rigidbody.AddForce(go, ForceMode.Impulse);
     }
 

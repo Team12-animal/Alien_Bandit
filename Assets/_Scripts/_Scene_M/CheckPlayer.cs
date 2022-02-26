@@ -563,6 +563,7 @@ public class CheckPlayer : MonoBehaviour
         Color normal = new Color(0.2f, 0.2f, 0.2f, 1.0f);
         SaveStarsState.instance.SaveDate(1, 3, normal);
         SaveStarsState.instance.SaveDate(2, 3, normal);
+        SaveStarsState.instance.SaveDate(3, 3, normal);
         SaveStarsState.instance.LoadDate();
         UpdateStarsStates updateStars = new UpdateStarsStates();
         dataStarts.Add(GameObject.Find(updateStars.star01));
@@ -571,6 +572,10 @@ public class CheckPlayer : MonoBehaviour
         dataStarts.Add(GameObject.Find(updateStars.star04));
         dataStarts.Add(GameObject.Find(updateStars.star05));
         dataStarts.Add(GameObject.Find(updateStars.star06));
+        dataStarts.Add(GameObject.Find(updateStars.star07));
+        dataStarts.Add(GameObject.Find(updateStars.star08));
+        dataStarts.Add(GameObject.Find(updateStars.star09));
+
         for (int i = 0; i < dataStarts.Count; i++)
         {
             stars[i].GetComponent<RawImage>().color = dataStarts[i].GetComponent<RawImage>().color;
