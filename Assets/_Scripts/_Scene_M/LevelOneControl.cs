@@ -63,7 +63,7 @@ public class LevelOneControl : LevelControl
         {
             gameOverUIText[i].gameObject.SetActive(false);
         }
-        gamingTime = 180.0f;
+        gamingTime = 120.0f;
         doorDestroied = false;
         isWin = false;
         gameWinUI.SetActive(false);
