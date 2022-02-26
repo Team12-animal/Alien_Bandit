@@ -13,7 +13,7 @@ public class FoxAnimatorController : MonoBehaviour
     [HideInInspector] public string trotTrigger = "Trot";
     [HideInInspector] public string runTrigger = "Run";
     [HideInInspector] public string jumpTrigger = "Jump";
-
+    [HideInInspector] public string homeTrigger = "Home";
 
     //animation name
     [HideInInspector] public string breaking = "Fox_Dig";
@@ -21,6 +21,7 @@ public class FoxAnimatorController : MonoBehaviour
     [HideInInspector] public string stun = "Fox_Stun";
     [HideInInspector] public string jump = "Fox_Jump_InPlace";
     [HideInInspector] public string idle = "Idle";
+    [HideInInspector] public string run = "RunBlendTree";
 
 
     private string currentState;
@@ -57,6 +58,10 @@ public class FoxAnimatorController : MonoBehaviour
 
         if (state == runTrigger)
         {
+            //if (PlayingIdle() == true)
+            //{
+            //    animator.Play(run);
+            //}
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
             animator.SetTrigger(runTrigger);
@@ -74,6 +79,13 @@ public class FoxAnimatorController : MonoBehaviour
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
             animator.Play(state);
+        }
+
+        if (state == homeTrigger)
+        {
+            animator.SetFloat(turnForceHash, turnForce);
+            animator.SetFloat(moveForceHash, moveForce);
+            animator.SetTrigger(homeTrigger);
         }
     }
 
@@ -132,6 +144,18 @@ public class FoxAnimatorController : MonoBehaviour
         }
     }
 
+    private bool PlayingIdle()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(idle))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void AnimaEventToRun()
     {
         Debug.Log("npc back to run");
@@ -159,6 +183,14 @@ public class FoxAnimatorController : MonoBehaviour
         else
         {
             meshes.SetActive(true);
+        }
+    }
+
+    private void AnimaEventInactivate()
+    {
+        if (this.gameObject.activeSelf == true)
+        {
+            this.gameObject.SetActive(false);
         }
     }
 }

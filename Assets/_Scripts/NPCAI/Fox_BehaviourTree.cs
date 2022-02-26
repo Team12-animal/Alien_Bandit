@@ -12,6 +12,8 @@ public class Fox_BehaviourTree : MonoBehaviour
     private int status;
     private float alertDist;
 
+    public string txtName;
+
     //target
     private BoxController boxC;
     private RopeController ropeC;
@@ -40,8 +42,8 @@ public class Fox_BehaviourTree : MonoBehaviour
     public GameObject nearestPlayer;
     public bool holdingRockOrBox;
 
-    private float maxSpeed;
-    private float maxRot;
+    //go home
+    public float homeArriveDist;
 
     //seek ended or not
     private bool arriveTarget = false;
@@ -64,7 +66,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     {
         //AStar
         WPTerrain wpt = new WPTerrain();
-        wpt.Init();
+        wpt.Init(txtName);
 
         AStar aStar = new AStar();
         aStar.Init(wpt);
@@ -111,9 +113,11 @@ public class Fox_BehaviourTree : MonoBehaviour
         status = (int)data.status;
         alertDist = data.m_fRadius;
 
+        data.arriveDist = data.oriArriveDist;
+
         missionComplete = false;
         arriveTarget = false;
-        arriveHome = false;
+        arriveHomeArea = false;
         pAttact = false;
     }
 
@@ -156,6 +160,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         {
             target = data.birthPos;
             data.target = target;
+            data.arriveDist = homeArriveDist;
 
             if (target != null && target.activeSelf == true)
             {
@@ -173,7 +178,12 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
 
         
-        UpdateTargetPosition();
+        if (UpdateTargetPosition() == true)
+        {
+            aStarPerfoming = AStar.instance.PerformAStar(this.transform.position, target.transform.position);
+            currentPathPt = 0;
+        }
+
         SetY();
 
         switch (status)
@@ -205,11 +215,11 @@ public class Fox_BehaviourTree : MonoBehaviour
         data.status = status;
     }
 
-    public bool targetPosChange = false;
     Vector3 oriTPos;
 
-    private void UpdateTargetPosition()
+    private bool UpdateTargetPosition()
     {
+        bool targetPosChange;
         if (target != null)
         {
             if( oriTPos != target.transform.position)
@@ -222,8 +232,13 @@ public class Fox_BehaviourTree : MonoBehaviour
             {
                 targetPosChange = false;
             }
-
         }
+        else
+        {
+            return false;
+        }
+
+        return targetPosChange;
     }
 
     private void CheckStatusAndUpdate()
@@ -249,7 +264,7 @@ public class Fox_BehaviourTree : MonoBehaviour
                 status = (int)FoxAIData.FoxStatus.Safe;
             }
 
-            if (missionComplete || CheckUsingTarget() == true)
+            if (missionComplete || UnableToAccessOrNot() == true)
             {
                 status = (int)FoxAIData.FoxStatus.Home;
             }
@@ -270,13 +285,18 @@ public class Fox_BehaviourTree : MonoBehaviour
         data.UpdateStatus(status);
     }
 
-    private bool CheckUsingTarget()
+    private bool UnableToAccessOrNot()
     {
         bool result;
         result = target == null || target.activeSelf == false ||
                  (boxC != null && boxC.beUsing == true) ||
                  (ropeC != null && ropeC.beUsing == true) ||
                  (bagC != null && bagC.beUsing == true);
+
+        if (target != null && target.transform.position.y < -0.5f)
+        {
+            return true;
+        }
 
         return result;
     }
@@ -327,32 +347,34 @@ public class Fox_BehaviourTree : MonoBehaviour
     #region fox behaviour tree
     private void BreakItem()
     {
-        if (aStarPerfoming)
-        {
-            List<Vector3> path = AStar.instance.GetPath();
-            int final = path.Count - 1;
-
-            for (int i = final; i >= currentPathPt; i--)
-            {
-                Vector3 sPos = path[i];
-                Vector3 cPos = this.transform.position;
-
-                if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
-                {
-                    continue;
-                }
-
-                currentPathPt = i;
-                data.SetTarget(sPos);
-                break;
-            }
-
-            Debug.Log("Doing AStar");
-        }
-
         if (arriveTarget == false)
         {
-            if (SteeringBehavior.CollisionAvoid(data) == false)
+
+            if (aStarPerfoming)
+            {
+                List<Vector3> path = AStar.instance.GetPath();
+                int final = path.Count - 1;
+
+                for (int i = final; i >= currentPathPt; i--)
+                {
+                    Vector3 sPos = path[i];
+                    Vector3 cPos = this.transform.position;
+
+                    if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                    {
+                        continue;
+                    }
+
+                    currentPathPt = i;
+                    data.SetTarget(sPos);
+                    break;
+                }
+
+                Debug.Log("Doing AStar");
+
+                arriveTarget = SteeringBehavior.Seek(data);
+            }
+            else if (SteeringBehavior.CollisionAvoid(data) == false)
             {
                 arriveTarget = SteeringBehavior.Seek(data);
             }
@@ -452,56 +474,59 @@ public class Fox_BehaviourTree : MonoBehaviour
         fAC.ChangeAndPlayAnimation(fAC.attacked, 0, 0);
     }
 
-    bool arriveHome = false;
+    public bool arriveHomeArea = false;
     private void GoHome()
     {
-        MoveToBirthPos();
-        fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 5, data.m_Speed * 10);
-
-        if (arriveHome)
+        if (arriveHomeArea == false)
         {
-            fAC.ChangeAndPlayAnimation(fAC.idle, 0, 0);
-            this.gameObject.SetActive(false);
+            MoveToBirthPos();
+            fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 5, data.m_Speed * 10);
+        }
+        else
+        {
+            fAC.ChangeAndPlayAnimation(fAC.homeTrigger, 0, 1);
         }
     }
 
     private void MoveToBirthPos()
     {
-        if (aStarPerfoming)
-        {
-            List<Vector3> path = AStar.instance.GetPath();
-            int final = path.Count - 1;
-
-            for (int i = final; i >= currentPathPt; i--)
+            if (aStarPerfoming)
             {
-                Vector3 sPos = path[i];
-                Vector3 cPos = this.transform.position;
+                List<Vector3> path = AStar.instance.GetPath();
+                int final = path.Count - 1;
 
-                if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                for (int i = final; i >= currentPathPt; i--)
                 {
-                    continue;
+                    Vector3 sPos = path[i];
+                    Vector3 cPos = this.transform.position;
+
+                    if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                    {
+                    Debug.Log("astar linecast bith");
+                        continue;
+                    }
+
+                    currentPathPt = i;
+                    data.SetTarget(sPos);
+                    break;
                 }
 
-                currentPathPt = i;
-                data.SetTarget(sPos);
-                break;
+                Debug.Log("Doing AStar");
+
+                arriveHomeArea = SteeringBehavior.Seek(data);
+            }
+            else if (SteeringBehavior.CollisionAvoid(data) == false)
+            {
+                arriveHomeArea = SteeringBehavior.Seek(data);
             }
 
-            Debug.Log("Doing AStar");
-        }
-
-        if (SteeringBehavior.CollisionAvoid(data) == false)
-        {
-            arriveHome = SteeringBehavior.Seek(data);
-        }
-
-        SteeringBehavior.Move(data);
+            SteeringBehavior.Move(data);
+            fAC.ChangeAndPlayAnimation(fAC.runTrigger, data.m_fTempTurnForce * 5, data.m_Speed * 10);
     }
 
     #endregion
 
     #region other behaviour
-
     public void AnimaEventBreakTarget()
     {
         if (target.tag == "box")
@@ -529,7 +554,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         Vector3 from = this.transform.position;
         from.y += 5.0f;
-        from.z -= 1.0f;
+        from.z += 0.5f;
         Vector3 dir = -this.transform.up;
 
         RaycastHit hit;
@@ -550,7 +575,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         Vector3 from = this.transform.position;
         from.y += 5.0f;
-        from.z -= 2.0f;
+        from.z += 1.0f;
         Vector3 dir = -this.transform.up;
         Gizmos.color = Color.black;
         Gizmos.DrawLine(from, from + (dir * 5));

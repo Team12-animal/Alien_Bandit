@@ -18,15 +18,6 @@ public class PoolLoader : MonoBehaviour
     private void Awake()
     {
         nodes = GameObject.FindGameObjectsWithTag(nodeTagName);
-        
-        if(nodes.Length > 0)
-        {
-            Debug.Log(nodeTagName + ": Add node success");
-        }
-        else
-        {
-            Debug.Log(nodeTagName + ": Add node failed");
-        }
 
         LoadPrefab();
         SpawnPrefab();

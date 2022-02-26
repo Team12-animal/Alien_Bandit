@@ -272,6 +272,7 @@ public class SteeringBehavior
     {
         Vector3 cPos = data.m_Go.transform.position;
         Vector3 vec = data.m_vTarget - cPos;
+        Debug.Log("astar seek" + data.m_vTarget + vec);
         vec.y = 0.0f;
         float fDist = vec.magnitude;
         if (fDist < data.arriveDist)

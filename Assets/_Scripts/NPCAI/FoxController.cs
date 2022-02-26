@@ -15,6 +15,10 @@ public class FoxController : MonoBehaviour
     private GameObject levelController;
     private LevelControl lv;
 
+    //coroutine
+    public float waitForStart;
+    public float delay;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -37,7 +41,7 @@ public class FoxController : MonoBehaviour
 
     IEnumerator CheckBreakableItems()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(waitForStart);
 
         while (true)
         {
@@ -49,7 +53,7 @@ public class FoxController : MonoBehaviour
                 GenNewFox();
             }
 
-            yield return new WaitForSeconds(30);
+            yield return new WaitForSeconds(delay);
         }
     }
 
@@ -64,7 +68,7 @@ public class FoxController : MonoBehaviour
         {
             foreach (GameObject box in boxes)
             {
-                if (box.GetComponent<BoxController>().beUsing == false)
+                if (box.GetComponent<BoxController>().beUsing == false && box.transform.position.y >= -0.5f)
                 {
                     breakableItems.Add(box);
                 }
@@ -75,7 +79,7 @@ public class FoxController : MonoBehaviour
         {
             foreach (GameObject rope in ropes)
             {
-                if (rope.GetComponent<RopeController>().beUsing == false)
+                if (rope.GetComponent<RopeController>().beUsing == false && rope.transform.position.y >= -0.5f)
                 {
                     breakableItems.Add(rope);
                 }
@@ -86,7 +90,7 @@ public class FoxController : MonoBehaviour
         {
             foreach (GameObject bag in bags)
             {
-                if (bag.GetComponent<BagController>().beUsing == false)
+                if (bag.GetComponent<BagController>().beUsing == false && bag.transform.position.y >= -0.5f)
                 {
                     breakableItems.Add(bag);
                 }
@@ -137,6 +141,8 @@ public class FoxController : MonoBehaviour
                 nearestPos = pos;
                 tempDist = dist;
             }
+
+            Debug.Log("fox near" + target.name + pos.name);
         }
 
         if(nearestPos == null)
@@ -160,7 +166,10 @@ public class FoxController : MonoBehaviour
             birthPos = null;
         }
 
-        SpawnFox(target, birthPos);
+        if (target != null && birthPos != null)
+        {
+            SpawnFox(target, birthPos);
+        }
     }
 
     GameObject fox;
