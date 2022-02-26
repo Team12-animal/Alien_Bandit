@@ -22,6 +22,7 @@ public class LevelOneControl : LevelControl
     [SerializeField] GameObject gameWinUI;
     [SerializeField] GameObject gameFailUI;
     [SerializeField] GameObject levelUI;
+
     [SerializeField] GameObject chooseLevelUIStartButtonLevel02;
     [SerializeField] GameObject chooseLevelUIStartButtonLevel01;
 

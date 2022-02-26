@@ -74,28 +74,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1101 &-6675790710488112628
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: -1231077976746222288}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.82954544
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1102 &-5468861320668304765
 AnimatorState:
   serializedVersion: 6
@@ -250,7 +228,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Wolfr_Yes
-  m_Speed: 1
+  m_Speed: 1.2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5071266908590200522}
@@ -264,32 +242,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 1827226128182048838, guid: f91f1f08695abb641aae628996b8fc56, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-1231077976746222288
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Wolfr_Jump_Run
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7901706937718377391, guid: a5c4f866749217d4b97c4aec45aa70e0, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -406,12 +358,6 @@ AnimatorStateMachine:
     m_State: {fileID: 3526716051671025148}
     m_Position: {x: 1590, y: -310, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -1231077976746222288}
-    m_Position: {x: 1740, y: 50, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 2482800074557879196}
-    m_Position: {x: 1440, y: 50, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: -4571973005363673063}
     m_Position: {x: 680, y: -120, z: 0}
   - serializedVersion: 1
@@ -422,37 +368,37 @@ AnimatorStateMachine:
     m_Position: {x: 940, y: -60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3086940733791880662}
-    m_Position: {x: 260, y: 140, z: 0}
+    m_Position: {x: 1360, y: -60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6912158292954239276}
-    m_Position: {x: 540, y: 140, z: 0}
+    m_Position: {x: 1360, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5468861320668304765}
-    m_Position: {x: 940, y: 190, z: 0}
+    m_Position: {x: 940, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1563781932876684806}
-    m_Position: {x: 940, y: 60, z: 0}
+    m_Position: {x: 940, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2483284633597142841}
-    m_Position: {x: 810, y: 10, z: 0}
+    m_Position: {x: 940, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 217724786394808580}
-    m_Position: {x: 1050, y: 10, z: 0}
+    m_Position: {x: 940, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -817381893918886251}
-    m_Position: {x: 1200, y: 120, z: 0}
+    m_Position: {x: 1150, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8599194940017908296}
-    m_Position: {x: 450, y: 50, z: 0}
+    m_Position: {x: 1360, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8213159767692272556}
-    m_Position: {x: 450, y: 210, z: 0}
+    m_Position: {x: 1570, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8276271142724631249}
-    m_Position: {x: 1200, y: 190, z: 0}
+    m_Position: {x: 1150, y: -60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8411223539126462640}
-    m_Position: {x: 470, y: 280, z: 0}
+    m_Position: {x: 1780, y: -120, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -485,33 +431,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &2482800074557879196
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Wolfr_PickUp
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -6675790710488112628}
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: e600454b27ca75c4d966f1e701655de5, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &2483284633597142841
 AnimatorState:
   serializedVersion: 6
@@ -520,7 +439,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Wolfr_Idle Look Right
-  m_Speed: 3
+  m_Speed: 4.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3041769822869722062}
@@ -666,7 +585,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Wolfr_Sneak_Idle
-  m_Speed: 3
+  m_Speed: 4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 2883406191318385016}

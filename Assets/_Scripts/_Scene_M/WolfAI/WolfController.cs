@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WolfController : MonoBehaviour
 {
     [Header("GameObjects(Targets) in Scene")]
-    [SerializeField] GameObject restPlace;
-    [SerializeField] GameObject finalPlace;
+    GameObject restPlace;
+    GameObject finalPlace;
     GameObject[] rabbits;
     bool catched;
     bool rested;
@@ -26,6 +27,8 @@ public class WolfController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody>();
+        restPlace = GameObject.Find("Rest");
+        finalPlace = GameObject.Find("Final");
         catched = false;
         rested = false;
         finaled = false;
@@ -75,7 +78,7 @@ public class WolfController : MonoBehaviour
             restTime += Time.deltaTime;
         }
 
-        if(transform.position.y >= -288.74f)
+        if(transform.position.y >= 30.74f)
         {
             Destroy(gameObject);
         }
@@ -94,13 +97,13 @@ public class WolfController : MonoBehaviour
 
     public void AddForceToJump()
     {
-        Vector3 go = transform.forward * 9.0f + transform.up * 12.0f;
+        Vector3 go = transform.forward * 480.0f + transform.up * 540.0f;
         rigidbody.AddForce(go, ForceMode.Impulse);
     }
 
     public void AddForceToFinalJump()
     {
-        Vector3 go = transform.forward * 12.0f + transform.up * 54.0f;
+        Vector3 go = transform.forward * 240.0f + transform.up * 2700.0f;
         rigidbody.AddForce(go, ForceMode.Impulse);
     }
 
@@ -119,7 +122,15 @@ public class WolfController : MonoBehaviour
     {
         rabbits[0].transform.SetParent(mousePosition, false);
         rabbits[0].transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        rabbits[0].GetComponent<SphereCollider>().enabled = false;
+        rabbits[0].GetComponent<RabbitAI>().enabled = false;
+        rabbits[0].GetComponent<NavMeshAgent>().enabled = false;
         catched = true;
+    }
+
+    public void SetSetCreatedToFalse()
+    {
+       GameObject.Find("WolfSetting").GetComponent<WolfTrigger>().created = false;
     }
 
 
