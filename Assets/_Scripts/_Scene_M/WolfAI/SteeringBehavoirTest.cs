@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SteeringBehavoir
+public class SteeringBehavoirTest
 {
     private const float nearDistance = 3.0f;
 
