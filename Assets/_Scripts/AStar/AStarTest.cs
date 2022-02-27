@@ -5,6 +5,7 @@ using UnityEngine;
 public class AStarTest : MonoBehaviour
 {
     public string txtName;
+    public string nodeName;
     //from npc
     [SerializeField]public FoxAIData data;
     public int currentPathPt;
@@ -20,7 +21,7 @@ public class AStarTest : MonoBehaviour
     void Start()
     {
         WPTerrain wpt = new WPTerrain();
-        wpt.Init(txtName);
+        wpt.Init(txtName, nodeName);
 
         AStar astar = new AStar();
         astar.Init(wpt);

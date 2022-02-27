@@ -22,7 +22,6 @@ public class LevelControl : MonoBehaviour
     [SerializeField] Text addScoreText;
     [SerializeField] GameObject addScore;
 
-
     public void AddScoreData()
     {
         scoreList.Add(rabbit, 30);

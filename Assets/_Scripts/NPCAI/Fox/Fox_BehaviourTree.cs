@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Fox_BehaviourTree : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     private float alertDist;
 
     public string txtName;
+    public string nodeName;
 
     //target
     private BoxController boxC;
@@ -61,12 +63,17 @@ public class Fox_BehaviourTree : MonoBehaviour
     public bool aStarPerfoming = false;
     int currentPathPt = -1;
 
+    //target UI
+    private Camera cam;
+    public Image warningIcon;
+    public bool targetLocking = true;
+
     // Start is called before the first frame update
     void Start()
     {
         //AStar
         WPTerrain wpt = new WPTerrain();
-        wpt.Init(txtName);
+        wpt.Init(txtName, nodeName);
 
         AStar aStar = new AStar();
         aStar.Init(wpt);
@@ -75,7 +82,12 @@ public class Fox_BehaviourTree : MonoBehaviour
         aStarPerfoming = AStar.instance.PerformAStar(this.transform.position, data.target.transform.position);
         currentPathPt = 0;
 
-        Debug.Log("astar a" + aStarPerfoming);
+        cam = Camera.main;
+        if (cam != null)
+        {
+            warningIcon = GameObject.Find("Warning").GetComponent<Image>();
+            warningIcon.transform.rotation = cam.transform.rotation;
+        }
     }
 
     private void OnEnable()
@@ -119,6 +131,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         arriveTarget = false;
         arriveHomeArea = false;
         pAttact = false;
+        targetLocking = true;
     }
 
     private void PlayerInit()
@@ -166,6 +179,8 @@ public class Fox_BehaviourTree : MonoBehaviour
             {
                 data.m_vTarget = target.transform.position;
             }
+
+            targetLocking = false;
         }
 
         if (status == (int)FoxAIData.FoxStatus.Attacked)
@@ -205,7 +220,6 @@ public class Fox_BehaviourTree : MonoBehaviour
                 break;
 
         }
-
         DataUpdate();
     }
 
@@ -543,6 +557,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         GameObject.Destroy(target);
         target = null;
         missionComplete = true;
+        targetLocking = false;
     }
 
     #endregion
@@ -614,5 +629,22 @@ public class Fox_BehaviourTree : MonoBehaviour
             target = data.birthPos;
             data.m_vTarget = target.transform.position;
         }
+    }
+
+    public Vector3 WarningUIDisplay()
+    {
+        Vector3 newPos;
+
+        if (targetLocking == true)
+        {
+            newPos = target.transform.position;
+            newPos.y += 2.5f;
+        }
+        else
+        {
+            newPos = new Vector3(1000000.0f, 1000000.0f, 1000000.0f);
+        }
+
+        return newPos;
     }
 }

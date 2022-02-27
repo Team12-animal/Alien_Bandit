@@ -12,29 +12,13 @@ public class FoxController : MonoBehaviour
     GameObject target;
     GameObject birthPos;
 
-    private GameObject levelController;
-    private LevelControl lv;
-
     //coroutine
     public float waitForStart;
     public float delay;
 
     // Start is called before the first frame update
     void Awake()
-    {
-        levelController = GameObject.Find("LevelControl");
-
-
-        if (levelController != null)
-        {
-            lv = levelController.GetComponent<LevelOneControl>();
-
-            if (lv == null || lv.isActiveAndEnabled != true)
-            {
-                lv = levelController.GetComponent<LevelTwoControl>();
-            }
-        }
-
+    { 
         LoadFox();
         StartCoroutine(CheckBreakableItems());
     }
@@ -100,6 +84,10 @@ public class FoxController : MonoBehaviour
         return breakableItems;
     }
 
+    BoxController boxC;
+    RopeController ropeC;
+    BagController bagC;
+
     private GameObject SetTarget()
     {
         int maxI = breakableItems.Count - 1;
@@ -109,16 +97,61 @@ public class FoxController : MonoBehaviour
 
         if (breakableItems != null)
         {
+            if (breakableItems[i].tag == "Box")
+            {
+                boxC = breakableItems[i].GetComponent<BoxController>();
+            }
+
+            if (breakableItems[i].tag == "Rope")
+            {
+                ropeC = breakableItems[i].GetComponent<RopeController>();
+            }
+
+            if (breakableItems[i].tag == "Bag")
+            {
+                bagC = breakableItems[i].GetComponent<BagController>();
+            }
+
             return breakableItems[i];
         }
         else
         {
             if(i + 1 <= maxI)
             {
+                if (breakableItems[i + 1].tag == "Box")
+                {
+                    boxC = breakableItems[i + 1].GetComponent<BoxController>();
+                }
+
+                if (breakableItems[i + 1].tag == "Rope")
+                {
+                    ropeC = breakableItems[i + 1].GetComponent<RopeController>();
+                }
+
+                if (breakableItems[i + 1].tag == "Bag")
+                {
+                    bagC = breakableItems[i + 1].GetComponent<BagController>();
+                }
+
                 return breakableItems[i + 1];
             }
             else
             {
+                if (breakableItems[0].tag == "Box")
+                {
+                    boxC = breakableItems[0].GetComponent<BoxController>();
+                }
+
+                if (breakableItems[0].tag == "Rope")
+                {
+                    ropeC = breakableItems[0].GetComponent<RopeController>();
+                }
+
+                if (breakableItems[0].tag == "Bag")
+                {
+                    bagC = breakableItems[0].GetComponent<BagController>();
+                }
+
                 return breakableItems[0];
             }
         }

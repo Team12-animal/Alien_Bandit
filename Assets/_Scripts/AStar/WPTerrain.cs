@@ -8,11 +8,11 @@ public class WPTerrain
     public List<PathNode> nodeList;
     public GameObject[] obstacles;
 
-    public void Init(string txtName)
+    public void Init(string txtName, string nodeName)
     {
         obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         nodeList = new List<PathNode>();
-        GameObject[] nodes = GameObject.FindGameObjectsWithTag("WP");
+        GameObject[] nodes = GameObject.FindGameObjectsWithTag(nodeName);
 
         foreach (GameObject node in nodes)
         {
