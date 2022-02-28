@@ -7,7 +7,7 @@ public class PlaneMove : MonoBehaviour
 
     public Vector3[] point;
     int currentPoint = 0;
-    public float speed = 0.001f;
+    private float speed ;
     private Vector3 LastPos;
     private Vector3 CurrentPos;
     private Vector3 DifPos;
@@ -28,6 +28,7 @@ public class PlaneMove : MonoBehaviour
         if (currentPoint == 0)
         {
             LastPos = transform.position;
+            speed += 0.05f * Time.deltaTime;
             CurrentPos = Vector3.Lerp(transform.position, point[1], speed);
             transform.position = CurrentPos;
             DifPos = LastPos - CurrentPos;
@@ -35,12 +36,14 @@ public class PlaneMove : MonoBehaviour
             if (dist < 0.1f)
             {
                 currentPoint = 1;
+                speed = 0;
                 StartCoroutine(WaitSecond());
             }
         }
         else
         {
             LastPos = transform.position;
+            speed += 0.05f * Time.deltaTime;
             CurrentPos = Vector3.Lerp(transform.position, point[0], speed);
             transform.position = CurrentPos;
             DifPos = LastPos - CurrentPos;
@@ -48,6 +51,7 @@ public class PlaneMove : MonoBehaviour
             if (dist < 0.1f)
             {
                 currentPoint = 0;
+                speed= 0;
                 StartCoroutine(WaitSecond());
             }
         }

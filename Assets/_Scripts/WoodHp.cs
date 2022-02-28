@@ -21,6 +21,7 @@ public class WoodHp : MonoBehaviour
         if (hpGo != null && hpGo.activeSelf == true)
         {
             hpGo.transform.forward = new Vector3(transform.position.x - target.position.x, 0, transform.position.z - target.position.z);
+            hpGo.transform.position = this.transform.position + new Vector3(0, 1.5f, 0);
         }
     }
 

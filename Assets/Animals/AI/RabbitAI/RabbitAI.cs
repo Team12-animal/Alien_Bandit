@@ -8,27 +8,28 @@ public class RabbitAI : MonoBehaviour
     public enum eFSMState
     {
         NONE = -1,
-        Idle,  //狀態機State:0
-        Wander,//狀態機State:1
-        Attack,//狀態機State:2
-        Chase,//狀態機State:3
+        Idle,        //狀態機State:0
+        Wander,      //狀態機State:1
+        Attack,      //狀態機State:2
+        Chase,       //狀態機State:3
         MoveToTarget,//狀態機State:3 到兔子洞State:4
         Runaway,
         Dead,
     }
 
-    private eFSMState m_eCurrentState;  //當前狀態
-    public RabbitAIData m_Data;         //AI資料
-    private float m_fCurrentTime;       //當前狀態經過時間
-    private float m_fIdleTime;          //狀態時間
+    private eFSMState m_eCurrentState;      //當前狀態
+    public RabbitAIData m_Data;             //AI資料
+    private float m_fCurrentTime;           //當前狀態經過時間
+    private float m_fIdleTime;              //狀態時間
     private GameObject m_CurrentEnemyTarget;//當前偵測目標
-    private GameObject[] m_WanderPoints;//兔子窩的位置物件
-    private Animator m_Am;              //AI的動畫狀態機
+    private GameObject[] m_WanderPoints;    //兔子窩的位置物件
+    private Animator m_Am;                  //AI的動畫狀態機
     private List<GameObject> players;
-    private GameObject attackWood;
+    [SerializeField] private GameObject attackWood;
     private GameObject dangerAnimal;
     private bool isDanger = false;
     Vector3 lastPos;
+    Quaternion attackWoodForward;
     // Use this for initialization
     public void Start()
     {
@@ -151,6 +152,7 @@ public class RabbitAI : MonoBehaviour
             else
             {
                 m_Data.agent.enabled = false;
+                m_Data.m_fMaxSpeed = 0.2f;
                 m_eCurrentState = eFSMState.Chase;   //逃跑
                 m_Am.SetInteger("State", 3);
                 m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
@@ -178,7 +180,7 @@ public class RabbitAI : MonoBehaviour
                 m_eCurrentState = eFSMState.Attack;
                 return;
             }
-            m_Data.m_fMaxSpeed = 0.09f;
+            m_Data.m_fMaxSpeed = 0.05f;
             m_Am.SetInteger("State", 0);
             CheckPlayerInSight();
             if (isDanger)
@@ -235,10 +237,10 @@ public class RabbitAI : MonoBehaviour
                     m_eCurrentState = eFSMState.MoveToTarget;
                     return;
                 }
-            }           
+            }
             if (!(lastPos == transform.position))
             {
-                m_Am.SetInteger("State",1);
+                m_Am.SetInteger("State", 1);
             }
             lastPos = transform.position;
             m_Data.agent.enabled = true;
@@ -277,7 +279,8 @@ public class RabbitAI : MonoBehaviour
         {
             bool bAttack = false;
             bool bCheck = CheckTargetEnemyInSight(m_CurrentEnemyTarget, ref bAttack);
-
+            m_Data.m_fMaxSpeed = 0.2f;
+            m_Data.agent.enabled = false;
             if (bCheck == false)
             {
                 m_Am.SetInteger("State", 0);
@@ -331,17 +334,21 @@ public class RabbitAI : MonoBehaviour
             }
             else
             {
-                m_Data.m_fMaxSpeed = 0.01f;
-                transform.rotation = Quaternion.Lerp(this.transform.rotation, attackWood.transform.rotation, 0.05f);
-                float dist = (transform.position - m_Data.m_vTarget).magnitude;
+                m_Data.m_fMaxSpeed = 0.2f;
+                float dist = (transform.position - attackWood.transform.position).magnitude;
+                Debug.LogError(dist);
                 if (dist < 1.5f)
                 {
-                    transform.forward = attackWood.transform.position;
+                    Debug.LogError("開啃");
                     m_Am.SetInteger("State", 2);
                 }
                 else
                 {
-                    m_Data.m_vTarget = attackWood.transform.position - new Vector3(0f, 0f, 1f);
+                    Debug.LogError("移動");
+                    attackWoodForward = Quaternion.LookRotation(attackWood.transform.forward);
+                    transform.rotation = Quaternion.Lerp(this.transform.rotation, attackWood.transform.rotation, 0.05f);
+                    m_Am.SetInteger("State", 1);
+                    m_Data.m_vTarget = attackWood.transform.position;
                     SteeringBehavior.Seek(m_Data);
                     SteeringBehavior.Move(m_Data);
                 }
@@ -360,7 +367,7 @@ public class RabbitAI : MonoBehaviour
 
         NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
 
-        if(navHit.distance == Mathf.Infinity)
+        if (navHit.distance == Mathf.Infinity)
         {
             NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
         }
@@ -421,6 +428,7 @@ public class RabbitAI : MonoBehaviour
         {
             if (m_eCurrentState == eFSMState.Wander || m_eCurrentState == eFSMState.Idle)
             {
+                m_Data.agent.enabled = false;
                 attackWood = other.gameObject;
             }
         }
@@ -429,6 +437,7 @@ public class RabbitAI : MonoBehaviour
     {
         if (other.tag == "Wood")
         {
+            m_Data.agent.enabled = true;
             attackWood = null;
         }
     }
