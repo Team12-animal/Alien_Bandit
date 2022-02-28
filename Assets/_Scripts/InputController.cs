@@ -248,4 +248,11 @@ public class InputController : MonoBehaviour
             anim.ChangeAnimaEventState(anim.Player_Fear);
         }
     }
+
+    //for pInWater
+    public Vector3 GetPlayerPos()
+    {
+        return this.gameObject.transform.position;
+    }
+
 }
