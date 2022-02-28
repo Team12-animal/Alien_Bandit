@@ -88,13 +88,14 @@ public class Fox_BehaviourTree : MonoBehaviour
             warningIcon = GameObject.Find("Warning").GetComponent<Image>();
             warningIcon.transform.rotation = cam.transform.rotation;
         }
+
+        PlayerInit();
     }
 
     private void OnEnable()
     {
         Debug.Log("fox init onenable");
         DataInit();
-        PlayerInit();
 
         fAC = this.GetComponent<FoxAnimatorController>();
 
@@ -226,7 +227,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     //update aidata script
     private void DataUpdate()
     {
-        data.status = status;
+        data.UpdateStatus(status);
     }
 
     Vector3 oriTPos;

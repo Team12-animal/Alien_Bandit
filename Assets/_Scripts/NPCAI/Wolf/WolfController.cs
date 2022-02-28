@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class WolfController : MonoBehaviour
 {
-    [SerializeField] List<GameObject> birthPoses;
+    GameObject wolf;
+    public GameObject birthPos;
+    public GameObject homePos;
+
     [SerializeField] List<GameObject> preys;
 
-    GameObject wolf;
-    GameObject birthPos;
+    private WolfAIData data;
 
     //coroutine
     public float waitForStart;
@@ -16,18 +18,73 @@ public class WolfController : MonoBehaviour
 
     private void Awake()
     {
-        
+        LoadWolf();
+        StartCoroutine(ActiveWolf());
+    }
+    IEnumerator ActiveWolf()
+    {
+        yield return new WaitForSeconds(waitForStart);
+
+        while (true)
+        {
+            preys = FindPreys();
+
+            if (preys.Count > 0 && wolf.activeSelf == false)
+            {
+                GenWolf(preys);
+            }
+
+            yield return new WaitForSeconds(delay);
+        }
     }
 
     private void LoadWolf()
     {
-        var prefab = Resources.Load<GameObject>("Wolf");
+        var prefab = Resources.Load<GameObject>("WolfAI");
         wolf = GameObject.Instantiate(prefab) as GameObject;
+
+        data = wolf.GetComponent<Wolf_BehaviourTree>().data;
+        data.birthPos = birthPos;
+        data.homePos = homePos;
+        
         wolf.SetActive(false);
     }
 
-    private void SpawnWolf()
+    private List<GameObject> FindPreys()
     {
-        //SetBirthPos();
+        List<GameObject> preys = new List<GameObject>();
+        GameObject[] rabbits = GameObject.FindGameObjectsWithTag("Rabbit");
+        GameObject[] raccoons = GameObject.FindGameObjectsWithTag("Raccoon");
+
+        Debug.Log($"wolfcontrol init rabbit{rabbits.Length} raccoons{raccoons.Length}");
+
+        if (rabbits.Length > 0)
+        {
+            foreach (GameObject r in rabbits)
+            {
+                preys.Add(r);
+            }
+        }
+
+        if (raccoons.Length > 0)
+        {
+            foreach (GameObject r in raccoons)
+            {
+                preys.Add(r);
+            }
+        }
+
+        return preys;
+    }
+
+    private void GenWolf(List<GameObject> preys)
+    {
+        wolf.transform.position = birthPos.transform.position;
+        wolf.transform.forward = birthPos.transform.forward;
+
+        data.preys = preys;
+        data.UpdateStatus(0);
+
+        wolf.SetActive(true);
     }
 }

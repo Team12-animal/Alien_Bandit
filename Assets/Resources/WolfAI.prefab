@@ -721,8 +721,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4187911221402080402}
   - component: {fileID: 7314550297612914970}
+  - component: {fileID: 1050339686869042996}
+  - component: {fileID: -3372457512570480398}
+  - component: {fileID: 1829762202718912998}
   m_Layer: 0
-  m_Name: Wolf
+  m_Name: WolfAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -737,7 +740,7 @@ Transform:
   m_GameObject: {fileID: 4854366307625891389}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_Children:
   - {fileID: 8749532712498704798}
   - {fileID: 7933812682187933402}
@@ -754,7 +757,7 @@ Animator:
   m_GameObject: {fileID: 4854366307625891389}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 9a5a6e2d8587a644b9b2da5d4940b5e3, type: 3}
-  m_Controller: {fileID: 9100000, guid: a7b494c97107c7045983486144fe3356, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5c8fe080330ddd4408d2a01e5d2791b6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 1
   m_ApplyRootMotion: 1
@@ -763,6 +766,83 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1050339686869042996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4854366307625891389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b88443a4cc3e93648aa3f600b38a545d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3372457512570480398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4854366307625891389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71562aa9fee38364aa49e4cda2418c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    m_fRadius: 4
+    m_fProbeLength: 1.5
+    m_Speed: 0
+    m_fMaxSpeed: 0.09
+    m_fRot: 0
+    m_fMaxRot: 0.06
+    m_Go: {fileID: 4854366307625891389}
+    arriveDist: 3
+    m_vTarget: {x: 0, y: 0, z: 0}
+    m_vCurrentVector: {x: 0, y: 0, z: 0}
+    m_fTempTurnForce: 0
+    m_fMoveForce: 0
+    m_bMove: 0
+    m_bCol: 0
+    birthPos: {fileID: 0}
+    homePos: {fileID: 0}
+    preys: []
+    target: {fileID: 0}
+    alertDist: 4
+    Status: 0
+    status: 0
+  preys: []
+  target: {fileID: 0}
+  catchedTarget: {fileID: 0}
+  missionComplete: 0
+  arriveTarget: 0
+  arriveHome: 0
+  targetSwitched: 0
+  hitten: 0
+  txtName: testNode
+  nodeTag: WP
+  aStarPerfoming: 0
+  mouth: {fileID: 8977016372379236376}
+--- !u!114 &1829762202718912998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4854366307625891389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7066373f3c653c4e983d6cd3254265c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  runTrigger: Run
+  jumpTrigger: Jump
+  attacked: Attacked
+  breakBox: BreakBox
+  catchT: Catch
+  jump: Jump
 --- !u!1 &4860447985161280826
 GameObject:
   m_ObjectHideFlags: 0

@@ -58,7 +58,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.22393163
+        functionName: AnimaEventCatchTarget
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 71562aa9fee38364aa49e4cda2418c96, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.8649572
+        functionName: AnimaEventToRun
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: c7066373f3c653c4e983d6cd3254265c, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

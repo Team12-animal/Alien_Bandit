@@ -33,8 +33,6 @@ public class FoxAnimatorController : MonoBehaviour
         animator = this.GetComponent<Animator>();
         turnForceHash = Animator.StringToHash("turnForce");
         moveForceHash = Animator.StringToHash("moveForce");
-
-        Debug.Log("npc start" + turnForceHash + " / " + moveForceHash);
     }
 
     public void ChangeAndPlayAnimation(string state, float turnForce, float moveForce)
@@ -58,21 +56,12 @@ public class FoxAnimatorController : MonoBehaviour
 
         if (state == runTrigger)
         {
-            //if (PlayingIdle() == true)
-            //{
-            //    animator.Play(run);
-            //}
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
             animator.SetTrigger(runTrigger);
         }
 
-        if (state == jumpTrigger)
-        {
-            animator.SetFloat(turnForceHash, turnForce);
-            animator.SetFloat(moveForceHash, moveForce);
-            animator.SetTrigger(jumpTrigger);
-        }
+      
 
         if (state == breaking || state == attacked || state == idle)
         {
