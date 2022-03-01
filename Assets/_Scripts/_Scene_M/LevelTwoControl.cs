@@ -35,7 +35,7 @@ public class LevelTwoControl : LevelControl
     [Header("ContinueUISetting")]
     float waittingTimeToShowContinueUI = 3.0f;
     [SerializeField] GameObject continueUI;
-    [SerializeField] GameObject[] levelTwoStars;
+    GameObject[] levelTwoStars;
     [SerializeField] List<GameObject> showStars;
     [HideInInspector] [SerializeField] List<GameObject> players = new List<GameObject>();
     bool player01CheckToContinue;
