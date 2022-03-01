@@ -35,7 +35,7 @@ public class LevelTwoControl : LevelControl
     [Header("ContinueUISetting")]
     float waittingTimeToShowContinueUI = 3.0f;
     [SerializeField] GameObject continueUI;
-    [SerializeField] GameObject[] levelTwoStars;
+    GameObject[] levelTwoStars;
     [SerializeField] List<GameObject> showStars;
     [HideInInspector] [SerializeField] List<GameObject> players = new List<GameObject>();
     bool player01CheckToContinue;
@@ -195,10 +195,10 @@ public class LevelTwoControl : LevelControl
         {
             GameOverSetting(input01, input02, input03, input04);
             // can't control players;
-            for (int i = 0; i < gameOverUIText.Length; i++)
-            {
-                gameOverUIText[i].gameObject.SetActive(true);
-            }
+            //for (int i = 0; i < gameOverUIText.Length; i++)
+            //{
+            //    gameOverUIText[i].gameObject.SetActive(true);
+            //}
             gameFailUI.SetActive(true);
             waittingLoad -= Time.deltaTime;
             if (waittingLoad <= 0.0f)

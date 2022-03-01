@@ -67,8 +67,10 @@ public class CheckEveryPlayerConfirmReady : MonoBehaviour
         bool twoPlayerTpye1001 = SceneController.instance.selected01 && !SceneController.instance.selected02 && !SceneController.instance.selected03 && SceneController.instance.selected04;
         //1110; 3
         bool threePlayerType1110 = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && !SceneController.instance.selected04;
-        //1011; 3
-        bool threePlayerType1101 = SceneController.instance.selected01 && !SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
+        //1101; 3
+        bool threePlayerType1101 = SceneController.instance.selected01 && SceneController.instance.selected02 && !SceneController.instance.selected03 && SceneController.instance.selected04;
+        //1011
+        bool threePlayerType1011 = SceneController.instance.selected01 && !SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
         //1111; 4
         bool fourPlayer = SceneController.instance.selected01 && SceneController.instance.selected02 && SceneController.instance.selected03 && SceneController.instance.selected04;
 
@@ -154,6 +156,11 @@ public class CheckEveryPlayerConfirmReady : MonoBehaviour
                     SceneController.instance.LoadLevel(numberOfLevel);
                 }
                 else if (threePlayerType1101 && player01CheckToContinue && player02CheckToContinue && player04CheckToContinue)
+                {
+                    SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
+                    SceneController.instance.LoadLevel(numberOfLevel);
+                }
+                else if (threePlayerType1011 && player01CheckToContinue && player03CheckToContinue && player04CheckToContinue)
                 {
                     SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
                     SceneController.instance.LoadLevel(numberOfLevel);
