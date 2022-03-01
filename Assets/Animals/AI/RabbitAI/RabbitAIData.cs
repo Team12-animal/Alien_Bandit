@@ -22,7 +22,9 @@ public class RabbitAIData : NpcAIData
 
     public NavMeshAgent agent;
 
-    public bool iscatched;
+    public bool isCatched = false;
+
+    public bool isBited = false;
 }
 
 

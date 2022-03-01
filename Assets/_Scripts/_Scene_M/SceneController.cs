@@ -66,6 +66,7 @@ public class SceneController : MonoBehaviour
             //StartCoroutine(LoadAsynchronously(sceneIndex));
             StartCoroutine(LoadTransition());
             SceneManager.LoadScene(sceneIndex);
+            AudiosManager.Instance.ChangeBGM(sceneIndex);
             //eventsController.SetActive(true);
             if (selected01)
             {
@@ -88,6 +89,7 @@ public class SceneController : MonoBehaviour
         {
             StartCoroutine(LoadTransition());
             SceneManager.LoadScene(0);
+            AudiosManager.Instance.ChangeBGM(0);
             //eventsController.SetActive(false);
             selected01 = false;
             selected02 = false;

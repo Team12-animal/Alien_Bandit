@@ -604,7 +604,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 162351fc1b812a248a6978ae81fa5360, type: 2}
+  - {fileID: 2100000, guid: a806201472b01174e9ad088a6e8a8312, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1658,12 +1658,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8085606584561408698}
   - component: {fileID: 8088246542095001063}
+  - component: {fileID: 8088246542095001087}
   - component: {fileID: 8088246542095001062}
   - component: {fileID: 5538210285745236159}
-  - component: {fileID: 8088246542095001087}
+  - component: {fileID: 7972446330102542305}
   m_Layer: 20
   m_Name: RaccoonBadyAI
-  m_TagString: Untagged
+  m_TagString: Raccoon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1675,15 +1676,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8088246542095001056}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
   m_Children:
   - {fileID: 8082327489537674062}
   - {fileID: 8085139148691024362}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &8088246542095001063
 Animator:
   serializedVersion: 3
@@ -1703,6 +1704,39 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8088246542095001087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8088246542095001056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8252a9e91db8144b8684fe8fa30e55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Data:
+    m_fRadius: 1
+    m_fProbeLength: 6
+    m_Speed: 0
+    m_fMaxSpeed: 0.001
+    m_fRot: 0.1
+    m_fMaxRot: 0.2
+    m_Go: {fileID: 8088246542095001056}
+    arriveDist: 0
+    m_vTarget: {x: 0, y: 0, z: 0}
+    m_vCurrentVector: {x: 0, y: 0, z: 0}
+    m_fTempTurnForce: 0
+    m_fMoveForce: 0
+    m_bMove: 0
+    m_bCol: 0
+    m_fSight: 5
+    m_fAttackRange: 2.5
+    m_fAttackTime: 1
+    m_TargetObject: {fileID: 0}
+    agent: {fileID: 8088246542095001062}
+    iscatched: 0
 --- !u!195 &8088246542095001062
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1739,39 +1773,22 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 2
   m_Center: {x: 0, y: 0.3, z: 0.1}
---- !u!114 &8088246542095001087
-MonoBehaviour:
+--- !u!54 &7972446330102542305
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8088246542095001056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8252a9e91db8144b8684fe8fa30e55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Data:
-    m_fRadius: 1
-    m_fProbeLength: 6
-    m_Speed: 0
-    m_fMaxSpeed: 0.04
-    m_fRot: 0.1
-    m_fMaxRot: 0.2
-    m_Go: {fileID: 8088246542095001056}
-    arriveDist: 0
-    m_vTarget: {x: 0, y: 0, z: 0}
-    m_vCurrentVector: {x: 0, y: 0, z: 0}
-    m_fTempTurnForce: 0
-    m_fMoveForce: 0
-    m_bMove: 0
-    m_bCol: 0
-    m_fSight: 5
-    m_fAttackRange: 2.5
-    m_fAttackTime: 1
-    m_TargetObject: {fileID: 0}
-    agent: {fileID: 8088246542095001062}
-    iscatched: 0
+  serializedVersion: 2
+  m_Mass: 0.1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8088304548050961340
 GameObject:
   m_ObjectHideFlags: 0

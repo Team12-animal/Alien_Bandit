@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AIMain : MonoBehaviour
 {
@@ -10,9 +11,12 @@ public class AIMain : MonoBehaviour
     [SerializeField] private List<GameObject> m_Player;
     [SerializeField] private GameObject[] m_WanderPoints;
     [SerializeField] private List<GameObject> m_SceneRabbit = new List<GameObject>();
+    [SerializeField] private List<GameObject> m_SceneRaccoon = new List<GameObject>();
     private int[] randomArray;
     private int randtime;
-    private GameObject go;
+    private GameObject rabbitgo = null;
+    private GameObject raccoongo = null;
+    public Vector3[] raccoonPos;
 
     public static AIMain m_Instance
     {
@@ -36,7 +40,7 @@ public class AIMain : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        go = Resources.Load("RabbitAI") as GameObject;
+        rabbitgo = Resources.Load("RabbitAI") as GameObject;
 
         m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");
         if (m_WanderPoints.Length != 0)
@@ -48,6 +52,10 @@ public class AIMain : MonoBehaviour
             }
         }
 
+        if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            raccoongo = Resources.Load("RaccoonAI") as GameObject;
+        }
     }
 
     // Use this for initialization
@@ -79,6 +87,14 @@ public class AIMain : MonoBehaviour
             Debug.LogError("No Player");
         }
 
+
+        if (raccoongo!=null)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                AddRaccoon(i);
+            }
+        }
     }
 
     public List<GameObject> GetPlayerList()
@@ -103,7 +119,7 @@ public class AIMain : MonoBehaviour
         }
         Vector3 Pos = m_WanderPoints[randomArray[randtime]].transform.position;
         Quaternion Rot = Quaternion.Euler(0f, Random.Range(0, 361), 0f);
-        GameObject rago = Instantiate(go, Pos, Rot, this.transform);
+        GameObject rago = Instantiate(rabbitgo, Pos, Rot, this.transform);
         if (rago != null)
         {
             m_SceneRabbit.Add(rago);
@@ -116,6 +132,14 @@ public class AIMain : MonoBehaviour
         Destroy(go.gameObject);
         m_SceneRabbit.Remove(go);
         StartCoroutine(WaitTimeAddRabbit(5f));
+    }
+
+    public void AddRaccoon(int i)
+    {
+        Vector3 Pos = raccoonPos[i];
+        Quaternion Rot = Quaternion.Euler(0f,180f, 0f);
+        GameObject raccoon = Instantiate(raccoongo, Pos, Rot, this.transform);
+        m_SceneRaccoon.Add(raccoon);
     }
 
     private void Update()

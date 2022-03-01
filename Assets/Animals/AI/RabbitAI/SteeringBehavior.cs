@@ -260,12 +260,9 @@ public class SteeringBehavior
             }
             data.m_fTempTurnForce = -fDotR;
         }
-
-
         data.m_fMoveForce = -fDotF;
         data.m_bMove = true;
         return true;
-
     }
 
     static public bool Seek(NpcAIData data)
