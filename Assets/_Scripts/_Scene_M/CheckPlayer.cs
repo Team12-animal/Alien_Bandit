@@ -81,7 +81,7 @@ public class CheckPlayer : MonoBehaviour
 
     [Header("Stars")]
     [SerializeField] List<GameObject> stars;
-    [HideInInspector][SerializeField] List<GameObject> dataStarts;
+    [HideInInspector] [SerializeField] List<GameObject> dataStarts;
 
     public string menuDance01 { get; private set; } = "CharacterControllerTest_Male_MainMenu01";
     public string menuDance02 { get; private set; } = "CharacterControllerTest_Male_MainMenu02";
@@ -107,6 +107,7 @@ public class CheckPlayer : MonoBehaviour
     }
     private void LateUpdate()
     {
+        //ResetPlayer234StartButton();
         ResetMouseCurrentSelectedButton();
     }
     #region Process scripts
@@ -128,31 +129,62 @@ public class CheckPlayer : MonoBehaviour
     }
     private void AddAndCaneclPlayer()
     {
-        if (Input.GetButtonDown("Use2"))//add player02
+        if (Input.GetButtonDown("Use2") && checkUI.activeInHierarchy)//add player02
         {
             player2AddButtonImage.GetComponent<Image>().sprite = added02;
         }
-        else if (Input.GetButtonDown("Take2"))//cancel player02
+        else if (Input.GetButtonDown("Take2") && checkUI.activeInHierarchy)//cancel player02
         {
             player2AddButtonImage.GetComponent<Image>().sprite = normal02;
         }
-        if (Input.GetButtonDown("Use3"))//add player03
+        if (Input.GetButtonDown("Use3") && checkUI.activeInHierarchy)//add player03
         {
             player3AddButtonImage.GetComponent<Image>().sprite = added03;
         }
-        else if (Input.GetButtonDown("Take3"))//cancel player03
+        else if (Input.GetButtonDown("Take3") && checkUI.activeInHierarchy)//cancel player03
         {
             player3AddButtonImage.GetComponent<Image>().sprite = normal03;
         }
-        if (Input.GetButtonDown("Use4"))//add player04
+        if (Input.GetButtonDown("Use4") && checkUI.activeInHierarchy)//add player04
         {
             player4AddButtonImage.GetComponent<Image>().sprite = added04;
         }
-        else if (Input.GetButtonDown("Take4"))//cancel player04
+        else if (Input.GetButtonDown("Take4") && checkUI.activeInHierarchy)//cancel player04
         {
             player4AddButtonImage.GetComponent<Image>().sprite = normal04;
         }
     }
+
+    [Header("UseToRestRoleUIButton")]
+    [SerializeField] GameObject Button_SeclectImage01UseToRest;
+    [SerializeField] GameObject Button_SeclectImage02;
+    [SerializeField] GameObject Button_SeclectImage03;
+    [SerializeField] GameObject Button_SeclectImage04;
+    public void ResetPlayer234StartButton()
+    {
+        if (outerFrameP2.activeInHierarchy && confirm02 && eventSystem02.currentSelectedGameObject == Button_SeclectImage01UseToRest)
+        {
+            float vertical = Input.GetAxisRaw("Vertical2");
+            float horizontal = Input.GetAxisRaw("Horizontal2");
+            if((vertical > 0.01f || horizontal < 0.01f))
+                eventSystem02.SetSelectedGameObject(Button_SeclectImage02);
+        }
+        if (outerFrameP3.activeInHierarchy && confirm03 && eventSystem03.currentSelectedGameObject == Button_SeclectImage01UseToRest)
+        {
+            float vertical = Input.GetAxis("Vertical3");
+            float horizontal = Input.GetAxisRaw("Horizontal3");
+            if (vertical > 0.01f || horizontal < 0.01f)
+                eventSystem03.SetSelectedGameObject(Button_SeclectImage03);
+        }
+        if (outerFrameP4.activeInHierarchy && confirm04 && eventSystem04.currentSelectedGameObject == Button_SeclectImage01UseToRest)
+        {
+            float vertical = Input.GetAxisRaw("Vertical4");
+            float horizontal = Input.GetAxisRaw("Horizontal4");
+            if ((vertical > 0.01f || horizontal < 0.01f))
+                eventSystem04.SetSelectedGameObject(Button_SeclectImage04);
+        }
+    }
+
     private void ChangePlayerSkinWhenSelectButtonON()
     {
         if (outerFrameP1.activeInHierarchy && Input.GetButtonDown("Horizontal1") && confirm01 && eventSystem01.currentSelectedGameObject == checkSelectButton01)//Change player01 skin
@@ -563,6 +595,7 @@ public class CheckPlayer : MonoBehaviour
         Color normal = new Color(0.2f, 0.2f, 0.2f, 1.0f);
         SaveStarsState.instance.SaveDate(1, 3, normal);
         SaveStarsState.instance.SaveDate(2, 3, normal);
+        SaveStarsState.instance.SaveDate(3, 3, normal);
         SaveStarsState.instance.LoadDate();
         UpdateStarsStates updateStars = new UpdateStarsStates();
         dataStarts.Add(GameObject.Find(updateStars.star01));
@@ -571,6 +604,10 @@ public class CheckPlayer : MonoBehaviour
         dataStarts.Add(GameObject.Find(updateStars.star04));
         dataStarts.Add(GameObject.Find(updateStars.star05));
         dataStarts.Add(GameObject.Find(updateStars.star06));
+        dataStarts.Add(GameObject.Find(updateStars.star07));
+        dataStarts.Add(GameObject.Find(updateStars.star08));
+        dataStarts.Add(GameObject.Find(updateStars.star09));
+
         for (int i = 0; i < dataStarts.Count; i++)
         {
             stars[i].GetComponent<RawImage>().color = dataStarts[i].GetComponent<RawImage>().color;

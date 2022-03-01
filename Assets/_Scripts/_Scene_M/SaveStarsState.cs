@@ -9,9 +9,12 @@ public class SaveStarsState : MonoBehaviour
     public static SaveStarsState instance;
     [SerializeField] List<RawImage> imagesLevelOne;
     [SerializeField] List<RawImage> imagesLevelTwo;
+    [SerializeField] List<RawImage> imagesLevelThree;
 
     public string saveLevelOneName { get; private set; } = "/SaveAndLoad/saveStarStateLevelOne.json";
     public string saveLevelTwoName { get; private set; } = "/SaveAndLoad/saveStarStateLevelTwo.json";
+    public string saveLevelThreeName { get; private set; } = "/SaveAndLoad/saveStarStateLevelThree.json";
+
 
     private void Awake()
     {
@@ -52,6 +55,19 @@ public class SaveStarsState : MonoBehaviour
             }
         }
     }
+    public class LevelThreeStar
+    {
+        public int levelTwo = 3;
+        public int levelThreeStarsCounts = 0;
+        public Color[] colorsThree = new Color[3];
+        public void Init()
+        {
+            for (int i = 0; i < SaveStarsState.instance.imagesLevelThree.Count; i++)
+            {
+                colorsThree[i] = SaveStarsState.instance.imagesLevelThree[i].color;
+            }
+        }
+    }
     /// <summary>
     /// Save level stars to json
     /// </summary>
@@ -62,6 +78,7 @@ public class SaveStarsState : MonoBehaviour
     {
         LevelOneStar levelOneStar = new LevelOneStar();
         LevelTwoStar levelTwoStar = new LevelTwoStar();
+        LevelThreeStar levelThreeStar = new LevelThreeStar();
         switch (level)
         {
             case 1:
@@ -78,26 +95,41 @@ public class SaveStarsState : MonoBehaviour
                     imagesLevelTwo[i].color = color;
                 }
                 break;
+            case 3:
+                levelThreeStar.levelThreeStarsCounts = number;
+                for (int i = 0; i < number; i++)
+                {
+                    imagesLevelThree[i].color = color;
+                }
+                break;
         }
         levelOneStar.Init();
         levelTwoStar.Init();
+        levelThreeStar.Init();
         string json01 = JsonUtility.ToJson(levelOneStar);
         string json02 = JsonUtility.ToJson(levelTwoStar);
+        string json03 = JsonUtility.ToJson(levelThreeStar);
         File.WriteAllText(Application.streamingAssetsPath + saveLevelOneName, json01);
         File.WriteAllText(Application.streamingAssetsPath + saveLevelTwoName, json02);
+        File.WriteAllText(Application.streamingAssetsPath + saveLevelThreeName, json03);
+
     }
 
     public void LoadDate()
     {
         string json01 = File.ReadAllText(Application.streamingAssetsPath + saveLevelOneName);
         string json02 = File.ReadAllText(Application.streamingAssetsPath + saveLevelTwoName);
+        string json03 = File.ReadAllText(Application.streamingAssetsPath + saveLevelThreeName);
+
         LevelOneStar loadLevelOne = JsonUtility.FromJson<LevelOneStar>(json01);
         LevelTwoStar loadLevelTwo = JsonUtility.FromJson<LevelTwoStar>(json02);
+        LevelThreeStar loadLevelThree = JsonUtility.FromJson<LevelThreeStar>(json03);
         //write color form json to Unity
         for (int i = 0; i < SaveStarsState.instance.imagesLevelOne.Count; i++)
         {
             imagesLevelOne[i].color = loadLevelOne.colorsOne[i];
             imagesLevelTwo[i].color = loadLevelTwo.colorsTwo[i];
+            imagesLevelThree[i].color = loadLevelThree.colorsThree[i];
         }
     }
     /// <summary>
@@ -108,6 +140,7 @@ public class SaveStarsState : MonoBehaviour
         Color normal = new Color(0.2f, 0.2f, 0.2f, 1.0f);
         SaveDate(1, 3, normal);
         SaveDate(2, 3, normal);
+        SaveDate(3, 3, normal);
         LoadDate();
     }
 }

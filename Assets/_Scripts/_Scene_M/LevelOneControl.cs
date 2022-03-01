@@ -22,6 +22,7 @@ public class LevelOneControl : LevelControl
     [SerializeField] GameObject gameWinUI;
     [SerializeField] GameObject gameFailUI;
     [SerializeField] GameObject levelUI;
+
     [SerializeField] GameObject chooseLevelUIStartButtonLevel02;
     [SerializeField] GameObject chooseLevelUIStartButtonLevel01;
 
@@ -62,7 +63,7 @@ public class LevelOneControl : LevelControl
         {
             gameOverUIText[i].gameObject.SetActive(false);
         }
-        gamingTime = 180.0f;
+        gamingTime = 120.0f;
         doorDestroied = false;
         isWin = false;
         gameWinUI.SetActive(false);

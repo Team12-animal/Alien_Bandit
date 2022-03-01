@@ -10,9 +10,9 @@ public class Seek : MonoBehaviour
     {
         Vector3 temp = aiData.target.transform.position - transform.position;
         if ((temp.magnitude) >= 3.0f)
-            SteeringBehavoir.Seek(aiData, aiData.target);
+            SteeringBehavoirTest.Seek(aiData, aiData.target);
         if ((temp.magnitude) >= 3.0f)
-            SteeringBehavoir.Move(aiData);
+            SteeringBehavoirTest.Move(aiData);
     }
 
     private void OnDrawGizmos()
