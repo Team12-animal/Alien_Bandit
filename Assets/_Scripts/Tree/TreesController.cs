@@ -25,7 +25,7 @@ public class TreesController : MonoBehaviour
         {
             lv = levelController.GetComponent<LevelOneControl>();
 
-            if (lv.isActiveAndEnabled != true)
+            if (lv == null)
             {
                 lv = levelController.GetComponent<LevelTwoControl>();
             }

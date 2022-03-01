@@ -13,14 +13,17 @@ public class FoxAnimatorController : MonoBehaviour
     [HideInInspector] public string trotTrigger = "Trot";
     [HideInInspector] public string runTrigger = "Run";
     [HideInInspector] public string jumpTrigger = "Jump";
-
+    [HideInInspector] public string homeTrigger = "Home";
 
     //animation name
     [HideInInspector] public string breaking = "Fox_Dig";
     [HideInInspector] public string attacked = "Fox_Damaged";
     [HideInInspector] public string stun = "Fox_Stun";
     [HideInInspector] public string jump = "Fox_Jump_InPlace";
-    
+    [HideInInspector] public string idle = "Idle";
+    [HideInInspector] public string run = "RunBlendTree";
+
+
     private string currentState;
 
     public GameObject meshes;
@@ -30,13 +33,11 @@ public class FoxAnimatorController : MonoBehaviour
         animator = this.GetComponent<Animator>();
         turnForceHash = Animator.StringToHash("turnForce");
         moveForceHash = Animator.StringToHash("moveForce");
-
-        Debug.Log("npc start" + turnForceHash + " / " + moveForceHash);
     }
 
     public void ChangeAndPlayAnimation(string state, float turnForce, float moveForce)
     {
-        Debug.Log("npc play animation" + turnForce + " / " + moveForce);
+        Debug.Log("npc play animation" +state + turnForce + " / " + moveForce);
         if(state == currentState)
         {
             animator.SetFloat(turnForceHash, turnForce);
@@ -60,18 +61,20 @@ public class FoxAnimatorController : MonoBehaviour
             animator.SetTrigger(runTrigger);
         }
 
-        if (state == jumpTrigger)
-        {
-            animator.SetFloat(turnForceHash, turnForce);
-            animator.SetFloat(moveForceHash, moveForce);
-            animator.SetTrigger(jumpTrigger);
-        }
+      
 
-        if (state == breaking || state == attacked)
+        if (state == breaking || state == attacked || state == idle)
         {
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
             animator.Play(state);
+        }
+
+        if (state == homeTrigger)
+        {
+            animator.SetFloat(turnForceHash, turnForce);
+            animator.SetFloat(moveForceHash, moveForce);
+            animator.SetTrigger(homeTrigger);
         }
     }
 
@@ -130,6 +133,18 @@ public class FoxAnimatorController : MonoBehaviour
         }
     }
 
+    private bool PlayingIdle()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(idle))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void AnimaEventToRun()
     {
         Debug.Log("npc back to run");
@@ -157,6 +172,14 @@ public class FoxAnimatorController : MonoBehaviour
         else
         {
             meshes.SetActive(true);
+        }
+    }
+
+    private void AnimaEventInactivate()
+    {
+        if (this.gameObject.activeSelf == true)
+        {
+            this.gameObject.SetActive(false);
         }
     }
 }

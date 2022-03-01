@@ -16,10 +16,13 @@ public class AStar
     public void Init(WPTerrain terrain)
     {
         this.terrain = terrain;
+
         openList = new List<PathNode>();
         closeList = new List<PathNode>();
         pathList = new List<Vector3>();
         instance = this;
+
+        Debug.Log("astar test init" + terrain.nodeList.Count);
     }
 
     public List<Vector3> GetPath()
@@ -104,13 +107,9 @@ public class AStar
 
         openList.Add(sNode);
 
-        Debug.Log("astar" + openList.Count);
-
         while (openList.Count > 0)
         {
             cNode = GetBestNode();
-
-            Debug.Log(openList.Count + "astar a" + cNode.go.name + sNode.go.name + eNode.go.name);
 
             if (cNode == null)
             {
@@ -118,7 +117,6 @@ public class AStar
             }
             else if (cNode.go == eNode.go)
             {
-                Debug.Log("astar bbb");
                 BuildPath(sPos, ePos, sNode, eNode);
                 return true;
             }
@@ -158,11 +156,9 @@ public class AStar
                 nNode.parent = cNode;
                 openList.Add(nNode);
 
-                Debug.Log(openList.Count + "astar n " + nNode.go.name);
             }
             cNode.nodeState = PathNodeState.NODE_CLOSED;
         }
-
         return false;
     }
 }

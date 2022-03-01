@@ -213,6 +213,11 @@ public class PlayerMovement : MonoBehaviour
             aniName = "HoldWoodWalk";
         }
 
+        if (tagName == "Bag")
+        {
+            aniName = "HoldRockWalk";
+        }
+
         return aniName;
     }
 
@@ -280,7 +285,7 @@ public class PlayerMovement : MonoBehaviour
         {
             triggerItem = other.GetComponent<RockTrigger>().targetRock;
         }
-        else if (other.tag == "Wood" || other.tag == "Chop" || other.tag == "Bucket" || other.tag == "Box" || other.tag == "Rope")
+        else if (other.tag == "Wood" || other.tag == "Chop" || other.tag == "Bucket" || other.tag == "Box" || other.tag == "Rope" || other.tag == "Bag")
         {
             triggerItem = other.gameObject;
         }
@@ -374,6 +379,11 @@ public class PlayerMovement : MonoBehaviour
         if (tagName == "Rope")
         {
             aniName = "PickWood";
+        }
+
+        if (tagName == "Bag")
+        {
+            aniName = "PickUpRock";
         }
 
         return aniName;
@@ -534,7 +544,7 @@ public class PlayerMovement : MonoBehaviour
 
         //check animation status
         //remove child
-        if (itemInhand != null && (itemInhand.tag == "RockModel" || itemInhand.tag == "Box"))
+        if (itemInhand != null && (itemInhand.tag == "RockModel" || itemInhand.tag == "Box" || itemInhand.tag == "Bag"))
         {
             aniClip = "ThrowRock";
         }
@@ -572,9 +582,14 @@ public class PlayerMovement : MonoBehaviour
             aniName = "PutDownRock";
         }
 
-        if(tagName == "Rope")
+        if (tagName == "Rope")
         {
             aniName = "PutDownWood";
+        }
+
+        if (tagName == "Bag")
+        {
+            aniName = "PutDownRock";
         }
 
         Debug.Log("Drop" + tagName + aniName);
@@ -676,6 +691,16 @@ public class PlayerMovement : MonoBehaviour
         {
             itemInhand.GetComponent<RockMovement>().touchingGround = false;
         }
+
+        if (itemInhand.tag == "Bag")
+        {
+            itemInhand.GetComponent<BagController>().touchingGround = false;
+        }
+
+        if (itemInhand.tag == "Rope")
+        {
+            itemInhand.GetComponent<RopeController>().beUsing = true;
+        }
     }
     
     //remove item from player, and then turn off kinematic and open collider
@@ -694,7 +719,7 @@ public class PlayerMovement : MonoBehaviour
             (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = true;
         }
 
-        if(itemInhand.tag == "Box")
+        if (itemInhand.tag == "Box")
         {
             itemInhand.GetComponent<BoxController>().touchingGround = true;
         }
@@ -704,12 +729,22 @@ public class PlayerMovement : MonoBehaviour
             itemInhand.GetComponent<RockMovement>().touchingGround = true;
         }
 
+        if (itemInhand.tag == "Bag")
+        {
+            itemInhand.GetComponent<BagController>().touchingGround = true;
+        }
+
         if (itemInhand.tag == "Chop")
         {
             itemInhand.GetComponent<ChopInUse>().BackToHome();
         }
 
-        itemInhand = null;
+        if (itemInhand.tag == "Rope")
+        {
+            itemInhand.GetComponent<RopeController>().beUsing = false;
+        }
+
+            itemInhand = null;
         Debug.Log("drop item " + itemInhand == null);
         UpdatePlayerData();
     }
@@ -757,6 +792,11 @@ public class PlayerMovement : MonoBehaviour
         if (itemInhand.tag == "RockModel")
         {
             itemInhand.GetComponent<RockMovement>().touchingGround = true;
+        }
+
+        if (itemInhand.tag == "Bag")
+        {
+            itemInhand.GetComponent<BagController>().touchingGround = true;
         }
 
         itemInhand = null;

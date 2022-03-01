@@ -15,6 +15,9 @@ public class FoxAIData : NpcAIData
     //dist to player to enter alert status
     private float alertDist;
 
+    //same as arriveDist
+    public float oriArriveDist = 3.3f;
+
     //fox status for behaviour tree
     public FoxStatus Status = FoxStatus.Safe;
     [HideInInspector]

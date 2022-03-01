@@ -5,10 +5,12 @@ using System.IO;
 
 public class WPSave : MonoBehaviour
 {
+    public string txtName;
+    public string nodeTag;
     private void Start()
     {
-        GameObject[] nodes = GameObject.FindGameObjectsWithTag("WP");
-        StreamWriter sw = new StreamWriter("Assets/aStarNode.txt", false);
+        GameObject[] nodes = GameObject.FindGameObjectsWithTag(nodeTag);
+        StreamWriter sw = new StreamWriter($"Assets/{txtName}.txt", false);
 
         string s = "";
 
@@ -31,5 +33,7 @@ public class WPSave : MonoBehaviour
         }
 
         sw.Close();
+
+        Debug.LogError("WPSaved");
     }
 }

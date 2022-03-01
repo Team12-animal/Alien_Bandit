@@ -8,11 +8,11 @@ public class WPTerrain
     public List<PathNode> nodeList;
     public GameObject[] obstacles;
 
-    public void Init()
+    public void Init(string txtName, string nodeName)
     {
         obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         nodeList = new List<PathNode>();
-        GameObject[] nodes = GameObject.FindGameObjectsWithTag("WP");
+        GameObject[] nodes = GameObject.FindGameObjectsWithTag(nodeName);
 
         foreach (GameObject node in nodes)
         {
@@ -25,7 +25,7 @@ public class WPTerrain
             nodeList.Add(p);
         }
 
-        LoadWP();
+        LoadWP(txtName);
     }
 
     public void ClearAStarInfo()
@@ -40,9 +40,9 @@ public class WPTerrain
         }
     }
 
-    public void LoadWP()
+    public void LoadWP(string txtName)
     {
-        StreamReader sr = new StreamReader("Assets/aStarNode.txt");
+        StreamReader sr = new StreamReader($"Assets/{txtName}.txt");
         if (sr == null)
         {
             return;
@@ -50,10 +50,7 @@ public class WPTerrain
 
         sr.Close();
 
-        TextAsset ta = Resources.Load("aStarNode") as TextAsset;
-
-        Debug.Log("ta.text" + ta == null);
-
+        TextAsset ta = Resources.Load(txtName) as TextAsset;
         string all = ta.text;
         string[] lines = all.Split('\n');
         int lineAmt = lines.Length;
@@ -80,6 +77,7 @@ public class WPTerrain
             }
 
             int nei = int.Parse(ss[1]);
+
             int index = 2;
 
             for (int i = 0; i < nei; i++)
@@ -87,13 +85,22 @@ public class WPTerrain
                 string name = ss[index + i];
                 for (int j = 0; j < nodeList.Count; j++)
                 {
-                    if (nodeList[i].go.name.Equals(name))
+                    if (nodeList[j].go.name.Equals(name))
                     {
                         current.neibors.Add(nodeList[j]);
                         break;
                     }
                 }
             }
+
+            string print = $"{current.go.name} ";
+
+            foreach (PathNode p in current.neibors)
+            {
+                print += p.go.name;
+            }
+
+            Debug.Log($"wpt line: neinum {nei}, nodes {print}");
         }
     }
 
@@ -102,24 +109,24 @@ public class WPTerrain
         PathNode rnode = null;
         PathNode node;
         int nodeAmt = nodeList.Count;
-        float max = 100000.0f;
+        float min = 1000000000000.0f;
 
         for (int i = 0; i < nodeAmt; i++)
         {
             node = nodeList[i];
 
-            if (Physics.Linecast(pos, node.pos, 1 << 8 | 1 << 15))
-            {
-                continue;
-            }
+            //if (Physics.Linecast(pos, node.pos, 1 << 8))
+            //{
+            //    continue;
+            //}
 
             Vector3 vec = node.pos - pos;
             vec.y = 0.0f;
             float dist = vec.magnitude;
 
-            if(dist < max)
+            if(dist < min)
             {
-                max = dist;
+                min = dist;
                 rnode = node;
             }
         }

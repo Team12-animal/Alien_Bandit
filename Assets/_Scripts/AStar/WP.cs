@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class WP : MonoBehaviour
 {
+    public bool openGizmo;
     public List<GameObject> neibors;
 
     private void OnDrawGizmos()
     {
-        if (neibors != null && neibors.Count > 0)
+        if (openGizmo == true)
         {
-            foreach (GameObject n in neibors)
+            if (neibors != null && neibors.Count > 0)
             {
-                Gizmos.color = Color.cyan;
-                Gizmos.DrawLine(this.transform.position, n.transform.position);
+                foreach (GameObject n in neibors)
+                {
+                    Gizmos.color = Color.cyan;
+                    Gizmos.DrawLine(this.transform.position, n.transform.position);
+                }
             }
         }
     }

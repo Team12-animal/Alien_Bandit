@@ -4294,8 +4294,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelOneControl: {fileID: 0}
   levelTwoControl: {fileID: 663837602898181302}
-  collectTargets: 0
-  targetAmt: 0
+  collectRabbits: 0
+  collectRaccoons: 0
+  collectLittleRaccoons: 0
+  collectPigs: 0
 --- !u!4 &399994809 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4153951137213078, guid: 20a2edbb5aaf6bf4a932566240f09151, type: 3}
@@ -9404,6 +9406,7 @@ MonoBehaviour:
   itemInhand: {fileID: 0}
   holdingPos: {fileID: 0}
   workingTable: {fileID: 0}
+  usingTable: 0
   targetItem: {fileID: 0}
   triggerItem: {fileID: 0}
 --- !u!1 &1038736032
@@ -18456,11 +18459,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000012657785910, guid: 3fe5e5b169873104ca3a52a601994ea5, type: 3}
   m_PrefabInstance: {fileID: 244195991}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2010491022 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3877395876734867187, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
-  m_PrefabInstance: {fileID: 3877395877459738237}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2016383346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19595,17 +19593,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74a1aec3440ce0a42a48669454f5e3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreChangeOrNot: 0
+  scoreText: {fileID: 0}
+  addScoreText: {fileID: 0}
+  addScore: {fileID: 0}
   waittingTime: 2.1
-  waittingTimeText: {fileID: 2602731917241962402}
-  waittingTimeUI: {fileID: 2602731917338523130}
+  readyImage: {fileID: 0}
+  goImage: {fileID: 0}
+  waittingTimeUI: {fileID: 0}
   gamingTime: 180
   gamingTimeText: {fileID: 2602731918233974869}
   gameOverUIText:
   - {fileID: 6500894312499620121}
   - {fileID: 6500894313600495708}
-  gameWinUI: {fileID: 2602731917982183283}
+  gameWinUI: {fileID: 0}
+  gameFailUI: {fileID: 0}
+  levelUI: {fileID: 0}
+  chooseLevelUIStartButtonLevel03: {fileID: 0}
+  chooseLevelUIStartButtonLevel02: {fileID: 0}
   doorDestroied: 0
-  player: []
+  continueUI: {fileID: 0}
+  levelTwoStars: []
+  showStars: []
+  players: []
+  player02RawImage: {fileID: 0}
+  player03RawImage: {fileID: 0}
+  player04RawImage: {fileID: 0}
+  player01ReadyImage: {fileID: 0}
+  player02ReadyImage: {fileID: 0}
+  player03ReadyImage: {fileID: 0}
+  player04ReadyImage: {fileID: 0}
   isWin: 0
   createdRain: 0
   startRainTime: 176
@@ -19718,27 +19735,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60095bb84dcabae429abf4bcdc71a4bd, type: 3}
---- !u!114 &2602731917241962402 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1283954575917347295, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
-  m_PrefabInstance: {fileID: 3877395877459738237}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!223 &2602731917338523130 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 1283954575745059719, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
-  m_PrefabInstance: {fileID: 3877395877459738237}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2602731917982183283 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1283954576120811790, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
-  m_PrefabInstance: {fileID: 3877395877459738237}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2602731918233974869 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1283954574996342312, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
@@ -19750,11 +19746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2602731918614254476 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1283954574605938161, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
-  m_PrefabInstance: {fileID: 3877395877459738237}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3877395877459738237
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19814,6 +19805,14 @@ PrefabInstance:
       propertyPath: levelControl
       value: 
       objectReference: {fileID: 663837602898181300}
+    - target: {fileID: 4414475581736703584, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 4414475581736703584, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.26
+      objectReference: {fileID: 0}
     - target: {fileID: 5089774231236737254, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
       propertyPath: m_Camera
       value: 
@@ -19838,7 +19837,7 @@ PrefabInstance:
     - target: {fileID: 5555761440165396995, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: tipsCanvas
       value: 
-      objectReference: {fileID: 2010491022}
+      objectReference: {fileID: 0}
     - target: {fileID: 5555761440165396995, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: dialogueText
       value: 
@@ -19846,7 +19845,7 @@ PrefabInstance:
     - target: {fileID: 5555761440165396995, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: waittingTimeUI
       value: 
-      objectReference: {fileID: 2602731917338523130}
+      objectReference: {fileID: 0}
     - target: {fileID: 5555761440165396995, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: levelTwoControl
       value: 
@@ -19854,7 +19853,7 @@ PrefabInstance:
     - target: {fileID: 5555761440165396995, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: backgroundCanvas
       value: 
-      objectReference: {fileID: 2602731918614254476}
+      objectReference: {fileID: 0}
     - target: {fileID: 5555761440165397020, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
       propertyPath: m_RootOrder
       value: 0

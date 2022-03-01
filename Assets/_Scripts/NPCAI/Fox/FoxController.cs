@@ -12,41 +12,20 @@ public class FoxController : MonoBehaviour
     GameObject target;
     GameObject birthPos;
 
-    private GameObject levelController;
-    private LevelControl lv;
+    //coroutine
+    public float waitForStart;
+    public float delay;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        levelController = GameObject.Find("LevelControl");
-
-
-        if (levelController != null)
-        {
-            lv = levelController.GetComponent<LevelOneControl>();
-
-            if (lv == null || lv.isActiveAndEnabled != true)
-            {
-                lv = levelController.GetComponent<LevelTwoControl>();
-            }
-        }
-
+    void Awake()
+    { 
         LoadFox();
         StartCoroutine(CheckBreakableItems());
     }
 
-    private void Update()
-    {
-        if (fox.activeSelf == true && behaviour.IsTargetUsing())
-        {
-            behaviour.data.target = SetTarget();
-        }
-    }
-
-
     IEnumerator CheckBreakableItems()
     {
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(waitForStart);
 
         while (true)
         {
@@ -58,7 +37,7 @@ public class FoxController : MonoBehaviour
                 GenNewFox();
             }
 
-            yield return new WaitForSeconds(1000);
+            yield return new WaitForSeconds(delay);
         }
     }
 
@@ -67,12 +46,16 @@ public class FoxController : MonoBehaviour
         List<GameObject> breakableItems = new List<GameObject>();
         GameObject[] boxes = GameObject.FindGameObjectsWithTag("Box");
         GameObject[] ropes = GameObject.FindGameObjectsWithTag("Rope");
+        GameObject[] bags = GameObject.FindGameObjectsWithTag("Bag");
 
         if (boxes.Length > 0)
         {
             foreach (GameObject box in boxes)
             {
-                breakableItems.Add(box);
+                if (box.GetComponent<BoxController>().beUsing == false && box.transform.position.y >= -0.5f)
+                {
+                    breakableItems.Add(box);
+                }
             }
         }
 
@@ -80,12 +63,30 @@ public class FoxController : MonoBehaviour
         {
             foreach (GameObject rope in ropes)
             {
-                breakableItems.Add(rope);
+                if (rope.GetComponent<RopeController>().beUsing == false && rope.transform.position.y >= -0.5f)
+                {
+                    breakableItems.Add(rope);
+                }
+            }
+        }
+
+        if (bags.Length > 0)
+        {
+            foreach (GameObject bag in bags)
+            {
+                if (bag.GetComponent<BagController>().beUsing == false && bag.transform.position.y >= -0.5f)
+                {
+                    breakableItems.Add(bag);
+                }
             }
         }
 
         return breakableItems;
     }
+
+    BoxController boxC;
+    RopeController ropeC;
+    BagController bagC;
 
     private GameObject SetTarget()
     {
@@ -96,16 +97,61 @@ public class FoxController : MonoBehaviour
 
         if (breakableItems != null)
         {
+            if (breakableItems[i].tag == "Box")
+            {
+                boxC = breakableItems[i].GetComponent<BoxController>();
+            }
+
+            if (breakableItems[i].tag == "Rope")
+            {
+                ropeC = breakableItems[i].GetComponent<RopeController>();
+            }
+
+            if (breakableItems[i].tag == "Bag")
+            {
+                bagC = breakableItems[i].GetComponent<BagController>();
+            }
+
             return breakableItems[i];
         }
         else
         {
             if(i + 1 <= maxI)
             {
+                if (breakableItems[i + 1].tag == "Box")
+                {
+                    boxC = breakableItems[i + 1].GetComponent<BoxController>();
+                }
+
+                if (breakableItems[i + 1].tag == "Rope")
+                {
+                    ropeC = breakableItems[i + 1].GetComponent<RopeController>();
+                }
+
+                if (breakableItems[i + 1].tag == "Bag")
+                {
+                    bagC = breakableItems[i + 1].GetComponent<BagController>();
+                }
+
                 return breakableItems[i + 1];
             }
             else
             {
+                if (breakableItems[0].tag == "Box")
+                {
+                    boxC = breakableItems[0].GetComponent<BoxController>();
+                }
+
+                if (breakableItems[0].tag == "Rope")
+                {
+                    ropeC = breakableItems[0].GetComponent<RopeController>();
+                }
+
+                if (breakableItems[0].tag == "Bag")
+                {
+                    bagC = breakableItems[0].GetComponent<BagController>();
+                }
+
                 return breakableItems[0];
             }
         }
@@ -128,6 +174,8 @@ public class FoxController : MonoBehaviour
                 nearestPos = pos;
                 tempDist = dist;
             }
+
+            Debug.Log("fox near" + target.name + pos.name);
         }
 
         if(nearestPos == null)
@@ -151,7 +199,10 @@ public class FoxController : MonoBehaviour
             birthPos = null;
         }
 
-        SpawnFox(target, birthPos);
+        if (target != null && birthPos != null)
+        {
+            SpawnFox(target, birthPos);
+        }
     }
 
     GameObject fox;
@@ -176,18 +227,26 @@ public class FoxController : MonoBehaviour
 
     private void SpawnFox(GameObject target, GameObject birthPos)
     {
-        fox.SetActive(true);
-
         fox.transform.position = birthPos.transform.position;
         fox.transform.forward = birthPos.transform.forward;
 
-        behaviour.target = target;
         foxData.target = target;
-        behaviour.birthPos = birthPos;
-        foxData.UpdateStatus(0);
+        foxData.birthPos = birthPos;
+        foxData.UpdateStatus((int)FoxAIData.FoxStatus.Safe);
 
-        behaviour.missionComplete = false;
+        fox.SetActive(true);
 
         Debug.Log("foxspawn" + target.name + birthPos.name);
+    }
+
+    //return fox exist or not
+    public bool FoxInField()
+    {
+        if (fox != null)
+        {
+            return fox.activeSelf == true;
+        }
+
+        return false;
     }
 }

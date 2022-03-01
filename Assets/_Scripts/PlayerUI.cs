@@ -19,7 +19,7 @@ public class PlayerUI : MonoBehaviour
         {
             return;
         }
-        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        cam = Camera.main;
 
         if(cam != null)
         {

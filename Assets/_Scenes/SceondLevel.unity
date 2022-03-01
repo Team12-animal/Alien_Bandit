@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4411001, g: 0.5079774, b: 0.58444536, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.43661225, g: 0.501284, b: 0.585156, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -750,6 +750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 1366601693}
   - {fileID: 204431853}
@@ -829,7 +830,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1397608728}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &58424209
 GameObject:
@@ -6877,6 +6878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 57251565}
   - {fileID: 1225803530}
@@ -6954,7 +6956,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1397608728}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &209579295 stripped
 Transform:
@@ -7229,6 +7231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 1060112690}
   - {fileID: 1602411844}
@@ -8236,6 +8239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 532872704}
   - {fileID: 1060112690}
@@ -8314,7 +8318,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1397608728}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &394617678 stripped
 Transform:
@@ -9277,6 +9281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 1366601693}
   - {fileID: 1225803530}
@@ -9357,7 +9362,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1397608728}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &548748363
 GameObject:
@@ -9575,6 +9580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 629054943}
   - {fileID: 1602411844}
@@ -9649,7 +9655,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 572948797}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.266174, y: 2.392777, z: -1.5740814}
+  m_LocalPosition: {x: 14.266174, y: 0.8, z: -1.5740814}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1397608728}
@@ -10150,6 +10156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 1602411844}
   - {fileID: 572948797}
@@ -10227,7 +10234,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1397608728}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &632326748
 PrefabInstance:
@@ -10980,6 +10987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 1225803530}
   - {fileID: 2078899898}
@@ -14566,6 +14574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 532872704}
   - {fileID: 394245484}
@@ -14645,7 +14654,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1397608728}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1061576630
 PrefabInstance:
@@ -15316,6 +15325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 669664612}
   - {fileID: 1996097642}
@@ -16651,6 +16661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 57251565}
   - {fileID: 1366601693}
@@ -16730,7 +16741,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1397608728}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1227852799 stripped
 Transform:
@@ -17918,6 +17929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 57251565}
   - {fileID: 1225803530}
@@ -17996,7 +18008,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1397608728}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1374484132
 PrefabInstance:
@@ -23257,6 +23269,7 @@ Transform:
   m_LocalPosition: {x: 27.923824, y: -0.6827769, z: 37.28408}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1602411849}
   - {fileID: 57251570}
   - {fileID: 1366601698}
   - {fileID: 532872709}
@@ -23265,7 +23278,6 @@ Transform:
   - {fileID: 204431858}
   - {fileID: 1060112695}
   - {fileID: 629054948}
-  - {fileID: 1602411849}
   - {fileID: 258582715}
   - {fileID: 1515097291}
   - {fileID: 2121800138}
@@ -29245,6 +29257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 258582710}
   - {fileID: 2121800133}
@@ -30429,6 +30442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 394245484}
   - {fileID: 1060112690}
@@ -30505,11 +30519,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1602411844}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.986176, y: 2.392777, z: -3.144081}
+  m_LocalPosition: {x: 8.986176, y: 0.68, z: -3.144081}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1397608728}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1609834049
 PrefabInstance:
@@ -33460,14 +33474,13 @@ MonoBehaviour:
   scoreText: {fileID: 710012323}
   addScoreText: {fileID: 2004519141}
   addScore: {fileID: 2004519136}
-  level: 2
+  level: 0
   waittingTime: 3
   readyImage: {fileID: 4908421854524314978}
   goImage: {fileID: 21300000, guid: ca3b63acd99bda14c9accdc0f390cd03, type: 3}
   waittingTimeUI: {fileID: 6516226716219853917}
   gamingTime: 180
   gamingTimeText: {fileID: 651376344527292542}
-  gameOverUIText: []
   gameWinUI: {fileID: 337523403168139815}
   gameFailUI: {fileID: 337523403168139815}
   levelUI: {fileID: 1382119408}
@@ -34250,6 +34263,8 @@ MonoBehaviour:
   - {fileID: 1515888461}
   - {fileID: 1635542866}
   breakableItems: []
+  waitForStart: 20
+  delay: 30
 --- !u!4 &1993526991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5023827496289240853, guid: a79279818571b6848a9ccb8dcb36dd2c, type: 3}
@@ -34360,6 +34375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 2078899898}
   - {fileID: 669664612}
@@ -35429,6 +35445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 669664612}
   - {fileID: 1996097642}
@@ -36008,6 +36025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openGizmo: 0
   neibors:
   - {fileID: 258582710}
   - {fileID: 1515097286}

@@ -195,10 +195,10 @@ public class CraftingManager : MonoBehaviour
         {
             slot = 1;
         }
-        
+
         //craftGameObjects[slot].transform.position = slotimage[slot].transform.position;
 
-        if(craftGameObjects[slot].tag == "Wood")
+        if (craftGameObjects[slot].tag == "Wood")
         {
             //close item gameobject and open item icon
             craftGameObjects[slot].SetActive(false);
@@ -206,7 +206,7 @@ public class CraftingManager : MonoBehaviour
             showingIcons[slot] = logIcons[slot];
         }
 
-        if(craftGameObjects[slot].tag == "Rope")
+        if (craftGameObjects[slot].tag == "Rope")
         {
             craftGameObjects[slot].SetActive(false);
             ropeIcons[slot].SetActive(true);
@@ -239,7 +239,7 @@ public class CraftingManager : MonoBehaviour
             //close the item icon, and show the item
             showingIcons[slotPos].SetActive(false);
             craftGameObjects[slotPos].SetActive(true);
-            
+
             //?????u?@?x?????????m
             //Vector3 move = new Vector3(transform.position.x - 3f, transform.position.y, transform.position.z);
             //????????Item?MGameObject
@@ -320,7 +320,7 @@ public class CraftingManager : MonoBehaviour
     /// </summary>
     private void CloseItemIcon()
     {
-        foreach(GameObject icon in showingIcons)
+        foreach (GameObject icon in showingIcons)
         {
             icon.SetActive(false);
         }
@@ -338,6 +338,7 @@ public class CraftingManager : MonoBehaviour
         for (int i = 0; i < craftGameObjects.Count; i++)
         {
             Destroy(craftGameObjects[i]);
+            craftGameObjects[i] = null;
         }
         craftItems.Clear();
         craftGameObjects.Clear();
@@ -359,7 +360,7 @@ public class CraftingManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Box" || other.tag == "Player")
+        if (other.tag == "Box" || other.tag == "Player")
         {
             return;
         }
@@ -377,12 +378,12 @@ public class CraftingManager : MonoBehaviour
         //Vector3 move = new Vector3(transform.position.x, transform.position.y + 5.0f, transform.position.z + 1.0f);
         //other.gameObject.transform.position = move;
 
-       
+
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Box")
+        if (other.tag == "Box" || other.tag == "Bag")
         {
             //box left on table
             isTake = false;
@@ -406,7 +407,7 @@ public class CraftingManager : MonoBehaviour
     //remove item
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Box")
+        if (other.tag == "Box" || other.tag == "Bag")
         {
             //box be taken
             isTake = true;
