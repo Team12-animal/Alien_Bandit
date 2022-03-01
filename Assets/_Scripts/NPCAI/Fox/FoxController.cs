@@ -240,8 +240,13 @@ public class FoxController : MonoBehaviour
     }
 
     //return fox exist or not
-    public bool WolfInField()
+    public bool FoxInField()
     {
-        return fox.activeSelf == true;
+        if (fox != null)
+        {
+            return fox.activeSelf == true;
+        }
+
+        return false;
     }
 }
