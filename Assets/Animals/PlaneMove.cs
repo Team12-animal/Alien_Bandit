@@ -41,7 +41,6 @@ public class PlaneMove : MonoBehaviour
             float dist = (transform.position - point[1]).magnitude;
             if (dist < 0.1f)
             {
-                Debug.LogError("往前");
                 currentPoint = 1;
                 speed = 0;
                 StartCoroutine(WaitThreeSecond());
@@ -57,7 +56,6 @@ public class PlaneMove : MonoBehaviour
             float dist = (transform.position - point[0]).magnitude;
             if (dist < 0.1f)
             {
-                Debug.LogError("往後");
                 currentPoint = 0;
                 speed= 0;
                 StartCoroutine(WaitThreeSecond());
@@ -71,18 +69,32 @@ public class PlaneMove : MonoBehaviour
     }
 
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.tag == "Player")
-    //    {
-    //        if (currentPoint == 0)
-    //        {
-    //            other.transform.position += DifPos;
-    //        }
-    //        else
-    //        {
-    //            other.transform.position += DifPos;
-    //        }
-    //    }
-    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            other.gameObject.transform.SetParent(transform);
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.name == "Player01")
+        {
+            other.gameObject.transform.SetParent(GameObject.Find("PlayerBox01").transform);
+        }
+        else if (other.name == "Player02")
+        {
+            other.gameObject.transform.SetParent(GameObject.Find("PlayerBox02").transform);
+        }
+        else if (other.name == "Player03")
+        {
+            other.gameObject.transform.SetParent(GameObject.Find("PlayerBox03").transform);
+        }
+        else if (other.name == "Player04")
+        {
+            other.gameObject.transform.SetParent(GameObject.Find("PlayerBox04").transform);
+        }
+    }
 }

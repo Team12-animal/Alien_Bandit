@@ -31,7 +31,7 @@ public class RabbitAI : MonoBehaviour
     Vector3 lastPos;
     Quaternion attackWoodForward;
     public Collider currentCollider;
-    private WolfController wolf;
+    private WolfController wolf =null;
     // Use this for initialization
     public void Start()
     {
@@ -172,7 +172,6 @@ public class RabbitAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //isDanger = wolf.
         m_Data.arriveDist = m_Data.m_Speed + 0.001f;
         if (m_Data.isBited || m_Data.isCatched)
         {
@@ -200,21 +199,25 @@ public class RabbitAI : MonoBehaviour
                 m_Data.m_fMaxSpeed = 0.05f;
                 m_Am.SetInteger("State", 0);
                 CheckPlayerInSight();
-                if (isDanger)
+                if (wolf != null)
                 {
-                    bool bAttack = false;
-                    //dangerAnimal = GameObject.Find("Fox");
-                    bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
-                    if (danger)
+                    isDanger = wolf.WolfInField();
+                    if (isDanger)
                     {
-                        m_Data.agent.enabled = true;
-                        m_Data.agent.updateRotation = true;
-                        m_Data.m_vTarget = CheckCloseHole().transform.position;
-                        m_Am.SetInteger("State", 3);
-                        m_eCurrentState = eFSMState.MoveToTarget;
-                        return;
+                        bool bAttack = false;
+                        dangerAnimal = wolf.wolf;
+                        bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
+                        if (danger)
+                        {
+                            m_Data.agent.enabled = true;
+                            m_Data.agent.updateRotation = true;
+                            m_Data.m_vTarget = CheckCloseHole().transform.position;
+                            m_Am.SetInteger("State", 3);
+                            m_eCurrentState = eFSMState.MoveToTarget;
+                            return;
+                        }
                     }
-                }
+                }             
                 // Wait to move.           
                 if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
                 {
