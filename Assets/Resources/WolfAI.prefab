@@ -810,6 +810,8 @@ MonoBehaviour:
     preys: []
     target: {fileID: 0}
     alertDist: 4
+    jumpPs: []
+    catchedTarget: {fileID: 0}
     Status: 0
     status: 0
   preys: []
@@ -820,10 +822,13 @@ MonoBehaviour:
   arriveHome: 0
   targetSwitched: 0
   hitten: 0
-  txtName: testNode
-  nodeTag: WP
+  jumping: 0
+  txtName: ThirdLevel_Wolf
+  nodeTag: WWP
   aStarPerfoming: 0
+  jumpPs: []
   targetLocking: 1
+  nearestP: {fileID: 0}
   mouth: {fileID: 8977016372379236376}
 --- !u!114 &1829762202718912998
 MonoBehaviour:

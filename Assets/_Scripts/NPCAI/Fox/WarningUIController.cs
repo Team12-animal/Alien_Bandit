@@ -21,6 +21,7 @@ public class WarningUIController : MonoBehaviour
     {
         cam = Camera.main;
         warningGo = this.gameObject;
+        warningGo.transform.rotation = cam.transform.rotation;
         warningIcon = warningGo.GetComponent<Image>();
 
         temp = warningIcon.color;

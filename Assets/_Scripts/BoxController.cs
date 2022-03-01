@@ -39,9 +39,7 @@ public class BoxController : MonoBehaviour
         if (beUsing == true && other.gameObject.tag == "Rabbit" && targetAnimal == null)
         {
             targetAnimal = other.gameObject;
-            ac = targetAnimal.GetComponent(typeof(Collider)) as Collider;
-            ac.enabled = false;
-            targetAnimal.GetComponent<RabbitAI>().m_Data.iscatched = true;
+            targetAnimal.GetComponent<RabbitAI>().m_Data.isCatched = true;
             targetAnimal.transform.position = contentSpot.transform.position;
             targetAnimal.transform.up = contentSpot.transform.up;
             targetAnimal.transform.parent = contentSpot.gameObject.transform;

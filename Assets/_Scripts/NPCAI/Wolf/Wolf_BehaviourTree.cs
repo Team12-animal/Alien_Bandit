@@ -581,6 +581,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
     {
         Vector3 mouthPos = mouth.transform.position;
         mouthPos.y -= 1.0f;
+        target.GetComponent<RabbitAI>().m_Data.isBited = true;
         target.transform.position = mouthPos;
         target.transform.right = mouth.transform.up;
         target.transform.parent = mouth.transform;

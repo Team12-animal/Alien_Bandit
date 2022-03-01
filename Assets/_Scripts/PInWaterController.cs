@@ -10,8 +10,8 @@ public class PInWaterController : MonoBehaviour
 
     List<GameObject> pInWater;
 
-    public GameObject dropIntoWaterEffect;
-    public GameObject respawnEffect;
+    //public GameObject dropIntoWaterEffect;
+    //public GameObject respawnEffect;
     public GameObject respawnPos;
 
     //save Pos
@@ -75,11 +75,11 @@ public class PInWaterController : MonoBehaviour
         yield return new WaitForSecondsRealtime(1);
 
         UI.transform.position = savePos;
-        PlayEffect(respawnEffect, respawnPos.transform.position);
+        ///PlayEffect(respawnEffect, respawnPos.transform.position);
 
         yield return new WaitForSeconds(0.5f);
 
-        respawnEffect.SetActive(false);
+        //respawnEffect.SetActive(false);
         pInWater[0].transform.position = respawnPos.transform.position;
         pInWater[0].GetComponent<InputController>().enabled = true;
         pInWater.RemoveAt(0);
@@ -98,7 +98,7 @@ public class PInWaterController : MonoBehaviour
             if (playerPos.y <= -0.5f)
             {
                 pInWater.Add(players[index]);
-                PlayEffect(dropIntoWaterEffect, playerPos);
+                //PlayEffect(dropIntoWaterEffect, playerPos);
                 players[index].transform.position = savePos;
                 ICs[index].enabled = false;
             }

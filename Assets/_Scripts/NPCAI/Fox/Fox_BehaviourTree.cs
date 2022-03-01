@@ -64,8 +64,6 @@ public class Fox_BehaviourTree : MonoBehaviour
     int currentPathPt = -1;
 
     //target UI
-    private Camera cam;
-    public Image warningIcon;
     public bool targetLocking = true;
 
     // Start is called before the first frame update
@@ -81,13 +79,6 @@ public class Fox_BehaviourTree : MonoBehaviour
         //astar
         aStarPerfoming = AStar.instance.PerformAStar(this.transform.position, data.target.transform.position);
         currentPathPt = 0;
-
-        cam = Camera.main;
-        if (cam != null)
-        {
-            warningIcon = GameObject.Find("Warning").GetComponent<Image>();
-            warningIcon.transform.rotation = cam.transform.rotation;
-        }
 
         PlayerInit();
     }
