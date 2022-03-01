@@ -35,6 +35,11 @@ public class WolfAnimatorController : MonoBehaviour
 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName(state))
         {
+            if (state == jumpTrigger && state == currentState)
+            {
+                animator.ResetTrigger(state);
+            }
+
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
             return;

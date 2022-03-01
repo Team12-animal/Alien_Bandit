@@ -520,7 +520,15 @@ public class Wolf_BehaviourTree : MonoBehaviour
         else
         {
             mouth.transform.DetachChildren();
-            GameObject.Destroy(catchedTarget);
+            
+            if (catchedTarget.tag == "Rabbit")
+            {
+                AIMain.m_Instance.RemoveRabbit(catchedTarget);
+            }
+            else if (catchedTarget.tag == "Raccoon")
+            {
+                //add  AIMain.m_Instance.RemoveRaccoon(catchedTarget);
+            }
             catchedTarget = null;
             data.catchedTarget = null;
             this.gameObject.SetActive(false);
@@ -582,10 +590,10 @@ public class Wolf_BehaviourTree : MonoBehaviour
         Vector3 mouthPos = mouth.transform.position;
         mouthPos.y -= 1.0f;
         target.GetComponent<RabbitAI>().m_Data.isBited = true;
+        (target.GetComponent(typeof(Collider)) as Collider).enabled = false;
         target.transform.position = mouthPos;
         target.transform.right = mouth.transform.up;
         target.transform.parent = mouth.transform;
-        (target.GetComponent(typeof(Collider)) as Collider).enabled = false;
         catchedTarget = target;
         data.catchedTarget = target;
         missionComplete = true;

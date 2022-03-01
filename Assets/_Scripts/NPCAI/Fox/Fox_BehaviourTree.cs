@@ -353,6 +353,8 @@ public class Fox_BehaviourTree : MonoBehaviour
     #region fox behaviour tree
     private void BreakItem()
     {
+        arriveTarget = ArriveTargetOrNot();
+
         if (arriveTarget == false)
         {
 
@@ -378,11 +380,11 @@ public class Fox_BehaviourTree : MonoBehaviour
 
                 Debug.Log("Doing AStar");
 
-                arriveTarget = SteeringBehavior.Seek(data);
+               SteeringBehavior.Seek(data);
             }
             else if (SteeringBehavior.CollisionAvoid(data) == false)
             {
-                arriveTarget = SteeringBehavior.Seek(data);
+                SteeringBehavior.Seek(data);
             }
 
             SteeringBehavior.Move(data);
@@ -483,6 +485,8 @@ public class Fox_BehaviourTree : MonoBehaviour
     public bool arriveHomeArea = false;
     private void GoHome()
     {
+        arriveHomeArea = ArriveTargetOrNot();
+
         if (arriveHomeArea == false)
         {
             MoveToBirthPos();
@@ -517,13 +521,13 @@ public class Fox_BehaviourTree : MonoBehaviour
                     break;
                 }
 
-                Debug.Log("Doing AStar");
-
-                arriveHomeArea = SteeringBehavior.Seek(data);
+                bool seekend = SteeringBehavior.Seek(data);
+            
+                Debug.Log($"Doing AStar seek end {seekend}");
             }
             else if (SteeringBehavior.CollisionAvoid(data) == false)
             {
-                arriveHomeArea = SteeringBehavior.Seek(data);
+                SteeringBehavior.Seek(data);
             }
 
             SteeringBehavior.Move(data);
@@ -638,5 +642,21 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
 
         return newPos;
+    }
+
+    private bool ArriveTargetOrNot()
+    {
+        float dist = (this.transform.position - target.transform.position).magnitude;
+
+        if (dist <= data.arriveDist)
+        {
+            Debug.Log($"arrivetarget true + dist {dist} arrive dist {data.arriveDist}");
+            return true;
+        }
+        else
+        {
+            Debug.Log($"arrivetarget false + dist {dist} arrive dist {data.arriveDist}");
+            return false;
+        }
     }
 }
