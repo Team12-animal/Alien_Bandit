@@ -38,10 +38,7 @@ public class BagController : MonoBehaviour
         if (beUsing == true && other.gameObject.tag == "Raccoon" && targetAnimal == null)
         {
             targetAnimal = other.gameObject;
-            ac = targetAnimal.GetComponent(typeof(Collider)) as Collider;
-            //targetAnimal.GetComponent<RabbitAI>().enabled = false;
-            //targetAnimal.GetComponent<NavMeshAgent>().enabled = false;
-            ac.enabled = false;
+            targetAnimal.GetComponent<RaccoonAI>().m_Data.iscatched = true;
             this.transform.Find("Racoon Poly Art").gameObject.SetActive(false);
             targetAnimal.transform.position = contentSpot.transform.position;
             targetAnimal.transform.up = contentSpot.transform.up;
