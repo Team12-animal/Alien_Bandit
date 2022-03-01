@@ -16,6 +16,9 @@ public class WolfAIData : NpcAIData
     //jump
     public List<GameObject> jumpPs;
 
+    //for rabbit and raccoon
+    public GameObject catchedTarget;
+
     public WolfStatus Status;
     [HideInInspector]
     public int status = (int)WolfStatus.Safe;

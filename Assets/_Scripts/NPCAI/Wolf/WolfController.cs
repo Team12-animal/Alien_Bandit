@@ -103,4 +103,16 @@ public class WolfController : MonoBehaviour
         return false;
     }
 
+    //return rabbit catched or not
+    public bool TargetCatched()
+    {
+        if (wolf != null && data.catchedTarget != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

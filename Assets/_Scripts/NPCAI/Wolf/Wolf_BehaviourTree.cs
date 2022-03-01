@@ -521,6 +521,8 @@ public class Wolf_BehaviourTree : MonoBehaviour
         {
             mouth.transform.DetachChildren();
             GameObject.Destroy(catchedTarget);
+            catchedTarget = null;
+            data.catchedTarget = null;
             this.gameObject.SetActive(false);
         }
     }
@@ -584,6 +586,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
         target.transform.parent = mouth.transform;
         (target.GetComponent(typeof(Collider)) as Collider).enabled = false;
         catchedTarget = target;
+        data.catchedTarget = target;
         missionComplete = true;
     }
 
@@ -592,6 +595,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
         mouth.transform.DetachChildren();
         (catchedTarget.GetComponent(typeof(Collider)) as Collider).enabled = true;
         catchedTarget = null;
+        data.catchedTarget = null;
         missionComplete = true;
     }
     #endregion
