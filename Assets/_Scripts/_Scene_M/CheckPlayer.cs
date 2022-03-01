@@ -55,10 +55,10 @@ public class CheckPlayer : MonoBehaviour
 
     [Header("Confirm Skin")]
     [SerializeField] List<RawImage> rawImages;
-    public bool confirm01 = false;
-    public bool confirm02 = false;
-    public bool confirm03 = false;
-    public bool confirm04 = false;
+    bool confirm01 = false;
+    bool confirm02 = false;
+    bool confirm03 = false;
+    bool confirm04 = false;
     string confirmName01 = "confirm01";
     string confirmName02 = "confirm02";
     string confirmName03 = "confirm03";
@@ -461,7 +461,7 @@ public class CheckPlayer : MonoBehaviour
     public void OpenLevelUI()
     {
         int PlayerCount = Convert.ToInt32(SceneController.instance.selected01) + Convert.ToInt32(SceneController.instance.selected02) + Convert.ToInt32(SceneController.instance.selected03) + Convert.ToInt32(SceneController.instance.selected04);
-        
+
         switch (PlayerCount)
         {
             case 1:
@@ -548,13 +548,10 @@ public class CheckPlayer : MonoBehaviour
 
     public void CancelPlayerRawImages()
     {
-        if (onePlayer1000 || twoPlayerTpye1001 || twoPlayerType1010 || twoPlayerType1100 || threePlayerType1101 || threePlayerType1110 || fourPlayer)
-        {
-            for (int i = 0; i < rawImages.Count; i++)
-            {
-                rawImages[i].enabled = false;
-            }
-        }
+        //for (int i = 0; i < rawImages.Count; i++)
+        //{
+        //    rawImages[i].enabled = false;
+        //}
     }
 
     public void LoadSecneLevel(int sceneIndex)
