@@ -48,7 +48,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     public float homeArriveDist;
 
     //seek ended or not
-    private bool arriveTarget = false;
+    public bool arriveTarget = false;
 
     //mission complete or not
     public bool missionComplete = false;
