@@ -22,6 +22,7 @@ public class RaccoonAI : MonoBehaviour
     private Animator m_Am;                  //AI的動畫狀態機
     private List<GameObject> players;
     private Vector3 lastPos;
+    public Collider currentCollider;
 
     public void Start()
     {
@@ -126,110 +127,118 @@ public class RaccoonAI : MonoBehaviour
     void Update()
     {
         m_Data.arriveDist = m_Data.m_Speed + 0.001f;
-
-        //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
-        if (m_eCurrentState == eFSMState.Idle)
+        if (m_Data.isBited || m_Data.isCatched)
         {
-            m_Data.m_fMaxSpeed = 0.05f;
             m_Am.SetInteger("State", 0);
-            CheckPlayerInSight();
-
-            // Wait to move.           
-            if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
-            {
-                m_Data.agent.enabled = true;
-                m_fCurrentTime = 0.0f;
-                m_fIdleTime = 0.5f;
-                m_Data.m_vTarget = RandomNavSphere(m_WanderPoints.transform.position, m_Data.m_fSight, -1);  //在視野範圍內隨機位置
-                m_eCurrentState = eFSMState.Wander;
-                m_Am.applyRootMotion = false;
-                lastPos = transform.position;
-            }
-            else
-            {
-                m_fCurrentTime += Time.deltaTime;
-            }
-        }
-        else if (m_eCurrentState == eFSMState.Wander)
-        {
-            m_fIdleTime = Random.Range(4.0f, 5.0f);  //漫步停留時間為隨機3～4秒
-            CheckPlayerInSight();
-            if (!(lastPos == transform.position))
-            {
-                m_Am.SetInteger("State", 1);
-            }
-            lastPos = transform.position;
-            m_Data.agent.enabled = true;
-            m_Data.agent.updateRotation = true;
-            m_Data.agent.SetDestination(m_Data.m_vTarget);  //AI移動到隨機目標點
-            Vector3 newPos = (m_Data.m_vTarget - transform.position); //到目標點的向量
-            float dis = newPos.magnitude;  //距離長度
-            if (dis < 0.3f || (m_fCurrentTime > m_fIdleTime))  //若小於0.1f便回到IDLE狀態 (到達) Or 若超過停留時間便中斷並進入IDLE狀態 (未到達)
-            {
-                m_Data.agent.updateRotation = false;
-                m_Data.agent.SetDestination(transform.position);  //將位置調整為當前位置(避免平移)
-                m_eCurrentState = eFSMState.Idle;
-                m_fCurrentTime = 0.0f;
-                m_fIdleTime = Random.Range(1.0f, 3.0f);
-                m_Data.m_bMove = false;
-            }
-            else
-            {
-                m_fCurrentTime += Time.deltaTime;
-            }
-        }
-        else if (m_eCurrentState == eFSMState.MoveToTarget)
-        {
-            m_Am.SetInteger("State", 2);
-            m_Data.agent.SetDestination(m_Data.m_vTarget);
-            m_Data.agent.speed = 5f;
-            Vector3 newPos = (m_Data.m_vTarget - transform.position);
-            float dis = newPos.magnitude;
-            if (dis < 1.5f)
-            {
-                m_Am.SetInteger("State", 0);
-                m_eCurrentState = eFSMState.Idle;
-                m_fCurrentTime = 0.0f;
-                m_fIdleTime = Random.Range(2.0f, 3.0f);
-                return;
-            }
-        }
-        else if (m_eCurrentState == eFSMState.Chase)
-        {
-            bool bAttack = false;
-            bool bCheck = CheckTargetEnemyInSight(m_CurrentEnemyTarget, ref bAttack);
-            m_Data.m_fMaxSpeed = 0.2f;
             m_Data.agent.enabled = false;
-            if (bCheck == false)
+            currentCollider.enabled = false;
+        }
+        else
+        {
+            currentCollider.enabled = true;
+            //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
+            if (m_eCurrentState == eFSMState.Idle)
             {
+                m_Data.m_fMaxSpeed = 0.05f;
                 m_Am.SetInteger("State", 0);
-                m_eCurrentState = eFSMState.Idle;
-                m_fCurrentTime = 0.0f;
-                m_fIdleTime = Random.Range(2.0f, 3.0f);
-                return;
+                CheckPlayerInSight();
+
+                // Wait to move.           
+                if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
+                {
+                    m_Data.agent.enabled = true;
+                    m_fCurrentTime = 0.0f;
+                    m_fIdleTime = 0.5f;
+                    m_Data.m_vTarget = RandomNavSphere(m_WanderPoints.transform.position, m_Data.m_fSight, -1);  //在視野範圍內隨機位置
+                    m_eCurrentState = eFSMState.Wander;
+                    m_Am.applyRootMotion = false;
+                    lastPos = transform.position;
+                }
+                else
+                {
+                    m_fCurrentTime += Time.deltaTime;
+                }
             }
-            if (bAttack)
+            else if (m_eCurrentState == eFSMState.Wander)
             {
+                m_fIdleTime = Random.Range(4.0f, 5.0f);  //漫步停留時間為隨機3～4秒
+                CheckPlayerInSight();
+                if (!(lastPos == transform.position))
+                {
+                    m_Am.SetInteger("State", 1);
+                }
+                lastPos = transform.position;
                 m_Data.agent.enabled = true;
                 m_Data.agent.updateRotation = true;
-                m_Data.m_vTarget = m_WanderPoints.transform.position;
-                m_Am.SetInteger("State", 2);
-                m_eCurrentState = eFSMState.MoveToTarget;
-            }
-            else
-            {
-                m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
-                if (SteeringBehavior.CollisionAvoid(m_Data) == false)
+                m_Data.agent.SetDestination(m_Data.m_vTarget);  //AI移動到隨機目標點
+                Vector3 newPos = (m_Data.m_vTarget - transform.position); //到目標點的向量
+                float dis = newPos.magnitude;  //距離長度
+                if (dis < 0.3f || (m_fCurrentTime > m_fIdleTime))  //若小於0.1f便回到IDLE狀態 (到達) Or 若超過停留時間便中斷並進入IDLE狀態 (未到達)
                 {
-                    SteeringBehavior.Flee(m_Data);
+                    m_Data.agent.updateRotation = false;
+                    m_Data.agent.SetDestination(transform.position);  //將位置調整為當前位置(避免平移)
+                    m_eCurrentState = eFSMState.Idle;
+                    m_fCurrentTime = 0.0f;
+                    m_fIdleTime = Random.Range(1.0f, 3.0f);
+                    m_Data.m_bMove = false;
                 }
-                SteeringBehavior.Move(m_Data);
-                m_Am.SetInteger("State", 2);
+                else
+                {
+                    m_fCurrentTime += Time.deltaTime;
+                }
             }
+            else if (m_eCurrentState == eFSMState.MoveToTarget)
+            {
+                m_Am.SetInteger("State", 2);
+                m_Data.agent.SetDestination(m_Data.m_vTarget);
+                m_Data.agent.speed = 5f;
+                Vector3 newPos = (m_Data.m_vTarget - transform.position);
+                float dis = newPos.magnitude;
+                if (dis < 1.5f)
+                {
+                    m_Am.SetInteger("State", 0);
+                    m_eCurrentState = eFSMState.Idle;
+                    m_fCurrentTime = 0.0f;
+                    m_fIdleTime = Random.Range(2.0f, 3.0f);
+                    return;
+                }
+            }
+            else if (m_eCurrentState == eFSMState.Chase)
+            {
+                bool bAttack = false;
+                bool bCheck = CheckTargetEnemyInSight(m_CurrentEnemyTarget, ref bAttack);
+                m_Data.m_fMaxSpeed = 0.2f;
+                m_Data.agent.enabled = false;
+                if (bCheck == false)
+                {
+                    m_Am.SetInteger("State", 0);
+                    m_eCurrentState = eFSMState.Idle;
+                    m_fCurrentTime = 0.0f;
+                    m_fIdleTime = Random.Range(2.0f, 3.0f);
+                    return;
+                }
+                if (bAttack)
+                {
+                    m_Data.agent.enabled = true;
+                    m_Data.agent.updateRotation = true;
+                    m_Data.m_vTarget = m_WanderPoints.transform.position;
+                    m_Am.SetInteger("State", 2);
+                    m_eCurrentState = eFSMState.MoveToTarget;
+                }
+                else
+                {
+                    m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
+                    if (SteeringBehavior.CollisionAvoid(m_Data) == false)
+                    {
+                        SteeringBehavior.Flee(m_Data);
+                    }
+                    SteeringBehavior.Move(m_Data);
+                    m_Am.SetInteger("State", 2);
+                }
 
+            }
         }
     }
-
     public Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
 
