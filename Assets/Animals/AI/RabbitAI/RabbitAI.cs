@@ -31,6 +31,7 @@ public class RabbitAI : MonoBehaviour
     Vector3 lastPos;
     Quaternion attackWoodForward;
     public Collider currentCollider;
+    private WolfController wolf;
     // Use this for initialization
     public void Start()
     {
@@ -41,6 +42,7 @@ public class RabbitAI : MonoBehaviour
         m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");  //找到場景上的所有兔子窩
         m_Am = GetComponent<Animator>();
         players = AIMain.m_Instance.GetPlayerList();
+        wolf = GameObject.Find("WolfManager").GetComponent<WolfController>();
     }
 
     /// <summary>
@@ -170,6 +172,7 @@ public class RabbitAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //isDanger = wolf.
         m_Data.arriveDist = m_Data.m_Speed + 0.001f;
         if (m_Data.isBited || m_Data.isCatched)
         {
@@ -179,6 +182,12 @@ public class RabbitAI : MonoBehaviour
         }
         else
         {
+            currentCollider.enabled = true;
+            if (transform.position.y>0.07f)
+            {
+                transform.position = Vector3.Lerp(transform.position,new Vector3(transform.position.x,0.07f,transform.position.z),0.001f);
+                return;
+            }
             //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
             if (m_eCurrentState == eFSMState.Idle)
             {
@@ -194,7 +203,7 @@ public class RabbitAI : MonoBehaviour
                 if (isDanger)
                 {
                     bool bAttack = false;
-                    dangerAnimal = GameObject.Find("Fox");
+                    //dangerAnimal = GameObject.Find("Fox");
                     bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
                     if (danger)
                     {

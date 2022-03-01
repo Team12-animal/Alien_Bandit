@@ -1662,6 +1662,7 @@ GameObject:
   - component: {fileID: 8088246542095001062}
   - component: {fileID: 5538210285745236159}
   - component: {fileID: 7972446330102542305}
+  - component: {fileID: 3255281997526051832}
   m_Layer: 20
   m_Name: RaccoonBadyAI
   m_TagString: Raccoon
@@ -1711,7 +1712,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8088246542095001056}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8252a9e91db8144b8684fe8fa30e55, type: 3}
   m_Name: 
@@ -1736,7 +1737,9 @@ MonoBehaviour:
     m_fAttackTime: 1
     m_TargetObject: {fileID: 0}
     agent: {fileID: 8088246542095001062}
-    iscatched: 0
+    isCatched: 0
+    isBited: 0
+  currentCollider: {fileID: 5538210285745236159}
 --- !u!195 &8088246542095001062
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1789,6 +1792,41 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3255281997526051832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8088246542095001056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc8d40d57cb66142a5cb023bf03b53e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Data:
+    m_fRadius: 1
+    m_fProbeLength: 6
+    m_Speed: 0
+    m_fMaxSpeed: 0.001
+    m_fRot: 0.1
+    m_fMaxRot: 0.2
+    m_Go: {fileID: 8088246542095001056}
+    arriveDist: 0
+    m_vTarget: {x: 0, y: 0, z: 0}
+    m_vCurrentVector: {x: 0, y: 0, z: 0}
+    m_fTempTurnForce: 0
+    m_fMoveForce: 0
+    m_bMove: 0
+    m_bCol: 0
+    m_fSight: 5
+    m_fAttackRange: 2.5
+    m_fAttackTime: 1
+    m_TargetObject: {fileID: 0}
+    agent: {fileID: 8088246542095001062}
+    isCatched: 0
+    isBited: 0
+  currentCollider: {fileID: 5538210285745236159}
 --- !u!1 &8088304548050961340
 GameObject:
   m_ObjectHideFlags: 0

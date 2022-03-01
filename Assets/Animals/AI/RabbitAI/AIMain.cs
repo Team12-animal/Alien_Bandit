@@ -16,6 +16,7 @@ public class AIMain : MonoBehaviour
     private int randtime;
     private GameObject rabbitgo = null;
     private GameObject raccoongo = null;
+    private GameObject raccoonBadygo = null;
     public Vector3[] raccoonPos;
 
     public static AIMain m_Instance
@@ -55,6 +56,7 @@ public class AIMain : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 3)
         {
             raccoongo = Resources.Load("RaccoonAI") as GameObject;
+            raccoonBadygo = Resources.Load("RaccoonBadyAI") as GameObject;
         }
     }
 
@@ -92,7 +94,7 @@ public class AIMain : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                AddRaccoon(i);
+                AddRaccoon(raccoongo,i);
             }
         }
     }
@@ -134,20 +136,22 @@ public class AIMain : MonoBehaviour
         StartCoroutine(WaitTimeAddRabbit(5f));
     }
 
-    public void AddRaccoon(int i)
+    public void AddRaccoon(GameObject go, int i)
     {
         Vector3 Pos = raccoonPos[i];
         Quaternion Rot = Quaternion.Euler(0f,180f, 0f);
-        GameObject raccoon = Instantiate(raccoongo, Pos, Rot, this.transform);
+        GameObject raccoon = Instantiate(go, Pos, Rot, this.transform);
         m_SceneRaccoon.Add(raccoon);
     }
 
-    private void Update()
+    public void Removeraccoon(GameObject go)
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (m_SceneRaccoon.Count == 1 && m_SceneRaccoon[0].name == "RaccoonAI(Clone)")
         {
-            AddRabbit();
+            AddRaccoon(raccoonBadygo, 3);
         }
+        Destroy(go.gameObject);
+        m_SceneRabbit.Remove(go);
     }
 
     private void RandomArray()

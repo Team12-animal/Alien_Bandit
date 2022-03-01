@@ -23,7 +23,7 @@ public class ElephantAI : MonoBehaviour
     public bool IsPoint = true;
     public float speed;
     private int currentPoint = 0;
-
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -32,6 +32,8 @@ public class ElephantAI : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
+        audioSource = GetComponent<AudioSource>();
+        stateTime = 3f;
 
         Transform[] wanderPoint = GameObject.Find("ElephantWander").GetComponentsInChildren<Transform>();
         foreach (Transform go in wanderPoint)
@@ -43,8 +45,8 @@ public class ElephantAI : MonoBehaviour
     void Update()
     {
         switch (currentState)
-        {
-            case ElephantState.Idle:
+        { 
+            case ElephantState.Idle:                
                 IdleState();
                 break;
             case ElephantState.Wander:
@@ -65,9 +67,10 @@ public class ElephantAI : MonoBehaviour
             animator.SetInteger("State", 1);
             if (IsPoint)
             {
-                currentState = ElephantState.WanderPoint;
                 ChosePoint();
+                currentState = ElephantState.WanderPoint;             
                 currentPos = point[currentPoint].position;
+
             }
             else
             {
@@ -107,7 +110,15 @@ public class ElephantAI : MonoBehaviour
         {
             currentTime = 0;
             currentState = ElephantState.Idle;
-            animator.SetInteger("State", 0);
+            Debug.LogError(stateTime);
+            if (stateTime > 7f)
+            {
+                animator.SetInteger("State", 2);
+            }
+            else
+            {
+                animator.SetInteger("State", 0);
+            }
         }
     }
 
@@ -150,5 +161,16 @@ public class ElephantAI : MonoBehaviour
         NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
 
         return navHit.position;
+    }
+
+    public void AudioPlay(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
+
+    public void SetAnimator()
+    {
+        animator.SetInteger("State",0);
     }
 }
