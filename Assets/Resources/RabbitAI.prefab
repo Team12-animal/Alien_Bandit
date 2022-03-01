@@ -512,8 +512,10 @@ MonoBehaviour:
     m_fAttackTime: 1
     m_TargetObject: {fileID: 3964796615413391712, guid: 9ff269c9533477947ad2554a7533b9af, type: 3}
     agent: {fileID: 7899327696254469028}
-    iscatched: 0
+    isCatched: 0
+    isBited: 0
   attackWood: {fileID: 0}
+  currentCollider: {fileID: -1388082514391233302}
 --- !u!195 &7899327696254469028
 NavMeshAgent:
   m_ObjectHideFlags: 0

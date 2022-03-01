@@ -28,7 +28,7 @@ public class RaccoonAI : MonoBehaviour
         m_CurrentEnemyTarget = null;
         m_eCurrentState = eFSMState.Idle;
         m_fCurrentTime = 0.0f;
-        m_fIdleTime = Random.Range(3.0f, 5.0f);
+        m_fIdleTime = Random.Range(0.5f, 3.0f);
         m_Am = GetComponent<Animator>();
         players = AIMain.m_Instance.GetPlayerList();
         m_WanderPoints = GameObject.Find("HousePoint");

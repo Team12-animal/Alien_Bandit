@@ -30,6 +30,7 @@ public class RabbitAI : MonoBehaviour
     private bool isDanger = false;
     Vector3 lastPos;
     Quaternion attackWoodForward;
+    public Collider currentCollider;
     // Use this for initialization
     public void Start()
     {
@@ -170,187 +171,195 @@ public class RabbitAI : MonoBehaviour
     void Update()
     {
         m_Data.arriveDist = m_Data.m_Speed + 0.001f;
-
-        //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
-        if (m_eCurrentState == eFSMState.Idle)
+        if (m_Data.isBited || m_Data.isCatched)
         {
-
-            if (attackWood != null)
-            {
-                m_eCurrentState = eFSMState.Attack;
-                return;
-            }
-            m_Data.m_fMaxSpeed = 0.05f;
             m_Am.SetInteger("State", 0);
-            CheckPlayerInSight();
-            if (isDanger)
-            {
-                bool bAttack = false;
-                dangerAnimal = GameObject.Find("Fox");
-                bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
-                if (danger)
-                {
-                    m_Data.agent.enabled = true;
-                    m_Data.agent.updateRotation = true;
-                    m_Data.m_vTarget = CheckCloseHole().transform.position;
-                    m_Am.SetInteger("State", 3);
-                    m_eCurrentState = eFSMState.MoveToTarget;
-                    return;
-                }
-            }
-            // Wait to move.           
-            if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
-            {
-                m_Data.agent.enabled = true;
-                m_fCurrentTime = 0.0f;
-                m_fIdleTime = 0.5f;
-                m_Data.m_vTarget = RandomNavSphere(transform.position, m_Data.m_fSight, -1);  //在視野範圍內隨機位置
-                m_eCurrentState = eFSMState.Wander;
-                m_Am.applyRootMotion = false;
-                lastPos = transform.position;
-            }
-            else
-            {
-                m_fCurrentTime += Time.deltaTime;
-            }
-        }
-        else if (m_eCurrentState == eFSMState.Wander)
-        {
-            if (attackWood != null)
-            {
-                m_eCurrentState = eFSMState.Attack;
-                return;
-            }
-            m_fIdleTime = Random.Range(4.0f, 5.0f);  //漫步停留時間為隨機3～4秒
-            CheckPlayerInSight();
-            if (isDanger)
-            {
-                bool bAttack = false;
-                dangerAnimal = GameObject.Find("Fox");
-                bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
-                if (danger)
-                {
-                    m_Data.agent.enabled = true;
-                    m_Data.agent.updateRotation = true;
-                    m_Data.m_vTarget = CheckCloseHole().transform.position;
-                    m_Am.SetInteger("State", 3);
-                    m_eCurrentState = eFSMState.MoveToTarget;
-                    return;
-                }
-            }
-            if (!(lastPos == transform.position))
-            {
-                m_Am.SetInteger("State", 1);
-            }
-            lastPos = transform.position;
-            m_Data.agent.enabled = true;
-            m_Data.agent.updateRotation = true;
-            m_Data.agent.SetDestination(m_Data.m_vTarget);  //AI移動到隨機目標點
-            Vector3 newPos = (m_Data.m_vTarget - transform.position); //到目標點的向量
-            float dis = newPos.magnitude;  //距離長度
-            if (dis < 0.3f || (m_fCurrentTime > m_fIdleTime))  //若小於0.1f便回到IDLE狀態 (到達) Or 若超過停留時間便中斷並進入IDLE狀態 (未到達)
-            {
-                m_Data.agent.updateRotation = false;
-                m_Data.agent.SetDestination(transform.position);  //將位置調整為當前位置(避免平移)
-                m_eCurrentState = eFSMState.Idle;
-                m_fCurrentTime = 0.0f;
-                m_fIdleTime = Random.Range(1.0f, 3.0f);
-                m_Data.m_bMove = false;
-            }
-            else
-            {
-                m_fCurrentTime += Time.deltaTime;
-            }
-        }
-        else if (m_eCurrentState == eFSMState.MoveToTarget)
-        {
-            m_Am.SetInteger("State", 3);
-            m_Data.agent.SetDestination(m_Data.m_vTarget);
-            m_Data.agent.speed = 5f;
-            Vector3 newPos = (m_Data.m_vTarget - transform.position);
-            float dis = newPos.magnitude;
-            if (dis < 1.5f)
-            {
-                m_Am.applyRootMotion = true;
-                m_Am.SetInteger("State", 4);
-            }
-        }
-        else if (m_eCurrentState == eFSMState.Chase)
-        {
-            bool bAttack = false;
-            bool bCheck = CheckTargetEnemyInSight(m_CurrentEnemyTarget, ref bAttack);
-            m_Data.m_fMaxSpeed = 0.2f;
             m_Data.agent.enabled = false;
-            if (bCheck == false)
-            {
-                m_Am.SetInteger("State", 0);
-                m_eCurrentState = eFSMState.Idle;
-                m_fCurrentTime = 0.0f;
-                m_fIdleTime = Random.Range(2.0f, 3.0f);
-                return;
-            }
-            if (bAttack)
-            {
-                m_Data.agent.enabled = true;
-                m_Data.agent.updateRotation = true;
-                m_Data.m_vTarget = CheckCloseHole().transform.position;
-                m_Am.SetInteger("State", 3);
-                m_eCurrentState = eFSMState.MoveToTarget;
-            }
-            else
-            {
-                m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
-                if (SteeringBehavior.CollisionAvoid(m_Data) == false)
-                {
-                    SteeringBehavior.Flee(m_Data);
-                }
-                SteeringBehavior.Move(m_Data);
-                m_Am.SetInteger("State", 3);
-            }
-
+            currentCollider.enabled = false;
         }
-        else if (m_eCurrentState == eFSMState.Attack)
+        else
         {
-            CheckPlayerInSight();
-            if (isDanger)
+            //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
+            if (m_eCurrentState == eFSMState.Idle)
             {
-                bool bAttack = false;
-                dangerAnimal = GameObject.Find("Fox");
-                bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
-                if (danger)
+
+                if (attackWood != null)
                 {
-                    m_Data.agent.enabled = true;
-                    m_Data.agent.updateRotation = true;
-                    m_Data.m_vTarget = CheckCloseHole().transform.position;
-                    m_Am.SetInteger("State", 3);
-                    m_eCurrentState = eFSMState.MoveToTarget;
+                    m_eCurrentState = eFSMState.Attack;
                     return;
                 }
-            }
-            if (attackWood == null)
-            {
-                m_eCurrentState = eFSMState.Idle;
-                return;
-            }
-            else
-            {
-                m_Data.m_fMaxSpeed = 0.2f;
-                float dist = (transform.position - attackWood.transform.position).magnitude;
-                Debug.LogError(dist);
-                if (dist < 1.5f)
+                m_Data.m_fMaxSpeed = 0.05f;
+                m_Am.SetInteger("State", 0);
+                CheckPlayerInSight();
+                if (isDanger)
                 {
-                    Debug.LogError("開啃");
-                    m_Am.SetInteger("State", 2);
+                    bool bAttack = false;
+                    dangerAnimal = GameObject.Find("Fox");
+                    bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
+                    if (danger)
+                    {
+                        m_Data.agent.enabled = true;
+                        m_Data.agent.updateRotation = true;
+                        m_Data.m_vTarget = CheckCloseHole().transform.position;
+                        m_Am.SetInteger("State", 3);
+                        m_eCurrentState = eFSMState.MoveToTarget;
+                        return;
+                    }
+                }
+                // Wait to move.           
+                if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
+                {
+                    m_Data.agent.enabled = true;
+                    m_fCurrentTime = 0.0f;
+                    m_fIdleTime = 0.5f;
+                    m_Data.m_vTarget = RandomNavSphere(transform.position, m_Data.m_fSight, -1);  //在視野範圍內隨機位置
+                    m_eCurrentState = eFSMState.Wander;
+                    m_Am.applyRootMotion = false;
+                    lastPos = transform.position;
                 }
                 else
                 {
-                    Debug.LogError("移動");
-                    attackWoodForward = Quaternion.LookRotation(attackWood.transform.forward);
-                    transform.rotation = Quaternion.Lerp(this.transform.rotation, attackWood.transform.rotation, 0.05f);
+                    m_fCurrentTime += Time.deltaTime;
+                }
+            }
+            else if (m_eCurrentState == eFSMState.Wander)
+            {
+                if (attackWood != null)
+                {
+                    m_eCurrentState = eFSMState.Attack;
+                    return;
+                }
+                m_fIdleTime = Random.Range(4.0f, 5.0f);  //漫步停留時間為隨機3～4秒
+                CheckPlayerInSight();
+                if (isDanger)
+                {
+                    bool bAttack = false;
+                    dangerAnimal = GameObject.Find("Wolf");
+                    bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
+                    if (danger)
+                    {
+                        m_Data.agent.enabled = true;
+                        m_Data.agent.updateRotation = true;
+                        m_Data.m_vTarget = CheckCloseHole().transform.position;
+                        m_Am.SetInteger("State", 3);
+                        m_eCurrentState = eFSMState.MoveToTarget;
+                        return;
+                    }
+                }
+                if (!(lastPos == transform.position))
+                {
                     m_Am.SetInteger("State", 1);
-                    m_Data.m_vTarget = attackWood.transform.position;
-                    SteeringBehavior.Seek(m_Data);
+                }
+                lastPos = transform.position;
+                m_Data.agent.enabled = true;
+                m_Data.agent.updateRotation = true;
+                m_Data.agent.SetDestination(m_Data.m_vTarget);  //AI移動到隨機目標點
+                Vector3 newPos = (m_Data.m_vTarget - transform.position); //到目標點的向量
+                float dis = newPos.magnitude;  //距離長度
+                if (dis < 0.3f || (m_fCurrentTime > m_fIdleTime))  //若小於0.1f便回到IDLE狀態 (到達) Or 若超過停留時間便中斷並進入IDLE狀態 (未到達)
+                {
+                    m_Data.agent.updateRotation = false;
+                    m_Data.agent.SetDestination(transform.position);  //將位置調整為當前位置(避免平移)
+                    m_eCurrentState = eFSMState.Idle;
+                    m_fCurrentTime = 0.0f;
+                    m_fIdleTime = Random.Range(1.0f, 3.0f);
+                    m_Data.m_bMove = false;
+                }
+                else
+                {
+                    m_fCurrentTime += Time.deltaTime;
+                }
+            }
+            else if (m_eCurrentState == eFSMState.MoveToTarget)
+            {
+                m_Am.SetInteger("State", 3);
+                m_Data.agent.SetDestination(m_Data.m_vTarget);
+                m_Data.agent.speed = 5f;
+                Vector3 newPos = (m_Data.m_vTarget - transform.position);
+                float dis = newPos.magnitude;
+                if (dis < 1.5f)
+                {
+                    m_Am.applyRootMotion = true;
+                    m_Am.SetInteger("State", 4);
+                }
+            }
+            else if (m_eCurrentState == eFSMState.Chase)
+            {
+                bool bAttack = false;
+                bool bCheck = CheckTargetEnemyInSight(m_CurrentEnemyTarget, ref bAttack);
+                m_Data.m_fMaxSpeed = 0.2f;
+                m_Data.agent.enabled = false;
+                if (bCheck == false)
+                {
+                    m_Am.SetInteger("State", 0);
+                    m_eCurrentState = eFSMState.Idle;
+                    m_fCurrentTime = 0.0f;
+                    m_fIdleTime = Random.Range(2.0f, 3.0f);
+                    return;
+                }
+                if (bAttack)
+                {
+                    m_Data.agent.enabled = true;
+                    m_Data.agent.updateRotation = true;
+                    m_Data.m_vTarget = CheckCloseHole().transform.position;
+                    m_Am.SetInteger("State", 3);
+                    m_eCurrentState = eFSMState.MoveToTarget;
+                }
+                else
+                {
+                    m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
+                    if (SteeringBehavior.CollisionAvoid(m_Data) == false)
+                    {
+                        SteeringBehavior.Flee(m_Data);
+                    }
                     SteeringBehavior.Move(m_Data);
+                    m_Am.SetInteger("State", 3);
+                }
+
+            }
+            else if (m_eCurrentState == eFSMState.Attack)
+            {
+                CheckPlayerInSight();
+                if (isDanger)
+                {
+                    bool bAttack = false;
+                    dangerAnimal = GameObject.Find("Fox");
+                    bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
+                    if (danger)
+                    {
+                        m_Data.agent.enabled = true;
+                        m_Data.agent.updateRotation = true;
+                        m_Data.m_vTarget = CheckCloseHole().transform.position;
+                        m_Am.SetInteger("State", 3);
+                        m_eCurrentState = eFSMState.MoveToTarget;
+                        return;
+                    }
+                }
+                if (attackWood == null)
+                {
+                    m_eCurrentState = eFSMState.Idle;
+                    return;
+                }
+                else
+                {
+                    m_Data.m_fMaxSpeed = 0.2f;
+                    float dist = (transform.position - attackWood.transform.position).magnitude;
+                    Debug.LogError(dist);
+                    if (dist < 1.5f)
+                    {
+                        Debug.LogError("開啃");
+                        m_Am.SetInteger("State", 2);
+                    }
+                    else
+                    {
+                        Debug.LogError("移動");
+                        attackWoodForward = Quaternion.LookRotation(attackWood.transform.forward);
+                        transform.rotation = Quaternion.Lerp(this.transform.rotation, attackWood.transform.rotation, 0.05f);
+                        m_Am.SetInteger("State", 1);
+                        m_Data.m_vTarget = attackWood.transform.position;
+                        SteeringBehavior.Seek(m_Data);
+                        SteeringBehavior.Move(m_Data);
+                    }
                 }
             }
         }
