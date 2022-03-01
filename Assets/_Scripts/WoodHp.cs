@@ -8,7 +8,7 @@ public class WoodHp : MonoBehaviour
     private GameObject hpGo;
     private Image hp;
     private GameObject canvas;
-    [SerializeField] private Transform target;
+    private Transform target;
     // Start is called before the first frame update
     void Start()
     {

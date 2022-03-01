@@ -19,10 +19,10 @@ public class ElephantAI : MonoBehaviour
     private Animator animator;
     private NavMeshAgent agent;
     private Quaternion rotate;
-    [SerializeField] private List<Transform> point;
+    [SerializeField] public  List<Transform> point;
     public bool IsPoint = true;
     public float speed;
-    private int currentPoint = 0;
+    public int currentPoint = 0;
     private AudioSource audioSource;
 
     void Start()

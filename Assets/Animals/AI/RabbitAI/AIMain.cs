@@ -144,7 +144,7 @@ public class AIMain : MonoBehaviour
         m_SceneRaccoon.Add(raccoon);
     }
 
-    public void Removeraccoon(GameObject go)
+    public void RemoveRaccoon(GameObject go)
     {
         if (m_SceneRaccoon.Count == 1 && m_SceneRaccoon[0].name == "RaccoonAI(Clone)")
         {
