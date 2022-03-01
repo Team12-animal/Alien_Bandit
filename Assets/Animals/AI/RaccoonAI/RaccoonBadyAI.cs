@@ -19,6 +19,7 @@ public class RaccoonBadyAI : MonoBehaviour
     private Animator m_Am;              //AI的動畫狀態機
     private List<GameObject> players;
     Vector3 lastPos;
+    public Collider currentCollider;
 
     // Use this for initialization
     public void Start()
@@ -89,56 +90,67 @@ public class RaccoonBadyAI : MonoBehaviour
     void Update()
     {
         m_Data.arriveDist = m_Data.m_Speed + 0.001f;
-        //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
-        if (currentState == CurrentState.Idle)
+        if (m_Data.isBited || m_Data.isCatched)
         {
             m_Am.SetInteger("State", 0);
-            // Wait to move.           
-            if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
-            {
-                m_Data.agent.enabled = true;
-                m_fCurrentTime = 0.0f;
-                m_fIdleTime = 0.5f;
-                m_Data.m_vTarget = RandomNavSphere(transform.position, m_Data.m_fSight, -1);  //在視野範圍內隨機位置
-                currentState = CurrentState.Walk;
-                m_Am.applyRootMotion = false;
-                lastPos = transform.position;
-            }
-            else
-            {
-                m_fCurrentTime += Time.deltaTime;
-            }
+            m_Data.agent.enabled = false;
+            currentCollider.enabled = false;
         }
-        else if (currentState == CurrentState.Walk)
+        else
         {
-            m_fIdleTime = Random.Range(3.0f, 6.0f);  //漫步停留時間為隨機3～4秒
-            if (!(lastPos == transform.position))
+            currentCollider.enabled = true;
+            m_Data.arriveDist = m_Data.m_Speed + 0.001f;
+            //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
+            if (currentState == CurrentState.Idle)
             {
-                m_Am.SetInteger("State", 1);
-            }
-            lastPos = transform.position;
-            m_Data.agent.enabled = true;
-            m_Data.agent.updateRotation = true;
-            m_Data.agent.SetDestination(m_Data.m_vTarget);  //AI移動到隨機目標點
-            Vector3 newPos = (m_Data.m_vTarget - transform.position); //到目標點的向量
-            float dis = newPos.magnitude;  //距離長度
-            if (dis < 0.3f || (m_fCurrentTime > m_fIdleTime))  //若小於0.1f便回到IDLE狀態 (到達) Or 若超過停留時間便中斷並進入IDLE狀態 (未到達)
-            {
-                m_Data.agent.updateRotation = false;
-                m_Data.agent.SetDestination(transform.position);  //將位置調整為當前位置(避免平移)
-                currentState = CurrentState.Idle;
-                m_fCurrentTime = 0.0f;
-                m_fIdleTime = Random.Range(1.0f, 3.0f);
-                m_Data.m_bMove = false;
                 m_Am.SetInteger("State", 0);
+                // Wait to move.           
+                if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
+                {
+                    m_Data.agent.enabled = true;
+                    m_fCurrentTime = 0.0f;
+                    m_fIdleTime = 0.5f;
+                    m_Data.m_vTarget = RandomNavSphere(transform.position, m_Data.m_fSight, -1);  //在視野範圍內隨機位置
+                    currentState = CurrentState.Walk;
+                    m_Am.applyRootMotion = false;
+                    lastPos = transform.position;
+                }
+                else
+                {
+                    m_fCurrentTime += Time.deltaTime;
+                }
             }
-            else
+            else if (currentState == CurrentState.Walk)
             {
-                m_fCurrentTime += Time.deltaTime;
+                m_fIdleTime = Random.Range(3.0f, 6.0f);  //漫步停留時間為隨機3～4秒
+                if (!(lastPos == transform.position))
+                {
+                    m_Am.SetInteger("State", 1);
+                }
+                lastPos = transform.position;
+                m_Data.agent.enabled = true;
+                m_Data.agent.updateRotation = true;
+                m_Data.agent.SetDestination(m_Data.m_vTarget);  //AI移動到隨機目標點
+                Vector3 newPos = (m_Data.m_vTarget - transform.position); //到目標點的向量
+                float dis = newPos.magnitude;  //距離長度
+                if (dis < 0.3f || (m_fCurrentTime > m_fIdleTime))  //若小於0.1f便回到IDLE狀態 (到達) Or 若超過停留時間便中斷並進入IDLE狀態 (未到達)
+                {
+                    m_Data.agent.updateRotation = false;
+                    m_Data.agent.SetDestination(transform.position);  //將位置調整為當前位置(避免平移)
+                    currentState = CurrentState.Idle;
+                    m_fCurrentTime = 0.0f;
+                    m_fIdleTime = Random.Range(1.0f, 3.0f);
+                    m_Data.m_bMove = false;
+                    m_Am.SetInteger("State", 0);
+                }
+                else
+                {
+                    m_fCurrentTime += Time.deltaTime;
+                }
             }
-        }
-        else if (currentState == CurrentState.Attack)
-        {
+            else if (currentState == CurrentState.Attack)
+            {
+            }
         }
     }
 

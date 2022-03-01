@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WolfController : MonoBehaviour
 {
-    GameObject wolf;
+    public GameObject wolf;
     public GameObject birthPos;
     public GameObject homePos;
 

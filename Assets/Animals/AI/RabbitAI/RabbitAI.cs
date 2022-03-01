@@ -31,6 +31,7 @@ public class RabbitAI : MonoBehaviour
     Vector3 lastPos;
     Quaternion attackWoodForward;
     public Collider currentCollider;
+    private WolfController wolf =null;
     // Use this for initialization
     public void Start()
     {
@@ -41,6 +42,7 @@ public class RabbitAI : MonoBehaviour
         m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");  //找到場景上的所有兔子窩
         m_Am = GetComponent<Animator>();
         players = AIMain.m_Instance.GetPlayerList();
+        wolf = GameObject.Find("WolfManager").GetComponent<WolfController>();
     }
 
     /// <summary>
@@ -179,6 +181,12 @@ public class RabbitAI : MonoBehaviour
         }
         else
         {
+            currentCollider.enabled = true;
+            if (transform.position.y>0.07f)
+            {
+                transform.position = Vector3.Lerp(transform.position,new Vector3(transform.position.x,0.07f,transform.position.z),0.001f);
+                return;
+            }
             //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
             if (m_eCurrentState == eFSMState.Idle)
             {
@@ -191,21 +199,25 @@ public class RabbitAI : MonoBehaviour
                 m_Data.m_fMaxSpeed = 0.05f;
                 m_Am.SetInteger("State", 0);
                 CheckPlayerInSight();
-                if (isDanger)
+                if (wolf != null)
                 {
-                    bool bAttack = false;
-                    dangerAnimal = GameObject.Find("Fox");
-                    bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
-                    if (danger)
+                    isDanger = wolf.WolfInField();
+                    if (isDanger)
                     {
-                        m_Data.agent.enabled = true;
-                        m_Data.agent.updateRotation = true;
-                        m_Data.m_vTarget = CheckCloseHole().transform.position;
-                        m_Am.SetInteger("State", 3);
-                        m_eCurrentState = eFSMState.MoveToTarget;
-                        return;
+                        bool bAttack = false;
+                        dangerAnimal = wolf.wolf;
+                        bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
+                        if (danger)
+                        {
+                            m_Data.agent.enabled = true;
+                            m_Data.agent.updateRotation = true;
+                            m_Data.m_vTarget = CheckCloseHole().transform.position;
+                            m_Am.SetInteger("State", 3);
+                            m_eCurrentState = eFSMState.MoveToTarget;
+                            return;
+                        }
                     }
-                }
+                }             
                 // Wait to move.           
                 if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
                 {
