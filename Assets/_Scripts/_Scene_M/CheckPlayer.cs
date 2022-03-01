@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,10 +55,10 @@ public class CheckPlayer : MonoBehaviour
 
     [Header("Confirm Skin")]
     [SerializeField] List<RawImage> rawImages;
-    bool confirm01 = false;
-    bool confirm02 = false;
-    bool confirm03 = false;
-    bool confirm04 = false;
+    public bool confirm01 = false;
+    public bool confirm02 = false;
+    public bool confirm03 = false;
+    public bool confirm04 = false;
     string confirmName01 = "confirm01";
     string confirmName02 = "confirm02";
     string confirmName03 = "confirm03";
@@ -89,6 +90,13 @@ public class CheckPlayer : MonoBehaviour
     public string menuDance04 { get; private set; } = "CharacterControllerTest_Male_MainMenu04";
     public string withItemAnimator { get; private set; } = "CharacterControllerTest_Male_withItem";
 
+    bool onePlayer1000;
+    bool twoPlayerType1100;
+    bool twoPlayerType1010;
+    bool twoPlayerTpye1001;
+    bool threePlayerType1110;
+    bool threePlayerType1101;
+    bool fourPlayer;
 
     private void Awake()
     {
@@ -104,6 +112,10 @@ public class CheckPlayer : MonoBehaviour
         AddAndCaneclPlayer();
         ChangePlayerSkinWhenSelectButtonON();
         ChangeSelectTraingleColor();
+        GetReadyInRoleUI(outerFrameP1, confirm01, eventSystem01, checkSelectButton01, "Use1", "Take1", playerOneReadyInRoleUI, ref lockPlayer01);
+        GetReadyInRoleUI(outerFrameP2, confirm02, eventSystem02, checkSelectButton02, "Use2", "Take2", playerTwoReadyInRoleUI, ref lockPlayer02);
+        GetReadyInRoleUI(outerFrameP3, confirm03, eventSystem03, checkSelectButton03, "Use3", "Take3", playerThreeReadyInRoleUI, ref lockPlayer03);
+        GetReadyInRoleUI(outerFrameP4, confirm04, eventSystem04, checkSelectButton04, "Use4", "Take4", playerFourReadyInRoleUI, ref lockPlayer04);
     }
     private void LateUpdate()
     {
@@ -166,7 +178,7 @@ public class CheckPlayer : MonoBehaviour
         {
             float vertical = Input.GetAxisRaw("Vertical2");
             float horizontal = Input.GetAxisRaw("Horizontal2");
-            if((vertical > 0.01f || horizontal < 0.01f))
+            if ((vertical > 0.01f || horizontal < 0.01f))
                 eventSystem02.SetSelectedGameObject(Button_SeclectImage02);
         }
         if (outerFrameP3.activeInHierarchy && confirm03 && eventSystem03.currentSelectedGameObject == Button_SeclectImage01UseToRest)
@@ -185,9 +197,52 @@ public class CheckPlayer : MonoBehaviour
         }
     }
 
+    [Header("GetReadyImagesInRoleUI")]
+    [SerializeField] GameObject playerOneReadyInRoleUI;
+    [SerializeField] GameObject playerTwoReadyInRoleUI;
+    [SerializeField] GameObject playerThreeReadyInRoleUI;
+    [SerializeField] GameObject playerFourReadyInRoleUI;
+    public bool lockPlayer01 = false;
+    public bool lockPlayer02 = false;
+    public bool lockPlayer03 = false;
+    public bool lockPlayer04 = false;
+
+    public void CloseRoleUIAndGoToLevelUI()
+    {
+
+        //if(lockPlayer01 && lockPlayer02)
+        //{
+        //    OpenLevelUI();
+        //    CancelPlayerRawImages();
+        //    lockPlayer01 = false;
+        //    lockPlayer02 = false;
+        //    lockPlayer03 = false;
+        //    lockPlayer04 = false;
+        //    playerOneReadyInRoleUI.SetActive(false);
+        //    playerTwoReadyInRoleUI.SetActive(false);
+        //    playerThreeReadyInRoleUI.SetActive(false);
+        //    playerFourReadyInRoleUI.SetActive(false);
+        //}
+    }
+
+
+    public void GetReadyInRoleUI(GameObject outerFrame, bool confirm, EventSystem eventNumber, GameObject checkSelectButton, string use, string take, GameObject playerReadyInRoleUI, ref bool lockPlayer)
+    {
+        if (outerFrame.activeInHierarchy && confirm && eventNumber.currentSelectedGameObject == checkSelectButton && Input.GetButtonDown(use))
+        {
+            playerReadyInRoleUI.SetActive(true);
+            lockPlayer = true;
+        }
+        else if (outerFrame.activeInHierarchy && confirm && eventNumber.currentSelectedGameObject == checkSelectButton && Input.GetButtonDown(take))
+        {
+            playerReadyInRoleUI.SetActive(false);
+            lockPlayer = false;
+        }
+    }
+
     private void ChangePlayerSkinWhenSelectButtonON()
     {
-        if (outerFrameP1.activeInHierarchy && Input.GetButtonDown("Horizontal1") && confirm01 && eventSystem01.currentSelectedGameObject == checkSelectButton01)//Change player01 skin
+        if (outerFrameP1.activeInHierarchy && Input.GetButtonDown("Horizontal1") && confirm01 && eventSystem01.currentSelectedGameObject == checkSelectButton01 && !lockPlayer01)//Change player01 skin
         {
             SceneController.instance.player01.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal1");
             float horizontal = Input.GetAxisRaw("Horizontal1");
@@ -208,7 +263,7 @@ public class CheckPlayer : MonoBehaviour
                 rightTraingle01.GetComponent<Image>().color = normalColor;
             }
         }
-        if (outerFrameP2.activeInHierarchy && Input.GetButtonDown("Horizontal2") && confirm02 && eventSystem02.currentSelectedGameObject == checkSelectButton02)//Change player02 skin
+        if (outerFrameP2.activeInHierarchy && Input.GetButtonDown("Horizontal2") && confirm02 && eventSystem02.currentSelectedGameObject == checkSelectButton02 && !lockPlayer02)//Change player02 skin
         {
             SceneController.instance.player02.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal2");
             float horizontal = Input.GetAxisRaw("Horizontal2");
@@ -229,7 +284,7 @@ public class CheckPlayer : MonoBehaviour
                 rightTraingle02.GetComponent<Image>().color = normalColor;
             }
         }
-        if (outerFrameP3.activeInHierarchy && Input.GetAxisRaw("Horizontal3") != 0 && confirm03 && eventSystem03.currentSelectedGameObject == checkSelectButton03)//Change player03 skin
+        if (outerFrameP3.activeInHierarchy && Input.GetAxisRaw("Horizontal3") != 0 && confirm03 && eventSystem03.currentSelectedGameObject == checkSelectButton03 && !lockPlayer03)//Change player03 skin
         {
             SceneController.instance.player03.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal3");
             float horizontal = Input.GetAxisRaw("Horizontal3");
@@ -250,7 +305,7 @@ public class CheckPlayer : MonoBehaviour
                 rightTraingle03.GetComponent<Image>().color = normalColor;
             }
         }
-        if (outerFrameP4.activeInHierarchy && Input.GetAxisRaw("Horizontal4") != 0 && confirm04 && eventSystem04.currentSelectedGameObject == checkSelectButton04)//Change player04 skin
+        if (outerFrameP4.activeInHierarchy && Input.GetAxisRaw("Horizontal4") != 0 && confirm04 && eventSystem04.currentSelectedGameObject == checkSelectButton04 && !lockPlayer04)//Change player04 skin
         {
             SceneController.instance.player04.GetComponent<ChangeRoleSkin>().ChangeSkin("Horizontal4");
             float horizontal = Input.GetAxisRaw("Horizontal4");
@@ -405,8 +460,39 @@ public class CheckPlayer : MonoBehaviour
 
     public void OpenLevelUI()
     {
-        levelUI.SetActive(true);
-        eventSystem01.SetSelectedGameObject(chooseLevelStartButton);
+        int PlayerCount = Convert.ToInt32(SceneController.instance.selected01) + Convert.ToInt32(SceneController.instance.selected02) + Convert.ToInt32(SceneController.instance.selected03) + Convert.ToInt32(SceneController.instance.selected04);
+        
+        switch (PlayerCount)
+        {
+            case 1:
+                if (lockPlayer01)
+                {
+                    levelUI.SetActive(true);
+                    eventSystem01.SetSelectedGameObject(chooseLevelStartButton);
+                }
+                break;
+            case 2:
+                if ((lockPlayer01 && lockPlayer02) || (lockPlayer01 && lockPlayer03) || (lockPlayer01 && lockPlayer04))
+                {
+                    levelUI.SetActive(true);
+                    eventSystem01.SetSelectedGameObject(chooseLevelStartButton);
+                }
+                break;
+            case 3:
+                if ((lockPlayer01 && lockPlayer02 && lockPlayer03) || (lockPlayer01 && lockPlayer03 && lockPlayer04) || (lockPlayer01 && lockPlayer02 && lockPlayer04))
+                {
+                    levelUI.SetActive(true);
+                    eventSystem01.SetSelectedGameObject(chooseLevelStartButton);
+                }
+                break;
+            case 4:
+                if (lockPlayer01 && lockPlayer02 && lockPlayer03 && lockPlayer04)
+                {
+                    levelUI.SetActive(true);
+                    eventSystem01.SetSelectedGameObject(chooseLevelStartButton);
+                }
+                break;
+        }
     }
 
     public void OpenContinueUI(int number)
@@ -462,9 +548,12 @@ public class CheckPlayer : MonoBehaviour
 
     public void CancelPlayerRawImages()
     {
-        for (int i = 0; i < rawImages.Count; i++)
+        if (onePlayer1000 || twoPlayerTpye1001 || twoPlayerType1010 || twoPlayerType1100 || threePlayerType1101 || threePlayerType1110 || fourPlayer)
         {
-            rawImages[i].enabled = false;
+            for (int i = 0; i < rawImages.Count; i++)
+            {
+                rawImages[i].enabled = false;
+            }
         }
     }
 
@@ -613,4 +702,17 @@ public class CheckPlayer : MonoBehaviour
             stars[i].GetComponent<RawImage>().color = dataStarts[i].GetComponent<RawImage>().color;
         }
     }
+
+    public void ResetRoleConfirmImage()
+    {
+        lockPlayer01 = false;
+        lockPlayer02 = false;
+        lockPlayer03 = false;
+        lockPlayer04 = false;
+        playerOneReadyInRoleUI.SetActive(false);
+        playerTwoReadyInRoleUI.SetActive(false);
+        playerThreeReadyInRoleUI.SetActive(false);
+        playerFourReadyInRoleUI.SetActive(false);
+    }
+
 }

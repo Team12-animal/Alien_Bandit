@@ -195,10 +195,10 @@ public class LevelTwoControl : LevelControl
         {
             GameOverSetting(input01, input02, input03, input04);
             // can't control players;
-            for (int i = 0; i < gameOverUIText.Length; i++)
-            {
-                gameOverUIText[i].gameObject.SetActive(true);
-            }
+            //for (int i = 0; i < gameOverUIText.Length; i++)
+            //{
+            //    gameOverUIText[i].gameObject.SetActive(true);
+            //}
             gameFailUI.SetActive(true);
             waittingLoad -= Time.deltaTime;
             if (waittingLoad <= 0.0f)
