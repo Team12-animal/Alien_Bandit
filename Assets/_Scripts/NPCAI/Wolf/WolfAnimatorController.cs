@@ -33,7 +33,7 @@ public class WolfAnimatorController : MonoBehaviour
     {
         Debug.Log("npc play animation" + state + turnForce + " / " + moveForce);
 
-        if (state == currentState)
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(state))
         {
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
@@ -44,9 +44,10 @@ public class WolfAnimatorController : MonoBehaviour
         
         if (state == runTrigger || state == jumpTrigger)
         {
+            Debug.Log("npc play animation2" + state);
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
-            animator.SetTrigger(runTrigger);
+            animator.SetTrigger(state);
         }
 
         if (state == attacked || state == breakBox || state == catchT)
@@ -57,13 +58,14 @@ public class WolfAnimatorController : MonoBehaviour
         }
     }
 
-    private bool AllowToChange()
+    public bool AllowToChange()
     {
         AnimatorStateInfo nowPlaying = animator.GetCurrentAnimatorStateInfo(0);
 
         bool aniLock = !nowPlaying.IsName(attacked) && !nowPlaying.IsName(breakBox) &&
-                       !nowPlaying.IsName(catchT) && !nowPlaying.IsName(jump);
+                       !nowPlaying.IsName(catchT);
 
+        Debug.Log("npc anima allow" + aniLock);
         return aniLock;
     }
 

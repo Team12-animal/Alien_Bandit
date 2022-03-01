@@ -16,6 +16,9 @@ public class WolfController : MonoBehaviour
     public float waitForStart;
     public float delay;
 
+    //jump
+    public List<GameObject> jumpPs;
+
     private void Awake()
     {
         LoadWolf();
@@ -46,7 +49,8 @@ public class WolfController : MonoBehaviour
         data = wolf.GetComponent<Wolf_BehaviourTree>().data;
         data.birthPos = birthPos;
         data.homePos = homePos;
-        
+        data.jumpPs = jumpPs;
+
         wolf.SetActive(false);
     }
 
@@ -87,4 +91,11 @@ public class WolfController : MonoBehaviour
 
         wolf.SetActive(true);
     }
+
+    //return wolf exist or not
+    public bool WolfInField()
+    {
+        return wolf.activeSelf == true;
+    }
+
 }

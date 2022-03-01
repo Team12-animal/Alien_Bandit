@@ -726,7 +726,7 @@ GameObject:
   - component: {fileID: 1829762202718912998}
   m_Layer: 0
   m_Name: WolfAI
-  m_TagString: Untagged
+  m_TagString: Wolf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -794,9 +794,9 @@ MonoBehaviour:
     m_fRadius: 4
     m_fProbeLength: 1.5
     m_Speed: 0
-    m_fMaxSpeed: 0.09
+    m_fMaxSpeed: 0.1
     m_fRot: 0
-    m_fMaxRot: 0.06
+    m_fMaxRot: 0.08
     m_Go: {fileID: 4854366307625891389}
     arriveDist: 3
     m_vTarget: {x: 0, y: 0, z: 0}
@@ -823,6 +823,7 @@ MonoBehaviour:
   txtName: testNode
   nodeTag: WP
   aStarPerfoming: 0
+  targetLocking: 1
   mouth: {fileID: 8977016372379236376}
 --- !u!114 &1829762202718912998
 MonoBehaviour:

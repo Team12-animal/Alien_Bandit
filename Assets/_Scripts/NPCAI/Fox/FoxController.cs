@@ -238,4 +238,10 @@ public class FoxController : MonoBehaviour
 
         Debug.Log("foxspawn" + target.name + birthPos.name);
     }
+
+    //return fox exist or not
+    public bool WolfInField()
+    {
+        return fox.activeSelf == true;
+    }
 }
