@@ -14,21 +14,22 @@ public class ElephantAI : MonoBehaviour
 
     private ElephantState currentState;
     private float currentTime;
-    [SerializeField]private float stateTime;
+    [SerializeField] private float stateTime;
     private Vector3 currentPos;
     private Animator animator;
     private NavMeshAgent agent;
     private Quaternion rotate;
-    [SerializeField] public  List<Transform> point;
+    [SerializeField] public List<Transform> point;
     public bool IsPoint = true;
     public float speed;
     public int currentPoint = 0;
     private AudioSource audioSource;
+    public GameObject warningIcon;
+    public GameObject bloom;
 
     void Start()
     {
         currentState = ElephantState.Idle;
-        currentPos = new Vector3(0, 0, 0);
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -41,12 +42,14 @@ public class ElephantAI : MonoBehaviour
             point.Add(go);
         }
         point.RemoveAt(0);
+        currentPos = point[currentPoint+1].position;
+        StartCoroutine(WarningActive());
     }
     void Update()
     {
         switch (currentState)
-        { 
-            case ElephantState.Idle:                
+        {
+            case ElephantState.Idle:
                 IdleState();
                 break;
             case ElephantState.Wander:
@@ -68,8 +71,9 @@ public class ElephantAI : MonoBehaviour
             if (IsPoint)
             {
                 ChosePoint();
-                currentState = ElephantState.WanderPoint;             
+                currentState = ElephantState.WanderPoint;
                 currentPos = point[currentPoint].position;
+                StartCoroutine(WarningActive());
 
             }
             else
@@ -98,9 +102,9 @@ public class ElephantAI : MonoBehaviour
 
     private void WanderState()
     {
-        
+
         Vector3 dist = currentPos - transform.position;
-        rotate = Quaternion.LookRotation(dist,transform.up);
+        rotate = Quaternion.LookRotation(dist, transform.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.deltaTime * 0.35f);
 
         transform.position = Vector3.MoveTowards(transform.position, currentPos, speed * Time.deltaTime);
@@ -110,7 +114,6 @@ public class ElephantAI : MonoBehaviour
         {
             currentTime = 0;
             currentState = ElephantState.Idle;
-            Debug.LogError(stateTime);
             if (stateTime > 7f)
             {
                 animator.SetInteger("State", 2);
@@ -122,7 +125,7 @@ public class ElephantAI : MonoBehaviour
         }
     }
 
-    private void  ChosePoint()
+    private void ChosePoint()
     {
         switch (currentPoint)
         {
@@ -171,6 +174,35 @@ public class ElephantAI : MonoBehaviour
 
     public void SetAnimator()
     {
-        animator.SetInteger("State",0);
+        animator.SetInteger("State", 0);
+    }
+
+    IEnumerator WarningActive()
+    {
+        warningIcon.transform.position = currentPos + new Vector3(0,1.5f,0);
+        warningIcon.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        warningIcon.SetActive(false);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Box" || collision.transform.tag == "Wood" || collision.transform.tag == "Rope" )
+        {
+            StartCoroutine(ElephantDestroy(collision.transform.gameObject , collision.rigidbody));
+        }
+    }
+
+    IEnumerator ElephantDestroy(GameObject go , Rigidbody rd)
+    {
+        rd.useGravity = false;
+        go.transform.GetChild(0).GetComponent<Collider>().enabled = false;
+        bloom.transform.position = go.transform.position;
+        yield return new WaitForSeconds(3f);
+        rd.useGravity = transform;
+        bloom.SetActive(true);
+        Destroy(go, 1.5f);
+        yield return new WaitForSeconds(2.5f);
+        bloom.SetActive(false);
     }
 }

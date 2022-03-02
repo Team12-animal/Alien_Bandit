@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private PlayerData data;
     public Camera cam;
+    private AudioSource audioSource;
 
     private Rigidbody rb;
     public Vector3 velocity;
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
         data = GetComponent<PlayerData>();
+        audioSource = GetComponent<AudioSource>();
         InitPlayerData(data);
 
         rVec = cam.transform.right;
@@ -425,6 +427,7 @@ public class PlayerMovement : MonoBehaviour
     //???????e?????? ?????????M???F(??animation event)
     public void AnimaEventSpawnStumpAndLog()
     {
+        audioSource.Play();
         if (data.tree != null && tree != data.tree)
         {
             tree = data.tree;

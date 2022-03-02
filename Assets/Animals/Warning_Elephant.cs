@@ -8,10 +8,7 @@ public class Warning_Elephant : MonoBehaviour
     Camera cam;
     Image warningIcon;
     GameObject warningGo;
-    Vector3 followingPos;
     Color temp;
-    ElephantAI elephantAI;
-
 
     void Start()
     {
@@ -20,18 +17,12 @@ public class Warning_Elephant : MonoBehaviour
         warningGo.transform.rotation = cam.transform.rotation;
         warningIcon = warningGo.GetComponent<Image>();
         temp = warningIcon.color;
-        elephantAI = GameObject.Find("ElephantAI").GetComponent<ElephantAI>();
     }
 
     // Update is called once per frame
     void Update()
     {
         TwinkleUI();
-    }
-
-    private void LateUpdate()
-    {
-        followingPos = elephantAI.point[elephantAI.currentPoint].position;
     }
 
     private float fullAlpha = 1.0f;

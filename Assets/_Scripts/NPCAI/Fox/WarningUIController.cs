@@ -37,7 +37,6 @@ public class WarningUIController : MonoBehaviour
                 foxBT = fox.GetComponent<Fox_BehaviourTree>();
             }
         }
-
         TwinkleUI();
     }
 

@@ -31,8 +31,8 @@ public class RabbitAI : MonoBehaviour
     Vector3 lastPos;
     Quaternion attackWoodForward;
     public Collider currentCollider;
-    private WolfController wolf =null;
-    // Use this for initialization
+    private WolfController wolf = null;
+
     public void Start()
     {
         m_CurrentEnemyTarget = null;
@@ -182,9 +182,9 @@ public class RabbitAI : MonoBehaviour
         else
         {
             currentCollider.enabled = true;
-            if (transform.position.y>0.07f)
+            if (transform.position.y > 0.07f)
             {
-                transform.position = Vector3.Lerp(transform.position,new Vector3(transform.position.x,0.07f,transform.position.z),0.001f);
+                transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, 0.07f, transform.position.z), 0.001f);
                 return;
             }
             //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
@@ -217,7 +217,7 @@ public class RabbitAI : MonoBehaviour
                             return;
                         }
                     }
-                }             
+                }
                 // Wait to move.           
                 if (m_fCurrentTime > m_fIdleTime)  //當當前經過時間大於停留時間，進入漫步
                 {
