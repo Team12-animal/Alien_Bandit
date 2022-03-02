@@ -30,7 +30,7 @@ public class PlayerData : MonoBehaviour
     private void Update()
     {
         AdjustSpeed();
-        BoxAndRockStatusReturn();
+        BoxBagRockStatusReturn();
     }
 
     private void AdjustSpeed()
@@ -47,7 +47,7 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-    private void BoxAndRockStatusReturn()
+    private void BoxBagRockStatusReturn()
     {
         if(item != null)
         {
@@ -64,6 +64,13 @@ public class PlayerData : MonoBehaviour
                 rm.beUsing = true;
 
                 Debug.Log("rock check" + rm.beUsing);
+            }
+
+            if (item.tag == "Bag")
+            {
+                BagController bagC = item.GetComponent<BagController>();
+                bagC.beUsing = true;
+                bagC.user = this.gameObject;
             }
         }
     }
