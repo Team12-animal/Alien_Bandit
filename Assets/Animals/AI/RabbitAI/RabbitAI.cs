@@ -176,8 +176,10 @@ public class RabbitAI : MonoBehaviour
         if (m_Data.isBited || m_Data.isCatched)
         {
             m_Am.SetInteger("State", 0);
+            m_eCurrentState = eFSMState.Idle;
             m_Data.agent.enabled = false;
             currentCollider.enabled = false;
+
         }
         else
         {
