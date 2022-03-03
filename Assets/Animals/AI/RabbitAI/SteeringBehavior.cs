@@ -329,9 +329,11 @@ public class SteeringBehavior
     {
         Vector3 cPos = data.m_Go.transform.position;
         Vector3 vec = data.m_vTarget - cPos;
-        Debug.Log("astar seek" + data.m_vTarget + vec);
         vec.y = 0.0f;
         float fDist = vec.magnitude;
+
+        Debug.Log($"astar seek dist{fDist}" + data.m_vTarget + vec);
+
         if (fDist < data.arriveDist)
         {
             if(data.m_Go.tag == "Rabbit")
@@ -347,6 +349,10 @@ public class SteeringBehavior
 
             if(data.m_Go.tag == "Fox")
             {
+                Vector3 tempDir = data.m_vTarget - cPos;
+                Vector3 vFinal = cPos + tempDir * 0.2f;
+                vFinal.y = cPos.y;
+                data.m_Go.transform.position = vFinal;
                 data.m_fMoveForce = 0.0f;
                 data.m_fTempTurnForce = 0.0f;
                 data.m_Speed = 0.0f;

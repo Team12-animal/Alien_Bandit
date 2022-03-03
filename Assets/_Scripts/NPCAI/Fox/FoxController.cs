@@ -157,33 +157,12 @@ public class FoxController : MonoBehaviour
         }
     }
 
-    float tempDist;
-    GameObject nearestPos;
-
     private GameObject SetBirthPos()
     {
-        tempDist = 10000.0f;
-        nearestPos = null;
+        int birthAmt = birthPoses.Count;
+        int index = Random.Range(0, birthAmt);
 
-        foreach (GameObject pos in birthPoses)
-        {
-            float dist = (target.transform.position - pos.transform.position).magnitude;
-
-            if(dist < tempDist)
-            {
-                nearestPos = pos;
-                tempDist = dist;
-            }
-
-            Debug.Log("fox near" + target.name + pos.name);
-        }
-
-        if(nearestPos == null)
-        {
-            Debug.Log("find nearest pos failed");
-        }
-
-        return nearestPos;
+        return birthPoses[index];
     }
 
     private void GenNewFox()

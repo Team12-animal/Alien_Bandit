@@ -10,8 +10,10 @@ public class PInWaterController : MonoBehaviour
 
     List<GameObject> pInWater;
 
-    //public GameObject dropIntoWaterEffect;
-    //public GameObject respawnEffect;
+    public GameObject dropIntoWaterEffect;
+    private ParticleSystem dropInWater;
+    public GameObject respawnEffect;
+    private ParticleSystem respawning;
     public GameObject respawnPos;
 
     //save Pos
@@ -21,8 +23,6 @@ public class PInWaterController : MonoBehaviour
 
     public GameObject UI;
     private UICountdown countdown;
-
-    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -43,8 +43,8 @@ public class PInWaterController : MonoBehaviour
         UI.transform.rotation = Camera.main.transform.rotation;
         countdown = UI.GetComponent<UICountdown>();
 
-        audioSource = GetComponent<AudioSource>();
-        Debug.Log($"playere amt players{players.Count} pm{ICs.Count}");
+        dropInWater = dropIntoWaterEffect.GetComponent<ParticleSystem>();
+        respawning = respawnEffect.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -55,7 +55,6 @@ public class PInWaterController : MonoBehaviour
         if (pInWater.Count > 0 && countdowning == false)
         {
             StartCoroutine(ReviveCountdown());
-            PlayAudio();
         }
     }
 
@@ -79,11 +78,11 @@ public class PInWaterController : MonoBehaviour
         yield return new WaitForSecondsRealtime(1);
 
         UI.transform.position = savePos;
-        ///PlayEffect(respawnEffect, respawnPos.transform.position);
+        respawnEffect.transform.position = respawnPos.transform.position + respawnPos.transform.up * 0.5f;
+        respawning.Play(true);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f);
 
-        //respawnEffect.SetActive(false);
         pInWater[0].transform.position = respawnPos.transform.position;
         pInWater[0].GetComponent<InputController>().enabled = true;
         pInWater.RemoveAt(0);
@@ -102,22 +101,11 @@ public class PInWaterController : MonoBehaviour
             if (playerPos.y <= -0.5f)
             {
                 pInWater.Add(players[index]);
-                //PlayEffect(dropIntoWaterEffect, playerPos);
+                dropIntoWaterEffect.transform.position = playerPos;
+                dropInWater.Play(true);
                 players[index].transform.position = savePos;
                 ICs[index].enabled = false;
             }
         }
-    }
-
-    private void PlayEffect(GameObject effect, Vector3 pos)
-    {
-        PlayAudio();
-        Instantiate(effect);
-        effect.transform.position = pos;
-    }
-
-    private void PlayAudio()
-    {
-        audioSource.Play();
     }
 }

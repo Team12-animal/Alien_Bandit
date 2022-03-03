@@ -130,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.DrawLine(from, to, Color.black);
 
-        if (Physics.Linecast(from, to, 1 << 8 | 1 << 15))
+        if (Physics.Linecast(from, to, 1 << 8 | 1 << 17))
         {
             moveAmt = new Vector3(0, 0, 0);
         }
@@ -239,7 +239,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawLine(from, to, Color.black);
 
         RaycastHit hit;
-        if (Physics.Linecast(from, to, out hit, 1 << 8 | 1 << 15))
+        if (Physics.Linecast(from, to, out hit, 1 << 8 | 1 << 17))
         {
             moveAmt = hit.point - from;
             moveAmt.y += 0.5f;

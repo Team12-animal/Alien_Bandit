@@ -32,9 +32,11 @@ public class Wolf_BehaviourTree : MonoBehaviour
     public bool arriveHome;
     public bool targetSwitched; //ever switch target or not
     public bool hitten; //hit by rock or box
+    public bool attackedEnd;
     public bool jumping;
 
     //AStar
+    AStar aStar;
     public string txtName;
     public string nodeTag;
     public bool aStarPerfoming = false;
@@ -53,7 +55,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
         WPTerrain wpt = new WPTerrain();
         wpt.Init(txtName, nodeTag);
 
-        AStar aStar = new AStar();
+        aStar = new AStar();
         aStar.Init(wpt);
 
         InitPlayer();
@@ -116,6 +118,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
         arriveHome = false;
         targetSwitched = false;
         hitten = false;
+        attackedEnd = false;
         catchedTarget = null;
     }
 
@@ -164,9 +167,14 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void Update()
     {
+        if (wAC.AllowToChange() == false)
+        {
+            return;
+        }
+
         FindEffectPlayer();
 
-        if (target != homePos)
+        if (!(catchedTarget != null && target == homePos))
         {
             CheckAndSetTarget();
         }
@@ -180,7 +188,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
         
         if (TargetPositionUpdate() == true)
         {
-            aStarPerfoming = AStar.instance.PerformAStar(this.transform.position, target.transform.position);
+            aStarPerfoming = aStar.PerformAStar(this.transform.position, target.transform.position);
             currentPathPt = 0;
         }
 
@@ -244,6 +252,12 @@ public class Wolf_BehaviourTree : MonoBehaviour
     
     private void CheckAndSetTarget()
     {
+        if (target == null)
+        {
+            target = homePos;
+            missionComplete = true;
+        }
+
         if (missionComplete)
         {
             target = homePos;
@@ -277,7 +291,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void CheckStatusAndUpdate()
     {
-        if (hitten && !missionComplete)
+        if (hitten && !attackedEnd)
         {
             status = (int)WolfAIData.WolfStatus.Attacked;
             data.UpdateStatus(status);
@@ -372,7 +386,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
         if (aStarPerfoming)
         {
-            List<Vector3> path = AStar.instance.GetPath();
+            List<Vector3> path = aStar.GetPath();
             Gizmos.color = Color.blue;
             int iCount = path.Count - 1;
             int i;
@@ -406,21 +420,30 @@ public class Wolf_BehaviourTree : MonoBehaviour
             }
             else if (aStarPerfoming)
             {
-                List<Vector3> path = AStar.instance.GetPath();
+                List<Vector3> path = aStar.GetPath();
                 int final = path.Count - 1;
+
+                string s = "";
+                foreach (Vector3 p in path)
+                {
+                    s += p;
+                }
 
                 for (int i = final; i >= currentPathPt; i--)
                 {
                     Vector3 sPos = path[i];
                     Vector3 cPos = this.transform.position;
 
-                    if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                    RaycastHit hit;
+                    if (Physics.Linecast(cPos, sPos, out hit, 1 << 8 | 1 << 15))
                     {
+                        Debug.Log($"astar linecast bith {hit.transform.gameObject}");
                         continue;
                     }
 
                     currentPathPt = i;
                     data.SetTarget(sPos);
+                    Debug.Log($"doing astar path{s} sPos{sPos}");
                     break;
                 }
 
@@ -482,30 +505,46 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void GoHome()
     {
+        if (catchedTarget != null)
+        {
+            catchedTarget.transform.localPosition = new Vector3(0.065f, 0.01f, -0.281f);
+        }
+
         if (arriveHome == false)
         {
-            if (aStarPerfoming)
+            jumping = JumpOrNot();
+            if (jumping == true)
             {
-                List<Vector3> path = AStar.instance.GetPath();
+                arriveHome = SteeringBehavior.Seek(data);
+            }
+            else if (aStarPerfoming)
+            {
+                List<Vector3> path = aStar.GetPath();
                 int final = path.Count - 1;
+
+                string s = "";
+                foreach (Vector3 p in path)
+                {
+                    s += p;
+                }
 
                 for (int i = final; i >= currentPathPt; i--)
                 {
                     Vector3 sPos = path[i];
                     Vector3 cPos = this.transform.position;
 
-                    if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                    RaycastHit hit;
+                    if (Physics.Linecast(cPos, sPos, out hit, 1 << 8 | 1 << 15))
                     {
-                        Debug.Log("astar linecast bith");
+                        Debug.Log($"astar linecast bith {hit.transform.gameObject}");
                         continue;
                     }
 
                     currentPathPt = i;
                     data.SetTarget(sPos);
+                    Debug.Log($"doing astar home path{s} sPos{sPos}");
                     break;
                 }
-
-                Debug.Log("Doing AStar");
 
                 arriveHome = SteeringBehavior.Seek(data);
             }
@@ -515,12 +554,27 @@ public class Wolf_BehaviourTree : MonoBehaviour
             }
 
             SteeringBehavior.Move(data);
-            wAC.ChangeAndPlayAnimation(wAC.runTrigger, data.m_fTempTurnForce * 8, data.m_Speed * 8);
+
+            if (jumping == true)
+            {
+                wAC.ChangeAndPlayAnimation(wAC.jumpTrigger, data.m_fTempTurnForce * 8, data.m_Speed * 8);
+            }
+            else
+            {
+                wAC.ChangeAndPlayAnimation(wAC.runTrigger, data.m_fTempTurnForce * 8, data.m_Speed * 8);
+            }
         }
         else
         {
-            mouth.transform.DetachChildren();
-            GameObject.Destroy(catchedTarget);
+            if (catchedTarget != null && catchedTarget.tag == "Rabbit")
+            {
+                AIMain.m_Instance.RemoveRabbit(catchedTarget);
+            }
+            else if (catchedTarget != null && catchedTarget.tag == "Raccoon")
+            {
+                AIMain.m_Instance.RemoveRaccoon(catchedTarget);
+            }
+            
             catchedTarget = null;
             data.catchedTarget = null;
             this.gameObject.SetActive(false);
@@ -581,24 +635,62 @@ public class Wolf_BehaviourTree : MonoBehaviour
     {
         Vector3 mouthPos = mouth.transform.position;
         mouthPos.y -= 1.0f;
-        target.GetComponent<RabbitAI>().m_Data.isBited = true;
-        target.transform.position = mouthPos;
-        target.transform.right = mouth.transform.up;
-        target.transform.parent = mouth.transform;
-        (target.GetComponent(typeof(Collider)) as Collider).enabled = false;
-        catchedTarget = target;
-        data.catchedTarget = target;
+        catchedTarget.transform.position = mouthPos;
+        catchedTarget.transform.right = mouth.transform.up;
+        catchedTarget.transform.parent = mouth.transform;
+        catchedTarget.transform.localPosition = new Vector3(0.065f, 0.01f, -0.281f);
         missionComplete = true;
+    }
+
+    private void AnimaEventTargetIsBite()
+    {
+        if (target.tag == "Rabbit")
+        {
+            target.GetComponent<RabbitAI>().m_Data.isBited = true;
+        }
+
+        if (target.tag == "Raccoon")
+        {
+            target.GetComponent<RaccoonAI>().m_Data.isBited = true;
+        }
+
+        catchedTarget = target;
+        data.catchedTarget = catchedTarget;
+        target = null;
     }
 
     private void AnimaEventAttacked()
     {
-        mouth.transform.DetachChildren();
-        (catchedTarget.GetComponent(typeof(Collider)) as Collider).enabled = true;
-        catchedTarget = null;
-        data.catchedTarget = null;
-        missionComplete = true;
+        if (catchedTarget != null)
+        {
+            catchedTarget.transform.parent = null;
+
+            if (catchedTarget.tag == "Rabbit")
+            {
+                catchedTarget.GetComponent<RabbitAI>().m_Data.isBited = false;
+            }
+
+            if (catchedTarget.tag == "Raccoon")
+            {
+                catchedTarget.GetComponent<RaccoonAI>().m_Data.isBited = false;
+            }
+
+            catchedTarget = null;
+            data.catchedTarget = null;
+            missionComplete = true;
+        }
     }
+
+    public void AnimaEventAttcedEnd()
+    {
+        if (!missionComplete)
+        {
+            missionComplete = true;
+        }
+
+        attackedEnd = true;
+    }
+
     #endregion
 
     //UI display for warnUIDisplayer
@@ -619,5 +711,5 @@ public class Wolf_BehaviourTree : MonoBehaviour
         }
 
         return newPos;
-    }
+    } 
 }
