@@ -100,6 +100,10 @@ public class LevelTwoControl : LevelControl
         //missionManager.AddMission(1);
         gameFailUI.SetActive(false);
         levelUI.SetActive(false);
+        if (level == 3)
+        {
+            missionManager.AddMission(1);
+        }
 
         AddScoreData();
     }
