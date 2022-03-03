@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 04bce3e3bbbe60648989dee775b7bc31, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!1 &30798944
 GameObject:
   m_ObjectHideFlags: 0
@@ -16392,8 +16392,8 @@ MonoBehaviour:
   birthPos: {fileID: 1853672359}
   homePos: {fileID: 375605566}
   preys: []
-  waitForStart: 24
-  delay: 48
+  waitForStart: 0
+  delay: 2
   jumpPs:
   - {fileID: 1284919924}
   - {fileID: 1164159649}
@@ -16572,7 +16572,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1164159649}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 57.6, y: -24.07, z: 12.5}
+  m_LocalPosition: {x: 58.57, y: -24.07, z: 11.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1112556266}
@@ -16872,7 +16872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
       propertyPath: m_Layer
-      value: 17
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
       propertyPath: m_TagString

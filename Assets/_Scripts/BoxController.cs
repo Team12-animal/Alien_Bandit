@@ -13,7 +13,7 @@ public class BoxController : MonoBehaviour
     public bool animalCatched = false;
     private Rigidbody rb;
     public bool touchingGround = false;
-
+    public bool physicStart;
     private void Awake()
     {
         contentSpot = this.transform.Find("Box").Find("ContentSpot").gameObject;
@@ -34,7 +34,12 @@ public class BoxController : MonoBehaviour
 
         if (touchingGround == true)
         {
-            //Debug.Log($"box velocity{rb.IsSleeping(false)}");
+            if (rb.IsSleeping() == true)
+            {
+                physicStart = true;
+            }
+
+            Debug.Log($"box velocity sleeping {rb.IsSleeping()} physics {physicStart}");
         }
     }
 
@@ -49,7 +54,6 @@ public class BoxController : MonoBehaviour
             {
                 targetAnimal = other.gameObject;
                 targetAnimal.GetComponent<RabbitAI>().m_Data.isCatched = true;
-                targetAnimal.transform.position = contentSpot.transform.position;
                 targetAnimal.transform.up = contentSpot.transform.up;
                 targetAnimal.transform.parent = contentSpot.gameObject.transform;
                 targetAnimal.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);

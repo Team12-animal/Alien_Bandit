@@ -505,11 +505,6 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void GoHome()
     {
-        //if (catchedTarget != null)
-        //{
-        //    catchedTarget.transform.localPosition = new Vector3(0.065f, 0.01f, -0.281f);
-        //}
-
         if (arriveHome == false)
         {
             jumping = JumpOrNot();
@@ -633,9 +628,6 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void AnimaEventCatchTarget()
     {
-        Vector3 mouthPos = mouth.transform.position;
-        mouthPos.y -= 1.0f;
-        catchedTarget.transform.position = mouthPos;
         catchedTarget.transform.right = mouth.transform.up;
         catchedTarget.transform.parent = mouth.transform;
         catchedTarget.transform.localPosition = new Vector3(0.065f, 0.01f, -0.281f);

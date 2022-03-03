@@ -39,9 +39,9 @@ public class BagController : MonoBehaviour
         {
             targetAnimal = other.gameObject;
             targetAnimal.GetComponent<RaccoonAI>().m_Data.isCatched = true;
-            targetAnimal.transform.position = contentSpot.transform.position;
             targetAnimal.transform.up = contentSpot.transform.up;
             targetAnimal.transform.parent = contentSpot.gameObject.transform;
+            targetAnimal.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
             animalCatched = true;
         }
     }
