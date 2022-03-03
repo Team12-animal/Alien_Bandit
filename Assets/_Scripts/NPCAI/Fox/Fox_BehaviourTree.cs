@@ -556,8 +556,10 @@ public class Fox_BehaviourTree : MonoBehaviour
                 (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = false;
             }
         }
-
-        target.GetComponent<Rigidbody>().isKinematic = true;
+        if (target.GetComponent<Rigidbody>() != null)
+        {
+            target.GetComponent<Rigidbody>().isKinematic = true;
+        }
         Vector3 temp = this.transform.position + this.transform.forward * data.arriveDist;
         temp.y = target.transform.position.y;
         target.transform.position = temp;

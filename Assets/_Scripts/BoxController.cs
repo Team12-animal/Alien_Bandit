@@ -34,7 +34,7 @@ public class BoxController : MonoBehaviour
 
         if (touchingGround == true)
         {
-            if (rb.IsSleeping() == true)
+            if (rb.IsSleeping() == false)
             {
                 physicStart = true;
             }
@@ -64,11 +64,10 @@ public class BoxController : MonoBehaviour
 
     private void TurnBeUsingToFalse()
     {
-        if (rb.velocity == new Vector3(0.0f, 0.0f, 0.0f) && touchingGround)
+        if (rb.IsSleeping() == true && physicStart)
         {
             beUsing = false;
+            physicStart = false;
         }
-
-        
     }
 }
