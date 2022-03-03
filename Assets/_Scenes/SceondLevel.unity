@@ -5867,6 +5867,7 @@ GameObject:
   - component: {fileID: 120905852}
   - component: {fileID: 120905851}
   - component: {fileID: 120905850}
+  - component: {fileID: 120905855}
   m_Layer: 0
   m_Name: WP_1
   m_TagString: WP
@@ -5967,6 +5968,20 @@ Transform:
   m_Father: {fileID: 1122562362}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &120905855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120905849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2457d5aa1f9514517a7fcde3ea60828a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txtName: new_foxWP
+  nodeTag: WP
 --- !u!1001 &122745878
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31950,7 +31965,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   birthPoses:
+  - {fileID: 1274446138}
+  - {fileID: 1825244122}
   - {fileID: 1001699208}
+  - {fileID: 1661969123}
   breakableItems: []
   waitForStart: 0
   delay: 2
@@ -55288,6 +55306,14 @@ PrefabInstance:
     - target: {fileID: 5085700705902070576, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: m_Name
       value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 5085700705902070576, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070583, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: m_RootOrder
