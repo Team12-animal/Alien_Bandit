@@ -265,6 +265,66 @@ public class SteeringBehavior
         return true;
     }
 
+    static public bool Flee2(NpcAIData data)
+    {
+        Vector3 cPos = data.m_Go.transform.position;  //AI目前位置
+        Vector3 vec = data.m_vTarget - cPos;  //下一個要到的位置
+        vec.y = 0.0f;
+        float fDist = vec.magnitude;  //下一個要到的位置長度
+        data.m_fTempTurnForce = 0.0f;  //AI轉向強制力
+       
+        if (data.m_fProbeLength+2.5f < fDist)
+        {
+            if (data.m_Speed > 0.01f)
+            {
+                data.m_fMoveForce = -1.0f;
+            }
+            data.m_bMove = true;
+            return false;
+        }
+       
+        Vector3 vf = data.m_Go.transform.forward;  //AI的朝向
+        Vector3 vr = data.m_Go.transform.right;  //AI的右邊
+        data.m_vCurrentVector = vf;
+        vec.Normalize();
+        float fDotF = Vector3.Dot(vf, vec);  //算出目標在前方或後方(反向-1、同向1、垂直0)
+
+        if (fDotF < -0.96f)
+        {
+            fDotF = -1.0f;
+            //data.m_vCurrentVector = -vec * Random.Range(0.1f, 5f);
+            data.m_vCurrentVector = -vec;
+            data.m_fTempTurnForce = 0.0f;
+            data.m_fRot = 0.0f;
+
+        }
+        else
+        {
+            if (fDotF > 1.0f)
+            {
+                fDotF = 1.0f;
+            }
+            float fDotR = Vector3.Dot(vr, vec);//要左轉或右轉
+
+            if (fDotF > 0.0f)
+            {
+                if (fDotR > 0.0f)
+                {
+                    fDotR = 1.0f;
+                }
+                else
+                {
+                    fDotR = -1.0f;
+                }
+            }
+            data.m_fTempTurnForce = -fDotR * Random.Range(0.1f, 5f);
+            //data.m_fTempTurnForce = -fDotR;
+        }
+        data.m_fMoveForce = -fDotF *1.5f;
+        data.m_bMove = true;
+        return true;
+    }
+
     static public bool Seek(NpcAIData data)
     {
         Vector3 cPos = data.m_Go.transform.position;
@@ -361,6 +421,7 @@ public class SteeringBehavior
         data.m_bMove = true;
         return false;
     }
+
 
     static public bool PlayerAvoid(NpcAIData data, List<GameObject> players)
     {
