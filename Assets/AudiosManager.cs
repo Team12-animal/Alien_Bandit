@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+
 public class AudiosManager : MonoBehaviour
 {
     private static AudiosManager m_instance;
@@ -25,8 +27,11 @@ public class AudiosManager : MonoBehaviour
         }
     }
 
+    public EventSystem system;
     public AudioClip[] clips;
     public AudioSource audioSource;
+    public AudioSource buttonSource;
+
     void Awake()
     {
         if (m_instance == null)
@@ -46,5 +51,15 @@ public class AudiosManager : MonoBehaviour
         audioSource.Play();
     }
 
-    
+    public void SelectButtonAudio()
+    {
+        buttonSource.clip = clips[4];
+        buttonSource.Play();
+    }
+
+    public void SubmitButtonAudio()
+    {
+        buttonSource.clip = clips[5];
+        buttonSource.Play();
+    }
 }

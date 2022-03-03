@@ -133,6 +133,11 @@ public class RabbitAI : MonoBehaviour
             bAttack = false;
             return true;
         }
+        else if (m_eCurrentState == eFSMState.Chase && fDist < m_Data.m_fSight + 1.5f)
+        {
+            bAttack = false;
+            return true;
+        }
         return false;
     }
 
@@ -161,7 +166,7 @@ public class RabbitAI : MonoBehaviour
                 m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
                 if (SteeringBehavior.CollisionAvoid(m_Data) == false)
                 {
-                    SteeringBehavior.Flee(m_Data);
+                    SteeringBehavior.Flee2(m_Data);
                 }
                 SteeringBehavior.Move(m_Data);
             }
@@ -301,7 +306,7 @@ public class RabbitAI : MonoBehaviour
             {
                 bool bAttack = false;
                 bool bCheck = CheckTargetEnemyInSight(m_CurrentEnemyTarget, ref bAttack);
-                m_Data.m_fMaxSpeed = 0.2f;
+                m_Data.m_fMaxSpeed = 0.25f;
                 m_Data.agent.enabled = false;
                 if (bCheck == false)
                 {
@@ -324,7 +329,7 @@ public class RabbitAI : MonoBehaviour
                     m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
                     if (SteeringBehavior.CollisionAvoid(m_Data) == false)
                     {
-                        SteeringBehavior.Flee(m_Data);
+                        SteeringBehavior.Flee2(m_Data);
                     }
                     SteeringBehavior.Move(m_Data);
                     m_Am.SetInteger("State", 3);
