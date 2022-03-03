@@ -98,6 +98,9 @@ public class CheckPlayer : MonoBehaviour
     bool threePlayerType1101;
     bool fourPlayer;
 
+    public AudioSource buttonSource;
+    public AudioClip[] clip;
+
     private void Awake()
     {
         FindPlayers();
@@ -711,5 +714,15 @@ public class CheckPlayer : MonoBehaviour
         playerThreeReadyInRoleUI.SetActive(false);
         playerFourReadyInRoleUI.SetActive(false);
     }
+    public void SelectButtonAudio()
+    {
+        buttonSource.clip = clip[0];
+        buttonSource.Play();
+    }
 
+    public void SubmitButtonAudio()
+    {
+        buttonSource.clip = clip[1];
+        buttonSource.Play();
+    }
 }
