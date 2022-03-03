@@ -40,9 +40,8 @@ public class BoxController : MonoBehaviour
         {
             targetAnimal = other.gameObject;
             targetAnimal.GetComponent<RabbitAI>().m_Data.isCatched = true;
-            targetAnimal.transform.position = contentSpot.transform.position;
-            targetAnimal.transform.up = contentSpot.transform.up;
             targetAnimal.transform.parent = contentSpot.gameObject.transform;
+            targetAnimal.transform.localPosition = Vector3.zero;
             animalCatched = true;
         }
     }

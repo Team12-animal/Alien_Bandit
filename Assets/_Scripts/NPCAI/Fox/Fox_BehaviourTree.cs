@@ -643,6 +643,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
     }
 
+    private bool music = true;
     public Vector3 WarningUIDisplay()
     {
         Vector3 newPos;
@@ -651,6 +652,10 @@ public class Fox_BehaviourTree : MonoBehaviour
         {
             newPos = target.transform.position;
             newPos.y += 2.5f;
+            if (music)
+            { 
+            
+            }
         }
         else
         {

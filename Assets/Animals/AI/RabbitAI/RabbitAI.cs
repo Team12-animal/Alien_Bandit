@@ -362,15 +362,12 @@ public class RabbitAI : MonoBehaviour
                 {
                     m_Data.m_fMaxSpeed = 0.2f;
                     float dist = (transform.position - attackWood.transform.position).magnitude;
-                    Debug.LogError(dist);
                     if (dist < 1.5f)
                     {
-                        Debug.LogError("¶}°Ù");
                         m_Am.SetInteger("State", 2);
                     }
                     else
                     {
-                        Debug.LogError("²¾°Ê");
                         attackWoodForward = Quaternion.LookRotation(attackWood.transform.forward);
                         transform.rotation = Quaternion.Lerp(this.transform.rotation, attackWood.transform.rotation, 0.05f);
                         m_Am.SetInteger("State", 1);
