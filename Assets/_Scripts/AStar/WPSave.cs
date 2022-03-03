@@ -34,6 +34,5 @@ public class WPSave : MonoBehaviour
 
         sw.Close();
 
-        Debug.LogError("WPSaved");
     }
 }

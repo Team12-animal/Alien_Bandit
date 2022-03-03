@@ -23,6 +23,7 @@ public class RaccoonAI : MonoBehaviour
     private List<GameObject> players;
     private Vector3 lastPos;
     public Collider currentCollider;
+    public SkinnedMeshRenderer skinnedMesh;
 
     public void Start()
     {
@@ -130,11 +131,17 @@ public class RaccoonAI : MonoBehaviour
         if (m_Data.isBited || m_Data.isCatched)
         {
             m_Am.SetInteger("State", 0);
+            m_eCurrentState = eFSMState.Idle;
             m_Data.agent.enabled = false;
             currentCollider.enabled = false;
+            if (m_Data.isCatched)
+            {
+                skinnedMesh.enabled = false;
+            }
         }
         else
         {
+            skinnedMesh.enabled = true;
             currentCollider.enabled = true;
             //Debug.LogError("Current State " + m_eCurrentState);  //¦L¥X·í«eª¬ºA
             if (m_eCurrentState == eFSMState.Idle)

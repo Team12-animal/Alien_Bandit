@@ -505,6 +505,11 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void GoHome()
     {
+        if (catchedTarget != null)
+        {
+            catchedTarget.transform.localPosition = new Vector3(0.065f, 0.01f, -0.281f);
+        }
+
         if (arriveHome == false)
         {
             jumping = JumpOrNot();
@@ -567,7 +572,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
             }
             else if (catchedTarget != null && catchedTarget.tag == "Raccoon")
             {
-                //AIMain.m_Instance.RemoveRaccoon(catchedTarget);
+                AIMain.m_Instance.RemoveRaccoon(catchedTarget);
             }
             
             catchedTarget = null;
@@ -633,16 +638,25 @@ public class Wolf_BehaviourTree : MonoBehaviour
         catchedTarget.transform.position = mouthPos;
         catchedTarget.transform.right = mouth.transform.up;
         catchedTarget.transform.parent = mouth.transform;
+        catchedTarget.transform.localPosition = new Vector3(0.065f, 0.01f, -0.281f);
         missionComplete = true;
     }
 
     private void AnimaEventTargetIsBite()
     {
-        target.GetComponent<RabbitAI>().m_Data.isBited = true;
+        if (target.tag == "Rabbit")
+        {
+            target.GetComponent<RabbitAI>().m_Data.isBited = true;
+        }
+
+        if (target.tag == "Raccoon")
+        {
+            target.GetComponent<RaccoonAI>().m_Data.isBited = true;
+        }
+
         catchedTarget = target;
         data.catchedTarget = catchedTarget;
         target = null;
-        Debug.Log($"target bite catched isBited {target.GetComponent<RabbitAI>().m_Data.isBited} Target{target != null}");
     }
 
     private void AnimaEventAttacked()
@@ -650,7 +664,17 @@ public class Wolf_BehaviourTree : MonoBehaviour
         if (catchedTarget != null)
         {
             catchedTarget.transform.parent = null;
-            catchedTarget.GetComponent<RabbitAI>().m_Data.isBited = false;
+
+            if (catchedTarget.tag == "Rabbit")
+            {
+                catchedTarget.GetComponent<RabbitAI>().m_Data.isBited = false;
+            }
+
+            if (catchedTarget.tag == "Raccoon")
+            {
+                catchedTarget.GetComponent<RaccoonAI>().m_Data.isBited = false;
+            }
+
             catchedTarget = null;
             data.catchedTarget = null;
             missionComplete = true;
