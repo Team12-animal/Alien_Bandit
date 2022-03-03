@@ -792,6 +792,7 @@ public class PlayerMovement : MonoBehaviour
         if (itemInhand.tag == "Box")
         {
             itemInhand.GetComponent<BoxController>().touchingGround = true;
+            Debug.Log($"box velocity touchingGround {rb.velocity}");
         }
 
         if (itemInhand.tag == "RockModel")
@@ -807,7 +808,7 @@ public class PlayerMovement : MonoBehaviour
         itemInhand = null;
         UpdatePlayerData();
 
-        Debug.Log("ThrowAway" + realForce);
+        Debug.Log("box v ThrowAway" + realForce);
     }
 
     //inactive item while put it on table
