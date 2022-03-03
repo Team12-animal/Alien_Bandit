@@ -189,10 +189,9 @@ public class RabbitAI : MonoBehaviour
         else
         {
             currentCollider.enabled = true;
-            if (transform.position.y > 0.07f)
+            if (transform.position.y > 0.1f)
             {
-                transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, 0.07f, transform.position.z), 0.001f);
-                return;
+                transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, 0f, transform.position.z), 0.001f);
             }
             //Debug.LogError("Current State " + m_eCurrentState);  //¦L¥X·í«eª¬ºA
             if (m_eCurrentState == eFSMState.Idle)

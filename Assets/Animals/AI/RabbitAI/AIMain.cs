@@ -11,6 +11,7 @@ public class AIMain : MonoBehaviour
     [SerializeField] private List<GameObject> m_Player;
     [SerializeField] private GameObject[] m_WanderPoints;
     [SerializeField] private List<GameObject> m_SceneRabbit = new List<GameObject>();
+    public int rabbitCount = 5;
     [SerializeField] private List<GameObject> m_SceneRaccoon = new List<GameObject>();
     private int[] randomArray;
     private int randtime;
@@ -18,6 +19,7 @@ public class AIMain : MonoBehaviour
     private GameObject raccoongo = null;
     private GameObject raccoonBadygo = null;
     public Vector3[] raccoonPos;
+
 
     public static AIMain m_Instance
     {
@@ -47,7 +49,7 @@ public class AIMain : MonoBehaviour
         if (m_WanderPoints.Length != 0)
         {
             RandomArray();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < rabbitCount; i++)
             {
                 AddRabbit();
             }
