@@ -100,6 +100,38 @@ public class SceneController : MonoBehaviour
             MainPlayer(player03);
             MainPlayer(player04);
         }
+        else if (sceneIndex == 3)
+        {
+            Vector3 pos01 = new Vector3();
+            Vector3 pos02 = new Vector3();
+            Vector3 pos03 = new Vector3();
+            Vector3 pos04 = new Vector3();
+
+            StartCoroutine(LoadTransition());
+            SceneManager.LoadScene(sceneIndex);
+            AudiosManager.Instance.ChangeBGM(sceneIndex);
+            //eventsController.SetActive(true);
+            if (selected01)
+            {
+                SetPlayer(player01);
+                player01.transform.position = pos01;
+            }
+            if (selected02)
+            {
+                SetPlayer(player02);
+                player02.transform.position = pos02;
+            }
+            if (selected03)
+            {
+                SetPlayer(player03);
+                player03.transform.position = pos03;
+            }
+            if (selected04)
+            {
+                SetPlayer(player04);
+                player04.transform.position = pos04;
+            }
+        }
     }
     IEnumerator LoadAsynchronously(int sceneIndex)
     {
