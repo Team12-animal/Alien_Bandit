@@ -505,10 +505,10 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void GoHome()
     {
-        if (catchedTarget != null)
-        {
-            catchedTarget.transform.localPosition = new Vector3(0.065f, 0.01f, -0.281f);
-        }
+        //if (catchedTarget != null)
+        //{
+        //    catchedTarget.transform.localPosition = new Vector3(0.065f, 0.01f, -0.281f);
+        //}
 
         if (arriveHome == false)
         {
