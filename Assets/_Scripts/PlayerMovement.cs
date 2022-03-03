@@ -792,6 +792,7 @@ public class PlayerMovement : MonoBehaviour
         if (itemInhand.tag == "Box")
         {
             itemInhand.GetComponent<BoxController>().touchingGround = true;
+            Debug.Log($"box velocity touchingGround {rb.velocity}");
         }
 
         if (itemInhand.tag == "RockModel")

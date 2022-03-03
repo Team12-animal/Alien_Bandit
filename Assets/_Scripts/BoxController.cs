@@ -25,17 +25,17 @@ public class BoxController : MonoBehaviour
         firstCreated = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (beUsing == true)
         {
             TurnBeUsingToFalse();
         }
 
-        //if (targetAnimal != null)
-        //{
-        //    targetAnimal.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
-        //}
+        if (touchingGround == true)
+        {
+            //Debug.Log($"box velocity{rb.IsSleeping(false)}");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,6 +52,7 @@ public class BoxController : MonoBehaviour
                 targetAnimal.transform.position = contentSpot.transform.position;
                 targetAnimal.transform.up = contentSpot.transform.up;
                 targetAnimal.transform.parent = contentSpot.gameObject.transform;
+                targetAnimal.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
                 animalCatched = true;
             }
         }
@@ -64,6 +65,6 @@ public class BoxController : MonoBehaviour
             beUsing = false;
         }
 
-        Debug.Log($"box velocity{rb.velocity}");
+        
     }
 }
