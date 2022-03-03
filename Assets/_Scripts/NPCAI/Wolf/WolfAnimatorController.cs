@@ -92,5 +92,6 @@ public class WolfAnimatorController : MonoBehaviour
             return false;
         }
     }
+
     #endregion
 }

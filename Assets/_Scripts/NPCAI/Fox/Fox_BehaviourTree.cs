@@ -23,6 +23,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     //rock
     public bool hitten = false;
+    public bool attackEnd = false;
 
     //real speed and rot
     private float movingForce;
@@ -59,12 +60,11 @@ public class Fox_BehaviourTree : MonoBehaviour
     //AStar
     public bool aStarPerfoming = false;
     int currentPathPt = -1;
+    AStar aStar;
 
     //target UI
     public bool targetLocking = true;
-
-    AStar aStar;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -246,7 +246,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void CheckStatusAndUpdate()
     {
-        if (hitten == true)
+        if (hitten == true && !attackEnd)
         {
             status = (int)FoxAIData.FoxStatus.Attacked;
             data.UpdateStatus(status);
@@ -634,15 +634,6 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     }
 
-    public void AniEventTurnhittenToFalse()
-    {
-        if (hitten == true)
-        {
-            hitten = false;
-            missionComplete = true;
-        }
-    }
-
     private void SetTarget()
     {
         if (missionComplete)
@@ -683,5 +674,15 @@ public class Fox_BehaviourTree : MonoBehaviour
             Debug.Log($"arrivetarget false + dist {dist} arrive dist {data.arriveDist}");
             return false;
         }
+    }
+
+    public void AnimaEventAttckEnd()
+    {
+        if (!missionComplete)
+        {
+            missionComplete = true;
+        }
+
+        attackEnd = true;
     }
 }

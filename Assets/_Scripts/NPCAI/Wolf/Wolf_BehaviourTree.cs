@@ -32,6 +32,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
     public bool arriveHome;
     public bool targetSwitched; //ever switch target or not
     public bool hitten; //hit by rock or box
+    public bool attackedEnd;
     public bool jumping;
 
     //AStar
@@ -117,6 +118,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
         arriveHome = false;
         targetSwitched = false;
         hitten = false;
+        attackedEnd = false;
         catchedTarget = null;
     }
 
@@ -289,7 +291,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void CheckStatusAndUpdate()
     {
-        if (hitten && !missionComplete)
+        if (hitten && !attackedEnd)
         {
             status = (int)WolfAIData.WolfStatus.Attacked;
             data.UpdateStatus(status);
@@ -645,12 +647,26 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void AnimaEventAttacked()
     {
-        mouth.transform.DetachChildren();
-        (catchedTarget.GetComponent(typeof(Collider)) as Collider).enabled = true;
-        catchedTarget = null;
-        data.catchedTarget = null;
-        missionComplete = true;
+        if (catchedTarget != null)
+        {
+            catchedTarget.transform.parent = null;
+            catchedTarget.GetComponent<RabbitAI>().m_Data.isBited = false;
+            catchedTarget = null;
+            data.catchedTarget = null;
+            missionComplete = true;
+        }
     }
+
+    public void AnimaEventAttcedEnd()
+    {
+        if (!missionComplete)
+        {
+            missionComplete = true;
+        }
+
+        attackedEnd = true;
+    }
+
     #endregion
 
     //UI display for warnUIDisplayer
@@ -671,5 +687,5 @@ public class Wolf_BehaviourTree : MonoBehaviour
         }
 
         return newPos;
-    }
+    } 
 }
