@@ -34,6 +34,12 @@ public class SceneController : MonoBehaviour
     public int animStartHash { get; private set; }
     public int animEndHash { get; private set; }
 
+
+    [Header("For Level03 PlayerStartPosition")]
+    public Vector3 pos01 = new Vector3(12.18f, 0f, 14.3f);
+    public Vector3 pos02 = new Vector3(23.44f, 0f, 45.72f);
+    public Vector3 pos03 = new Vector3(43.08f, 0f, 34.65f);
+    public Vector3 pos04 = new Vector3(38.55f, 0f, 22.03f);
     private void Awake()
     {
         if (instance == null)
@@ -60,7 +66,37 @@ public class SceneController : MonoBehaviour
     public void LoadLevel(int sceneIndex)
     {
         if (sceneIndex < 0) throw new Exception(" < 0 not correct");
-        if (sceneIndex != 0)
+        if (sceneIndex == 3)
+        {
+            StartCoroutine(LoadTransition());
+            SceneManager.LoadScene(sceneIndex);
+            AudiosManager.Instance.ChangeBGM(sceneIndex);
+            //eventsController.SetActive(true);
+            if (selected01)
+            {
+                SetPlayer(player01);
+                Debug.LogWarning(" WHYYYYYYYYYY " + player01.transform.position);
+                player01.transform.position = pos01;
+                Debug.LogWarning(" WHYYYYYYYYYY " + player01.transform.position);
+
+            }
+            if (selected02)
+            {
+                SetPlayer(player02);
+                player02.transform.position = pos02;
+            }
+            if (selected03)
+            {
+                SetPlayer(player03);
+                player03.transform.position = pos03;
+            }
+            if (selected04)
+            {
+                SetPlayer(player04);
+                player04.transform.position = pos04;
+            }
+        }
+        else if (sceneIndex == 1 || sceneIndex == 2)
         {
             //depend on what situation to change method;using loading bar or not;
             //StartCoroutine(LoadAsynchronously(sceneIndex));
@@ -100,38 +136,7 @@ public class SceneController : MonoBehaviour
             MainPlayer(player03);
             MainPlayer(player04);
         }
-        else if (sceneIndex == 3)
-        {
-            Vector3 pos01 = new Vector3();
-            Vector3 pos02 = new Vector3();
-            Vector3 pos03 = new Vector3();
-            Vector3 pos04 = new Vector3();
 
-            StartCoroutine(LoadTransition());
-            SceneManager.LoadScene(sceneIndex);
-            AudiosManager.Instance.ChangeBGM(sceneIndex);
-            //eventsController.SetActive(true);
-            if (selected01)
-            {
-                SetPlayer(player01);
-                player01.transform.position = pos01;
-            }
-            if (selected02)
-            {
-                SetPlayer(player02);
-                player02.transform.position = pos02;
-            }
-            if (selected03)
-            {
-                SetPlayer(player03);
-                player03.transform.position = pos03;
-            }
-            if (selected04)
-            {
-                SetPlayer(player04);
-                player04.transform.position = pos04;
-            }
-        }
     }
     IEnumerator LoadAsynchronously(int sceneIndex)
     {
