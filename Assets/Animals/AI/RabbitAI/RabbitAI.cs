@@ -189,10 +189,9 @@ public class RabbitAI : MonoBehaviour
         else
         {
             currentCollider.enabled = true;
-            if (transform.position.y > 0.07f)
+            if (transform.position.y > 0.1f)
             {
-                transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, 0.07f, transform.position.z), 0.001f);
-                return;
+                transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, 0f, transform.position.z), 0.001f);
             }
             //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
             if (m_eCurrentState == eFSMState.Idle)
@@ -363,15 +362,12 @@ public class RabbitAI : MonoBehaviour
                 {
                     m_Data.m_fMaxSpeed = 0.2f;
                     float dist = (transform.position - attackWood.transform.position).magnitude;
-                    Debug.LogError(dist);
                     if (dist < 1.5f)
                     {
-                        Debug.LogError("開啃");
                         m_Am.SetInteger("State", 2);
                     }
                     else
                     {
-                        Debug.LogError("移動");
                         attackWoodForward = Quaternion.LookRotation(attackWood.transform.forward);
                         transform.rotation = Quaternion.Lerp(this.transform.rotation, attackWood.transform.rotation, 0.05f);
                         m_Am.SetInteger("State", 1);

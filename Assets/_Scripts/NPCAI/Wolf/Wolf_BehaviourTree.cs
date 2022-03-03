@@ -685,6 +685,10 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     #endregion
 
+    private bool music = true;
+    public AudioSource audioSource;
+    public AudioClip clip;
+
     //UI display for warnUIDisplayer
     public Vector3 WarningUIDisplay()
     {
@@ -696,12 +700,24 @@ public class Wolf_BehaviourTree : MonoBehaviour
         {
             newPos = target.transform.position;
             newPos.y += 2.5f;
+            if (music)
+            {
+                audioSource.clip = clip;
+                InvokeRepeating("PlayAudio", 0, 1f);
+                music = false;
+            }
         }
         else
         {
             newPos = new Vector3(1000000.0f, 1000000.0f, 1000000.0f);
+            music = true;
+            CancelInvoke("PlayAudio");
         }
 
         return newPos;
-    } 
+    }
+    public void PlayAudio()
+    {
+        audioSource.Play();
+    }
 }
