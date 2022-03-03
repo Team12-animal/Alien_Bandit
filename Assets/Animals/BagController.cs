@@ -52,5 +52,7 @@ public class BagController : MonoBehaviour
         {
             beUsing = false;
         }
+
+        Debug.Log($"box velocity{rb.velocity}");
     }
 }

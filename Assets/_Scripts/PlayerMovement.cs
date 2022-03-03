@@ -807,7 +807,7 @@ public class PlayerMovement : MonoBehaviour
         itemInhand = null;
         UpdatePlayerData();
 
-        Debug.Log("ThrowAway" + realForce);
+        Debug.Log("box v ThrowAway" + realForce);
     }
 
     //inactive item while put it on table

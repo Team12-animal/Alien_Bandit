@@ -31,19 +31,29 @@ public class BoxController : MonoBehaviour
         {
             TurnBeUsingToFalse();
         }
+
+        if (targetAnimal != null)
+        {
+            targetAnimal.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("box trigger" + other.gameObject.name);
+        Debug.Log($"box on trgger enter{other.gameObject.name}");
+
         if (beUsing == true && other.gameObject.tag == "Rabbit" && targetAnimal == null)
         {
-            targetAnimal = other.gameObject;
-            targetAnimal.GetComponent<RabbitAI>().m_Data.isCatched = true;
-            targetAnimal.transform.position = contentSpot.transform.position;
-            targetAnimal.transform.up = contentSpot.transform.up;
-            targetAnimal.transform.parent = contentSpot.gameObject.transform;
-            animalCatched = true;
+            float dist = (other.transform.position - this.transform.position).magnitude;
+            if (dist <= 2.0f)
+            {
+                targetAnimal = other.gameObject;
+                targetAnimal.GetComponent<RabbitAI>().m_Data.isCatched = true;
+                targetAnimal.transform.position = contentSpot.transform.position;
+                targetAnimal.transform.up = contentSpot.transform.up;
+                targetAnimal.transform.parent = contentSpot.gameObject.transform;
+                animalCatched = true;
+            }
         }
     }
 
@@ -53,5 +63,7 @@ public class BoxController : MonoBehaviour
         {
             beUsing = false;
         }
+
+        Debug.Log($"box velocity{rb.velocity}");
     }
 }
