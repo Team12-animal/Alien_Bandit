@@ -64,6 +64,7 @@ public class RaccoonAI : MonoBehaviour
             bAttack = false;
             return play;
         }
+
         return null;
     }
 
@@ -84,6 +85,11 @@ public class RaccoonAI : MonoBehaviour
             return true;
         }
         else if (fDist < m_Data.m_fSight)
+        {
+            bAttack = false;
+            return true;
+        }
+        else if (m_eCurrentState == eFSMState.Chase && fDist < m_Data.m_fSight + 1.5f)
         {
             bAttack = false;
             return true;
@@ -116,7 +122,7 @@ public class RaccoonAI : MonoBehaviour
                 m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
                 if (SteeringBehavior.CollisionAvoid(m_Data) == false)
                 {
-                    SteeringBehavior.Flee(m_Data);
+                    SteeringBehavior.Flee2(m_Data);
                 }
                 SteeringBehavior.Move(m_Data);
             }
@@ -237,7 +243,7 @@ public class RaccoonAI : MonoBehaviour
                     m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
                     if (SteeringBehavior.CollisionAvoid(m_Data) == false)
                     {
-                        SteeringBehavior.Flee(m_Data);
+                        SteeringBehavior.Flee2(m_Data);
                     }
                     SteeringBehavior.Move(m_Data);
                     m_Am.SetInteger("State", 2);

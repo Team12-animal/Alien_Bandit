@@ -35,7 +35,7 @@ public class ElephantAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         audioSource = GetComponent<AudioSource>();
-        stateTime = 3f;
+        stateTime = 5f;
 
         Transform[] wanderPoint = GameObject.Find("ElephantWander").GetComponentsInChildren<Transform>();
         foreach (Transform go in wanderPoint)
@@ -43,8 +43,6 @@ public class ElephantAI : MonoBehaviour
             point.Add(go);
         }
         point.RemoveAt(0);
-        currentPos = point[currentPoint+1].position;
-        StartCoroutine(WarningActive());
     }
     void Update()
     {
