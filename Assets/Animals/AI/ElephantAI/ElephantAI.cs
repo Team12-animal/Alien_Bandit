@@ -26,6 +26,7 @@ public class ElephantAI : MonoBehaviour
     private AudioSource audioSource;
     public GameObject warningIcon;
     public GameObject bloom;
+    public AudioClip clip;
 
     void Start()
     {
@@ -201,6 +202,8 @@ public class ElephantAI : MonoBehaviour
         yield return new WaitForSeconds(3f);
         rd.useGravity = transform;
         bloom.SetActive(true);
+        audioSource.clip = clip;
+        audioSource.Play();
         Destroy(go, 1.5f);
         yield return new WaitForSeconds(2.5f);
         bloom.SetActive(false);

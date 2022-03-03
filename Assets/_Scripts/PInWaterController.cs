@@ -22,6 +22,8 @@ public class PInWaterController : MonoBehaviour
     public GameObject UI;
     private UICountdown countdown;
 
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +43,7 @@ public class PInWaterController : MonoBehaviour
         UI.transform.rotation = Camera.main.transform.rotation;
         countdown = UI.GetComponent<UICountdown>();
 
+        audioSource = GetComponent<AudioSource>();
         Debug.Log($"playere amt players{players.Count} pm{ICs.Count}");
     }
 
@@ -52,6 +55,7 @@ public class PInWaterController : MonoBehaviour
         if (pInWater.Count > 0 && countdowning == false)
         {
             StartCoroutine(ReviveCountdown());
+            PlayAudio();
         }
     }
 
@@ -107,7 +111,13 @@ public class PInWaterController : MonoBehaviour
 
     private void PlayEffect(GameObject effect, Vector3 pos)
     {
+        PlayAudio();
         Instantiate(effect);
         effect.transform.position = pos;
+    }
+
+    private void PlayAudio()
+    {
+        audioSource.Play();
     }
 }

@@ -66,6 +66,10 @@ public class Fox_BehaviourTree : MonoBehaviour
     //target UI
     public bool targetLocking = true;
 
+    private AudioSource audioSource;
+    private bool musicDone= true;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -81,6 +85,8 @@ public class Fox_BehaviourTree : MonoBehaviour
         currentPathPt = 0;
 
         PlayerInit();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -628,15 +634,27 @@ public class Fox_BehaviourTree : MonoBehaviour
         Vector3 newPos;
 
         if (targetLocking == true)
-        {
+        {          
             newPos = target.transform.position;
             newPos.y += 2.5f;
+            if (musicDone)
+            {
+                InvokeRepeating("PlayAudio",0,1f);
+                musicDone = false;
+            }
         }
         else
         {
             newPos = new Vector3(1000000.0f, 1000000.0f, 1000000.0f);
+            CancelInvoke("PlayAudio");
+            musicDone = true; ;
         }
 
         return newPos;
+    }
+
+    void PlayAudio()
+    {
+        audioSource.Play();
     }
 }

@@ -842,6 +842,7 @@ MonoBehaviour:
     isCatched: 0
     isBited: 0
   currentCollider: {fileID: 1866102079379362824}
+  skinnedMesh: {fileID: 2660623832949271475}
 --- !u!195 &2666461372650264913
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -905,7 +906,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 47f1f2c05ba3a3e448d1358a1cd9f09d, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
