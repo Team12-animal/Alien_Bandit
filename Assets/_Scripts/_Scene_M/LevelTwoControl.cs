@@ -108,23 +108,50 @@ public class LevelTwoControl : LevelControl
         AddScoreData();
     }
 
-    private static void SettingPlayerPosition()
+    private void SettingPlayerPosition()
     {
-        if (SceneController.instance.selected01)
+        switch (level)
         {
-            SceneController.instance.SetPlayer(SceneController.instance.player01);
-        }
-        if (SceneController.instance.selected02)
-        {
-            SceneController.instance.SetPlayer(SceneController.instance.player02);
-        }
-        if (SceneController.instance.selected03)
-        {
-            SceneController.instance.SetPlayer(SceneController.instance.player03);
-        }
-        if (SceneController.instance.selected04)
-        {
-            SceneController.instance.SetPlayer(SceneController.instance.player04);
+            case 2:
+                if (SceneController.instance.selected01)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player01);
+                }
+                if (SceneController.instance.selected02)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player02);
+                }
+                if (SceneController.instance.selected03)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player03);
+                }
+                if (SceneController.instance.selected04)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player04);
+                }
+                break;
+            case 3:
+                if (SceneController.instance.selected01)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player01);
+                    SceneController.instance.player01.transform.position = SceneController.instance.pos01;
+                }
+                if (SceneController.instance.selected02)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player02);
+                    SceneController.instance.player02.transform.position = SceneController.instance.pos02;
+                }
+                if (SceneController.instance.selected03)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player03);
+                    SceneController.instance.player03.transform.position = SceneController.instance.pos03;
+                }
+                if (SceneController.instance.selected04)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player04);
+                    SceneController.instance.player04.transform.position = SceneController.instance.pos04;
+                }
+                break;
         }
     }
 
