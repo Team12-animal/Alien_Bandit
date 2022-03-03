@@ -17,16 +17,18 @@ public class AStarTest : MonoBehaviour
 
     Vector3 oriPos;
 
+    AStar astar;
+
     // Start is called before the first frame update
     void Start()
     {
         WPTerrain wpt = new WPTerrain();
         wpt.Init(txtName, nodeName);
 
-        AStar astar = new AStar();
+        astar = new AStar();
         astar.Init(wpt);
 
-        astaring = AStar.instance.PerformAStar(this.transform.position, target.transform.position);
+        astaring = astar.PerformAStar(this.transform.position, target.transform.position);
         currentPathPt = 0;
     }
 
@@ -35,13 +37,13 @@ public class AStarTest : MonoBehaviour
     {
         if (GetTargetPos() == true)
         {
-            astaring = AStar.instance.PerformAStar(this.transform.position, target.transform.position);
+            astaring = astar.PerformAStar(this.transform.position, target.transform.position);
             currentPathPt = 0;
         }
         
         if (astaring)
         {
-            List<Vector3> path = AStar.instance.GetPath();
+            List<Vector3> path = astar.GetPath();
 
             string sPath = "astar main path";
 
@@ -101,7 +103,7 @@ public class AStarTest : MonoBehaviour
     {
         if (astaring)
         {
-            List<Vector3> path = AStar.instance.GetPath();
+            List<Vector3> path = astar.GetPath();
             Gizmos.color = Color.blue;
             int count = path.Count - 1;
 

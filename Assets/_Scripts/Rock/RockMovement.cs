@@ -43,6 +43,11 @@ public class RockMovement : MonoBehaviour
         {
             other.GetComponent<Fox_BehaviourTree>().hitten = true;
         }
+
+        if (other.gameObject.tag == "Wolf")
+        {
+            other.GetComponent<Wolf_BehaviourTree>().hitten = true;
+        }
     }
 
     private void TurnBeUsingToFalse()

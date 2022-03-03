@@ -11,16 +11,12 @@ public class AStar
 
     List<Vector3> pathList;
 
-    static public AStar instance;
-
     public void Init(WPTerrain terrain)
     {
         this.terrain = terrain;
-
         openList = new List<PathNode>();
         closeList = new List<PathNode>();
         pathList = new List<Vector3>();
-        instance = this;
 
         Debug.Log("astar test init" + terrain.nodeList.Count);
     }
