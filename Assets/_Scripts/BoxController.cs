@@ -32,10 +32,10 @@ public class BoxController : MonoBehaviour
             TurnBeUsingToFalse();
         }
 
-        if (targetAnimal != null)
-        {
-            targetAnimal.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
-        }
+        //if (targetAnimal != null)
+        //{
+        //    targetAnimal.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
