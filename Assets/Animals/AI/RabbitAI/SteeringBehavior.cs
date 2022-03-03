@@ -75,6 +75,10 @@ public class SteeringBehavior
     static public bool CheckCollision(NpcAIData data)
     {
         List<Obstacle> m_AvoidTargets = AIMain.m_Instance.GetObstacles();
+        if (AIMain.m_Instance.rabbitCount > 0)
+        {
+            m_AvoidTargets.Add();
+        }
         if (m_AvoidTargets == null)
         {
             Debug.LogError("沒有要避免物");

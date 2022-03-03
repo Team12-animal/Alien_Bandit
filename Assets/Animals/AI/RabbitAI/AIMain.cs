@@ -180,4 +180,9 @@ public class AIMain : MonoBehaviour
         yield return new WaitForSeconds(time);
         AddRabbit();
     }
+
+    public int RabbitCount()
+    {
+        return m_SceneRabbit.Count;
+    }
 }
