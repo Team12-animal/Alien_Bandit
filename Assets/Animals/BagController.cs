@@ -13,6 +13,7 @@ public class BagController : MonoBehaviour
     public bool animalCatched = false;
     private Rigidbody rb;
     public bool touchingGround = false;
+    public bool physicStart = false;
 
     private void Awake()
     {
@@ -25,9 +26,14 @@ public class BagController : MonoBehaviour
         firstCreated = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (beUsing == true)
+        if (touchingGround == true && rb.velocity.magnitude > 0.2f)
+        {
+            physicStart = true;
+        }
+
+        if (physicStart == true && beUsing == true)
         {
             TurnBeUsingToFalse();
         }
@@ -35,24 +41,32 @@ public class BagController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (beUsing == true && other.gameObject.tag == "Raccoon" && targetAnimal == null)
+        if (beUsing == true && (other.gameObject.tag == "Raccoon" || other.gameObject.tag == "Pig")&& targetAnimal == null)
         {
             targetAnimal = other.gameObject;
-            targetAnimal.GetComponent<RaccoonAI>().m_Data.isCatched = true;
             targetAnimal.transform.up = contentSpot.transform.up;
             targetAnimal.transform.parent = contentSpot.gameObject.transform;
-            targetAnimal.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+
+            if (targetAnimal.tag == "Raccoon")
+            {
+                targetAnimal.GetComponent<RaccoonAI>().m_Data.isCatched = true;
+            }
+
+            if (targetAnimal.tag == "Pig")
+            {
+                targetAnimal.GetComponent<PigBehaviourTree>().SetCatchedStatus(this.gameObject);
+            }
+
             animalCatched = true;
         }
     }
 
     private void TurnBeUsingToFalse()
     {
-        if (rb.velocity == new Vector3(0.0f, 0.0f, 0.0f) && touchingGround)
+        if (rb.velocity.magnitude <= 0.18f && touchingGround)
         {
             beUsing = false;
+            physicStart = false;
         }
-
-        Debug.Log($"box velocity{rb.velocity}");
     }
 }

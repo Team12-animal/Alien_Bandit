@@ -426,7 +426,7 @@ public class SteeringBehavior
     static public bool PlayerAvoid(NpcAIData data, List<GameObject> players)
     {
         List<GameObject> m_AvoidTargets = players;
-        float radius = 2.0f;
+        float radius = data.m_fRadius;
         float probe = data.m_fRadius;
         Transform ct = data.m_Go.transform;  //AI的位置向量
         Vector3 cPos = ct.position;    //AI的位置
@@ -505,6 +505,11 @@ public class SteeringBehavior
         }
         data.m_bCol = false;
         return false;
+    }
+
+    static public bool WanderSeek(NpcAIData data)
+    {
+        return true;
     }
 }
 

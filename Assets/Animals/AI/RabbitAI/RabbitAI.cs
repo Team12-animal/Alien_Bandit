@@ -185,6 +185,15 @@ public class RabbitAI : MonoBehaviour
             m_Data.agent.enabled = false;
             currentCollider.enabled = false;
 
+            
+            if (m_Data.isCatched)
+            {
+                this.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            }
+            else
+            {
+                this.transform.localPosition = new Vector3(0.097f, 0.034f, -0.275f);
+            }
         }
         else
         {

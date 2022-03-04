@@ -13,7 +13,7 @@ public class BoxController : MonoBehaviour
     public bool animalCatched = false;
     private Rigidbody rb;
     public bool touchingGround = false;
-    public bool physicStart;
+    public bool physicStart = false;
     private void Awake()
     {
         contentSpot = this.transform.Find("Box").Find("ContentSpot").gameObject;
@@ -27,19 +27,14 @@ public class BoxController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (beUsing == true)
+        if (touchingGround == true && rb.velocity.magnitude > 0.2f)
         {
-            TurnBeUsingToFalse();
+            physicStart = true;
         }
 
-        if (touchingGround == true)
+        if (physicStart == true && beUsing == true)
         {
-            if (rb.IsSleeping() == false)
-            {
-                physicStart = true;
-            }
-
-            Debug.Log($"box velocity sleeping {rb.IsSleeping()} physics {physicStart}");
+            TurnBeUsingToFalse();
         }
     }
 
@@ -47,16 +42,26 @@ public class BoxController : MonoBehaviour
     {
         Debug.Log($"box on trgger enter{other.gameObject.name}");
 
-        if (beUsing == true && other.gameObject.tag == "Rabbit" && targetAnimal == null)
+        if (beUsing == true && (other.gameObject.tag == "Rabbit" || other.gameObject.tag == "Pig") && targetAnimal == null)
         {
             float dist = (other.transform.position - this.transform.position).magnitude;
-            if (dist <= 2.0f)
+            Debug.Log($"box on trgger enter dist{dist}");
+            if (dist <= 3.5f)
             {
                 targetAnimal = other.gameObject;
-                targetAnimal.GetComponent<RabbitAI>().m_Data.isCatched = true;
-                targetAnimal.transform.up = contentSpot.transform.up;
                 targetAnimal.transform.parent = contentSpot.gameObject.transform;
-                targetAnimal.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                targetAnimal.transform.localEulerAngles = contentSpot.transform.eulerAngles;
+
+                if (targetAnimal.tag == "Rabbit")
+                {
+                    targetAnimal.GetComponent<RabbitAI>().m_Data.isCatched = true;
+                }
+
+                if (targetAnimal.tag == "Pig")
+                {
+                    targetAnimal.GetComponent<PigBehaviourTree>().SetCatchedStatus(this.gameObject);
+                }
+                
                 animalCatched = true;
             }
         }
@@ -64,7 +69,7 @@ public class BoxController : MonoBehaviour
 
     private void TurnBeUsingToFalse()
     {
-        if (rb.IsSleeping() == true && physicStart)
+        if (rb.velocity == new Vector3(0.0f, 0.0f, 0.0f))
         {
             beUsing = false;
             physicStart = false;

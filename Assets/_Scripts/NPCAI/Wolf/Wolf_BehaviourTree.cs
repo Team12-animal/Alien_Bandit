@@ -162,7 +162,18 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private bool TargetAccessable(GameObject target)
     {
-        return target.transform.position.y <= 2.0f;
+        bool inJumpArea = false;
+
+        foreach (GameObject p in jumpPs)
+        {
+            if ((p.transform.position - target.transform.position).magnitude <= 8.0f)
+            {
+                inJumpArea = true;
+                break;
+            }
+        }
+
+        return (target.transform.position.y <= 2.0f && !inJumpArea);
     }
 
     private void Update()
@@ -628,9 +639,9 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void AnimaEventCatchTarget()
     {
+
         catchedTarget.transform.right = mouth.transform.up;
         catchedTarget.transform.parent = mouth.transform;
-        catchedTarget.transform.localPosition = new Vector3(0.065f, 0.01f, -0.281f);
         missionComplete = true;
     }
 

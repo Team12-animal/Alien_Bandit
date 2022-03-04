@@ -154,8 +154,16 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        FindEffectPlayer();
+    {   
+        if (!(target != null && (target.transform.position - this.transform.position).magnitude < data.m_fRadius + 2.0f))
+        {
+            FindEffectPlayer();
+        }
+        else
+        {
+            effectPlayers.Clear();
+        }
+
         CheckStatusAndUpdate();
         
         if (target == null || status == (int)FoxAIData.FoxStatus.Home)
@@ -246,16 +254,17 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void CheckStatusAndUpdate()
     {
-        if (hitten == true && !attackEnd)
+        if (fAC.BreakingOrNot() == true && UnableToAccessOrNot())
         {
-            status = (int)FoxAIData.FoxStatus.Attacked;
+            missionComplete = true;
+            status = (int)FoxAIData.FoxStatus.Home;
             data.UpdateStatus(status);
             return;
         }
 
-        if (fAC.BreakingOrNot() == true)
+        if (hitten == true && !attackEnd)
         {
-            status = (int)FoxAIData.FoxStatus.Safe;
+            status = (int)FoxAIData.FoxStatus.Attacked;
             data.UpdateStatus(status);
             return;
         }
@@ -275,14 +284,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         if (effectPlayers.Count > 0)
         {
-            if (pAC.ThorowingOrNot() == false)
-            {
-                status = (int)FoxAIData.FoxStatus.Alert;
-            }
-            else
-            {
-                status = (int)FoxAIData.FoxStatus.AvoidAttack;
-            }
+            status = (int)FoxAIData.FoxStatus.Alert;
         }
 
         data.UpdateStatus(status);
@@ -350,7 +352,10 @@ public class Fox_BehaviourTree : MonoBehaviour
     #region fox behaviour tree
     private void BreakItem()
     {
-        arriveTarget = ArriveTargetOrNot();
+        if (arriveTarget == false)
+        {
+            arriveTarget = ArriveTargetOrNot();
+        }
 
         if (arriveTarget == false)
         {
@@ -487,7 +492,10 @@ public class Fox_BehaviourTree : MonoBehaviour
     public bool arriveHomeArea = false;
     private void GoHome()
     {
-        arriveHomeArea = ArriveTargetOrNot();
+        if (arriveHomeArea == false)
+        {
+            arriveHomeArea = ArriveTargetOrNot();
+        }
      
         if (arriveHomeArea == false)
         {
@@ -566,6 +574,11 @@ public class Fox_BehaviourTree : MonoBehaviour
     }
     public void AnimaEventBreakTarget()
     {
+        if (target == birthPos)
+        {
+            return;
+        }
+
         if (target.tag == "box")
         {
             GameObject animalCatched = target.GetComponent<BoxController>().targetAnimal;
@@ -573,6 +586,24 @@ public class Fox_BehaviourTree : MonoBehaviour
             if (animalCatched != null)
             {
                 animalCatched.transform.parent = null;
+                if (animalCatched.tag == "Rabbit")
+                {
+                    animalCatched.GetComponent<RabbitAI>().m_Data.isCatched = false;
+                }
+            }
+        }
+
+        if (target.tag == "Bag")
+        {
+            GameObject animalCatched = target.GetComponent<BagController>().targetAnimal;
+
+            if (animalCatched != null)
+            {
+                animalCatched.transform.parent = null;
+                if (animalCatched.tag == "Raccoon")
+                {
+                    animalCatched.GetComponent<RaccoonAI>().m_Data.isCatched = false;
+                }
             }
         }
 

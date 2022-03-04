@@ -684,6 +684,7 @@ public class PlayerMovement : MonoBehaviour
         targetItem.transform.position = holdingPos.position;
         targetItem.transform.rotation = holdingPos.rotation;
         targetItem.transform.SetParent(holdingPos);
+        targetItem.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
         Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
         targetRG.isKinematic = true;
         itemInhand = targetItem;
