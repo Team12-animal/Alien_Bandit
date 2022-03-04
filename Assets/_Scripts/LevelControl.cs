@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class LevelControl : MonoBehaviour
 {
+    Vector3 upPos;
+
     //分數是否有變化
     public bool scoreChangeOrNot;
 
@@ -14,6 +16,7 @@ public class LevelControl : MonoBehaviour
     private readonly int raccoon = 2;
     private readonly int littleRaccoon = 3;
     private readonly int pig = 4;
+    private readonly int elephant = 5;
 
     public Dictionary<int, int> scoreList = new Dictionary<int, int>();
 
@@ -21,6 +24,7 @@ public class LevelControl : MonoBehaviour
     [SerializeField] Text scoreText;
     [SerializeField] Text addScoreText;
     [SerializeField] GameObject addScore;
+    [SerializeField] GameObject minusScore;
 
     public void AddScoreData()
     {
@@ -28,6 +32,7 @@ public class LevelControl : MonoBehaviour
         scoreList.Add(raccoon, 15);
         scoreList.Add(littleRaccoon, 125);
         scoreList.Add(pig, 70);
+        scoreList.Add(elephant,-1);
     }
 
     //for treeController
@@ -48,7 +53,14 @@ public class LevelControl : MonoBehaviour
 
         int[] result = new int[] { addScore, totalScore };
         addScoreText.text = addScore.ToString();
-        ScoreUIAnimation();
+        if (addScore > 0)
+        {
+            AddScoreUIAnimation();
+        }
+        else
+        {
+            MinusScoreUIAnimation();
+        }
         return result;
     }
 
@@ -67,11 +79,18 @@ public class LevelControl : MonoBehaviour
         }
     }
 
-    public void ScoreUIAnimation()
+    public void AddScoreUIAnimation()
     {
         addScore.GetComponent<Animator>().Play("AddScore");
     }
-
+    public void MinusScoreUIAnimation()
+    {
+        minusScore.GetComponent<Animator>().Play("MinusScore");
+    }
+    public void MinusScorePos(Vector3 pos)
+    {
+        minusScore.transform.position = pos + new Vector3(0,4f,0) ;    
+    }
     public void TotalScoreUI()
     {
         scoreText.text = totalScore.ToString();

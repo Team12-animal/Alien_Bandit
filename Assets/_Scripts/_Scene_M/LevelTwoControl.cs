@@ -104,7 +104,6 @@ public class LevelTwoControl : LevelControl
         {
             missionManager.AddMission(1);
         }
-
         AddScoreData();
     }
 

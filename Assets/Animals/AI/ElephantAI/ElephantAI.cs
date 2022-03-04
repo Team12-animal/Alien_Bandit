@@ -184,11 +184,18 @@ public class ElephantAI : MonoBehaviour
         warningIcon.SetActive(false);
     }
 
+
+    public LevelControl levelControl;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Box" || collision.transform.tag == "Wood" || collision.transform.tag == "Rope" )
         {
             StartCoroutine(ElephantDestroy(collision.transform.gameObject , collision.rigidbody));
+        }
+        if (collision.transform.tag == "Player")
+        {
+            levelControl.MinusScorePos(collision.transform.position);
+            levelControl.GenTotalScore(5);
         }
     }
 
