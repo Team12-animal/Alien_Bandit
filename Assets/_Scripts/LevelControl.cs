@@ -15,12 +15,16 @@ public class LevelControl : MonoBehaviour
     private readonly int littleRaccoon = 3;
     private readonly int pig = 4;
 
+    public readonly int fox = 6;
+    public readonly int wolf = 7;
+
     public Dictionary<int, int> scoreList = new Dictionary<int, int>();
 
     [Header("UI Text")]
     [SerializeField] Text scoreText;
     [SerializeField] Text addScoreText;
     [SerializeField] GameObject addScore;
+    [SerializeField] GameObject minusScore;
 
     public void AddScoreData()
     {
@@ -28,6 +32,9 @@ public class LevelControl : MonoBehaviour
         scoreList.Add(raccoon, 15);
         scoreList.Add(littleRaccoon, 125);
         scoreList.Add(pig, 70);
+        
+        scoreList.Add(fox, -5);
+        scoreList.Add(wolf, -10);
     }
 
     //for treeController
@@ -70,6 +77,16 @@ public class LevelControl : MonoBehaviour
     public void ScoreUIAnimation()
     {
         addScore.GetComponent<Animator>().Play("AddScore");
+    }
+
+    public void MinusScoreUIAnimation()
+    {
+        minusScore.GetComponent<Animation>().Play("MinusScore");
+    }
+
+    public void MinusScorePos(Vector3 pos)
+    {
+        minusScore.transform.position = pos + new Vector3(0, 4f, 0);
     }
 
     public void TotalScoreUI()

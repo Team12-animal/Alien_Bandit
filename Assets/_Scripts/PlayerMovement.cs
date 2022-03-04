@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private PlayerData data;
+    [HideInInspector] public PlayerData data;
     public Camera cam;
     private AudioSource audioSource;
     public  AudioClip[] clip;  
@@ -710,7 +710,7 @@ public class PlayerMovement : MonoBehaviour
     }
     
     //remove item from player, and then turn off kinematic and open collider
-    private void RemoveItem()
+    public void RemoveItem()
     {
         if (data.item == null)
         {

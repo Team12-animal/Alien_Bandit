@@ -639,7 +639,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void AnimaEventCatchTarget()
     {
-
+        MinusScore();
         catchedTarget.transform.right = mouth.transform.up;
         catchedTarget.transform.parent = mouth.transform;
         missionComplete = true;
@@ -727,8 +727,16 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
         return newPos;
     }
+
     public void PlayAudio()
     {
         audioSource.Play();
+    }
+
+    public LevelControl levelControl;
+    private void MinusScore()
+    {
+        levelControl.MinusScorePos(this.transform.position);
+        levelControl.GenTotalScore(levelControl.wolf);
     }
 }

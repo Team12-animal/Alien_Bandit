@@ -612,6 +612,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         target = null;
         missionComplete = true;
         targetLocking = false;
+        MinusScore();
     }
 
     #endregion
@@ -733,5 +734,12 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
 
         attackEnd = true;
+    }
+
+    public LevelControl levelControl;
+    private void MinusScore()
+    {
+        levelControl.MinusScorePos(this.transform.position);
+        levelControl.GenTotalScore(levelControl.fox);
     }
 }
