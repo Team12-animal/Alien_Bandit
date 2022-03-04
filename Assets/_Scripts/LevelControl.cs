@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class LevelControl : MonoBehaviour
 {
     Vector3 upPos;
+    public AudioSource audioSource;
+    public AudioClip[] clips;
 
     //分數是否有變化
     public bool scoreChangeOrNot;
@@ -55,10 +57,14 @@ public class LevelControl : MonoBehaviour
         addScoreText.text = addScore.ToString();
         if (addScore > 0)
         {
+            audioSource.clip = clips[0];
+            audioSource.Play();
             AddScoreUIAnimation();
         }
         else
         {
+            audioSource.clip = clips[1];
+            audioSource.Play();
             MinusScoreUIAnimation();
         }
         return result;
@@ -93,6 +99,14 @@ public class LevelControl : MonoBehaviour
     }
     public void TotalScoreUI()
     {
+        if (totalScore < 0)
+        {
+            scoreText.color = new Color(0.6792453f, 0.03128012f, 0f);
+        }
+        else 
+        {
+            scoreText.color = new Color(1f, 0.930903f,1f);
+        }
         scoreText.text = totalScore.ToString();
         Debug.LogWarning($"totalScore{totalScore}");
     }
