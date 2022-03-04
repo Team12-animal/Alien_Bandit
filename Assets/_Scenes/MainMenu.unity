@@ -6398,7 +6398,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 165932558}
     m_SelectOnLeft: {fileID: 804318574}
-    m_SelectOnRight: {fileID: 984118088}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -6449,7 +6449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -35611,7 +35611,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 165932558}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 75266476}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -38612,7 +38612,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 165932558}
     m_SelectOnLeft: {fileID: 75266476}
-    m_SelectOnRight: {fileID: 804318574}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -38663,7 +38663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3882353, g: 0.3882353, b: 0.3882353, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -57549,6 +57549,7 @@ GameObject:
   - component: {fileID: 1606039433}
   - component: {fileID: 1606039435}
   - component: {fileID: 1606039434}
+  - component: {fileID: 1606039436}
   m_Layer: 5
   m_Name: ChooseLevel
   m_TagString: Untagged
@@ -57619,6 +57620,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606039432}
   m_CullTransparentMesh: 1
+--- !u!114 &1606039436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606039432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa4f900450286041ba30c47e532263f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stars:
+  - {fileID: 1112791557}
+  - {fileID: 815490986}
+  - {fileID: 1804950399}
+  - {fileID: 1958619894}
+  - {fileID: 143387927}
+  - {fileID: 2007430692}
+  - {fileID: 1535137019}
+  - {fileID: 1886440449}
+  - {fileID: 2073911436}
+  levelsButtons:
+  - {fileID: 804318574}
+  - {fileID: 75266476}
+  - {fileID: 984118088}
+  selectableLevel02: {fileID: 75266476}
+  selectableLevel03: {fileID: 984118088}
 --- !u!1001 &1606060368
 PrefabInstance:
   m_ObjectHideFlags: 0
