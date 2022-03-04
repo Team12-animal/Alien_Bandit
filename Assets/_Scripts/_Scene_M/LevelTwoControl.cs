@@ -594,7 +594,7 @@ public class LevelTwoControl : LevelControl
     public void OpenLevelUI()
     {
         levelUI.SetActive(true);
-        if (isWin)
+        if (showStars[0].GetComponent<RawImage>().color == new Color(1.0f,1.0f,1.0f))
         {
             EventSystem.current.SetSelectedGameObject(chooseLevelUIStartButtonLevel03);
         }
