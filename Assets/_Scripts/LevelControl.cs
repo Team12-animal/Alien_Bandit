@@ -105,7 +105,7 @@ public class LevelControl : MonoBehaviour
         }
         else 
         {
-            scoreText.color = new Color(1f, 0.930903f,1f);
+            scoreText.color = new Color(1f, 0.930903f,0f);
         }
         scoreText.text = totalScore.ToString();
         Debug.LogWarning($"totalScore{totalScore}");
