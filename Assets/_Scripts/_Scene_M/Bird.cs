@@ -23,7 +23,7 @@ public class Bird : MonoBehaviour
         transform.position = new Vector3(890.1f, 260.73f, -1092.16f);
         //Vector3(564.048096, 5.95675659, -1092.16235) right position
         //LevelLoader.instance.OpenChooseRoleUI(false);
-        //CancelMouse();
+        CancelMouse();
 
         //UsingMouse();
     }
