@@ -87,29 +87,31 @@ public class AnimalCatcher : MonoBehaviour
         {
             collectRabbits += 1;
             lv.GenTotalScore(rabbit);
+            AIMain.m_Instance.RemoveRabbit(animalInBox);
         }
         else if (animalInBox.tag == "Raccoons")
         {
             collectRaccoons += 1;
             lv.GenTotalScore(raccoon);
+            AIMain.m_Instance.RemoveRaccoon(animalInBox);
         }
         else if (animalInBox.tag == "LittleRaccoons")
         {
             collectLittleRaccoons += 1;
             lv.GenTotalScore(littleRaccoon);
+            AIMain.m_Instance.RemoveRaccoon(animalInBox);
         }
         else if (animalInBox.tag == "Pig")
         {
             collectPigs += 1;
             lv.GenTotalScore(pig);
+            animalInBox.SetActive(false);
         }
 
         AIMain.m_Instance.AddRabbit();
         Debug.Log("Catch!");
 
-        animalInBox.SetActive(false);
         catcher.SetActive(false);
-        GameObject.Destroy(animalInBox);
         GameObject.Destroy(catcher);
 
         //play particle effect

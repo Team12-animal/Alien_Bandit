@@ -130,10 +130,10 @@ public class PInWaterController : MonoBehaviour
         {
             Vector3 playerPos = ICs[index].GetPlayerPos();
 
-            if (playerPos.y <= -0.5f)
+            if (playerPos.y <= -1.5f)
             {
                 pInWater.Add(players[index]);
-                dropIntoWaterEffect.transform.position = playerPos;
+                dropIntoWaterEffect.transform.position = playerPos + new Vector3 (0f, 1f, 0f);
                 dropInWater.Play(true);
                 levelControl.MinusScorePos(playerPos);
                 levelControl.GenTotalScore(8);

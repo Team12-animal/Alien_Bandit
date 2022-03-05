@@ -196,6 +196,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         if (status == (int)FoxAIData.FoxStatus.Attacked)
         {
+            targetLocking = false;
             Hurt();
         }
         else if (!fAC.AllowToMove())
