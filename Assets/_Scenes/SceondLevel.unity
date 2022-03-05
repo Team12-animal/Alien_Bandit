@@ -108,8 +108,8 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 30
-    agentClimb: 0.5
+    agentSlope: 5
+    agentClimb: 1
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -6843,7 +6843,7 @@ GameObject:
   - component: {fileID: 181058822}
   - component: {fileID: 181058821}
   - component: {fileID: 181058823}
-  m_Layer: 8
+  m_Layer: 17
   m_Name: CliffCollider(2)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -19341,7 +19341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7305935571239337104, guid: 30901d0dc0820d44f9853f4c8ea15de3, type: 3}
       propertyPath: m_Volume
-      value: 0.1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7305935571239337104, guid: 30901d0dc0820d44f9853f4c8ea15de3, type: 3}
       propertyPath: m_audioClip
