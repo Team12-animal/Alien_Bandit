@@ -15863,6 +15863,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5136066076151933908, guid: f8de2bccbec18864489342d2891d0725, type: 3}
   m_PrefabInstance: {fileID: 1153637928}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1153637930 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5136066076151933907, guid: f8de2bccbec18864489342d2891d0725, type: 3}
+  m_PrefabInstance: {fileID: 1153637928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1153899932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16902,6 +16907,11 @@ PrefabInstance:
 --- !u!224 &1243722657 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1145177637583448531, guid: e020d4f2b34a90e4e8cd15992029fc64, type: 3}
+  m_PrefabInstance: {fileID: 1243722656}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1243722658 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1145177637583448556, guid: e020d4f2b34a90e4e8cd15992029fc64, type: 3}
   m_PrefabInstance: {fileID: 1243722656}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1252190145
@@ -23312,6 +23322,7 @@ GameObject:
   - component: {fileID: 1382119409}
   - component: {fileID: 1382119411}
   - component: {fileID: 1382119410}
+  - component: {fileID: 1382119412}
   m_Layer: 5
   m_Name: ChooseLevel
   m_TagString: Untagged
@@ -23382,6 +23393,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382119408}
   m_CullTransparentMesh: 1
+--- !u!114 &1382119412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382119408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa4f900450286041ba30c47e532263f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stars:
+  - {fileID: 1565599143}
+  - {fileID: 1557786695}
+  - {fileID: 656937259}
+  - {fileID: 941403504}
+  - {fileID: 1869826334}
+  - {fileID: 1078446382}
+  - {fileID: 1243722658}
+  - {fileID: 1388591224}
+  - {fileID: 1153637930}
+  levelsButtons:
+  - {fileID: 1621077326}
+  - {fileID: 1386446757}
+  - {fileID: 1866700006}
+  selectableLevel02: {fileID: 1386446757}
+  selectableLevel03: {fileID: 1866700006}
 --- !u!1 &1386446756
 GameObject:
   m_ObjectHideFlags: 0
@@ -23420,7 +23459,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 1401638725}
     m_SelectOnLeft: {fileID: 1621077326}
-    m_SelectOnRight: {fileID: 1866700006}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -23738,6 +23777,11 @@ PrefabInstance:
 --- !u!224 &1388591223 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 455179590232211717, guid: c3819b41c65fb1548847cc4727145207, type: 3}
+  m_PrefabInstance: {fileID: 1388591222}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1388591224 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 455179590232211718, guid: c3819b41c65fb1548847cc4727145207, type: 3}
   m_PrefabInstance: {fileID: 1388591222}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1389847275
@@ -34946,7 +34990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.39, g: 0.39, b: 0.39, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

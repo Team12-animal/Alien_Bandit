@@ -57,7 +57,7 @@ public class SaveStarsState : MonoBehaviour
     }
     public class LevelThreeStar
     {
-        public int levelTwo = 3;
+        public int levelThree = 3;
         public int levelThreeStarsCounts = 0;
         public Color[] colorsThree = new Color[3];
         public void Init()
