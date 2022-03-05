@@ -422,6 +422,16 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void CatchTarget()
     {
+        if (target.tag == "Rabbit")
+        {
+            target.GetComponent<RabbitAI>().m_Data.isTargeted = true;
+        }
+
+        if (target.tag == "Raccoon")
+        {
+            target.GetComponent<RaccoonAI>().m_Data.isTargeted = true;
+        }
+
         if (arriveTarget == false)
         {
             jumping = JumpOrNot();
@@ -639,24 +649,26 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void AnimaEventCatchTarget()
     {
-        MinusScore();
+        Debug.Log("wolf catch target");
         catchedTarget.transform.right = mouth.transform.up;
         catchedTarget.transform.parent = mouth.transform;
+
+        if (catchedTarget.tag == "Rabbit")
+        {
+            catchedTarget.GetComponent<RabbitAI>().m_Data.isBited = true;
+        }
+
+        if (catchedTarget.tag == "Raccoon")
+        {
+            catchedTarget.GetComponent<RaccoonAI>().m_Data.isBited = true;
+        }
+
+        MinusScore();
         missionComplete = true;
     }
 
-    private void AnimaEventTargetIsBite()
+    private void AnimaEventTargetIsTargeted()
     {
-        if (target.tag == "Rabbit")
-        {
-            target.GetComponent<RabbitAI>().m_Data.isBited = true;
-        }
-
-        if (target.tag == "Raccoon")
-        {
-            target.GetComponent<RaccoonAI>().m_Data.isBited = true;
-        }
-
         catchedTarget = target;
         data.catchedTarget = catchedTarget;
         target = null;
@@ -671,11 +683,13 @@ public class Wolf_BehaviourTree : MonoBehaviour
             if (catchedTarget.tag == "Rabbit")
             {
                 catchedTarget.GetComponent<RabbitAI>().m_Data.isBited = false;
+                catchedTarget.GetComponent<RabbitAI>().m_Data.isTargeted = false;
             }
 
             if (catchedTarget.tag == "Raccoon")
             {
                 catchedTarget.GetComponent<RaccoonAI>().m_Data.isBited = false;
+                catchedTarget.GetComponent<RaccoonAI>().m_Data.isTargeted = false;
             }
 
             catchedTarget = null;
@@ -736,7 +750,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
     public LevelControl levelControl;
     private void MinusScore()
     {
-        levelControl.MinusScorePos(this.transform.position);
-        levelControl.GenTotalScore(levelControl.wolf);
+        //levelControl.MinusScorePos(this.transform.position);
+        //levelControl.GenTotalScore(levelControl.wolf);
     }
 }

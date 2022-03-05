@@ -518,7 +518,7 @@ public class LevelTwoControl : LevelControl
                     SaveStarsState.instance.SaveDate(level, 2, yellow);
                     GameOver();
                 }
-                else if (GetTotalScroe() >= 150)
+                else if (GetTotalScroe() >= 30)
                 {
                     //Saving data;
                     SaveStarsState.instance.SaveDate(level, 1, yellow);
@@ -539,7 +539,7 @@ public class LevelTwoControl : LevelControl
                     SaveStarsState.instance.SaveDate(level, 2, yellow);
                     GameOver();
                 }
-                else if (GetTotalScroe() >= 300)
+                else if (GetTotalScroe() >= 30)
                 {
                     //Saving data;
                     SaveStarsState.instance.SaveDate(level, 1, yellow);

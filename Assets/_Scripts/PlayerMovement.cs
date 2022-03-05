@@ -424,12 +424,10 @@ public class PlayerMovement : MonoBehaviour
 
     GameObject tree;
     TreeSensor ts;
-
-    //???????e?????? ?????????M???F(??animation event)
     public void AnimaEventSpawnStumpAndLog()
     {
-        audioSource.clip = clip[0];
-        audioSource.Play();
+        //audioSource.clip = clip[0];
+        //audioSource.Play();
         if (data.tree != null && tree != data.tree)
         {
             tree = data.tree;
