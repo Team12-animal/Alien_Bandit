@@ -24,6 +24,8 @@ public class PInWaterController : MonoBehaviour
     public List<GameObject> UIs;
     private List<UICountdown> cds;
 
+    public LevelControl levelControl;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -133,6 +135,8 @@ public class PInWaterController : MonoBehaviour
                 pInWater.Add(players[index]);
                 dropIntoWaterEffect.transform.position = playerPos;
                 dropInWater.Play(true);
+                levelControl.MinusScorePos(playerPos);
+                levelControl.GenTotalScore(8);
                 players[index].transform.position = savePos;
                 PlayerMovement pm = players[index].GetComponent<PlayerMovement>();
 

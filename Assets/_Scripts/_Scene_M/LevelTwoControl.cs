@@ -50,7 +50,7 @@ public class LevelTwoControl : LevelControl
     [SerializeField] GameObject player03ReadyImage;
     [SerializeField] GameObject player04ReadyImage;
 
-    MissionManager missionManager;
+    public MissionManager missionManager;
 
     //is player win the game?
     public bool isWin;

@@ -5545,7 +5545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 1572226547}
   - {fileID: 1900295083}
@@ -8095,7 +8095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 1572226547}
   - {fileID: 1567706565}
@@ -15217,6 +15217,7 @@ MonoBehaviour:
   - {fileID: 3248473803101523453}
   - {fileID: 3248473803101523452}
   - {fileID: 3248473803101523451}
+  levelControl: {fileID: 1919580629}
 --- !u!1 &1042650698
 GameObject:
   m_ObjectHideFlags: 0
@@ -15464,7 +15465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 1061438946}
   - {fileID: 1235776443}
@@ -15707,7 +15708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 343225105}
   - {fileID: 1046718512}
@@ -15975,7 +15976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 1659364993}
 --- !u!135 &1074150567
@@ -17220,8 +17221,8 @@ MonoBehaviour:
   - {fileID: 1875522997}
   - {fileID: 1176868692}
   - {fileID: 327891335}
-  waitForStart: 0
-  delay: 2
+  waitForStart: 37
+  delay: 36
   bumpEndPos: {fileID: 1969823300}
 --- !u!4 &1198037748 stripped
 Transform:
@@ -17556,7 +17557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 1046718512}
   - {fileID: 2085047912}
@@ -17776,7 +17777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 1757381865}
   - {fileID: 1046718512}
@@ -31379,7 +31380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 119505908}
   - {fileID: 1572226547}
@@ -31493,7 +31494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 119505908}
   - {fileID: 1567706565}
@@ -32413,7 +32414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 1567706565}
   - {fileID: 1074150565}
@@ -33458,7 +33459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 1046718512}
   - {fileID: 1267051450}
@@ -35305,7 +35306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 119505908}
   - {fileID: 1567706565}
@@ -35663,6 +35664,7 @@ MonoBehaviour:
   player02ReadyImage: {fileID: 1791204186953242189}
   player03ReadyImage: {fileID: 1791204187433335949}
   player04ReadyImage: {fileID: 1791204186597553543}
+  missionManager: {fileID: 513986107}
   isWin: 0
   createdRain: 0
   startRainTime: 120
@@ -37662,7 +37664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 1235776443}
   - {fileID: 1046718512}
