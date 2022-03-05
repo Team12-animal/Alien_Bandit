@@ -35622,6 +35622,7 @@ MonoBehaviour:
   breakableItems: []
   waitForStart: 18
   delay: 40
+  effect: {fileID: 3248473803101523451}
 --- !u!4 &1993526991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5023827496289240853, guid: a79279818571b6848a9ccb8dcb36dd2c, type: 3}
@@ -54839,6 +54840,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 651376345358731533}
     m_Modifications:
+    - target: {fileID: 642689212, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502560198988534629, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752127773591764759, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8317521461619958490, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
       propertyPath: targetPlayerName
       value: Player01
@@ -54955,11 +54968,20 @@ PrefabInstance:
       propertyPath: targetPlayerName
       value: Player04
       objectReference: {fileID: 0}
+    - target: {fileID: 9133495988015521706, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
 --- !u!224 &3248473803101523450 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8317521462215539530, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
+  m_PrefabInstance: {fileID: 3248473803101523449}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3248473803101523451 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5510375085872973148, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
   m_PrefabInstance: {fileID: 3248473803101523449}
   m_PrefabAsset: {fileID: 0}
 --- !u!222 &3359850176052664776
