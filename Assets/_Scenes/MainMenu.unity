@@ -6398,7 +6398,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 165932558}
     m_SelectOnLeft: {fileID: 804318574}
-    m_SelectOnRight: {fileID: 984118088}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -6449,7 +6449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6491,8 +6491,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -6507,8 +6507,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -7688,8 +7688,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -7704,8 +7704,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -12962,8 +12962,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -12978,8 +12978,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -32906,6 +32906,7 @@ GameObject:
   - component: {fileID: 605161554}
   - component: {fileID: 605161553}
   - component: {fileID: 605161559}
+  - component: {fileID: 605161557}
   m_Layer: 5
   m_Name: CanvasParent
   m_TagString: Untagged
@@ -33005,6 +33006,102 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!82 &605161557
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605161552}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &605161559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33076,6 +33173,10 @@ MonoBehaviour:
   - {fileID: 1886440449}
   - {fileID: 2073911436}
   dataStarts: []
+  buttonSource: {fileID: 605161557}
+  clip:
+  - {fileID: 8300000, guid: f1439e6765d4916488eda7d4ffd4ccc4, type: 3}
+  - {fileID: 8300000, guid: 392eb8f8b4acfeb439f491b7a631b4e1, type: 3}
   Button_SeclectImage01UseToRest: {fileID: 525643516}
   Button_SeclectImage02: {fileID: 1923402485}
   Button_SeclectImage03: {fileID: 700037505}
@@ -33495,8 +33596,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -33511,8 +33612,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -34619,8 +34720,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -34635,8 +34736,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -35510,7 +35611,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 165932558}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 75266476}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -35603,8 +35704,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -35619,8 +35720,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -35975,17 +36076,21 @@ MonoBehaviour:
   canvasCrossFade: {fileID: 7936653882835629579}
   transitionTime: 10
   player01: {fileID: 374582663}
-  translatePosition01: {x: 15, y: 0.12, z: 21}
+  translatePosition01: {x: 22, y: 0.12, z: 21}
   player02: {fileID: 1093815328}
-  translatePosition02: {x: 17, y: 0.12, z: 21}
+  translatePosition02: {x: 18, y: 0.12, z: 21}
   player03: {fileID: 877490337}
-  translatePosition03: {x: 18, y: 0.12, z: 21}
+  translatePosition03: {x: 22, y: 0.12, z: 25}
   player04: {fileID: 593578705}
-  translatePosition04: {x: 19, y: 0.12, z: 21}
+  translatePosition04: {x: 18, y: 0.12, z: 25}
   selected01: 0
   selected02: 0
   selected03: 0
   selected04: 0
+  pos01: {x: 12.18, y: 0, z: 41.3}
+  pos02: {x: 23.44, y: 0, z: 45.72}
+  pos03: {x: 41, y: 0, z: 30.8}
+  pos04: {x: 38.21, y: 0, z: 19.67}
   mainPosition01: {x: 356, y: 284.8, z: 30}
   mainPosition02: {x: 362, y: 284.8, z: 30}
   mainPosition03: {x: 368, y: 284.8, z: 30}
@@ -38519,7 +38624,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 165932558}
     m_SelectOnLeft: {fileID: 75266476}
-    m_SelectOnRight: {fileID: 804318574}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -38570,7 +38675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3882353, g: 0.3882353, b: 0.3882353, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -38612,8 +38717,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -38628,8 +38733,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -44884,8 +44989,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -44900,8 +45005,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -55012,7 +55117,6 @@ GameObject:
   - component: {fileID: 1403844853}
   - component: {fileID: 1403844852}
   - component: {fileID: 1403844851}
-  - component: {fileID: 1403844854}
   m_Layer: 0
   m_Name: AudiosManager
   m_TagString: Untagged
@@ -55144,7 +55248,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -55238,7 +55342,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a93b71921742ce47ba2aefda04d740a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  system: {fileID: 0}
   clips:
   - {fileID: 8300000, guid: 6ea6d2c45b91d414aadfce6d744fac76, type: 3}
   - {fileID: 8300000, guid: e1146ba6f962ee1469fc5b822aa7ca79, type: 3}
@@ -55247,103 +55350,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f1439e6765d4916488eda7d4ffd4ccc4, type: 3}
   - {fileID: 8300000, guid: 392eb8f8b4acfeb439f491b7a631b4e1, type: 3}
   audioSource: {fileID: 1403844852}
-  buttonSource: {fileID: 1403844854}
---- !u!82 &1403844854
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1403844849}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.2
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1424018072
 GameObject:
   m_ObjectHideFlags: 0
@@ -55845,7 +55851,6 @@ GameObject:
   - component: {fileID: 1475673861}
   - component: {fileID: 1475673860}
   - component: {fileID: 1475673863}
-  - component: {fileID: 1475673864}
   m_Layer: 5
   m_Name: Setting
   m_TagString: Untagged
@@ -55980,41 +55985,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 16
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1329815813}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &1475673864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1475673858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
   - eventID: 9
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -56029,10 +56005,26 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1329815813}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -56967,8 +56959,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -56983,8 +56975,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -57581,6 +57573,7 @@ GameObject:
   - component: {fileID: 1606039433}
   - component: {fileID: 1606039435}
   - component: {fileID: 1606039434}
+  - component: {fileID: 1606039436}
   m_Layer: 5
   m_Name: ChooseLevel
   m_TagString: Untagged
@@ -57651,6 +57644,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606039432}
   m_CullTransparentMesh: 1
+--- !u!114 &1606039436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606039432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa4f900450286041ba30c47e532263f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stars:
+  - {fileID: 1112791557}
+  - {fileID: 815490986}
+  - {fileID: 1804950399}
+  - {fileID: 1958619894}
+  - {fileID: 143387927}
+  - {fileID: 2007430692}
+  - {fileID: 1535137019}
+  - {fileID: 1886440449}
+  - {fileID: 2073911436}
+  levelsButtons:
+  - {fileID: 804318574}
+  - {fileID: 75266476}
+  - {fileID: 984118088}
+  selectableLevel02: {fileID: 75266476}
+  selectableLevel03: {fileID: 984118088}
 --- !u!1001 &1606060368
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59630,11 +59651,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4194125829684650, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.54999995
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4194125829684650, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4194125829684650, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.54999995
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4194125829684650, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -60104,6 +60129,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.00813072
       objectReference: {fileID: 0}
+    - target: {fileID: 95293523053791982, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 264077771d56f6d4f806a98115c68e24, type: 2}
     - target: {fileID: 3168699656531818522, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
@@ -60112,7 +60141,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5368351882017264785, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
+    - {fileID: 1555294820, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
+    - {fileID: 7234801346661484607, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
 --- !u!1 &1721758989
 GameObject:
@@ -89096,8 +89128,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -89112,8 +89144,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -95419,8 +95451,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SelectButtonAudio
           m_Mode: 1
           m_Arguments:
@@ -95435,8 +95467,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1403844853}
-          m_TargetAssemblyTypeName: AudiosManager, Assembly-CSharp
+        - m_Target: {fileID: 605161559}
+          m_TargetAssemblyTypeName: CheckPlayer, Assembly-CSharp
           m_MethodName: SubmitButtonAudio
           m_Mode: 1
           m_Arguments:

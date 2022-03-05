@@ -9396,6 +9396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1278580635}
+  clip: []
   velocity: {x: 0, y: 0, z: 0}
   raydect: 0
   maxSpeed: 0
@@ -19597,15 +19598,13 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   addScoreText: {fileID: 0}
   addScore: {fileID: 0}
+  level: 0
   waittingTime: 2.1
   readyImage: {fileID: 0}
   goImage: {fileID: 0}
   waittingTimeUI: {fileID: 0}
   gamingTime: 180
   gamingTimeText: {fileID: 2602731918233974869}
-  gameOverUIText:
-  - {fileID: 6500894312499620121}
-  - {fileID: 6500894313600495708}
   gameWinUI: {fileID: 0}
   gameFailUI: {fileID: 0}
   levelUI: {fileID: 0}
@@ -19613,7 +19612,6 @@ MonoBehaviour:
   chooseLevelUIStartButtonLevel02: {fileID: 0}
   doorDestroied: 0
   continueUI: {fileID: 0}
-  levelTwoStars: []
   showStars: []
   players: []
   player02RawImage: {fileID: 0}
@@ -19801,6 +19799,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1283954576424777827, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7568076d077c1ec408755cb14c95dd54, type: 3}
     - target: {fileID: 3877395877936590319, guid: 2a389c9331bb6f8409c91d139c56ce41, type: 3}
       propertyPath: levelControl
       value: 
@@ -19900,13 +19902,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9a067d0c1f71f0429c263f00e2c8938, type: 3}
---- !u!1 &6500894312499620121 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6002029030631342368, guid: 60095bb84dcabae429abf4bcdc71a4bd, type: 3}
-  m_PrefabInstance: {fileID: 683611963434510393}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6500894313600495708 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6002029029454714981, guid: 60095bb84dcabae429abf4bcdc71a4bd, type: 3}
-  m_PrefabInstance: {fileID: 683611963434510393}
-  m_PrefabAsset: {fileID: 0}

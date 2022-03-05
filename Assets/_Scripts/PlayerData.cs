@@ -10,7 +10,7 @@ public class PlayerData : MonoBehaviour
     private float reduceSpeed = 0.5f;
     public float realSpeed;
     public float maxRotate;
-    private float reduceRotate = 0.5f;
+    private float reduceRotate = 0.8f;
     public float realRotate;
     public float setDashTime = 0.24f;
     public float dashSpeed;

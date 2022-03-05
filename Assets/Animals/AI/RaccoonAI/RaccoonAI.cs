@@ -140,6 +140,18 @@ public class RaccoonAI : MonoBehaviour
             m_eCurrentState = eFSMState.Idle;
             m_Data.agent.enabled = false;
             currentCollider.enabled = false;
+            this.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+
+            if (m_Data.isCatched
+                )
+            {
+                this.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            }
+            else
+            {
+                this.transform.localPosition = new Vector3(0.092f, 0.0f, -0.412f);
+            }
+
             if (m_Data.isCatched)
             {
                 skinnedMesh.enabled = false;

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PInWaterController : MonoBehaviour
 {
-    List<GameObject> players;
-    List<InputController> ICs;
+    public GameObject[] players;
+    public InputController[] ICs;
 
     List<GameObject> pInWater;
 
@@ -21,27 +21,38 @@ public class PInWaterController : MonoBehaviour
 
     bool countdowning = false;
 
-    public GameObject UI;
-    private UICountdown countdown;
+    public List<GameObject> UIs;
+    private List<UICountdown> cds;
 
     // Start is called before the first frame update
     void Start()
     {
-        ICs = new List<InputController>();
-        players = new List<GameObject>();
+        ICs = new InputController[4];
+        players = new GameObject[4];
         pInWater = new List<GameObject>();
+        cds = new List<UICountdown>();
+
         savePos = new Vector3(10000.0f, 10000.0f, 10000.0f);
 
         GameObject[] pGOs = GameObject.FindGameObjectsWithTag("Player");
 
         foreach (GameObject p in pGOs)
         {
-            ICs.Add(p.GetComponent<InputController>());
-            players.Add(p);
+            for (int i = 0; i < 4; i++)
+            {
+                if (p.name == "Player0" + (i + 1))
+                {
+                    players[i] = p;
+                    ICs[i] = p.GetComponent<InputController>();
+                }
+            }
         }
 
-        UI.transform.rotation = Camera.main.transform.rotation;
-        countdown = UI.GetComponent<UICountdown>();
+        foreach (GameObject ui in UIs)
+        {
+            ui.transform.rotation = Camera.main.transform.rotation;
+            cds.Add(ui.GetComponent<UICountdown>());
+        }
 
         dropInWater = dropIntoWaterEffect.GetComponent<ParticleSystem>();
         respawning = respawnEffect.GetComponent<ParticleSystem>();
@@ -61,32 +72,51 @@ public class PInWaterController : MonoBehaviour
     IEnumerator ReviveCountdown()
     {
         countdowning = true;
-        Vector3 temPos = respawnPos.transform.position;
-        temPos.z += 1.0f;
-        temPos.y += 1.0f;
-        UI.transform.position = temPos;
-        countdown.ChangeSprite(3);
+     
+        GameObject pinProcess;
+        InputController icUsing;
+        int index = -1;
 
-        yield return new WaitForSecondsRealtime(1);
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (pInWater[0] == players[i])
+            {
+                index = i;
+                pinProcess = players[i];
+                icUsing = ICs[i];
+            }
+        }
+       
+        if (index > -1)
+        {
+            Vector3 temPos = respawnPos.transform.position;
+            temPos.z += 1.0f;
+            temPos.y += 1.0f;
+            UIs[index].transform.position = temPos;
+            cds[index].ChangeSprite(3);
 
-        countdown.ChangeSprite(2);
+            yield return new WaitForSecondsRealtime(1);
 
-        yield return new WaitForSecondsRealtime(1);
+            cds[index].ChangeSprite(2);
 
-        countdown.ChangeSprite(1);
+            yield return new WaitForSecondsRealtime(1);
 
-        yield return new WaitForSecondsRealtime(1);
+            cds[index].ChangeSprite(1);
 
-        UI.transform.position = savePos;
-        respawnEffect.transform.position = respawnPos.transform.position + respawnPos.transform.up * 0.5f;
-        respawning.Play(true);
+            yield return new WaitForSecondsRealtime(1);
 
-        yield return new WaitForSecondsRealtime(0.5f);
+            UIs[index].transform.position = savePos;
+            respawnEffect.transform.position = respawnPos.transform.position + respawnPos.transform.up * 0.5f;
+            respawning.Play(true);
 
-        pInWater[0].transform.position = respawnPos.transform.position;
-        pInWater[0].GetComponent<InputController>().enabled = true;
-        pInWater.RemoveAt(0);
-        countdowning = false;
+            yield return new WaitForSecondsRealtime(0.5f);
+
+            pInWater[0].transform.position = respawnPos.transform.position;
+            pInWater[0].GetComponent<InputController>().enabled = true;
+            pInWater.RemoveAt(0);
+            countdowning = false;
+        }
+        
         yield break;
     }
 
@@ -94,7 +124,7 @@ public class PInWaterController : MonoBehaviour
     {
         int index;
 
-        for (index = 0; index < players.Count; index++)
+        for (index = 0; index < players.Length; index++)
         {
             Vector3 playerPos = ICs[index].GetPlayerPos();
 
@@ -104,6 +134,24 @@ public class PInWaterController : MonoBehaviour
                 dropIntoWaterEffect.transform.position = playerPos;
                 dropInWater.Play(true);
                 players[index].transform.position = savePos;
+                PlayerMovement pm = players[index].GetComponent<PlayerMovement>();
+
+                if (pm.data.item != null)
+                {
+                    if (pm.data.item.tag == "Chop")
+                    {
+                        pm.RemoveItem();
+                    }
+                    else
+                    {
+                        GameObject item = pm.data.item;
+                        pm.RemoveItem();
+                        GameObject.Destroy(item);
+                    }
+
+                    Animator ani = players[index].GetComponent<Animator>();
+                    ani.Play("Idle");
+                }
                 ICs[index].enabled = false;
             }
         }

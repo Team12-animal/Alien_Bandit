@@ -13,7 +13,7 @@ public class BoxController : MonoBehaviour
     public bool animalCatched = false;
     private Rigidbody rb;
     public bool touchingGround = false;
-
+    public bool physicStart = false;
     private void Awake()
     {
         contentSpot = this.transform.Find("Box").Find("ContentSpot").gameObject;
@@ -25,9 +25,14 @@ public class BoxController : MonoBehaviour
         firstCreated = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (beUsing == true)
+        if (touchingGround == true && rb.velocity.magnitude > 0.2f)
+        {
+            physicStart = true;
+        }
+
+        if (physicStart == true && beUsing == true)
         {
             TurnBeUsingToFalse();
         }
@@ -35,23 +40,39 @@ public class BoxController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("box trigger" + other.gameObject.name);
-        if (beUsing == true && other.gameObject.tag == "Rabbit" && targetAnimal == null)
+        Debug.Log($"box on trgger enter{other.gameObject.name}");
+
+        if (beUsing == true && (other.gameObject.tag == "Rabbit" || other.gameObject.tag == "Pig") && targetAnimal == null)
         {
-            targetAnimal = other.gameObject;
-            targetAnimal.GetComponent<RabbitAI>().m_Data.isCatched = true;
-            targetAnimal.transform.position = contentSpot.transform.position;
-            targetAnimal.transform.up = contentSpot.transform.up;
-            targetAnimal.transform.parent = contentSpot.gameObject.transform;
-            animalCatched = true;
+            float dist = (other.transform.position - this.transform.position).magnitude;
+            Debug.Log($"box on trgger enter dist{dist}");
+            if (dist <= 3.5f)
+            {
+                targetAnimal = other.gameObject;
+                targetAnimal.transform.parent = contentSpot.gameObject.transform;
+                targetAnimal.transform.localEulerAngles = contentSpot.transform.eulerAngles;
+
+                if (targetAnimal.tag == "Rabbit")
+                {
+                    targetAnimal.GetComponent<RabbitAI>().m_Data.isCatched = true;
+                }
+
+                if (targetAnimal.tag == "Pig")
+                {
+                    targetAnimal.GetComponent<PigBehaviourTree>().SetCatchedStatus(this.gameObject);
+                }
+                
+                animalCatched = true;
+            }
         }
     }
 
     private void TurnBeUsingToFalse()
     {
-        if (rb.velocity == new Vector3(0.0f, 0.0f, 0.0f) && touchingGround)
+        if (rb.velocity == new Vector3(0.0f, 0.0f, 0.0f))
         {
             beUsing = false;
+            physicStart = false;
         }
     }
 }

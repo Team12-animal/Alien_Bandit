@@ -162,7 +162,18 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private bool TargetAccessable(GameObject target)
     {
-        return target.transform.position.y <= 2.0f;
+        bool inJumpArea = false;
+
+        foreach (GameObject p in jumpPs)
+        {
+            if ((p.transform.position - target.transform.position).magnitude <= 8.0f)
+            {
+                inJumpArea = true;
+                break;
+            }
+        }
+
+        return (target.transform.position.y <= 2.0f && !inJumpArea);
     }
 
     private void Update()
@@ -505,11 +516,6 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void GoHome()
     {
-        if (catchedTarget != null)
-        {
-            catchedTarget.transform.localPosition = new Vector3(0.065f, 0.01f, -0.281f);
-        }
-
         if (arriveHome == false)
         {
             jumping = JumpOrNot();
@@ -633,12 +639,9 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void AnimaEventCatchTarget()
     {
-        Vector3 mouthPos = mouth.transform.position;
-        mouthPos.y -= 1.0f;
-        catchedTarget.transform.position = mouthPos;
+        MinusScore();
         catchedTarget.transform.right = mouth.transform.up;
         catchedTarget.transform.parent = mouth.transform;
-        catchedTarget.transform.localPosition = new Vector3(0.065f, 0.01f, -0.281f);
         missionComplete = true;
     }
 
@@ -693,6 +696,10 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     #endregion
 
+    private bool music = true;
+    public AudioSource audioSource;
+    public AudioClip clip;
+
     //UI display for warnUIDisplayer
     public Vector3 WarningUIDisplay()
     {
@@ -704,12 +711,32 @@ public class Wolf_BehaviourTree : MonoBehaviour
         {
             newPos = target.transform.position;
             newPos.y += 2.5f;
+            if (music)
+            {
+                audioSource.clip = clip;
+                InvokeRepeating("PlayAudio", 0, 1f);
+                music = false;
+            }
         }
         else
         {
             newPos = new Vector3(1000000.0f, 1000000.0f, 1000000.0f);
+            music = true;
+            CancelInvoke("PlayAudio");
         }
 
         return newPos;
-    } 
+    }
+
+    public void PlayAudio()
+    {
+        audioSource.Play();
+    }
+
+    public LevelControl levelControl;
+    private void MinusScore()
+    {
+        levelControl.MinusScorePos(this.transform.position);
+        levelControl.GenTotalScore(levelControl.wolf);
+    }
 }

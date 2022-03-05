@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private PlayerData data;
+    [HideInInspector] public PlayerData data;
     public Camera cam;
     private AudioSource audioSource;
     public  AudioClip[] clip;  
@@ -684,6 +684,7 @@ public class PlayerMovement : MonoBehaviour
         targetItem.transform.position = holdingPos.position;
         targetItem.transform.rotation = holdingPos.rotation;
         targetItem.transform.SetParent(holdingPos);
+        targetItem.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
         Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
         targetRG.isKinematic = true;
         itemInhand = targetItem;
@@ -709,7 +710,7 @@ public class PlayerMovement : MonoBehaviour
     }
     
     //remove item from player, and then turn off kinematic and open collider
-    private void RemoveItem()
+    public void RemoveItem()
     {
         if (data.item == null)
         {
@@ -792,6 +793,7 @@ public class PlayerMovement : MonoBehaviour
         if (itemInhand.tag == "Box")
         {
             itemInhand.GetComponent<BoxController>().touchingGround = true;
+            Debug.Log($"box velocity touchingGround {rb.velocity}");
         }
 
         if (itemInhand.tag == "RockModel")
@@ -807,7 +809,7 @@ public class PlayerMovement : MonoBehaviour
         itemInhand = null;
         UpdatePlayerData();
 
-        Debug.Log("ThrowAway" + realForce);
+        Debug.Log("box v ThrowAway" + realForce);
     }
 
     //inactive item while put it on table

@@ -107,23 +107,50 @@ public class LevelTwoControl : LevelControl
         AddScoreData();
     }
 
-    private static void SettingPlayerPosition()
+    private void SettingPlayerPosition()
     {
-        if (SceneController.instance.selected01)
+        switch (level)
         {
-            SceneController.instance.SetPlayer(SceneController.instance.player01);
-        }
-        if (SceneController.instance.selected02)
-        {
-            SceneController.instance.SetPlayer(SceneController.instance.player02);
-        }
-        if (SceneController.instance.selected03)
-        {
-            SceneController.instance.SetPlayer(SceneController.instance.player03);
-        }
-        if (SceneController.instance.selected04)
-        {
-            SceneController.instance.SetPlayer(SceneController.instance.player04);
+            case 2:
+                if (SceneController.instance.selected01)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player01);
+                }
+                if (SceneController.instance.selected02)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player02);
+                }
+                if (SceneController.instance.selected03)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player03);
+                }
+                if (SceneController.instance.selected04)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player04);
+                }
+                break;
+            case 3:
+                if (SceneController.instance.selected01)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player01);
+                    SceneController.instance.player01.transform.position = SceneController.instance.pos01;
+                }
+                if (SceneController.instance.selected02)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player02);
+                    SceneController.instance.player02.transform.position = SceneController.instance.pos02;
+                }
+                if (SceneController.instance.selected03)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player03);
+                    SceneController.instance.player03.transform.position = SceneController.instance.pos03;
+                }
+                if (SceneController.instance.selected04)
+                {
+                    SceneController.instance.SetPlayer(SceneController.instance.player04);
+                    SceneController.instance.player04.transform.position = SceneController.instance.pos04;
+                }
+                break;
         }
     }
 
@@ -136,7 +163,7 @@ public class LevelTwoControl : LevelControl
             //LevelLoader.instance.LoadLevel(0);
         }
         TimeSettingAndAllowPlayerMoving();
-        GameOver();
+        //GameOver();
         //TriggerSceneEvents();
         WinGame(level);
     }
@@ -476,23 +503,49 @@ public class LevelTwoControl : LevelControl
     public void WinGame(int level)
     {
         Color yellow = new Color(1, 1, 1, 1);
-        if (GetTotalScroe() == 90)
+        switch (level)
         {
-            //Saving data;
-            SaveStarsState.instance.SaveDate(level, 3, yellow);
-            GameOver();
-        }
-        else if (GetTotalScroe() == 60)
-        {
-            //Saving data;
-            SaveStarsState.instance.SaveDate(level, 2, yellow);
-            GameOver();
-        }
-        else if (GetTotalScroe() == 30)
-        {
-            //Saving data;
-            SaveStarsState.instance.SaveDate(level, 1, yellow);
-            GameOver();
+            case 2:
+                if (GetTotalScroe() >= 350)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 3, yellow);
+                    GameOver();
+                }
+                else if (GetTotalScroe() >= 250)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 2, yellow);
+                    GameOver();
+                }
+                else if (GetTotalScroe() >= 150)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 1, yellow);
+                    GameOver();
+                }
+                break;
+
+            case 3:
+                if (GetTotalScroe() >= 700)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 3, yellow);
+                    GameOver();
+                }
+                else if (GetTotalScroe() >= 500)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 2, yellow);
+                    GameOver();
+                }
+                else if (GetTotalScroe() >= 300)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 1, yellow);
+                    GameOver();
+                }
+                break;
         }
     }
 
@@ -566,7 +619,7 @@ public class LevelTwoControl : LevelControl
     public void OpenLevelUI()
     {
         levelUI.SetActive(true);
-        if (isWin)
+        if (showStars[0].GetComponent<RawImage>().color == new Color(1.0f,1.0f,1.0f))
         {
             EventSystem.current.SetSelectedGameObject(chooseLevelUIStartButtonLevel03);
         }

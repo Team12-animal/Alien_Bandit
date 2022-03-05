@@ -64,7 +64,11 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     //target UI
     public bool targetLocking = true;
-    
+
+    //destroy target effect
+    public GameObject destroyEffect;
+    private ParticleSystem destroySystem;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +84,8 @@ public class Fox_BehaviourTree : MonoBehaviour
         currentPathPt = 0;
 
         PlayerInit();
+
+        destroySystem = destroyEffect.GetComponent<ParticleSystem>();
     }
 
     private void OnEnable()
@@ -154,8 +160,16 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        FindEffectPlayer();
+    {   
+        if (!(target != null && (target.transform.position - this.transform.position).magnitude < data.m_fRadius + 2.0f))
+        {
+            FindEffectPlayer();
+        }
+        else
+        {
+            effectPlayers.Clear();
+        }
+
         CheckStatusAndUpdate();
         
         if (target == null || status == (int)FoxAIData.FoxStatus.Home)
@@ -246,16 +260,17 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private void CheckStatusAndUpdate()
     {
-        if (hitten == true && !attackEnd)
+        if (fAC.BreakingOrNot() == true && UnableToAccessOrNot())
         {
-            status = (int)FoxAIData.FoxStatus.Attacked;
+            missionComplete = true;
+            status = (int)FoxAIData.FoxStatus.Home;
             data.UpdateStatus(status);
             return;
         }
 
-        if (fAC.BreakingOrNot() == true)
+        if (hitten == true && !attackEnd)
         {
-            status = (int)FoxAIData.FoxStatus.Safe;
+            status = (int)FoxAIData.FoxStatus.Attacked;
             data.UpdateStatus(status);
             return;
         }
@@ -275,14 +290,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         if (effectPlayers.Count > 0)
         {
-            if (pAC.ThorowingOrNot() == false)
-            {
-                status = (int)FoxAIData.FoxStatus.Alert;
-            }
-            else
-            {
-                status = (int)FoxAIData.FoxStatus.AvoidAttack;
-            }
+            status = (int)FoxAIData.FoxStatus.Alert;
         }
 
         data.UpdateStatus(status);
@@ -350,7 +358,10 @@ public class Fox_BehaviourTree : MonoBehaviour
     #region fox behaviour tree
     private void BreakItem()
     {
-        arriveTarget = ArriveTargetOrNot();
+        if (arriveTarget == false)
+        {
+            arriveTarget = ArriveTargetOrNot();
+        }
 
         if (arriveTarget == false)
         {
@@ -394,6 +405,19 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
         else
         {
+            if (target.activeSelf == true && target != birthPos)
+            {
+                destroyEffect.transform.position = target.transform.position;
+                destroyEffect.SetActive(true);
+                destroySystem.Play();
+                
+            }
+            else
+            {
+                destroySystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                destroyEffect.SetActive(false);
+            }
+
             fAC.ChangeAndPlayAnimation(fAC.breaking, 0, 0);
         }
     }
@@ -487,7 +511,10 @@ public class Fox_BehaviourTree : MonoBehaviour
     public bool arriveHomeArea = false;
     private void GoHome()
     {
-        arriveHomeArea = ArriveTargetOrNot();
+        if (arriveHomeArea == false)
+        {
+            arriveHomeArea = ArriveTargetOrNot();
+        }
      
         if (arriveHomeArea == false)
         {
@@ -556,14 +583,21 @@ public class Fox_BehaviourTree : MonoBehaviour
                 (child.gameObject.GetComponent(typeof(Collider)) as Collider).enabled = false;
             }
         }
-
-        target.GetComponent<Rigidbody>().isKinematic = true;
+        if (target.GetComponent<Rigidbody>() != null)
+        {
+            target.GetComponent<Rigidbody>().isKinematic = true;
+        }
         Vector3 temp = this.transform.position + this.transform.forward * data.arriveDist;
         temp.y = target.transform.position.y;
         target.transform.position = temp;
     }
     public void AnimaEventBreakTarget()
     {
+        if (target == birthPos)
+        {
+            return;
+        }
+
         if (target.tag == "box")
         {
             GameObject animalCatched = target.GetComponent<BoxController>().targetAnimal;
@@ -571,14 +605,34 @@ public class Fox_BehaviourTree : MonoBehaviour
             if (animalCatched != null)
             {
                 animalCatched.transform.parent = null;
+                if (animalCatched.tag == "Rabbit")
+                {
+                    animalCatched.GetComponent<RabbitAI>().m_Data.isCatched = false;
+                }
             }
         }
 
+        if (target.tag == "Bag")
+        {
+            GameObject animalCatched = target.GetComponent<BagController>().targetAnimal;
+
+            if (animalCatched != null)
+            {
+                animalCatched.transform.parent = null;
+                if (animalCatched.tag == "Raccoon")
+                {
+                    animalCatched.GetComponent<RaccoonAI>().m_Data.isCatched = false;
+                }
+            }
+        }
+
+        
         target.SetActive(false);
         GameObject.Destroy(target);
         target = null;
         missionComplete = true;
         targetLocking = false;
+        MinusScore();
     }
 
     #endregion
@@ -643,6 +697,9 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
     }
 
+    private bool music = true;
+    public AudioSource audioSource;
+    public AudioClip clip;
     public Vector3 WarningUIDisplay()
     {
         Vector3 newPos;
@@ -651,13 +708,26 @@ public class Fox_BehaviourTree : MonoBehaviour
         {
             newPos = target.transform.position;
             newPos.y += 2.5f;
+            if (music)
+            {
+                audioSource.clip = clip;
+                InvokeRepeating("PlayAudio",0,1f);
+                music = false;
+            }
         }
         else
         {
             newPos = new Vector3(1000000.0f, 1000000.0f, 1000000.0f);
+            music = true;
+            CancelInvoke("PlayAudio");
         }
 
         return newPos;
+    }
+
+    public void PlayAudio()
+    {
+        audioSource.Play();
     }
 
     private bool ArriveTargetOrNot()
@@ -684,5 +754,12 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
 
         attackEnd = true;
+    }
+
+    public LevelControl levelControl;
+    private void MinusScore()
+    {
+        levelControl.MinusScorePos(this.transform.position);
+        levelControl.GenTotalScore(levelControl.fox);
     }
 }
