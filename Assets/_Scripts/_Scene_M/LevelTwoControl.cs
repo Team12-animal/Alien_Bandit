@@ -80,11 +80,17 @@ public class LevelTwoControl : LevelControl
                 levelTwoStars[0] = GameObject.Find(updateStarsStates.star04);
                 levelTwoStars[1] = GameObject.Find(updateStarsStates.star05);
                 levelTwoStars[2] = GameObject.Find(updateStarsStates.star06);
+                missionManager.AddMission(0);
+                missionManager.AddMission(2);
+
                 break;
             case 3:
                 levelTwoStars[0] = GameObject.Find(updateStarsStates.star07);
                 levelTwoStars[1] = GameObject.Find(updateStarsStates.star08);
                 levelTwoStars[2] = GameObject.Find(updateStarsStates.star09);
+                missionManager.AddMission(0);
+                missionManager.AddMission(1);
+                missionManager.AddMission(2);
                 break;
         }
         //Setting Continue UI
@@ -96,20 +102,8 @@ public class LevelTwoControl : LevelControl
         player03ReadyImage.SetActive(false);
         player04ReadyImage.SetActive(false);
         missionManager = GameObject.Find("MissionCanvas").GetComponent<MissionManager>();
-        missionManager.AddMission();
-        //missionManager.AddMission(1);
         gameFailUI.SetActive(false);
         levelUI.SetActive(false);
-        if (level >= 2)
-        {
-            Debug.Log($"{level} mission 2 add");
-            missionManager.AddMission(2);
-            if (level == 3)
-            {
-                Debug.Log($"{level} mission 1 add");
-                missionManager.AddMission(1);
-            }
-        }
         AddScoreData();
     }
 
