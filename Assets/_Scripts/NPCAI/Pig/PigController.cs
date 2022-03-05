@@ -66,6 +66,7 @@ public class PigController : MonoBehaviour
             data.UpdateStatus(0);
 
             pig.transform.position = birthPos.transform.position;
+            pig.transform.forward = birthPos.transform.forward;
             pig.SetActive(true);
         }
     }
