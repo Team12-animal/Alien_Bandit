@@ -504,23 +504,49 @@ public class LevelTwoControl : LevelControl
     public void WinGame(int level)
     {
         Color yellow = new Color(1, 1, 1, 1);
-        if (GetTotalScroe() == 90)
+        switch (level)
         {
-            //Saving data;
-            SaveStarsState.instance.SaveDate(level, 3, yellow);
-            GameOver();
-        }
-        else if (GetTotalScroe() == 60)
-        {
-            //Saving data;
-            SaveStarsState.instance.SaveDate(level, 2, yellow);
-            GameOver();
-        }
-        else if (GetTotalScroe() == 30)
-        {
-            //Saving data;
-            SaveStarsState.instance.SaveDate(level, 1, yellow);
-            GameOver();
+            case 2:
+                if (GetTotalScroe() >= 350)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 3, yellow);
+                    GameOver();
+                }
+                else if (GetTotalScroe() >= 250)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 2, yellow);
+                    GameOver();
+                }
+                else if (GetTotalScroe() >= 150)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 1, yellow);
+                    GameOver();
+                }
+                break;
+
+            case 3:
+                if (GetTotalScroe() >= 700)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 3, yellow);
+                    GameOver();
+                }
+                else if (GetTotalScroe() >= 500)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 2, yellow);
+                    GameOver();
+                }
+                else if (GetTotalScroe() >= 300)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 1, yellow);
+                    GameOver();
+                }
+                break;
         }
     }
 
