@@ -33,6 +33,7 @@ public class MissionManager : MonoBehaviour
         missions = new List<GameObject>();
         Go.Add(Resources.Load("Mission") as GameObject);
         Go.Add(Resources.Load("Mission2") as GameObject);
+        Go.Add(Resources.Load("Mission3") as GameObject);
     }
 
     // Update is called once per frame
