@@ -153,8 +153,7 @@ public class AIMain : MonoBehaviour
             AddRaccoon(raccoonBadygo, 3);
         }
         Destroy(go);
-        m_SceneRabbit.Remove(go);
-
+        m_SceneRaccoon.Remove(go);
     }
 
     private void RandomArray()

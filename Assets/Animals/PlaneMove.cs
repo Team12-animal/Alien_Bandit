@@ -33,7 +33,6 @@ public class PlaneMove : MonoBehaviour
     {
         if (currentPoint == 0)
         {
-            Debug.LogError("原點往終點");
             LastPos = transform.position;
             speed += 0.05f * Time.deltaTime;
             CurrentPos = Vector3.Lerp(transform.position, point[1], speed);
@@ -49,7 +48,6 @@ public class PlaneMove : MonoBehaviour
         }
         else
         {
-            Debug.LogError("終點往原點");
             LastPos = transform.position;
             speed += 0.05f * Time.deltaTime;
             CurrentPos = Vector3.Lerp(transform.position, point[0], speed);

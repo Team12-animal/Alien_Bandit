@@ -125,7 +125,6 @@ public class RabbitAI : MonoBehaviour
         float fDist = v.magnitude;
         if (fDist < m_Data.m_fAttackRange)
         {
-            Debug.LogError("¦b§ðÀ»¤º");
             bAttack = true;
             return true;
         }

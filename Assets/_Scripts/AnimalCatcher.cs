@@ -93,12 +93,14 @@ public class AnimalCatcher : MonoBehaviour
         {
             collectRaccoons += 1;
             lv.GenTotalScore(raccoon);
+            Debug.LogError("Raccoons");
             AIMain.m_Instance.RemoveRaccoon(animalInBox);
         }
         else if (animalInBox.tag == "LittleRaccoons")
         {
             collectLittleRaccoons += 1;
             lv.GenTotalScore(littleRaccoon);
+            Debug.LogError("LittleRaccoons");
             AIMain.m_Instance.RemoveRaccoon(animalInBox);
         }
         else if (animalInBox.tag == "Pig")
@@ -108,7 +110,7 @@ public class AnimalCatcher : MonoBehaviour
             animalInBox.SetActive(false);
         }
 
-        AIMain.m_Instance.AddRabbit();
+        //AIMain.m_Instance.AddRabbit();
         Debug.Log("Catch!");
 
         catcher.SetActive(false);
