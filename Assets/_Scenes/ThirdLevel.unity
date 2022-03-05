@@ -262,7 +262,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 10558860}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 62.20895, y: -27.4, z: 15.8}
+  m_LocalPosition: {x: 61.72, y: -27.4, z: 15.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2068148737}
@@ -9792,10 +9792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missions: []
-  Go:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  Go: []
 --- !u!114 &513986108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18013,7 +18010,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276802676}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 62.8, y: -25.099998, z: 2.5}
+  m_LocalPosition: {x: 61.32, y: -25.099998, z: 2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2068148737}
@@ -34456,7 +34453,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828853589}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.6, y: -25.34, z: 2.8}
+  m_LocalPosition: {x: 34.09, y: -25.34, z: 3.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2068148737}
@@ -55461,6 +55458,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 651376345358731533}
     m_Modifications:
+    - target: {fileID: 486141778, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
+      propertyPath: levelControl
+      value: 
+      objectReference: {fileID: 1919580629}
     - target: {fileID: 5084117703339529012, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.03

@@ -100,9 +100,15 @@ public class LevelTwoControl : LevelControl
         //missionManager.AddMission(1);
         gameFailUI.SetActive(false);
         levelUI.SetActive(false);
-        if (level == 3)
+        if (level >= 2)
         {
-            missionManager.AddMission(1);
+            Debug.Log($"{level} mission 2 add");
+            missionManager.AddMission(2);
+            if (level == 3)
+            {
+                Debug.Log($"{level} mission 1 add");
+                missionManager.AddMission(1);
+            }
         }
         AddScoreData();
     }
@@ -518,7 +524,7 @@ public class LevelTwoControl : LevelControl
                     SaveStarsState.instance.SaveDate(level, 2, yellow);
                     GameOver();
                 }
-                else if (GetTotalScroe() >= 30)
+                else if (GetTotalScroe() >= 150)
                 {
                     //Saving data;
                     SaveStarsState.instance.SaveDate(level, 1, yellow);
@@ -539,7 +545,7 @@ public class LevelTwoControl : LevelControl
                     SaveStarsState.instance.SaveDate(level, 2, yellow);
                     GameOver();
                 }
-                else if (GetTotalScroe() >= 30)
+                else if (GetTotalScroe() >= 300)
                 {
                     //Saving data;
                     SaveStarsState.instance.SaveDate(level, 1, yellow);
