@@ -116,7 +116,7 @@ public class RaccoonAI : MonoBehaviour
             else
             {
                 m_Data.agent.enabled = false;
-                m_Data.m_fMaxSpeed = 0.2f;
+                m_Data.m_fMaxSpeed = 0.1f;
                 m_eCurrentState = eFSMState.Chase;   //°k¶]
                 m_Am.SetInteger("State", 3);
                 m_Data.m_vTarget = m_Data.m_TargetObject.transform.position;
@@ -231,7 +231,7 @@ public class RaccoonAI : MonoBehaviour
             {
                 bool bAttack = false;
                 bool bCheck = CheckTargetEnemyInSight(m_CurrentEnemyTarget, ref bAttack);
-                m_Data.m_fMaxSpeed = 0.2f;
+                m_Data.m_fMaxSpeed = 0.1f;
                 m_Data.agent.enabled = false;
                 if (bCheck == false)
                 {

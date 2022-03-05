@@ -86,6 +86,8 @@ public class Fox_BehaviourTree : MonoBehaviour
         PlayerInit();
 
         destroySystem = destroyEffect.GetComponent<ParticleSystem>();
+
+        levelControl = GameObject.Find("LevelControl").GetComponent<LevelControl>();
     }
 
     private void OnEnable()
@@ -767,7 +769,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     public LevelControl levelControl;
     private void MinusScore()
     {
-        //levelControl.MinusScorePos(this.transform.position);
-        //levelControl.GenTotalScore(levelControl.fox);
+        levelControl.MinusScorePos(this.transform.position);
+        levelControl.GenTotalScore(levelControl.fox);
     }
 }

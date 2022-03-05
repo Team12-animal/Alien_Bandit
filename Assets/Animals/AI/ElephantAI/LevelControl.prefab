@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9196883007731916802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9196883007731916800}
+  - component: {fileID: 9196883007731916815}
+  m_Layer: 0
+  m_Name: LevelControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9196883007731916800
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9196883007731916802}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9196883007731916815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9196883007731916802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a1aec3440ce0a42a48669454f5e3ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreChangeOrNot: 0
+  scoreText: {fileID: 0}
+  addScoreText: {fileID: 0}
+  addScore: {fileID: 0}
+  level: 2
+  waittingTime: 3
+  readyImage: {fileID: 0}
+  goImage: {fileID: 21300000, guid: ca3b63acd99bda14c9accdc0f390cd03, type: 3}
+  waittingTimeUI: {fileID: 0}
+  gamingTime: 180
+  gamingTimeText: {fileID: 0}
+  gameWinUI: {fileID: 0}
+  gameFailUI: {fileID: 0}
+  levelUI: {fileID: 0}
+  chooseLevelUIStartButtonLevel03: {fileID: 0}
+  chooseLevelUIStartButtonLevel02: {fileID: 0}
+  doorDestroied: 0
+  continueUI: {fileID: 0}
+  showStars:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  players: []
+  player02RawImage: {fileID: 0}
+  player03RawImage: {fileID: 0}
+  player04RawImage: {fileID: 0}
+  player01ReadyImage: {fileID: 0}
+  player02ReadyImage: {fileID: 0}
+  player03ReadyImage: {fileID: 0}
+  player04ReadyImage: {fileID: 0}
+  isWin: 0
+  createdRain: 0
+  startRainTime: 120
+  endRainEventTime: 60
+  createdOthers: 0
+  startOthersEventTime: 105
+  endOthersEventTime: 90

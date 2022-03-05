@@ -61,6 +61,8 @@ public class Wolf_BehaviourTree : MonoBehaviour
         InitPlayer();
 
         jumpPs = data.jumpPs;
+
+        levelControl = GameObject.Find("LevelControl").GetComponent<LevelControl>();
     }
 
     private void InitPlayer()
@@ -750,7 +752,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
     public LevelControl levelControl;
     private void MinusScore()
     {
-        //levelControl.MinusScorePos(this.transform.position);
-        //levelControl.GenTotalScore(levelControl.wolf);
+        levelControl.MinusScorePos(this.transform.position);
+        levelControl.GenTotalScore(levelControl.wolf);
     }
 }

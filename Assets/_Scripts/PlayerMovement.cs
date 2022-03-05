@@ -426,8 +426,8 @@ public class PlayerMovement : MonoBehaviour
     TreeSensor ts;
     public void AnimaEventSpawnStumpAndLog()
     {
-        //audioSource.clip = clip[0];
-        //audioSource.Play();
+        audioSource.clip = clip[0];
+        audioSource.Play();
         if (data.tree != null && tree != data.tree)
         {
             tree = data.tree;

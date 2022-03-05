@@ -1068,6 +1068,7 @@ MonoBehaviour:
   warningIcon: {fileID: 0}
   bloom: {fileID: 0}
   clip: {fileID: 0}
+  levelControl: {fileID: 0}
 --- !u!195 &8996642270157200318
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1130,8 +1131,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_PlayOnAwake: 0
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
