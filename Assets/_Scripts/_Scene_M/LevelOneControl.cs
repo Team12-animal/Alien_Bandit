@@ -451,13 +451,13 @@ public class LevelOneControl : LevelControl
     {
         Color yellow = new Color(1, 1, 1, 1);
 
-        if (isWin == true && GetTotalScroe() >= 60)//score >= 10
+        if ((GetTotalScroe() >= 60 && gamingTime <= 0.0f) || (isWin == true && GetTotalScroe() >= 60))//score >= 10
         {
             //Saving data;
-            SaveStarsState.instance.SaveDate(level, 3, yellow);
+            SaveStarsState.instance.SaveDate(level, 2, yellow);
             GameOver();
         }
-        else if (isWin == true && GetTotalScroe() >= 30)//score >= 20
+        else if ((GetTotalScroe() >= 30 && gamingTime <= 0.0f) || isWin == true && GetTotalScroe() >= 30)//score >= 20
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 1, yellow);
