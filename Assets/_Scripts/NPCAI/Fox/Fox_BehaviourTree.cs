@@ -287,6 +287,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
             if (missionComplete || UnableToAccessOrNot() == true)
             {
+                missionComplete = true;
                 status = (int)FoxAIData.FoxStatus.Home;
             }
         }

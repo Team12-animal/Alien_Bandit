@@ -7,11 +7,11 @@ public class PlaneMove : MonoBehaviour
 
     public Vector3[] point;
     int currentPoint = 0;
-    private float speed ;
+    private float speed;
     private Vector3 LastPos;
     private Vector3 CurrentPos;
     private Vector3 DifPos;
-    public  bool isMove=false;
+    public bool isMove = false;
     private ButtonSensor buttonSensor;
     // Start is called before the first frame update
     void Start()
@@ -23,16 +23,17 @@ public class PlaneMove : MonoBehaviour
     void Update()
     {
         isMove = buttonSensor.GetPressedBool();
-        if (currentPoint==1 || isMove)
+        if (currentPoint == 1 || isMove)
         {
             ChangePoint();
-        }       
+        }
     }
 
     void ChangePoint()
     {
         if (currentPoint == 0)
         {
+            Debug.LogError("原點往終點");
             LastPos = transform.position;
             speed += 0.05f * Time.deltaTime;
             CurrentPos = Vector3.Lerp(transform.position, point[1], speed);
@@ -48,6 +49,7 @@ public class PlaneMove : MonoBehaviour
         }
         else
         {
+            Debug.LogError("終點往原點");
             LastPos = transform.position;
             speed += 0.05f * Time.deltaTime;
             CurrentPos = Vector3.Lerp(transform.position, point[0], speed);
@@ -57,7 +59,7 @@ public class PlaneMove : MonoBehaviour
             if (dist < 0.1f)
             {
                 currentPoint = 0;
-                speed= 0;
+                speed = 0;
                 StartCoroutine(WaitThreeSecond());
             }
         }
