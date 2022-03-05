@@ -190,7 +190,7 @@ public class RabbitAI : MonoBehaviour
             {
                 this.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
             }
-            else if (m_Data.isTargeted && m_Data.isCatched)
+            else if (m_Data.isTargeted && m_Data.isBited)
             {
                 this.transform.localPosition = new Vector3(0.097f, 0.034f, -0.275f);
             }

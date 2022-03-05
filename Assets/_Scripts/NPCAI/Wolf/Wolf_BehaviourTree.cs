@@ -656,7 +656,6 @@ public class Wolf_BehaviourTree : MonoBehaviour
         if (catchedTarget.tag == "Rabbit")
         {
             catchedTarget.GetComponent<RabbitAI>().m_Data.isBited = true;
-            catchedTarget.transform.localPosition = new Vector3(0.097f, 0.034f, -0.275f);
         }
 
         if (catchedTarget.tag == "Raccoon")
@@ -675,27 +674,28 @@ public class Wolf_BehaviourTree : MonoBehaviour
         target = null;
     }
 
-    private void AnimaEventAttacked()
-    {
-        if (catchedTarget != null)
-        {
-            catchedTarget.transform.parent = null;
+    //private void AnimaEventAttacked()
+    //{
+    //    if (catchedTarget != null)
+    //    {
+    //        catchedTarget.transform.parent = null;
 
-            if (catchedTarget.tag == "Rabbit")
-            {
-                catchedTarget.GetComponent<RabbitAI>().m_Data.isBited = false;
-            }
+    //        if (catchedTarget.tag == "Rabbit")
+    //        {
+    //            catchedTarget.GetComponent<RabbitAI>().m_Data.isBited = false;
+                
+    //        }
 
-            if (catchedTarget.tag == "Raccoon")
-            {
-                catchedTarget.GetComponent<RaccoonAI>().m_Data.isBited = false;
-            }
+    //        if (catchedTarget.tag == "Raccoon")
+    //        {
+    //            catchedTarget.GetComponent<RaccoonAI>().m_Data.isBited = false;
+    //        }
 
-            catchedTarget = null;
-            data.catchedTarget = null;
-            missionComplete = true;
-        }
-    }
+    //        catchedTarget = null;
+    //        data.catchedTarget = null;
+    //        missionComplete = true;
+    //    }
+    //}
 
     public void AnimaEventAttcedEnd()
     {

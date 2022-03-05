@@ -134,7 +134,7 @@ public class RaccoonAI : MonoBehaviour
     void Update()
     {
         m_Data.arriveDist = m_Data.m_Speed + 0.001f;
-        if (m_Data.isBited || m_Data.isCatched)
+        if (m_Data.isBited || m_Data.isCatched || m_Data.isTargeted)
         {
             m_Am.SetInteger("State", 0);
             m_eCurrentState = eFSMState.Idle;
@@ -142,12 +142,11 @@ public class RaccoonAI : MonoBehaviour
             currentCollider.enabled = false;
             this.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
 
-            if (m_Data.isCatched
-                )
+            if (m_Data.isCatched)
             {
                 this.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
             }
-            else
+            else if (m_Data.isTargeted && m_Data.isCatched)
             {
                 this.transform.localPosition = new Vector3(0.092f, 0.0f, -0.412f);
             }

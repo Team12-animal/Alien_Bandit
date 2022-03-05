@@ -55,6 +55,7 @@ public class BoxController : MonoBehaviour
                 if (targetAnimal.tag == "Rabbit")
                 {
                     targetAnimal.GetComponent<RabbitAI>().m_Data.isCatched = true;
+                    Debug.Log($"box is catched");
                 }
 
                 if (targetAnimal.tag == "Pig")
