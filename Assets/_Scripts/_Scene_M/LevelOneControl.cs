@@ -454,7 +454,7 @@ public class LevelOneControl : LevelControl
         if ((GetTotalScroe() >= 60 && gamingTime <= 0.0f) || (isWin == true && GetTotalScroe() >= 60))//score >= 10
         {
             //Saving data;
-            SaveStarsState.instance.SaveDate(level, 2, yellow);
+            SaveStarsState.instance.SaveDate(level, 3, yellow);
             GameOver();
         }
         else if ((GetTotalScroe() >= 30 && gamingTime <= 0.0f) || isWin == true && GetTotalScroe() >= 30)//score >= 20
