@@ -27,6 +27,7 @@ public class LevelControl : MonoBehaviour
     [Header("UI Text")]
     [SerializeField] Text scoreText;
     [SerializeField] Text addScoreText;
+    [SerializeField] Text minusScoreText;
     [SerializeField] GameObject addScore;
     [SerializeField] GameObject minusScore;
 
@@ -58,15 +59,19 @@ public class LevelControl : MonoBehaviour
         totalScore += addScore;
 
         int[] result = new int[] { addScore, totalScore };
-        addScoreText.text = addScore.ToString();
+        
         if (addScore > 0)
         {
+            addScoreText.text = addScore.ToString();
             audioSource.clip = clips[0];
             audioSource.Play();
             AddScoreUIAnimation();
         }
         else
         {
+            Debug.Log($"addscore {addScore}");
+            addScore = Mathf.Abs(addScore);
+            minusScoreText.text = "-" + addScore.ToString();
             audioSource.clip = clips[1];
             audioSource.Play();
             MinusScoreUIAnimation();
