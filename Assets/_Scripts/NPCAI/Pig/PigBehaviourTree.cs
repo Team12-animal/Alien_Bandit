@@ -287,7 +287,7 @@ public class PigBehaviourTree : MonoBehaviour
             }
 
             SteeringBehavior.Move(data);
-            pAC.ChangeAndPlayAnimation(pAC.walkTrigger, data.m_fTempTurnForce * 10, data.m_Speed * 10);
+            pAC.ChangeAndPlayAnimation(pAC.walkTrigger, data.m_fTempTurnForce * 30, data.m_Speed * 30);
         }
         else
         {
@@ -324,7 +324,7 @@ public class PigBehaviourTree : MonoBehaviour
             }
 
             SteeringBehavior.Move(data);
-            pAC.ChangeAndPlayAnimation(pAC.runTrigger, data.m_fTempTurnForce * 10, data.m_Speed * 10);
+            pAC.ChangeAndPlayAnimation(pAC.runTrigger, data.m_fTempTurnForce * 30, data.m_Speed * 30);
         }
     }
 
@@ -372,7 +372,7 @@ public class PigBehaviourTree : MonoBehaviour
             }
 
             SteeringBehavior.Move(data);
-            pAC.ChangeAndPlayAnimation(pAC.runTrigger, data.m_fTempTurnForce * 10, data.m_Speed * 10);
+            pAC.ChangeAndPlayAnimation(pAC.runTrigger, data.m_fTempTurnForce * 30, data.m_Speed * 30);
         }
         else
         {
