@@ -34,8 +34,8 @@ public class LevelControl : MonoBehaviour
 
     public void AddScoreData()
     {
-        scoreList.Add(rabbit, 30);
-        scoreList.Add(raccoon, 15);
+        scoreList.Add(rabbit, 45);
+        scoreList.Add(raccoon, 18);
         scoreList.Add(littleRaccoon, 125);
         scoreList.Add(pig, 70);
         scoreList.Add(elephant, -1);

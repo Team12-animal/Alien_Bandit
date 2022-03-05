@@ -117,7 +117,7 @@ public class LevelOneControl : LevelControl
             //LevelLoader.instance.LoadLevel(0);
         }
         TimeSettingAndAllowPlayerMoving();
-        //GameOver();
+        GameOver();
         //TriggerSceneEvents();
         WinGame(1);//1  means what level two stars state;
 
