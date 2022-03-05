@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 1811426558}
   - {fileID: 1903450228}
@@ -5545,7 +5545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 1572226547}
   - {fileID: 1900295083}
@@ -5570,7 +5570,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119505908}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6902,7 +6902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 2145720534}
   - {fileID: 1903450228}
@@ -7198,8 +7198,8 @@ MonoBehaviour:
   - {fileID: 1586550685}
   - {fileID: 51394854}
   breakableItems: []
-  waitForStart: 13
-  delay: 18
+  waitForStart: 0
+  delay: 2
   effect: {fileID: 129347118}
 --- !u!1 &278444082
 GameObject:
@@ -8095,7 +8095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 1572226547}
   - {fileID: 1567706565}
@@ -8121,7 +8121,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343225105}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8171,7 +8171,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343225105}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4, y: 0.8, z: -0.6}
+  m_LocalPosition: {x: 0.76, y: 0.8, z: -2.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1700918106}
@@ -12841,7 +12841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 250934583}
   - {fileID: 1664232337}
@@ -15464,7 +15464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 1061438946}
   - {fileID: 1235776443}
@@ -15491,7 +15491,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046718512}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -15541,7 +15541,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046718512}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.8, y: 0.78, z: -11.1}
+  m_LocalPosition: {x: -0.62, y: 0.78, z: -12.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1700918106}
@@ -15707,7 +15707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 343225105}
   - {fileID: 1046718512}
@@ -15731,7 +15731,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061438946}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -15781,7 +15781,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061438946}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.2, y: 1, z: -6.5}
+  m_LocalPosition: {x: -3.4, y: 0.73, z: -6.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1700918106}
@@ -15975,7 +15975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 1659364993}
 --- !u!135 &1074150567
@@ -15998,7 +15998,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1074150565}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -16997,7 +16997,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176868692}
   m_LocalRotation: {x: -0, y: -0.90599984, z: -0, w: 0.42327806}
-  m_LocalPosition: {x: 36.024296, y: -11.03846, z: 36.760418}
+  m_LocalPosition: {x: 36.81, y: -11.03846, z: 35.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1191745605}
@@ -17220,8 +17220,8 @@ MonoBehaviour:
   - {fileID: 1875522997}
   - {fileID: 1176868692}
   - {fileID: 327891335}
-  waitForStart: 37
-  delay: 36
+  waitForStart: 0
+  delay: 2
   bumpEndPos: {fileID: 1969823300}
 --- !u!4 &1198037748 stripped
 Transform:
@@ -17556,7 +17556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 1046718512}
   - {fileID: 2085047912}
@@ -17581,7 +17581,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1235776443}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -17631,7 +17631,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1235776443}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.6, y: 0.7027769, z: -5.4}
+  m_LocalPosition: {x: 7.91, y: 2.91, z: -6.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1700918106}
@@ -17776,7 +17776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 1757381865}
   - {fileID: 1046718512}
@@ -17800,7 +17800,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1267051450}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -18010,7 +18010,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276802676}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 61.32, y: -25.099998, z: 2.5}
+  m_LocalPosition: {x: 64.8, y: -25.099998, z: 3.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2068148737}
@@ -31379,7 +31379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 119505908}
   - {fileID: 1572226547}
@@ -31405,7 +31405,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1567706565}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -31493,7 +31493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 119505908}
   - {fileID: 1567706565}
@@ -31518,7 +31518,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572226547}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -31782,7 +31782,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1586550685}
   m_LocalRotation: {x: -0, y: -0.90599984, z: -0, w: 0.42327806}
-  m_LocalPosition: {x: 21.2, y: 7.06, z: -3.4}
+  m_LocalPosition: {x: 21.69, y: 7.06, z: -3.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 273605674}
@@ -32413,7 +32413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 1567706565}
   - {fileID: 1074150565}
@@ -32437,7 +32437,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659364993}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -32525,7 +32525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 727068798}
   - {fileID: 250934583}
@@ -33458,7 +33458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 1046718512}
   - {fileID: 1267051450}
@@ -33482,7 +33482,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1757381865}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -33658,7 +33658,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 11.73
+  m_Radius: 12.8
   m_Height: 38.55
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -33951,7 +33951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 1903450228}
   - {fileID: 7623370}
@@ -35305,7 +35305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 119505908}
   - {fileID: 1567706565}
@@ -35329,7 +35329,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900295083}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -35417,7 +35417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 250934583}
   - {fileID: 1664232337}
@@ -35493,7 +35493,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1903450228}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.7, y: 5.527854, z: 6.3}
+  m_LocalPosition: {x: 10.04, y: 5.527854, z: 4.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 161344519}
@@ -35807,7 +35807,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1940092564}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 57.87, y: -24.07, z: 12.58}
+  m_LocalPosition: {x: 58.27, y: -24.07, z: 12.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2068148737}
@@ -37524,8 +37524,8 @@ MonoBehaviour:
   birthPos: {fileID: 1828853589}
   homePos: {fileID: 1276802676}
   preys: []
-  waitForStart: 18
-  delay: 22
+  waitForStart: 0
+  delay: 2
   jumpPs:
   - {fileID: 1940236218}
   - {fileID: 1940092564}
@@ -37644,7 +37644,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085047912}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.5, y: 0.8, z: -8.7}
+  m_LocalPosition: {x: 15.19, y: 6.12, z: -8.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1700918106}
@@ -37662,7 +37662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 0
+  openGizmo: 1
   neibors:
   - {fileID: 1235776443}
   - {fileID: 1046718512}
@@ -37686,7 +37686,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085047912}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -38345,7 +38345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baddf37cd0bc4ce7a05e28939a3eec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openGizmo: 1
+  openGizmo: 0
   neibors:
   - {fileID: 250934583}
 --- !u!135 &2145720536
