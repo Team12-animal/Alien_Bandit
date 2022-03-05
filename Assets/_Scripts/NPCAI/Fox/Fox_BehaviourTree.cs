@@ -64,7 +64,11 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     //target UI
     public bool targetLocking = true;
-    
+
+    //destroy target effect
+    public GameObject destroyEffect;
+    private ParticleSystem destroySystem;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +84,8 @@ public class Fox_BehaviourTree : MonoBehaviour
         currentPathPt = 0;
 
         PlayerInit();
+
+        destroySystem = destroyEffect.GetComponent<ParticleSystem>();
     }
 
     private void OnEnable()
@@ -399,6 +405,19 @@ public class Fox_BehaviourTree : MonoBehaviour
         }
         else
         {
+            if (target.activeSelf == true && target != birthPos)
+            {
+                destroyEffect.transform.position = target.transform.position;
+                destroyEffect.SetActive(true);
+                destroySystem.Play();
+                
+            }
+            else
+            {
+                destroySystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                destroyEffect.SetActive(false);
+            }
+
             fAC.ChangeAndPlayAnimation(fAC.breaking, 0, 0);
         }
     }
@@ -607,6 +626,7 @@ public class Fox_BehaviourTree : MonoBehaviour
             }
         }
 
+        
         target.SetActive(false);
         GameObject.Destroy(target);
         target = null;

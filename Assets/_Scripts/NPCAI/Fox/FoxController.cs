@@ -16,6 +16,9 @@ public class FoxController : MonoBehaviour
     public float waitForStart;
     public float delay;
 
+    //destory target effect
+    public GameObject effect;
+
     // Start is called before the first frame update
     void Awake()
     { 
@@ -195,6 +198,8 @@ public class FoxController : MonoBehaviour
        
         behaviour = fox.GetComponent<Fox_BehaviourTree>();
         foxData = behaviour.data;
+
+        behaviour.destroyEffect = effect;
 
         if (behaviour == null || foxData == null)
         {

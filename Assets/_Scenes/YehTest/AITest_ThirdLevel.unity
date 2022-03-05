@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.505
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.39491382, g: 0.49234825, b: 0.62632805, a: 0.505}
+  m_IndirectSpecularColor: {r: 0.43661225, g: 0.501284, b: 0.585156, a: 0.505}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7348,10 +7348,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce134d7876cc0fd4e860f927a4e5f713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players: []
+  ICs: []
   dropIntoWaterEffect: {fileID: 895211816}
   respawnEffect: {fileID: 2145051847}
   respawnPos: {fileID: 662127673}
-  UI: {fileID: 2104030239}
+  UIs:
+  - {fileID: 2104030239}
+  - {fileID: 1459592690}
+  - {fileID: 952868928}
+  - {fileID: 682706725}
 --- !u!1 &263667002
 GameObject:
   m_ObjectHideFlags: 0
@@ -11631,6 +11637,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 499646, guid: 7a160d313e6ca0c4d8d3191f76fc0fce, type: 3}
   m_PrefabInstance: {fileID: 678260916}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &682706725 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2727470259676082683, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
+  m_PrefabInstance: {fileID: 3248473803101523449}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &686478524 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5800337100606476769, guid: fd58a7877ce2f54429791ad0276094ec, type: 3}
@@ -14728,6 +14739,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3916574325633068106, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
   m_PrefabInstance: {fileID: 616041699}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &952868928 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3019076116887602488, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
+  m_PrefabInstance: {fileID: 3248473803101523449}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &958073499
 PrefabInstance:
@@ -31201,6 +31217,11 @@ CapsuleCollider:
   m_Height: 16.13
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1459592690 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8120145988844809310, guid: 62bc9559475338842b59a4c0d8f67574, type: 3}
+  m_PrefabInstance: {fileID: 3248473803101523449}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1467057256
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35471,6 +35492,7 @@ MonoBehaviour:
   scoreText: {fileID: 497972443}
   addScoreText: {fileID: 2027814882}
   addScore: {fileID: 2027814880}
+  minusScore: {fileID: 0}
   level: 3
   waittingTime: 3
   readyImage: {fileID: 4908421854524314978}
