@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AnimalCatcher : MonoBehaviour
 {
-    public GameObject box;
+    public GameObject catcher;
     private BoxController bc;
+    private BagController bagC;
     private GameObject animalInBox;
 
     public GameObject player;
@@ -40,12 +41,23 @@ public class AnimalCatcher : MonoBehaviour
     {
         if(other.gameObject.tag == "Box")
         {
-            box = other.gameObject;
-            bc = box.GetComponent<BoxController>();
+            catcher = other.gameObject;
+            bc = catcher.GetComponent<BoxController>();
             player = bc.user;
             if (bc.animalCatched == true)
             {
-                SendAnimalToHome(box);
+                SendAnimalToHome(catcher);
+            }
+        }
+
+        if(other.gameObject.tag == "Bag")
+        {
+            catcher = other.gameObject;
+            bagC = catcher.GetComponent<BagController>();
+            player = bagC.user;
+            if (bagC.animalCatched == true)
+            {
+                SendAnimalToHome(catcher);
             }
         }
     }
@@ -55,9 +67,18 @@ public class AnimalCatcher : MonoBehaviour
     private readonly int littleRaccoon = 3;
     private readonly int pig = 4;
 
-    private void SendAnimalToHome(GameObject box)
+    private void SendAnimalToHome(GameObject catcher)
     {
-        animalInBox = bc.targetAnimal;
+        if (catcher.tag == "Box")
+        {
+            animalInBox = bc.targetAnimal;
+        }
+
+        if (catcher.tag == "Bag")
+        {
+            animalInBox = bagC.targetAnimal;
+        }
+
         PlayerData data = player.GetComponent<PlayerData>();
         PlayerMovement pm = player.GetComponent<PlayerMovement>();
         data.catchedAmt += 1;
@@ -87,9 +108,9 @@ public class AnimalCatcher : MonoBehaviour
         Debug.Log("Catch!");
 
         animalInBox.SetActive(false);
-        box.SetActive(false);
+        catcher.SetActive(false);
         GameObject.Destroy(animalInBox);
-        GameObject.Destroy(box);
+        GameObject.Destroy(catcher);
 
         //play particle effect
         Instantiate(successEffect, spawnPos.transform);

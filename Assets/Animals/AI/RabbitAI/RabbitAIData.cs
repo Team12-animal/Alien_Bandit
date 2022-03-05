@@ -25,6 +25,8 @@ public class RabbitAIData : NpcAIData
     public bool isCatched = false;
 
     public bool isBited = false;
+
+    public bool isTargeted = false;
 }
 
 

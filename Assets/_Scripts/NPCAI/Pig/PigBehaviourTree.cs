@@ -424,25 +424,28 @@ public class PigBehaviourTree : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(data.birthPos.transform.position, 1.1f);
+        if (this.gameObject.activeSelf == true)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(data.birthPos.transform.position, 1.1f);
 
-        Gizmos.color = Color.gray;
-        Gizmos.DrawSphere(data.homePos.transform.position, 1.1f);
+            Gizmos.color = Color.gray;
+            Gizmos.DrawSphere(data.homePos.transform.position, 1.1f);
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(this.transform.position, data.m_fRadius);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(this.transform.position, data.m_fRadius);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * data.m_fProbeLength);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * data.m_fProbeLength);
 
-        Vector3 from = this.transform.position;
-        from.y += 5.0f;
-        from.z += 1.0f;
-        Vector3 dir = -this.transform.up;
-        Gizmos.color = Color.black;
-        Gizmos.DrawLine(from, from + (dir * 5));
-
+            Vector3 from = this.transform.position;
+            from.y += 5.0f;
+            from.z += 1.0f;
+            Vector3 dir = -this.transform.up;
+            Gizmos.color = Color.black;
+            Gizmos.DrawLine(from, from + (dir * 5));
+        }
+      
         if (aStarPerforming)
         {
             List<Vector3> path = astar.GetPath();

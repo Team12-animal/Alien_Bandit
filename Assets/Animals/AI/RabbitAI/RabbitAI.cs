@@ -178,7 +178,7 @@ public class RabbitAI : MonoBehaviour
     void Update()
     {
         m_Data.arriveDist = m_Data.m_Speed + 0.001f;
-        if (m_Data.isBited || m_Data.isCatched)
+        if (m_Data.isBited || m_Data.isTargeted || m_Data.isBited)
         {
             m_Am.SetInteger("State", 0);
             m_eCurrentState = eFSMState.Idle;
@@ -190,7 +190,7 @@ public class RabbitAI : MonoBehaviour
             {
                 this.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
             }
-            else
+            else if (m_Data.isTargeted && m_Data.isCatched)
             {
                 this.transform.localPosition = new Vector3(0.097f, 0.034f, -0.275f);
             }
