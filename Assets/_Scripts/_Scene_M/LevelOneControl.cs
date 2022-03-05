@@ -450,13 +450,14 @@ public class LevelOneControl : LevelControl
     public void WinGame(int level)
     {
         Color yellow = new Color(1, 1, 1, 1);
-        if (isWin == true && GetTotalScroe() == 60)//score >= 10
+
+        if (isWin == true && GetTotalScroe() >= 60)//score >= 10
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 3, yellow);
             GameOver();
         }
-        else if (isWin == true && GetTotalScroe() == 30)//score >= 20
+        else if (isWin == true && GetTotalScroe() >= 30)//score >= 20
         {
             //Saving data;
             SaveStarsState.instance.SaveDate(level, 1, yellow);
@@ -535,7 +536,7 @@ public class LevelOneControl : LevelControl
     public void OpenLevelUI()
     {
         levelUI.SetActive(true);
-        if (showStars[0].GetComponent<RawImage>().color == new Color(1.0f,1.0f,1.0f) || isWin)
+        if (showStars[0].GetComponent<RawImage>().color == new Color(1.0f, 1.0f, 1.0f) || isWin)
         {
             EventSystem.current.SetSelectedGameObject(chooseLevelUIStartButtonLevel02);
         }
