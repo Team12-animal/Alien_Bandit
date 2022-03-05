@@ -21,6 +21,7 @@ public class LevelControl : MonoBehaviour
     private readonly int elephant = 5;
     public readonly int fox = 6;
     public readonly int wolf = 7;
+    public readonly int river = 8;
 
     public Dictionary<int, int> scoreList = new Dictionary<int, int>();
 
@@ -33,13 +34,14 @@ public class LevelControl : MonoBehaviour
 
     public void AddScoreData()
     {
-        scoreList.Add(rabbit, 30);
-        scoreList.Add(raccoon, 15);
+        scoreList.Add(rabbit, 45);
+        scoreList.Add(raccoon, 18);
         scoreList.Add(littleRaccoon, 125);
         scoreList.Add(pig, 70);
         scoreList.Add(elephant, -1);
         scoreList.Add(fox, -5);
         scoreList.Add(wolf, -10);
+        scoreList.Add(river, -1);
     }
 
     //for treeController
@@ -69,7 +71,7 @@ public class LevelControl : MonoBehaviour
         }
         else
         {
-            Debug.Log($"addscore {addScore}");
+            //Debug.Log($"addscore {addScore}");
             addScore = Mathf.Abs(addScore);
             minusScoreText.text = "-" + addScore.ToString();
             audioSource.clip = clips[1];
@@ -81,7 +83,7 @@ public class LevelControl : MonoBehaviour
 
     private int AddScore(int type)
     {
-        Debug.Log("add score" + type);
+        //Debug.Log("add score" + type);
         if (scoreList.ContainsKey(type))
         {
             scoreChangeOrNot = true;

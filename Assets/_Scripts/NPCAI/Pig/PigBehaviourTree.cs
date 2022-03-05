@@ -276,7 +276,7 @@ public class PigBehaviourTree : MonoBehaviour
 
                     data.SetTarget(sPos);
 
-                    Debug.Log($"doing astar path{s} sPos{sPos}");
+                    Debug.Log($"pig doing astar path{s} sPos{sPos}");
                     break;
                 }
                 SteeringBehavior.Seek(data);
@@ -361,7 +361,7 @@ public class PigBehaviourTree : MonoBehaviour
                     currentPathPt = i;
 
                     data.SetTarget(sPos);
-                    Debug.Log($"doing astar path{s} sPos{sPos}");
+                    Debug.Log($"pig doing astar path{s} sPos{sPos}");
                     break;
                 }
                 SteeringBehavior.Seek(data);
