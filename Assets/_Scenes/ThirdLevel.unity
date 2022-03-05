@@ -9702,7 +9702,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missions: []
-  Go: []
+  Go:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &513986108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35551,6 +35554,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74a1aec3440ce0a42a48669454f5e3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  clips: []
   scoreChangeOrNot: 0
   scoreText: {fileID: 497972443}
   addScoreText: {fileID: 2027814882}
