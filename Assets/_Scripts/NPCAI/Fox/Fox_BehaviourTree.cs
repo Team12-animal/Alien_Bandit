@@ -161,12 +161,13 @@ public class Fox_BehaviourTree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        if (!(target != null && (target.transform.position - this.transform.position).magnitude < data.m_fRadius + 2.0f))
+        if (!(target != null && (target.transform.position - this.transform.position).magnitude < data.m_fRadius + 3.0f))
         {
             FindEffectPlayer();
         }
         else
         {
+            Debug.Log("fox ignore");
             effectPlayers.Clear();
         }
 
@@ -608,6 +609,13 @@ public class Fox_BehaviourTree : MonoBehaviour
                 if (animalCatched.tag == "Rabbit")
                 {
                     animalCatched.GetComponent<RabbitAI>().m_Data.isCatched = false;
+                    animalCatched.GetComponent<RabbitAI>().m_Data.isTargeted = false;
+                }
+
+                if (animalCatched.tag == "Raccoon")
+                {
+                    animalCatched.GetComponent<RaccoonAI>().m_Data.isCatched = false;
+                    animalCatched.GetComponent<RaccoonAI>().m_Data.isTargeted = false;
                 }
             }
         }
