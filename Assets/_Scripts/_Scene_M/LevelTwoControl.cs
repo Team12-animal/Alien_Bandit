@@ -164,7 +164,7 @@ public class LevelTwoControl : LevelControl
             //LevelLoader.instance.LoadLevel(0);
         }
         TimeSettingAndAllowPlayerMoving();
-        GameOver();
+        //GameOver();
         //TriggerSceneEvents();
         WinGame(level);
     }

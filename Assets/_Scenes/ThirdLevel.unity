@@ -6434,6 +6434,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 409248, guid: da8e893168526164591f81d60c0e06b1, type: 3}
   m_PrefabInstance: {fileID: 171567235}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &172570944 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5136066076151933907, guid: f8de2bccbec18864489342d2891d0725, type: 3}
+  m_PrefabInstance: {fileID: 1153637928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &179238150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6201417577865796235, guid: 936441e8ad7465e409c2285b778dfd8f, type: 3}
@@ -8511,6 +8516,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 456372, guid: d7be01913fd43c542a7c03fa290742fa, type: 3}
   m_PrefabInstance: {fileID: 388826790}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &398880879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1145177637583448556, guid: e020d4f2b34a90e4e8cd15992029fc64, type: 3}
+  m_PrefabInstance: {fileID: 1243722656}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &420130646 stripped
 Transform:
@@ -10834,6 +10844,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3916574325633068106, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
   m_PrefabInstance: {fileID: 612539569}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &624115026 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 455179590232211718, guid: c3819b41c65fb1548847cc4727145207, type: 3}
+  m_PrefabInstance: {fileID: 1388591222}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &631830486
 GameObject:
@@ -23811,6 +23826,7 @@ GameObject:
   - component: {fileID: 1382119409}
   - component: {fileID: 1382119411}
   - component: {fileID: 1382119410}
+  - component: {fileID: 1382119412}
   m_Layer: 5
   m_Name: ChooseLevel
   m_TagString: Untagged
@@ -23881,6 +23897,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382119408}
   m_CullTransparentMesh: 1
+--- !u!114 &1382119412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382119408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa4f900450286041ba30c47e532263f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stars:
+  - {fileID: 1565599143}
+  - {fileID: 1557786695}
+  - {fileID: 656937259}
+  - {fileID: 941403504}
+  - {fileID: 1869826334}
+  - {fileID: 1078446382}
+  - {fileID: 398880879}
+  - {fileID: 624115026}
+  - {fileID: 172570944}
+  levelsButtons:
+  - {fileID: 1621077326}
+  - {fileID: 1386446757}
+  - {fileID: 1866700006}
+  selectableLevel02: {fileID: 1386446757}
+  selectableLevel03: {fileID: 1866700006}
 --- !u!1 &1386446756
 GameObject:
   m_ObjectHideFlags: 0
@@ -37572,6 +37616,9 @@ MonoBehaviour:
   - {fileID: 941403504}
   - {fileID: 1869826334}
   - {fileID: 1078446382}
+  - {fileID: 398880879}
+  - {fileID: 624115026}
+  - {fileID: 172570944}
   dataStarts: []
 --- !u!4 &2103685490 stripped
 Transform:
