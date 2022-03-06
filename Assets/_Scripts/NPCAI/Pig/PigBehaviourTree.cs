@@ -217,8 +217,16 @@ public class PigBehaviourTree : MonoBehaviour
     {
         Vector3 result;
         Vector3 dir = nearestPlayer.transform.position - this.transform.position;
-        dir.Normalize();
-        result = this.transform.position + dir * runDist;
+        
+        if (!(Physics.Linecast(this.transform.position, nearestPlayer.transform.position, 1 << 8 | 1 << 15)))
+        {
+            dir.Normalize();
+            result = this.transform.position + dir * runDist;
+        }
+        else
+        {
+            result = this.transform.position + this.transform.forward * 1.0f;
+        }
 
         return result;
     }
