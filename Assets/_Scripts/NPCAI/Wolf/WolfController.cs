@@ -58,9 +58,6 @@ public class WolfController : MonoBehaviour
     {
         List<GameObject> preys = new List<GameObject>();
         GameObject[] rabbits = GameObject.FindGameObjectsWithTag("Rabbit");
-        GameObject[] raccoons = GameObject.FindGameObjectsWithTag("Raccoon");
-
-        Debug.Log($"wolfcontrol init rabbit{rabbits.Length} raccoons{raccoons.Length}");
 
         if (rabbits.Length > 0)
         {
@@ -69,15 +66,6 @@ public class WolfController : MonoBehaviour
                 preys.Add(r);
             }
         }
-
-        if (raccoons.Length > 0)
-        {
-            foreach (GameObject r in raccoons)
-            {
-                preys.Add(r);
-            }
-        }
-
         return preys;
     }
 

@@ -267,8 +267,10 @@ public class PigBehaviourTree : MonoBehaviour
                     Vector3 sPos = path[i];
                     Vector3 cPos = this.transform.position;
 
-                    if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                    RaycastHit hit;
+                    if (Physics.Linecast(cPos, sPos, out hit, 1 << 8 | 1 << 15))
                     {
+                        Debug.Log($"pig linecast {hit.transform.gameObject}");
                         continue;
                     }
 
@@ -352,9 +354,10 @@ public class PigBehaviourTree : MonoBehaviour
                 {
                     Vector3 sPos = path[i];
                     Vector3 cPos = this.transform.position;
-
-                    if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                    RaycastHit hit;
+                    if (Physics.Linecast(cPos, sPos, out hit, 1 << 8 | 1 << 15))
                     {
+                        Debug.Log($"pig linecast {hit.transform.gameObject}");
                         continue;
                     }
 
