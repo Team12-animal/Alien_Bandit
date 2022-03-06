@@ -834,7 +834,11 @@ MonoBehaviour:
   nearestP: {fileID: 0}
   mouth: {fileID: 8977016372379236376}
   audioSource: {fileID: -2961334507835078823}
-  clip: {fileID: 8300000, guid: d1759d9f9d2b42743b15972ccc5cd0e3, type: 3}
+  clip:
+  - {fileID: 8300000, guid: d1759d9f9d2b42743b15972ccc5cd0e3, type: 3}
+  - {fileID: 8300000, guid: b8b1ff093a0e74e4eb002f7b9cc03075, type: 3}
+  - {fileID: 8300000, guid: e4aa6f48a36014dcc9d111bf13e6c85f, type: 3}
+  levelControl: {fileID: 0}
 --- !u!114 &1829762202718912998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,9 +868,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d1759d9f9d2b42743b15972ccc5cd0e3, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

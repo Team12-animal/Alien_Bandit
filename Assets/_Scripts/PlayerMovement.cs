@@ -824,9 +824,10 @@ public class PlayerMovement : MonoBehaviour
         return holdingPos;
     }
 
-    public void PlayAudio()
+    public void PlayAudio(int i)
     {
-        audioSource.clip = clip[1];
+        audioSource.clip = clip[i];
         audioSource.Play();
     }
+
 }

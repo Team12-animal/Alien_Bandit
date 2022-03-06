@@ -2420,6 +2420,9 @@ MonoBehaviour:
   clip:
   - {fileID: 8300000, guid: 769e2a94bec01cc4d80923ef237ab7a0, type: 3}
   - {fileID: 8300000, guid: 9555bb5d21b4196439b724e99a147b5c, type: 3}
+  - {fileID: 8300000, guid: 544a2bfa20e4cc84584ff34c0c882f30, type: 3}
+  - {fileID: 8300000, guid: 911ab2de096ab674385d7ae4d9bcc4a2, type: 3}
+  - {fileID: 8300000, guid: 89a7dbe7a122bb040a881ea6e6f954f2, type: 3}
   velocity: {x: 0, y: 0, z: 0}
   raydect: 0
   maxSpeed: 0
@@ -2503,9 +2506,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

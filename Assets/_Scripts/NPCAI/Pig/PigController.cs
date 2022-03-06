@@ -85,6 +85,7 @@ public class PigController : MonoBehaviour
 
     private GameObject SetHomePos()
     {
+        pig.GetComponent<AudioSource>().Stop();
         List<GameObject> members = birthPos.GetComponent<PigNode>().groupMember;
 
         if (members.Count > 0)

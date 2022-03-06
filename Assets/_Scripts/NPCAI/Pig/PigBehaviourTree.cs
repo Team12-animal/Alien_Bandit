@@ -38,6 +38,7 @@ public class PigBehaviourTree : MonoBehaviour
 
     //crown
     public GameObject crown;
+    private AudioSource audioSource; 
 
     private void Awake()
     {
@@ -49,6 +50,8 @@ public class PigBehaviourTree : MonoBehaviour
         astar.Init(wpt);
 
         InitPlayer();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void InitPlayer()
@@ -69,6 +72,7 @@ public class PigBehaviourTree : MonoBehaviour
 
         aStarPerforming = astar.PerformAStar(this.transform.position, data.homePos.transform.position);
         currentPathPt = 0;
+        audioSource.Play();
 
     }
 

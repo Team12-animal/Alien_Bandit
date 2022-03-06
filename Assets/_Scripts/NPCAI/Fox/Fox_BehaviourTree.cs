@@ -99,6 +99,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         if (data.target != null)
         {
+            PlayFoxAudio(1);
             if (data.target.tag == "Box")
             {
                 boxC = data.target.GetComponent<BoxController>();
@@ -711,7 +712,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
     private bool music = true;
     public AudioSource audioSource;
-    public AudioClip clip;
+    public AudioClip[] clip;
     public Vector3 WarningUIDisplay()
     {
         Vector3 newPos;
@@ -722,7 +723,7 @@ public class Fox_BehaviourTree : MonoBehaviour
             newPos.y += 2.5f;
             if (music)
             {
-                audioSource.clip = clip;
+                audioSource.clip = clip[0];
                 InvokeRepeating("PlayAudio",0,1f);
                 music = false;
             }
@@ -742,6 +743,11 @@ public class Fox_BehaviourTree : MonoBehaviour
         audioSource.Play();
     }
 
+    public void PlayFoxAudio(int i)
+    {
+        audioSource.clip = clip[i];
+        audioSource.Play();
+    }
     private bool ArriveTargetOrNot()
     {
         float dist = (this.transform.position - target.transform.position).magnitude;

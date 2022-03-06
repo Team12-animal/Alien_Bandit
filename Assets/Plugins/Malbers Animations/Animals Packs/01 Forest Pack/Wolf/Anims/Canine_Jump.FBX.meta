@@ -1031,12 +1031,19 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.8905983
-        functionName: AnimaEventToRun
+      - time: 0
+        functionName: PlayWolfAudio
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: c7066373f3c653c4e983d6cd3254265c, type: 3}
         floatParameter: 0
-        intParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.8905983
+        functionName: PlayWolfAudio
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: c7066373f3c653c4e983d6cd3254265c, type: 3}
+        floatParameter: 0
+        intParameter: 2
         messageOptions: 0
       transformMask:
       - path: 

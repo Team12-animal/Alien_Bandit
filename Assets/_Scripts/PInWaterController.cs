@@ -25,10 +25,12 @@ public class PInWaterController : MonoBehaviour
     private List<UICountdown> cds;
 
     public LevelControl levelControl;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         ICs = new InputController[4];
         players = new GameObject[4];
         pInWater = new List<GameObject>();
@@ -135,6 +137,7 @@ public class PInWaterController : MonoBehaviour
                 pInWater.Add(players[index]);
                 dropIntoWaterEffect.transform.position = playerPos + new Vector3 (0f, 1f, 0f);
                 dropInWater.Play(true);
+                audioSource.Play();
                 levelControl.MinusScorePos(playerPos);
                 levelControl.GenTotalScore(8);
                 players[index].transform.position = savePos;

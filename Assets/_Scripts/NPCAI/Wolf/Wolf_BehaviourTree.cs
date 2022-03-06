@@ -714,7 +714,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private bool music = true;
     public AudioSource audioSource;
-    public AudioClip clip;
+    public AudioClip[] clip;
 
     //UI display for warnUIDisplayer
     public Vector3 WarningUIDisplay()
@@ -729,7 +729,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
             newPos.y += 2.5f;
             if (music)
             {
-                audioSource.clip = clip;
+                audioSource.clip = clip[0];
                 InvokeRepeating("PlayAudio", 0, 1f);
                 music = false;
             }
@@ -746,6 +746,11 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     public void PlayAudio()
     {
+        audioSource.Play();
+    }
+    public void PlayWolfAudio(int i )
+    {
+        audioSource.clip = clip[i];
         audioSource.Play();
     }
 
