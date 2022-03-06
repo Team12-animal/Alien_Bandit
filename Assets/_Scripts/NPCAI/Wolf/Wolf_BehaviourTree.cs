@@ -579,6 +579,9 @@ public class Wolf_BehaviourTree : MonoBehaviour
         }
         else
         {
+
+            MinusScore();
+
             if (catchedTarget != null && catchedTarget.tag == "Rabbit")
             {
                 AIMain.m_Instance.RemoveRabbit(catchedTarget);
@@ -658,7 +661,6 @@ public class Wolf_BehaviourTree : MonoBehaviour
             catchedTarget.GetComponent<RaccoonAI>().m_Data.isBited = true;
         }
 
-        MinusScore();
         missionComplete = true;
     }
 
@@ -745,7 +747,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
     public LevelControl levelControl;
     private void MinusScore()
     {
-        levelControl.MinusScorePos(this.transform.position);
+        levelControl.MinusScorePos(jumpPs[1].transform.position);
         levelControl.GenTotalScore(levelControl.wolf);
     }
 }

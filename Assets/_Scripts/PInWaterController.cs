@@ -46,6 +46,12 @@ public class PInWaterController : MonoBehaviour
                 {
                     players[i] = p;
                     ICs[i] = p.GetComponent<InputController>();
+                    continue;
+                }
+                else
+                {
+                    players[i] = null;
+                    ICs[i] = null;
                 }
             }
         }
@@ -58,6 +64,8 @@ public class PInWaterController : MonoBehaviour
 
         dropInWater = dropIntoWaterEffect.GetComponent<ParticleSystem>();
         respawning = respawnEffect.GetComponent<ParticleSystem>();
+
+        levelControl = GameObject.Find("LevelControl").GetComponent<LevelControl>();
     }
 
     // Update is called once per frame
@@ -128,6 +136,14 @@ public class PInWaterController : MonoBehaviour
 
         for (index = 0; index < players.Length; index++)
         {
+            if (players[index] == null)
+            {
+
+                Debug.Log($"skip {index}");
+                continue;
+            }
+
+            Debug.Log($"exceed {index}");
             Vector3 playerPos = ICs[index].GetPlayerPos();
 
             if (playerPos.y <= -1.5f)
@@ -135,6 +151,7 @@ public class PInWaterController : MonoBehaviour
                 pInWater.Add(players[index]);
                 dropIntoWaterEffect.transform.position = playerPos + new Vector3 (0f, 1f, 0f);
                 dropInWater.Play(true);
+                MinusScore();
                 levelControl.MinusScorePos(playerPos);
                 levelControl.GenTotalScore(8);
                 players[index].transform.position = savePos;
@@ -159,5 +176,11 @@ public class PInWaterController : MonoBehaviour
                 ICs[index].enabled = false;
             }
         }
+    }
+
+    private void MinusScore()
+    {
+        levelControl.MinusScorePos(this.transform.position);
+        levelControl.GenTotalScore(levelControl.river);
     }
 }

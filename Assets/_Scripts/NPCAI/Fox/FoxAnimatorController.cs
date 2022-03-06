@@ -37,8 +37,8 @@ public class FoxAnimatorController : MonoBehaviour
 
     public void ChangeAndPlayAnimation(string state, float turnForce, float moveForce)
     {
-        Debug.Log("npc play animation" +state + turnForce + " / " + moveForce);
-        if(state == currentState)
+        Debug.Log("fox play animation" +state + turnForce + " / " + moveForce + $"current{animator.GetCurrentAnimatorStateInfo(0).IsName(state)}");
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(state) == true)
         {
             Debug.Log($"fox animator stare{state} cuuent state-{currentState}");
             animator.SetFloat(turnForceHash, turnForce);

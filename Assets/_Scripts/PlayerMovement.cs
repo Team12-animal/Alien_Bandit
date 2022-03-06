@@ -300,6 +300,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        Debug.Log("player triggeritem exit");
         triggerItem = null;
     }
 
@@ -679,10 +680,18 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        targetItem.transform.position = holdingPos.position;
-        targetItem.transform.rotation = holdingPos.rotation;
-        targetItem.transform.SetParent(holdingPos);
-        targetItem.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        targetItem.transform.parent = holdingPos;
+        Debug.Log($"hold item {targetItem.name} parent{targetItem.transform.parent.name}");
+        if (targetItem.tag == "Rope")
+        {
+            targetItem.transform.localPosition = new Vector3(0.0f, 0.0f, -0.5f);
+            targetItem.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        }
+        else
+        {
+            targetItem.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        }
+
         Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();
         targetRG.isKinematic = true;
         itemInhand = targetItem;
@@ -748,7 +757,11 @@ public class PlayerMovement : MonoBehaviour
             itemInhand.GetComponent<RopeController>().beUsing = false;
         }
 
-            itemInhand = null;
+        itemInhand = null;
+        if (usingTable)
+        {
+            triggerItem = null;
+        }
         Debug.Log("drop item " + itemInhand == null);
         UpdatePlayerData();
     }
@@ -811,13 +824,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //inactive item while put it on table
-    private void AnimaEventItemInActivator()
-    {
-        if (usingTable)
-        {
-            itemInhand.SetActive(false);
-        }
-    }
+
 
     public Transform GetHoldingPos()
     {
