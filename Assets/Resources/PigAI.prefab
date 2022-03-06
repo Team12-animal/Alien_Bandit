@@ -504,6 +504,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5368351882017264785, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
+      propertyPath: clips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368351882017264785, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
       propertyPath: data.m_fMaxSpeed
       value: 0.03
       objectReference: {fileID: 0}
@@ -511,6 +515,14 @@ PrefabInstance:
       propertyPath: data.runSpeedTimes
       value: 2.1
       objectReference: {fileID: 0}
+    - target: {fileID: 5368351882017264785, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
+      propertyPath: clips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 588edf595cbe4b94cabaedd1ff05e9a4, type: 3}
+    - target: {fileID: 5368351882017264785, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
+      propertyPath: clips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: b49fdbc1c50264c4e8a61a7fea91914a, type: 3}
     - target: {fileID: 5368351882017264785, guid: 55172bcde118afc49abfe92b3495049b, type: 3}
       propertyPath: data.m_fProbeLength
       value: 1.2
@@ -560,7 +572,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 588edf595cbe4b94cabaedd1ff05e9a4, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.15
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0

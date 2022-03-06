@@ -138,11 +138,11 @@ public class AIMain : MonoBehaviour
         StartCoroutine(WaitTimeAddRabbit(5f));
     }
 
-    public void AddRaccoon(GameObject go, int i)
+    public void AddRaccoon(GameObject gos, int i)
     {
         Vector3 Pos = raccoonPos[i];
         Quaternion Rot = Quaternion.Euler(0f,180f, 0f);
-        GameObject raccoon = Instantiate(go, Pos, Rot, this.transform);
+        GameObject raccoon = Instantiate(gos, Pos, Rot, this.transform);
         m_SceneRaccoon.Add(raccoon);
     }
 

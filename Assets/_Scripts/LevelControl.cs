@@ -7,6 +7,7 @@ public class LevelControl : MonoBehaviour
 {
 
     Vector3 upPos;
+    public AudioSource audioSource_Sorce;
     public AudioSource audioSource;
     public AudioClip[] clips;
     //分數是否有變化
@@ -35,7 +36,7 @@ public class LevelControl : MonoBehaviour
     public void AddScoreData()
     {
         scoreList.Add(rabbit, 45);
-        scoreList.Add(raccoon, 18);
+        scoreList.Add(raccoon, 25);
         scoreList.Add(littleRaccoon, 125);
         scoreList.Add(pig, 70);
         scoreList.Add(elephant, -1);
@@ -65,8 +66,7 @@ public class LevelControl : MonoBehaviour
         if (addScore > 0)
         {
             addScoreText.text = addScore.ToString();
-            audioSource.clip = clips[0];
-            audioSource.Play();
+            PlayScoreAudio(0);
             AddScoreUIAnimation();
         }
         else
@@ -74,8 +74,7 @@ public class LevelControl : MonoBehaviour
             //Debug.Log($"addscore {addScore}");
             addScore = Mathf.Abs(addScore);
             minusScoreText.text = "-" + addScore.ToString();
-            audioSource.clip = clips[1];
-            audioSource.Play();
+            PlayScoreAudio(1);
             MinusScoreUIAnimation();
         }
         return result;
@@ -94,6 +93,17 @@ public class LevelControl : MonoBehaviour
             scoreChangeOrNot = false;
             return 0;
         }
+    }
+
+    public void PlayScoreAudio(int i)
+    {
+        audioSource_Sorce.clip = clips[i];
+        audioSource_Sorce.Play();
+    }        
+    public void PlayLevelAudio(int i)
+    {
+        audioSource.clip = clips[i];
+        audioSource.Play();
     }
 
     public void AddScoreUIAnimation()

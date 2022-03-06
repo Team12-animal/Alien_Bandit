@@ -57,6 +57,7 @@ public class LevelTwoControl : LevelControl
 
     private void Start()
     {
+        audioSource.clip = clips[3];
         //Setting Players who are in game
         SceneController.instance.GetPlayer(players);
         SettingPlayerPosition();
@@ -215,14 +216,30 @@ public class LevelTwoControl : LevelControl
         return time;
     }
 
+    private bool PlayEndMusic = true;
+    private bool PlayBellMusic = true;
+
     public void GameOver()
     {
         input01 = players[0].GetComponent<InputController>();
         input02 = players[1].GetComponent<InputController>();
         input03 = players[2].GetComponent<InputController>();
         input04 = players[3].GetComponent<InputController>();
+        if (gamingTime <= 30f && PlayEndMusic)
+        {
+            audioSource.loop = true;
+            PlayLevelAudio(2);
+            PlayEndMusic = false;
+        }
         if (gamingTime <= 0.0f)// || doorDestroied
         {
+            if (PlayBellMusic)
+            {
+                audioSource.loop = false;
+                PlayLevelAudio(3);
+                PlayBellMusic = false;
+            }
+
             GameOverSetting(input01, input02, input03, input04);
             // can't control players;
             //for (int i = 0; i < gameOverUIText.Length; i++)

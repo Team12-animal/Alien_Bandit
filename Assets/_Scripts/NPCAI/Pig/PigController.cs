@@ -16,7 +16,7 @@ public class PigController : MonoBehaviour
     public GameObject bumpEndPos;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {   
         birthNodes = GameObject.FindGameObjectsWithTag("PigNode");
         LoadPig();
@@ -41,8 +41,7 @@ public class PigController : MonoBehaviour
     private void LoadPig()
     {
         var prefab = Resources.Load<GameObject>("PigAI");
-        pig = GameObject.Instantiate(prefab) as GameObject;
-
+        pig = Instantiate(prefab);
         data = pig.GetComponent<PigBehaviourTree>().data;
         pig.GetComponent<PigBehaviourTree>().bumpEndPos = bumpEndPos;
         pig.SetActive(false);

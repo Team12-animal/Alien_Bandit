@@ -89,18 +89,16 @@ public class AnimalCatcher : MonoBehaviour
             lv.GenTotalScore(rabbit);
             AIMain.m_Instance.RemoveRabbit(animalInBox);
         }
-        else if (animalInBox.tag == "Raccoons")
-        {
-            collectRaccoons += 1;
-            lv.GenTotalScore(raccoon);
-            Debug.LogError("Raccoons");
-            AIMain.m_Instance.RemoveRaccoon(animalInBox);
-        }
-        else if (animalInBox.tag == "LittleRaccoons")
+        else if (animalInBox.name == "RaccoonBadyAI(Clone)")
         {
             collectLittleRaccoons += 1;
             lv.GenTotalScore(littleRaccoon);
-            Debug.LogError("LittleRaccoons");
+            AIMain.m_Instance.RemoveRaccoon(animalInBox);
+        }
+        else if (animalInBox.tag == "Raccoon")
+        {
+            collectRaccoons += 1;
+            lv.GenTotalScore(raccoon);
             AIMain.m_Instance.RemoveRaccoon(animalInBox);
         }
         else if (animalInBox.tag == "Pig")
