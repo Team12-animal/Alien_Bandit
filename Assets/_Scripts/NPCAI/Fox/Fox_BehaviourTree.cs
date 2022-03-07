@@ -126,7 +126,6 @@ public class Fox_BehaviourTree : MonoBehaviour
         arriveHomeArea = false;
         pAttact = false;
         targetLocking = true;
-        aStarPerfoming = true;
     }
 
     private void PlayerInit()

@@ -96,6 +96,11 @@ public class PigBehaviourTree : MonoBehaviour
         bumpedP = false;
         nearestPlayer = null;
         audioPlayed = false;
+
+        if (mesh.activeSelf == false)
+        {
+            mesh.SetActive(true);
+        }
     }
 
     private void Update()
