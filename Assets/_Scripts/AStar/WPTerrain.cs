@@ -52,10 +52,10 @@ public class WPTerrain
         sr.Close();
 
         string path = $"/{txtName}.txt";
-        //TextAsset ta = Resources.Load(Application.dataPath + "/Resources/" + txtName) as TextAsset;
-        //string all = ta.text;
         string all = File.ReadAllText(Application.streamingAssetsPath + path);
-        
+
+        Debug.Log($"wp load {all == null}");
+
         string[] lines = all.Split('\n');
         int lineAmt = lines.Length;
         int lineIndex = 0;
