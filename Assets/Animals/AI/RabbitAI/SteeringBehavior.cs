@@ -506,10 +506,5 @@ public class SteeringBehavior
         data.m_bCol = false;
         return false;
     }
-
-    static public bool WanderSeek(NpcAIData data)
-    {
-        return true;
-    }
 }
 

@@ -42,9 +42,9 @@ public class PigController : MonoBehaviour
     {
         var prefab = Resources.Load<GameObject>("PigAI");
         pig = Instantiate(prefab);
+        pig.SetActive(false);
         data = pig.GetComponent<PigBehaviourTree>().data;
         pig.GetComponent<PigBehaviourTree>().bumpEndPos = bumpEndPos;
-        pig.SetActive(false);
     }
 
     GameObject birthPos;
@@ -65,6 +65,7 @@ public class PigController : MonoBehaviour
             data.UpdateStatus(0);
 
             pig.transform.position = birthPos.transform.position;
+            pig.GetComponent<PigBehaviourTree>().enabled = true;
             pig.SetActive(true);
         }
     }

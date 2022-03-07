@@ -196,7 +196,7 @@ public class CraftingManager : MonoBehaviour
             slot = 1;
         }
 
-        //craftGameObjects[slot].transform.position = slotimage[slot].transform.position;
+       
 
         if (craftGameObjects[slot].tag == "Wood")
         {
@@ -214,9 +214,19 @@ public class CraftingManager : MonoBehaviour
         }
 
         //save the item gameobject at the top of slotimage
-        Vector3 savePos = slotimage[slot].transform.position;
-        savePos.y += 5.0f;
-        savePos.z += 2.0f;
+        Vector3 savePos = slotimage[slot].transform.TransformPoint(Vector3.zero);
+
+        if (slot == 0)
+        {
+            savePos.y += 3.0f;
+            savePos.x += 3.0f;
+        }
+        else
+        {
+            savePos.y += 3.0f;
+            savePos.x += 3.0f;
+        }
+
         craftGameObjects[slot].transform.position = savePos;
     }
     /// <summary>
@@ -364,21 +374,6 @@ public class CraftingManager : MonoBehaviour
         {
             return;
         }
-
-        //foreach (var v in items)
-        //{
-        //    if (v.canMix && other.tag == v.itemName && isTake)
-        //    {
-        //        AddItem(other.gameObject, v);
-        //        CanMixItem();
-        //        return;
-        //    }
-        //}
-
-        //Vector3 move = new Vector3(transform.position.x, transform.position.y + 5.0f, transform.position.z + 1.0f);
-        //other.gameObject.transform.position = move;
-
-
     }
 
     private void OnTriggerStay(Collider other)
