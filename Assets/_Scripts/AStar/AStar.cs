@@ -151,7 +151,7 @@ public class AStar
                 nNode.total = nNode.toThis + nNode.toGoal;
                 nNode.parent = cNode;
                 openList.Add(nNode);
-
+                Debug.Log($"astar{nNode}");
             }
             cNode.nodeState = PathNodeState.NODE_CLOSED;
         }

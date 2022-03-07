@@ -79,10 +79,6 @@ public class Fox_BehaviourTree : MonoBehaviour
         aStar = new AStar();
         aStar.Init(wpt);
 
-        //astar
-        aStarPerfoming = aStar.PerformAStar(this.transform.position, data.target.transform.position);
-        currentPathPt = 0;
-
         PlayerInit();
 
         destroySystem = destroyEffect.GetComponent<ParticleSystem>();
@@ -190,11 +186,19 @@ public class Fox_BehaviourTree : MonoBehaviour
             targetLocking = false;
         }
 
-        if (UpdateTargetPosition() == true)
+        if (UpdateTargetPosition() == true || aStarPerfoming == false)
         {
             Debug.Log("fox astar start");
             aStarPerfoming = aStar.PerformAStar(this.transform.position, target.transform.position);
             currentPathPt = 0;
+        }
+
+        if (aStarPerfoming == false)
+        {
+            target = data.birthPos;
+            missionComplete = true;
+            status = (int)FoxAIData.FoxStatus.Home;
+            targetLocking = false;
         }
 
         if (status == (int)FoxAIData.FoxStatus.Attacked)
