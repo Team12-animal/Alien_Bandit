@@ -19,7 +19,7 @@ public class AIMain : MonoBehaviour
     private GameObject raccoongo = null;
     private GameObject raccoonBadygo = null;
     public Vector3[] raccoonPos;
-
+    public AnimalCatcher catcher;
 
     public static AIMain m_Instance
     {
@@ -45,6 +45,12 @@ public class AIMain : MonoBehaviour
         Instance = this;
         rabbitgo = Resources.Load("RabbitAI") as GameObject;
 
+        if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            raccoongo = Resources.Load("RaccoonAI") as GameObject;
+            raccoonBadygo = Resources.Load("RaccoonBadyAI") as GameObject;
+        }
+
         m_WanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");
         if (m_WanderPoints.Length != 0)
         {
@@ -54,11 +60,14 @@ public class AIMain : MonoBehaviour
                 AddRabbit();
             }
         }
+    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 3)
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
         {
-            raccoongo = Resources.Load("RaccoonAI") as GameObject;
-            raccoonBadygo = Resources.Load("RaccoonBadyAI") as GameObject;
+            AddRabbit();
+
         }
     }
 
@@ -148,13 +157,13 @@ public class AIMain : MonoBehaviour
 
     public void RemoveRaccoon(GameObject go)
     {
-        if (m_SceneRaccoon.Count == 1 && m_SceneRaccoon[0].name == "RaccoonAI(Clone)")
+        if ((catcher.collectRaccoons%3)==0)
         {
             AddRaccoon(raccoonBadygo, 3);
-            StartCoroutine(WaitTimeAddRaccoon());
         }
         Destroy(go);
         m_SceneRaccoon.Remove(go);
+        StartCoroutine(WaitTimeAddRaccoon());
     }
 
     private void RandomArray()
@@ -183,10 +192,6 @@ public class AIMain : MonoBehaviour
 
     IEnumerator WaitTimeAddRaccoon()
     {
-        yield return new WaitForSeconds(20f);
-        AddRaccoon(raccoongo, 3);
-        yield return new WaitForSeconds(5f);
-        AddRaccoon(raccoongo, 3);
         yield return new WaitForSeconds(5f);
         AddRaccoon(raccoongo, 3);
 

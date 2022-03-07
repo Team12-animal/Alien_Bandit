@@ -23,10 +23,8 @@ public class ElephantAI : MonoBehaviour
     public bool IsPoint = true;
     public float speed;
     public int currentPoint = 0;
-    private AudioSource audioSource;
     public GameObject warningIcon;
-    public GameObject bloom;
-    public AudioClip clip;
+
 
     void Start()
     {
@@ -34,7 +32,6 @@ public class ElephantAI : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
-        audioSource = GetComponent<AudioSource>();
         stateTime = 5f;
 
         Transform[] wanderPoint = GameObject.Find("ElephantWander").GetComponentsInChildren<Transform>();
@@ -165,12 +162,6 @@ public class ElephantAI : MonoBehaviour
         return navHit.position;
     }
 
-    public void AudioPlay(AudioClip clip)
-    {
-        audioSource.clip = clip;
-        audioSource.Play();
-    }
-
     public void SetAnimator()
     {
         animator.SetInteger("State", 0);
@@ -184,33 +175,20 @@ public class ElephantAI : MonoBehaviour
         warningIcon.SetActive(false);
     }
 
+    public AudioSource audioSource;
+    public void AudioPlay(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
 
     public LevelControl levelControl;
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == "Box" || collision.transform.tag == "Wood" || collision.transform.tag == "Rope" )
-        {
-            StartCoroutine(ElephantDestroy(collision.transform.gameObject , collision.rigidbody));
-        }
         if (collision.transform.tag == "Player")
         {
             levelControl.MinusScorePos(collision.transform.position);
             levelControl.GenTotalScore(5);
         }
-    }
-
-    IEnumerator ElephantDestroy(GameObject go , Rigidbody rd)
-    {
-        rd.useGravity = false;
-        go.transform.GetChild(0).GetComponent<Collider>().enabled = false;
-        bloom.transform.position = go.transform.position;
-        yield return new WaitForSeconds(3f);
-        rd.useGravity = transform;
-        bloom.SetActive(true);
-        audioSource.clip = clip;
-        audioSource.Play();
-        Destroy(go, 1.5f);
-        yield return new WaitForSeconds(2.5f);
-        bloom.SetActive(false);
     }
 }

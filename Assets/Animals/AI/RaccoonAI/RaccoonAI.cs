@@ -24,6 +24,7 @@ public class RaccoonAI : MonoBehaviour
     private Vector3 lastPos;
     public Collider currentCollider;
     public SkinnedMeshRenderer skinnedMesh;
+    private AudioSource audioSource;
 
     public void Start()
     {
@@ -34,6 +35,7 @@ public class RaccoonAI : MonoBehaviour
         m_Am = GetComponent<Animator>();
         players = AIMain.m_Instance.GetPlayerList();
         m_WanderPoints = GameObject.Find("HousePoint");
+        audioSource = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -325,5 +327,8 @@ public class RaccoonAI : MonoBehaviour
 
     }
 
-
+    public void PlayAudio()
+    {
+        audioSource.Play();
+    }
 }

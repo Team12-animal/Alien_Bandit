@@ -83,11 +83,10 @@ public class WolfController : MonoBehaviour
     //return wolf exist or not
     public bool WolfInField()
     {
-        if (wolf != null)
+        if (wolf != null && wolf.activeSelf)
         {
-            return wolf.activeSelf == true;
+            return   true;
         }
-
         return false;
     }
 

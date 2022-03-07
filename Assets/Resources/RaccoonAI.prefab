@@ -765,6 +765,7 @@ GameObject:
   - component: {fileID: 1575198371825576958}
   - component: {fileID: 8927702459923918806}
   - component: {fileID: 1800377797504898902}
+  - component: {fileID: 3844989913428368968}
   m_Layer: 20
   m_Name: RaccoonAI
   m_TagString: Raccoon
@@ -1004,6 +1005,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbaeb70618197ca4bb1dec970431774b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &3844989913428368968
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2666461372650264919}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.5
+  m_Direction: 2
+  m_Center: {x: -0, y: 0.3, z: 0.1}
 --- !u!1 &2666531397575531593
 GameObject:
   m_ObjectHideFlags: 0
@@ -1789,7 +1804,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2667182564690258891}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.011, y: 0, z: 0.159}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2669452898958812685}

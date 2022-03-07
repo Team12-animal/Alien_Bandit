@@ -194,7 +194,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6604079416627456673}
   - component: {fileID: 6507428626314141993}
-  - component: {fileID: 1842610234132773673}
   m_Layer: 0
   m_Name: RabbitPolyArt
   m_TagString: Untagged
@@ -209,13 +208,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6605667318985261699}
-  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0.128, y: 0, z: 0.031}
+  m_LocalRotation: {x: -0.7070095, y: -0.011731516, z: -0.011731503, w: 0.7070095}
+  m_LocalPosition: {x: 0.003, y: -0, z: 0.002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6604206231232090955}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -1.901}
 --- !u!137 &6507428626314141993
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -315,20 +314,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.01903312, y: 0.13141924, z: 0.00006778538}
     m_Extent: {x: 0.28127587, y: 0.3118353, z: 0.13993268}
   m_DirtyAABB: 0
---- !u!64 &1842610234132773673
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6605667318985261699}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &6605698122322823819
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,6 +504,7 @@ MonoBehaviour:
     isBited: 0
     isTargeted: 0
   attackWood: {fileID: 0}
+  isDanger: 0
   currentCollider: {fileID: -1388082514391233302}
 --- !u!195 &7899327696254469028
 NavMeshAgent:

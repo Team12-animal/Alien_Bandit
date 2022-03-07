@@ -9,11 +9,13 @@ public class WoodHp : MonoBehaviour
     private Image hp;
     private GameObject canvas;
     private Transform target;
+    private Rigidbody rigidbody;
     // Start is called before the first frame update
     void Start()
     {
         canvas = GameObject.Find("TrianglePlayer");
         target = Camera.main.transform;
+        rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -36,6 +38,7 @@ public class WoodHp : MonoBehaviour
                 hpGo.transform.position = this.transform.position + new Vector3(0, 1.5f, 0);
                 hp = hpGo.GetComponent<Image>();
                 hpGo.SetActive(false);
+                rigidbody.useGravity = false;
             }
         }
     }
@@ -61,6 +64,7 @@ public class WoodHp : MonoBehaviour
         if (other.tag == "Rabbit")
         {
             hpGo.SetActive(false);
+            rigidbody.useGravity = true;
         }
     }
 }

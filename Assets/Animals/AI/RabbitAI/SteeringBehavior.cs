@@ -128,7 +128,7 @@ public class SteeringBehavior
         Transform ct = data.m_Go.transform;  //AI的位置向量
         Vector3 cPos = ct.position;    //AI的位置
         Vector3 cForward = ct.forward;  //AI的朝向
-        data.m_vCurrentVector = cForward;  
+        data.m_vCurrentVector = cForward;
         Vector3 vec;
         float fFinalDotDist;
         float fFinalProjDist;
@@ -142,7 +142,7 @@ public class SteeringBehavior
         float fMinDist = 10000.0f;
         for (int i = 0; i < iCount; i++)
         {
-            Debug.LogWarning(m_AvoidTargets[i]+ "-" + cPos);
+            Debug.LogWarning(m_AvoidTargets[i] + "-" + cPos);
             vec = m_AvoidTargets[i].transform.position - cPos;
             vec.y = 0.0f;
             fDist = vec.magnitude;
@@ -272,8 +272,8 @@ public class SteeringBehavior
         vec.y = 0.0f;
         float fDist = vec.magnitude;  //下一個要到的位置長度
         data.m_fTempTurnForce = 0.0f;  //AI轉向強制力
-       
-        if (data.m_fProbeLength+2.5f < fDist)
+
+        if (data.m_fProbeLength + 2f < fDist)
         {
             if (data.m_Speed > 0.01f)
             {
@@ -282,7 +282,7 @@ public class SteeringBehavior
             data.m_bMove = true;
             return false;
         }
-       
+
         Vector3 vf = data.m_Go.transform.forward;  //AI的朝向
         Vector3 vr = data.m_Go.transform.right;  //AI的右邊
         data.m_vCurrentVector = vf;
@@ -320,7 +320,7 @@ public class SteeringBehavior
             data.m_fTempTurnForce = -fDotR * Random.Range(0.1f, 5f);
             //data.m_fTempTurnForce = -fDotR;
         }
-        data.m_fMoveForce = -fDotF *1.5f;
+        data.m_fMoveForce = -fDotF * 1.5f;
         data.m_bMove = true;
         return true;
     }
@@ -336,7 +336,7 @@ public class SteeringBehavior
 
         if (fDist < data.arriveDist)
         {
-            if(data.m_Go.tag == "Rabbit")
+            if (data.m_Go.tag == "Rabbit")
             {
                 Vector3 vFinal = data.m_vTarget;
                 vFinal.y = cPos.y;
@@ -347,7 +347,7 @@ public class SteeringBehavior
                 data.m_bMove = false;
             }
 
-            if(data.m_Go.tag == "Fox")
+            if (data.m_Go.tag == "Fox")
             {
                 Vector3 tempDir = data.m_vTarget - cPos;
                 Vector3 vFinal = cPos + tempDir * 0.2f;

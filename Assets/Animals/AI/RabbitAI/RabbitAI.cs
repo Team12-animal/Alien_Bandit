@@ -27,7 +27,7 @@ public class RabbitAI : MonoBehaviour
     private List<GameObject> players;
     [SerializeField] private GameObject attackWood;
     private GameObject dangerAnimal;
-    private bool isDanger = false;
+    [SerializeField]private bool isDanger = false;
     Vector3 lastPos;
     Quaternion attackWoodForward;
     public Collider currentCollider;
@@ -204,7 +204,6 @@ public class RabbitAI : MonoBehaviour
             {
                 transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, 0f, transform.position.z), 0.001f);
             }
-            //Debug.LogError("Current State " + m_eCurrentState);  //印出當前狀態
             if (m_eCurrentState == eFSMState.Idle)
             {
 
@@ -260,19 +259,23 @@ public class RabbitAI : MonoBehaviour
                 }
                 m_fIdleTime = Random.Range(4.0f, 5.0f);  //漫步停留時間為隨機3～4秒
                 CheckPlayerInSight();
-                if (isDanger)
+                if (wolf != null)
                 {
-                    bool bAttack = false;
-                    dangerAnimal = GameObject.Find("Wolf");
-                    bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
-                    if (danger)
+                    isDanger = wolf.WolfInField();
+                    if (isDanger)
                     {
-                        m_Data.agent.enabled = true;
-                        m_Data.agent.updateRotation = true;
-                        m_Data.m_vTarget = CheckCloseHole().transform.position;
-                        m_Am.SetInteger("State", 3);
-                        m_eCurrentState = eFSMState.MoveToTarget;
-                        return;
+                        bool bAttack = false;
+                        dangerAnimal = wolf.wolf;
+                        bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
+                        if (danger)
+                        {
+                            m_Data.agent.enabled = true;
+                            m_Data.agent.updateRotation = true;
+                            m_Data.m_vTarget = CheckCloseHole().transform.position;
+                            m_Am.SetInteger("State", 3);
+                            m_eCurrentState = eFSMState.MoveToTarget;
+                            return;
+                        }
                     }
                 }
                 if (!(lastPos == transform.position))
@@ -349,19 +352,23 @@ public class RabbitAI : MonoBehaviour
             else if (m_eCurrentState == eFSMState.Attack)
             {
                 CheckPlayerInSight();
-                if (isDanger)
+                if (wolf != null)
                 {
-                    bool bAttack = false;
-                    dangerAnimal = GameObject.Find("Fox");
-                    bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
-                    if (danger)
+                    isDanger = wolf.WolfInField();
+                    if (isDanger)
                     {
-                        m_Data.agent.enabled = true;
-                        m_Data.agent.updateRotation = true;
-                        m_Data.m_vTarget = CheckCloseHole().transform.position;
-                        m_Am.SetInteger("State", 3);
-                        m_eCurrentState = eFSMState.MoveToTarget;
-                        return;
+                        bool bAttack = false;
+                        dangerAnimal = wolf.wolf;
+                        bool danger = CheckTargetEnemyInSight(dangerAnimal, ref bAttack);
+                        if (danger)
+                        {
+                            m_Data.agent.enabled = true;
+                            m_Data.agent.updateRotation = true;
+                            m_Data.m_vTarget = CheckCloseHole().transform.position;
+                            m_Am.SetInteger("State", 3);
+                            m_eCurrentState = eFSMState.MoveToTarget;
+                            return;
+                        }
                     }
                 }
                 if (attackWood == null)
