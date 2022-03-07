@@ -841,6 +841,7 @@ MonoBehaviour:
     agent: {fileID: 2666461372650264913}
     isCatched: 0
     isBited: 0
+    isTargeted: 0
   currentCollider: {fileID: 1866102079379362824}
   skinnedMesh: {fileID: 2660623832949271475}
 --- !u!195 &2666461372650264913
@@ -907,7 +908,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 47f1f2c05ba3a3e448d1358a1cd9f09d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.05
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
