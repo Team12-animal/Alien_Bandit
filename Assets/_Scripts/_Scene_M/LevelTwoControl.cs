@@ -687,6 +687,9 @@ public class LevelTwoControl : LevelControl
                 case "Wood":
                     Destroy(child.gameObject);
                     break;
+                case "Pig":
+                    Destroy(child.gameObject);
+                    break;
             }
         }
         Destroy(go.gameObject);
