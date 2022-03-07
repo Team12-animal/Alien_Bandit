@@ -66,7 +66,7 @@ public class LevelTwoControl : LevelControl
         //{
         //    gameOverUIText[i].gameObject.SetActive(false);
         //}
-        gamingTime = 180.0f;
+        gamingTime = 35.0f;
         doorDestroied = false;
         isWin = false;
         gameWinUI.SetActive(false);
@@ -171,8 +171,15 @@ public class LevelTwoControl : LevelControl
     /// <summary>
     /// When waitting time go up , allow player moving
     /// </summary>
+    private bool play321 = true; 
     private void TimeSettingAndAllowPlayerMoving()
     {
+        if (waittingTime<=3.0f && play321)
+        {
+            PlayLevelAudio(4);
+            play321 = false;
+        }
+
         if (waittingTime <= 0.0f)
         {
             waittingTimeUI.gameObject.SetActive(false);
@@ -199,7 +206,7 @@ public class LevelTwoControl : LevelControl
                 gamingTime = SetTime(gamingTime, gamingTimeText);
             }
         }
-        else if (waittingTime < 1.2f)
+        else if (waittingTime < 1.5f)
         {
             readyImage.GetComponent<Image>().sprite = goImage;
         }

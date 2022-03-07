@@ -1740,6 +1740,7 @@ MonoBehaviour:
     agent: {fileID: 8088246542095001062}
     isCatched: 0
     isBited: 0
+    isTargeted: 0
   currentCollider: {fileID: 5538210285745236159}
 --- !u!195 &8088246542095001062
 NavMeshAgent:
@@ -1827,6 +1828,7 @@ MonoBehaviour:
     agent: {fileID: 8088246542095001062}
     isCatched: 0
     isBited: 0
+    isTargeted: 0
   currentCollider: {fileID: 5538210285745236159}
   skinnedMesh: {fileID: 8201752399613073156}
 --- !u!82 &7797532511822471664
@@ -1841,7 +1843,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 47f1f2c05ba3a3e448d1358a1cd9f09d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.05
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
