@@ -322,15 +322,10 @@ public class PigBehaviourTree : MonoBehaviour
         {
             Vector3 dir = nearestPlayer.transform.position - this.transform.position;
             //Debug.Log($"bomb dist {dir.magnitude}");
-            if (dir.magnitude <= 6.0f)
+            if (dir.magnitude <= 3.0f)
             {
-                PlayPigAudio(1);
-
-                if (dir.magnitude <= 3.0f)
-                {
-                    pRB.AddExplosionForce(bumpForce, this.transform.position, 5.0f, bumpUpForce, ForceMode.Impulse);
-                    Debug.Log($"bomb");
-                }
+                pRB.AddExplosionForce(bumpForce, this.transform.position, 5.0f, bumpUpForce, ForceMode.Impulse);
+                Debug.Log($"bomb");
             }
             if (SteeringBehavior.CollisionAvoid(data) == false)
             {

@@ -151,6 +151,7 @@ public class AIMain : MonoBehaviour
         if (m_SceneRaccoon.Count == 1 && m_SceneRaccoon[0].name == "RaccoonAI(Clone)")
         {
             AddRaccoon(raccoonBadygo, 3);
+            StartCoroutine(WaitTimeAddRaccoon());
         }
         Destroy(go);
         m_SceneRaccoon.Remove(go);
@@ -180,13 +181,15 @@ public class AIMain : MonoBehaviour
         AddRabbit();
     }
 
-    IEnumerator WaitTimeAddRaccoon(float time)
+    IEnumerator WaitTimeAddRaccoon()
     {
-        yield return new WaitForSeconds(time);
-        for (int i = 0; i < 3; i++)
-        {
-            AddRaccoon(raccoongo, 3);
-        }
+        yield return new WaitForSeconds(20f);
+        AddRaccoon(raccoongo, 3);
+        yield return new WaitForSeconds(5f);
+        AddRaccoon(raccoongo, 3);
+        yield return new WaitForSeconds(5f);
+        AddRaccoon(raccoongo, 3);
+
     }
     public int RabbitCount()
     {
