@@ -66,7 +66,7 @@ public class LevelTwoControl : LevelControl
         //{
         //    gameOverUIText[i].gameObject.SetActive(false);
         //}
-        gamingTime = 35.0f;
+        gamingTime = 180.0f;
         doorDestroied = false;
         isWin = false;
         gameWinUI.SetActive(false);

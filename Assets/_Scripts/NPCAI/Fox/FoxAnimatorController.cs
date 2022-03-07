@@ -45,6 +45,12 @@ public class FoxAnimatorController : MonoBehaviour
             animator.SetFloat(moveForceHash, moveForce);
             return;
         }
+        if (state == attacked && currentState == state)
+        {
+            animator.SetFloat(turnForceHash, turnForce);
+            animator.SetFloat(moveForceHash, moveForce);
+            return;
+        }
 
         currentState = state;
        
