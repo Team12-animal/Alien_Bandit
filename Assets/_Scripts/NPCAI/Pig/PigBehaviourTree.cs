@@ -331,6 +331,10 @@ public class PigBehaviourTree : MonoBehaviour
             {
                 bumpedP = true;
             }
+            else if (Physics.Linecast(this.transform.position, target.transform.position, 1 << 8 | 1 << 15))
+            {
+                bumpedP = true;
+            }
         }
 
         if (bumpedP == false)
@@ -343,12 +347,10 @@ public class PigBehaviourTree : MonoBehaviour
                 {
                     audioSource.loop = false;
                     PlayPigAudio(1);
-                    Debug.Log($"pig audio play{audioSource.clip == clips[1]}");
                     audioPlayed = true;
                 }
                 bumpSystem.Play();
                 pRB.AddExplosionForce(bumpForce, this.transform.position, 5.0f, bumpUpForce, ForceMode.Impulse);
-                Debug.Log($"bomb");
             }
 
             if (SteeringBehavior.CollisionAvoid(data) == false)
