@@ -189,7 +189,7 @@ public class RaccoonAI : MonoBehaviour
             {
                 m_fIdleTime = Random.Range(4.0f, 5.0f);  //漫步停留時間為隨機3～4秒
                 CheckPlayerInSight();
-                if (!(lastPos == transform.position))
+                if (lastPos != transform.position)
                 {
                     m_Am.SetInteger("State", 1);
                 }
@@ -278,7 +278,7 @@ public class RaccoonAI : MonoBehaviour
 
         if (navHit.distance == Mathf.Infinity)
         {
-            NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+            return transform.position;
         }
         return navHit.position;
     }

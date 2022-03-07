@@ -130,6 +130,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         arriveHomeArea = false;
         pAttact = false;
         targetLocking = true;
+        aStarPerfoming = true;
     }
 
     private void PlayerInit()
@@ -191,6 +192,7 @@ public class Fox_BehaviourTree : MonoBehaviour
 
         if (UpdateTargetPosition() == true)
         {
+            Debug.Log("fox astar start");
             aStarPerfoming = aStar.PerformAStar(this.transform.position, target.transform.position);
             currentPathPt = 0;
         }

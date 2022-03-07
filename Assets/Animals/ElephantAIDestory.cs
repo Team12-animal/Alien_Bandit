@@ -26,7 +26,6 @@ public class ElephantAIDestory : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.LogError("¸}¸I¨ì");
         if (other.tag == "Box" || other.tag == "Wood" || other.tag == "Rope")
         {
             StartCoroutine(ElephantDestroy(other.gameObject));

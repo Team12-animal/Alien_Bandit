@@ -278,7 +278,7 @@ public class RabbitAI : MonoBehaviour
                         }
                     }
                 }
-                if (!(lastPos == transform.position))
+                if (lastPos != transform.position)
                 {
                     m_Am.SetInteger("State", 1);
                 }
@@ -411,7 +411,7 @@ public class RabbitAI : MonoBehaviour
 
         if (navHit.distance == Mathf.Infinity)
         {
-            NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+            return transform.position;
         }
         return navHit.position;
     }

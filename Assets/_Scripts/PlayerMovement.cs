@@ -648,7 +648,7 @@ public class PlayerMovement : MonoBehaviour
         
         float fDotD = Vector3.Dot(this.transform.forward, dirToItem);
 
-        if (fDotD < 0.1f)
+        if (fDotD < 0.5f)
         {
             temp = Vector3.Slerp(this.transform.forward, dirToItem, 1.0f);
             temp.y = this.transform.forward.y;
