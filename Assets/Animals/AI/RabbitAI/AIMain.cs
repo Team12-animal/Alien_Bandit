@@ -180,6 +180,14 @@ public class AIMain : MonoBehaviour
         AddRabbit();
     }
 
+    IEnumerator WaitTimeAddRaccoon(float time)
+    {
+        yield return new WaitForSeconds(time);
+        for (int i = 0; i < 3; i++)
+        {
+            AddRaccoon(raccoongo, 3);
+        }
+    }
     public int RabbitCount()
     {
         return m_SceneRabbit.Count;
