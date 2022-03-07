@@ -32,14 +32,15 @@ public class PigBehaviourTree : MonoBehaviour
 
     //bump player
     public float runDist; //dist from target(behind player) to player
+    public GameObject bumpEffect;
+    ParticleSystem bumpSystem;
+
 
     //animator
     private PigAnimatorController pAC;
 
     //crown
     public GameObject crown;
-    private AudioSource audioSource;
-    public AudioClip[] clips;
 
     private void Awake()
     {
@@ -52,7 +53,7 @@ public class PigBehaviourTree : MonoBehaviour
 
         InitPlayer();
 
-        audioSource = GetComponent<AudioSource>();
+        bumpSystem = bumpEffect.GetComponent<ParticleSystem>();
     }
 
     private void InitPlayer()
@@ -67,19 +68,13 @@ public class PigBehaviourTree : MonoBehaviour
 
         target = data.homePos;
 
-        //Debug.Log($"pig pos{this.transform.position} ");
-        //Debug.Log($"pig target {data.homePos.transform.position}");
-        //Debug.Log($"pig astar {astar == null}");
+        Debug.Log($"pig pos{this.transform.position} ");
+        Debug.Log($"pig target {data.homePos.transform.position}");
+        Debug.Log($"pig astar {astar == null}");
 
         aStarPerforming = astar.PerformAStar(this.transform.position, data.homePos.transform.position);
         currentPathPt = 0;
-        PlayPigAudio(0);
-    }
 
-    public void PlayPigAudio(int i)
-    {
-        audioSource.clip = clips[i];
-        audioSource.Play();
     }
 
     private void DataInit()
@@ -227,8 +222,16 @@ public class PigBehaviourTree : MonoBehaviour
     {
         Vector3 result;
         Vector3 dir = nearestPlayer.transform.position - this.transform.position;
-        dir.Normalize();
-        result = this.transform.position + dir * runDist;
+        
+        if (!(Physics.Linecast(this.transform.position, nearestPlayer.transform.position, 1 << 8 | 1 << 15)))
+        {
+            dir.Normalize();
+            result = this.transform.position + dir * runDist;
+        }
+        else
+        {
+            result = this.transform.position + this.transform.forward * 1.0f;
+        }
 
         return result;
     }
@@ -277,8 +280,10 @@ public class PigBehaviourTree : MonoBehaviour
                     Vector3 sPos = path[i];
                     Vector3 cPos = this.transform.position;
 
-                    if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                    RaycastHit hit;
+                    if (Physics.Linecast(cPos, sPos, out hit, 1 << 8 | 1 << 15))
                     {
+                        Debug.Log($"pig linecast {hit.transform.gameObject}");
                         continue;
                     }
 
@@ -322,16 +327,13 @@ public class PigBehaviourTree : MonoBehaviour
         {
             Vector3 dir = nearestPlayer.transform.position - this.transform.position;
             //Debug.Log($"bomb dist {dir.magnitude}");
-            if (dir.magnitude <= 6.0f)
+            if(dir.magnitude <= 3.0f)
             {
-                PlayPigAudio(1);
-
-                if (dir.magnitude <= 3.0f)
-                {
-                    pRB.AddExplosionForce(bumpForce, this.transform.position, 5.0f, bumpUpForce, ForceMode.Impulse);
-                    Debug.Log($"bomb");
-                }
+                bumpSystem.Play();
+                pRB.AddExplosionForce(bumpForce, this.transform.position, 5.0f, bumpUpForce, ForceMode.Impulse);
+                Debug.Log($"bomb");
             }
+
             if (SteeringBehavior.CollisionAvoid(data) == false)
             {
                 SteeringBehavior.Seek(data);
@@ -366,9 +368,10 @@ public class PigBehaviourTree : MonoBehaviour
                 {
                     Vector3 sPos = path[i];
                     Vector3 cPos = this.transform.position;
-
-                    if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                    RaycastHit hit;
+                    if (Physics.Linecast(cPos, sPos, out hit, 1 << 8 | 1 << 15))
                     {
+                        Debug.Log($"pig linecast {hit.transform.gameObject}");
                         continue;
                     }
 

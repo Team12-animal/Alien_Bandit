@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2882382087854002403}
   - component: {fileID: 2882382087854002413}
   - component: {fileID: 19246377435877895}
-  - component: {fileID: 7429112707233436791}
   - component: {fileID: 4220062119141379982}
   m_Layer: 0
   m_Name: rope
@@ -64,22 +63,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 1, z: 2.5}
   m_Center: {x: 0, y: 0.4, z: 0}
---- !u!208 &7429112707233436791
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2882382087854002414}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.1, y: 0.05, z: 0.1}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0.3, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!114 &4220062119141379982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb38efde402d1e48ab5fcf777e7da29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beUsing: 0
 --- !u!1001 &2882382087034564900
 PrefabInstance:
   m_ObjectHideFlags: 0

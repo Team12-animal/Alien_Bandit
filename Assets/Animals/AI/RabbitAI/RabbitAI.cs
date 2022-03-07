@@ -188,11 +188,13 @@ public class RabbitAI : MonoBehaviour
             
             if (m_Data.isCatched)
             {
-                this.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                this.transform.localPosition = new Vector3(-0.2f, 0.0f, 0.0f);
+                this.transform.localRotation = Quaternion.Euler(new Vector3(0.0f, 90f, 0.0f));
             }
             else if (m_Data.isTargeted && m_Data.isBited)
             {
-                this.transform.localPosition = new Vector3(0.097f, 0.034f, -0.275f);
+                this.transform.localPosition = new Vector3(-0.1f, 0f, -0.25f);
+                this.transform.localRotation = Quaternion.Euler(new Vector3(0f, 90f, 90f));
             }
         }
         else

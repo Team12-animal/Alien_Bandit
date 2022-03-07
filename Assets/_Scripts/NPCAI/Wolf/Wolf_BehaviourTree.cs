@@ -137,7 +137,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
         Debug.Log($"wolf set target amt {amt} index{index}");
 
-        if (preys[index].activeSelf == true && TargetAccessable(preys[index]))
+        if (preys[index] != null && preys[index].activeSelf == true && TargetAccessable(preys[index]))
         {
             return preys[index];
         }
@@ -429,11 +429,6 @@ public class Wolf_BehaviourTree : MonoBehaviour
             target.GetComponent<RabbitAI>().m_Data.isTargeted = true;
         }
 
-        if (target.tag == "Raccoon")
-        {
-            target.GetComponent<RaccoonAI>().m_Data.isTargeted = true;
-        }
-
         if (arriveTarget == false)
         {
             jumping = JumpOrNot();
@@ -460,7 +455,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
                     RaycastHit hit;
                     if (Physics.Linecast(cPos, sPos, out hit, 1 << 8 | 1 << 15))
                     {
-                        Debug.Log($"astar linecast bith {hit.transform.gameObject}");
+                        Debug.Log($"wolf linecast {hit.transform.gameObject}");
                         continue;
                     }
 
@@ -554,7 +549,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
                     RaycastHit hit;
                     if (Physics.Linecast(cPos, sPos, out hit, 1 << 8 | 1 << 15))
                     {
-                        Debug.Log($"astar linecast bith {hit.transform.gameObject}");
+                        Debug.Log($"wolf linecast {hit.transform.gameObject}");
                         continue;
                     }
 
@@ -587,10 +582,12 @@ public class Wolf_BehaviourTree : MonoBehaviour
             if (catchedTarget != null && catchedTarget.tag == "Rabbit")
             {
                 AIMain.m_Instance.RemoveRabbit(catchedTarget);
+                MinusScore();
             }
             else if (catchedTarget != null && catchedTarget.tag == "Raccoon")
             {
                 AIMain.m_Instance.RemoveRaccoon(catchedTarget);
+                MinusScore();
             }
             
             catchedTarget = null;
@@ -651,8 +648,6 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void AnimaEventCatchTarget()
     {
-        Debug.Log("wolf catch target");
-        catchedTarget.transform.right = mouth.transform.up;
         catchedTarget.transform.parent = mouth.transform;
 
         if (catchedTarget.tag == "Rabbit")
@@ -665,7 +660,6 @@ public class Wolf_BehaviourTree : MonoBehaviour
             catchedTarget.GetComponent<RaccoonAI>().m_Data.isBited = true;
         }
 
-        MinusScore();
         missionComplete = true;
     }
 
@@ -757,7 +751,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
     public LevelControl levelControl;
     private void MinusScore()
     {
-        levelControl.MinusScorePos(this.transform.position);
+        levelControl.MinusScorePos(jumpPs[1].transform.position);
         levelControl.GenTotalScore(levelControl.wolf);
     }
 }

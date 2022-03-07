@@ -26,6 +26,7 @@ public class WPTerrain
         }
 
         LoadWP(txtName);
+        Debug.Log($"wpt init text{txtName}node{nodeName} amt{nodes.Length}");
     }
 
     public void ClearAStarInfo()

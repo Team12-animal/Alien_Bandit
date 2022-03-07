@@ -388,8 +388,10 @@ public class Fox_BehaviourTree : MonoBehaviour
                     Vector3 sPos = path[i];
                     Vector3 cPos = this.transform.position;
 
-                    if (Physics.Linecast(cPos, sPos, 1 << 8 | 1 << 15))
+                    RaycastHit hit;
+                    if (Physics.Linecast(cPos, sPos, out hit, 1 << 8 | 1 << 15))
                     {
+                        Debug.Log($"fox linecast {hit.transform.gameObject}");
                         continue;
                     }
 
@@ -554,7 +556,7 @@ public class Fox_BehaviourTree : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Linecast(cPos, sPos, out hit, 1 << 8 | 1 << 15))
                 {
-                    Debug.Log($"astar linecast bith {hit.transform.gameObject}");
+                    Debug.Log($"fox linecast  {hit.transform.gameObject}");
                     continue;
                 }
 
@@ -604,13 +606,17 @@ public class Fox_BehaviourTree : MonoBehaviour
             return;
         }
 
-        if (target.tag == "box")
+        if (target.tag == "Box")
         {
             GameObject animalCatched = target.GetComponent<BoxController>().targetAnimal;
 
+            Debug.Log($"fox check catched animal {animalCatched != null}");
+
             if (animalCatched != null)
             {
-                animalCatched.transform.parent = null;
+                animalCatched.transform.SetParent(null);
+                animalCatched.transform.position = target.transform.position;
+
                 if (animalCatched.tag == "Rabbit")
                 {
                     animalCatched.GetComponent<RabbitAI>().m_Data.isCatched = false;

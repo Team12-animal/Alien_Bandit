@@ -48,6 +48,12 @@ public class PInWaterController : MonoBehaviour
                 {
                     players[i] = p;
                     ICs[i] = p.GetComponent<InputController>();
+                    continue;
+                }
+                else
+                {
+                    players[i] = null;
+                    ICs[i] = null;
                 }
             }
         }
@@ -130,6 +136,14 @@ public class PInWaterController : MonoBehaviour
 
         for (index = 0; index < players.Length; index++)
         {
+            if (players[index] == null)
+            {
+
+                Debug.Log($"skip {index}");
+                continue;
+            }
+
+            Debug.Log($"exceed {index}");
             Vector3 playerPos = ICs[index].GetPlayerPos();
 
             if (playerPos.y <= -1.5f)

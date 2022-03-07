@@ -46,10 +46,9 @@ public class WolfAnimatorController : MonoBehaviour
         }
 
         currentState = state;
-        
-        if (state == runTrigger || state == jumpTrigger)
+            
+        if (state == runTrigger ||  state == jumpTrigger)
         {
-            Debug.Log("npc play animation2" + state);
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);
             animator.SetTrigger(state);
