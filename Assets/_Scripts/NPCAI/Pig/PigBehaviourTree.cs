@@ -32,6 +32,9 @@ public class PigBehaviourTree : MonoBehaviour
 
     //bump player
     public float runDist; //dist from target(behind player) to player
+    public GameObject bumpEffect;
+    ParticleSystem bumpSystem;
+
 
     //animator
     private PigAnimatorController pAC;
@@ -49,6 +52,8 @@ public class PigBehaviourTree : MonoBehaviour
         astar.Init(wpt);
 
         InitPlayer();
+
+        bumpSystem = bumpEffect.GetComponent<ParticleSystem>();
     }
 
     private void InitPlayer()
@@ -324,6 +329,7 @@ public class PigBehaviourTree : MonoBehaviour
             //Debug.Log($"bomb dist {dir.magnitude}");
             if(dir.magnitude <= 3.0f)
             {
+                bumpSystem.Play();
                 pRB.AddExplosionForce(bumpForce, this.transform.position, 5.0f, bumpUpForce, ForceMode.Impulse);
                 Debug.Log($"bomb");
             }

@@ -579,16 +579,15 @@ public class Wolf_BehaviourTree : MonoBehaviour
         }
         else
         {
-
-            MinusScore();
-
             if (catchedTarget != null && catchedTarget.tag == "Rabbit")
             {
                 AIMain.m_Instance.RemoveRabbit(catchedTarget);
+                MinusScore();
             }
             else if (catchedTarget != null && catchedTarget.tag == "Raccoon")
             {
                 AIMain.m_Instance.RemoveRaccoon(catchedTarget);
+                MinusScore();
             }
             
             catchedTarget = null;
