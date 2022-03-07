@@ -51,8 +51,11 @@ public class WPTerrain
 
         sr.Close();
 
-        TextAsset ta = Resources.Load(txtName) as TextAsset;
-        string all = ta.text;
+        string path = $"/{txtName}.txt";
+        //TextAsset ta = Resources.Load(Application.dataPath + "/Resources/" + txtName) as TextAsset;
+        //string all = ta.text;
+        string all = File.ReadAllText(Application.streamingAssetsPath + path);
+        
         string[] lines = all.Split('\n');
         int lineAmt = lines.Length;
         int lineIndex = 0;

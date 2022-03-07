@@ -164,6 +164,12 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private bool TargetAccessable(GameObject target)
     {
+        if (Physics.Linecast(this.transform.position, target.transform.position, 1<< 15))
+        {
+            Debug.Log($"target unaccessable{target.name}");
+            return false;
+        }
+
         bool inJumpArea = false;
 
         foreach (GameObject p in jumpPs)
@@ -429,12 +435,22 @@ public class Wolf_BehaviourTree : MonoBehaviour
             target.GetComponent<RabbitAI>().m_Data.isTargeted = true;
         }
 
+        float dist = (this.transform.position - target.transform.position).magnitude;
+        if (dist <= data.arriveDist)
+        {
+            arriveTarget = true;
+        }
+        else
+        {
+            arriveTarget = false;
+        }
+
         if (arriveTarget == false)
         {
             jumping = JumpOrNot();
             if (jumping == true)
             {
-                arriveTarget = SteeringBehavior.Seek(data);
+                SteeringBehavior.Seek(data);
             }
             else if (aStarPerfoming)
             {
@@ -465,11 +481,11 @@ public class Wolf_BehaviourTree : MonoBehaviour
                     break;
                 }
 
-                arriveTarget = SteeringBehavior.Seek(data);
+                SteeringBehavior.Seek(data);
             }
             else if (SteeringBehavior.CollisionAvoid(data) == false)
             {
-                arriveTarget = SteeringBehavior.Seek(data);
+                SteeringBehavior.Seek(data);
             }
 
             SteeringBehavior.Move(data);
