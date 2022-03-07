@@ -530,7 +530,28 @@ public class LevelTwoControl : LevelControl
         switch (level)
         {
             case 2:
-                if (GetTotalScroe() >= 350)
+                if (GetTotalScroe() >= 200)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 3, yellow);
+                    GameOver();
+                }
+                else if (GetTotalScroe() >= 150)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 2, yellow);
+                    GameOver();
+                }
+                else if (GetTotalScroe() >= 100)
+                {
+                    //Saving data;
+                    SaveStarsState.instance.SaveDate(level, 1, yellow);
+                    GameOver();
+                }
+                break;
+
+            case 3:
+                if (GetTotalScroe() >= 300)
                 {
                     //Saving data;
                     SaveStarsState.instance.SaveDate(level, 3, yellow);
@@ -542,28 +563,7 @@ public class LevelTwoControl : LevelControl
                     SaveStarsState.instance.SaveDate(level, 2, yellow);
                     GameOver();
                 }
-                else if (GetTotalScroe() >= 150)
-                {
-                    //Saving data;
-                    SaveStarsState.instance.SaveDate(level, 1, yellow);
-                    GameOver();
-                }
-                break;
-
-            case 3:
-                if (GetTotalScroe() >= 700)
-                {
-                    //Saving data;
-                    SaveStarsState.instance.SaveDate(level, 3, yellow);
-                    GameOver();
-                }
-                else if (GetTotalScroe() >= 500)
-                {
-                    //Saving data;
-                    SaveStarsState.instance.SaveDate(level, 2, yellow);
-                    GameOver();
-                }
-                else if (GetTotalScroe() >= 300)
+                else if (GetTotalScroe() >= 200)
                 {
                     //Saving data;
                     SaveStarsState.instance.SaveDate(level, 1, yellow);
