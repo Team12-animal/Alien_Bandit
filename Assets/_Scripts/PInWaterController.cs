@@ -50,11 +50,6 @@ public class PInWaterController : MonoBehaviour
                     ICs[i] = p.GetComponent<InputController>();
                     continue;
                 }
-                else
-                {
-                    players[i] = null;
-                    ICs[i] = null;
-                }
             }
         }
 

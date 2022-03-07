@@ -29888,6 +29888,7 @@ GameObject:
   - component: {fileID: 1499154869}
   - component: {fileID: 1499154868}
   - component: {fileID: 1499154871}
+  - component: {fileID: 1499154872}
   m_Layer: 12
   m_Name: Rock (2)
   m_TagString: RockModel
@@ -29970,6 +29971,19 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!135 &1499154872
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499154866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: -0.025816662, y: 0.07773613, z: -0.0338767}
 --- !u!1001 &1499367825
 PrefabInstance:
   m_ObjectHideFlags: 0
