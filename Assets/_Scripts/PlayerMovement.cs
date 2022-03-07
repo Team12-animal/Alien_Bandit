@@ -690,6 +690,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             targetItem.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            targetItem.transform.localRotation = Quaternion.Euler(Vector3.zero);
         }
 
         Rigidbody targetRG = targetItem.GetComponent<Rigidbody>();

@@ -138,12 +138,9 @@ public class PInWaterController : MonoBehaviour
         {
             if (players[index] == null)
             {
-
-                Debug.Log($"skip {index}");
                 continue;
             }
 
-            Debug.Log($"exceed {index}");
             Vector3 playerPos = ICs[index].GetPlayerPos();
 
             if (playerPos.y <= -1.5f)

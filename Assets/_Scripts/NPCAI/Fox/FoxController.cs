@@ -32,7 +32,6 @@ public class FoxController : MonoBehaviour
 
         while (true)
         {
-            Debug.Log("fox coroutine");
             breakableItems = FindBreakableItems();
 
             if (breakableItems.Count > 0 && fox.activeSelf == false)

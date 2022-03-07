@@ -105,6 +105,7 @@ public class AnimalCatcher : MonoBehaviour
         {
             collectPigs += 1;
             lv.GenTotalScore(pig);
+            animalInBox.transform.parent = null;
             animalInBox.SetActive(false);
         }
 

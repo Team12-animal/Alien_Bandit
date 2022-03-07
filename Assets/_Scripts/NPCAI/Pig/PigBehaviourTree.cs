@@ -42,6 +42,10 @@ public class PigBehaviourTree : MonoBehaviour
     //crown
     public GameObject crown;
 
+    //audio
+    private AudioSource audioSource;
+    public AudioClip[] clips;
+
     private void Awake()
     {
         //AStar
@@ -54,6 +58,7 @@ public class PigBehaviourTree : MonoBehaviour
         InitPlayer();
 
         bumpSystem = bumpEffect.GetComponent<ParticleSystem>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void InitPlayer()
@@ -68,13 +73,16 @@ public class PigBehaviourTree : MonoBehaviour
 
         target = data.homePos;
 
-        Debug.Log($"pig pos{this.transform.position} ");
-        Debug.Log($"pig target {data.homePos.transform.position}");
-        Debug.Log($"pig astar {astar == null}");
-
         aStarPerforming = astar.PerformAStar(this.transform.position, data.homePos.transform.position);
         currentPathPt = 0;
 
+        PlayPigAudio(0);
+    }
+
+    public void PlayPigAudio(int i)
+    {
+        audioSource.clip = clips[i];
+        audioSource.Play();
     }
 
     private void DataInit()
@@ -87,6 +95,7 @@ public class PigBehaviourTree : MonoBehaviour
         arriveHome = false;
         bumpedP = false;
         nearestPlayer = null;
+        audioPlayed = false;
     }
 
     private void Update()
@@ -313,6 +322,7 @@ public class PigBehaviourTree : MonoBehaviour
 
     public float bumpForce;
     public float bumpUpForce;
+    bool audioPlayed = false;
     private void BumpPlayer()
     {
         if (bumpedP == false)
@@ -326,9 +336,16 @@ public class PigBehaviourTree : MonoBehaviour
         if (bumpedP == false)
         {
             Vector3 dir = nearestPlayer.transform.position - this.transform.position;
-            //Debug.Log($"bomb dist {dir.magnitude}");
+
             if(dir.magnitude <= 3.0f)
             {
+                if(audioPlayed == false)
+                {
+                    audioSource.loop = false;
+                    PlayPigAudio(1);
+                    Debug.Log($"pig audio play{audioSource.clip == clips[1]}");
+                    audioPlayed = true;
+                }
                 bumpSystem.Play();
                 pRB.AddExplosionForce(bumpForce, this.transform.position, 5.0f, bumpUpForce, ForceMode.Impulse);
                 Debug.Log($"bomb");
