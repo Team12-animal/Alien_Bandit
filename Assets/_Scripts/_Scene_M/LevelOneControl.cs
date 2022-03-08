@@ -115,6 +115,7 @@ public class LevelOneControl : LevelControl
             SceneController.instance.transition.SetTrigger(SceneController.instance.animEndHash);
             SceneController.instance.LoadLevel(0);
             //LevelLoader.instance.LoadLevel(0);
+            DestroyObjectOnDontDestroyOnLoadOnjects();
         }
         TimeSettingAndAllowPlayerMoving();
         GameOver();
