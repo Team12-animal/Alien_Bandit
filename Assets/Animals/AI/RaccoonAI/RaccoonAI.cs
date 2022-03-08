@@ -147,15 +147,11 @@ public class RaccoonAI : MonoBehaviour
             if (m_Data.isCatched)
             {
                 this.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                skinnedMesh.enabled = false;
             }
-            else if (m_Data.isTargeted && m_Data.isCatched)
+            else if (m_Data.isTargeted && m_Data.isBited)
             {
                 this.transform.localPosition = new Vector3(0.092f, 0.0f, -0.412f);
-            }
-
-            if (m_Data.isCatched)
-            {
-                skinnedMesh.enabled = false;
             }
         }
         else

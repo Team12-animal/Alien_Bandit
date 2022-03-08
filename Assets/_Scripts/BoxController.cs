@@ -44,17 +44,19 @@ public class BoxController : MonoBehaviour
 
         if (beUsing == true && (other.gameObject.tag == "Rabbit" || other.gameObject.tag == "Pig") && targetAnimal == null)
         {
+            if (other.gameObject.tag == "Rabbit")
+            {
+                if (other.gameObject.GetComponent<RabbitAI>().m_Data.isBited == true)
+                {
+                    Debug.Log($"ISBITED");
+                    return;
+                }
+            }
+
             float dist = (other.transform.position - this.transform.position).magnitude;
             Debug.Log($"box on trgger enter dist{dist}");
             if (dist <= 3.5f)
             {
-                if (targetAnimal.tag == "Rabbit")
-                {
-                    if(targetAnimal.GetComponent<RabbitAI>().m_Data.isBited == true)
-                    {
-                        return;
-                    }
-                }
                 targetAnimal = other.gameObject;
                 targetAnimal.transform.parent = contentSpot.gameObject.transform;
                 targetAnimal.transform.localEulerAngles = contentSpot.transform.eulerAngles;

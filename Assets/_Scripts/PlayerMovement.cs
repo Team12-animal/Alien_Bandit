@@ -334,12 +334,9 @@ public class PlayerMovement : MonoBehaviour
             aniClip = GetTakeAniName(tagName);
             UpdatePlayerData();
             targetItem = null;
-
-            Debug.Log("pick end");
         }
         else
         {
-            Debug.Log("unable to use");
             return "none";
         }
 
@@ -681,7 +678,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         targetItem.transform.parent = holdingPos;
-        Debug.Log($"hold item {targetItem.name} parent{targetItem.transform.parent.name}");
+        Debug.Log($"rope hold item {targetItem.name} parent{targetItem.transform.parent.name}");
         if (targetItem.tag == "Rope")
         {
             targetItem.transform.localPosition = new Vector3(0.0f, 0.0f, -0.5f);

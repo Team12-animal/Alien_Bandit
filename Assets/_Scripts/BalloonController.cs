@@ -96,18 +96,12 @@ public class BalloonController : MonoBehaviour
 
             if (arrived == true)
             {
-                //if (Time.time > countTime + 0.5f)
-                //{
-                    DropRope();
-                    countTime += 0.5f;
-                //}
+                DropRope();
+                countTime += 0.5f;
 
-                //if(Time.time > countTime + 0.2f)
-                //{
                 GoBackAndDestory();
                 timeCounting = false;
                 sending = false;
-                //}   
             }
         }
     }
@@ -116,9 +110,6 @@ public class BalloonController : MonoBehaviour
 
     private void ChosePath()
     {
-        //int pathAmt = paths.GetLength(0);
-        //int pathToGo = Random.Range(0, pathAmt - 1);
-
         if(pathToGo == 0)
         {
             pathToGo = 1;
@@ -164,7 +155,7 @@ public class BalloonController : MonoBehaviour
 
     private void DropRope()
     {
-        if(rope == null)
+        if(rope == null || holdRope == false)
         {
             return;
         }
@@ -175,6 +166,7 @@ public class BalloonController : MonoBehaviour
         //ropeRB.isKinematic = false;
 
         holdRope = false;
+        Debug.Log("drop rope");
     }
 
     private void GoBackAndDestory()
