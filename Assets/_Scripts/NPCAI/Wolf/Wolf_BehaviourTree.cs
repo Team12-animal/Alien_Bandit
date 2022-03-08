@@ -174,7 +174,7 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
         foreach (GameObject p in jumpPs)
         {
-            if ((p.transform.position - target.transform.position).magnitude <= 8.0f)
+            if ((p.transform.position - target.transform.position).magnitude <= 10.0f)
             {
                 inJumpArea = true;
                 break;
