@@ -791,8 +791,22 @@ public class PlayerMovement : MonoBehaviour
             realForce = 1800.0f;
         }
 
+        Vector3 throwDir = this.transform.forward;
+        
+        RaycastHit hit;
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, 10.0f, 1 << 18))
+        {
+            Vector3 dir = hit.point - this.transform.position;
+            float dirDot = Vector3.Dot(dir, this.transform.forward);
+            
+            if (dirDot >= 0.8f)
+            {
+                throwDir = dir.normalized;
+            }
+        }
+
         //??item???l?O
-        targetRG.AddForce(this.transform.forward * realForce, ForceMode.Impulse);
+        targetRG.AddForce(throwDir * realForce, ForceMode.Impulse);
 
         foreach (Transform child in itemInhand.transform)
         {
