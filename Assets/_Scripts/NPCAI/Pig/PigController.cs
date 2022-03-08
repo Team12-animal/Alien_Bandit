@@ -25,7 +25,7 @@ public class PigController : MonoBehaviour
 
     IEnumerator ActivePig()
     {
-        yield return new WaitForSeconds(waitForStart);
+        yield return new WaitForSecondsRealtime(waitForStart);
 
         while (true)
         {
@@ -34,7 +34,7 @@ public class PigController : MonoBehaviour
                 GenPig();
             }
 
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSecondsRealtime(delay);
         }
     }
 

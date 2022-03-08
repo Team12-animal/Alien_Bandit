@@ -248,10 +248,10 @@ public class AnimatorController : MonoBehaviour
         {
             if (holdingHammer == false)
             {
-                hammer.transform.position = hand.transform.position;
                 hammer.transform.forward = hand.transform.forward;
                 hammer.transform.Rotate(new Vector3(0.0f, 180.0f, 90.0f));
                 hammer.transform.parent = hand.transform;
+                hammer.transform.localPosition = Vector3.zero;
                 holdingHammer = true;
             }
             else
