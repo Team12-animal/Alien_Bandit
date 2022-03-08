@@ -675,7 +675,13 @@ public class LevelTwoControl : LevelControl
                 case "Chop":
                     Destroy(child.gameObject);
                     break;
+                case "Hammer":
+                    Destroy(child.gameObject);
+                    break;
                 case "Box":
+                    Destroy(child.gameObject);
+                    break;
+                case "Bag":
                     Destroy(child.gameObject);
                     break;
                 case "RockModel":

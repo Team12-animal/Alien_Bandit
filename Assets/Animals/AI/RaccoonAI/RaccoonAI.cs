@@ -183,7 +183,7 @@ public class RaccoonAI : MonoBehaviour
             }
             else if (m_eCurrentState == eFSMState.Wander)
             {
-                m_fIdleTime = Random.Range(4.0f, 5.0f);  //漫步停留時間為隨機3～4秒
+                m_fIdleTime = Random.Range(3.0f, 5.0f);  //漫步停留時間為隨機3～4秒
                 CheckPlayerInSight();
                 if (lastPos != transform.position)
                 {
@@ -201,7 +201,7 @@ public class RaccoonAI : MonoBehaviour
                     m_Data.agent.SetDestination(transform.position);  //將位置調整為當前位置(避免平移)
                     m_eCurrentState = eFSMState.Idle;
                     m_fCurrentTime = 0.0f;
-                    m_fIdleTime = Random.Range(1.0f, 3.0f);
+                    m_fIdleTime = Random.Range(1.0f, 2.0f);
                     m_Data.m_bMove = false;
                 }
                 else
@@ -264,7 +264,7 @@ public class RaccoonAI : MonoBehaviour
     public Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
 
-        Vector3 randDirection = Random.insideUnitSphere * (dist + 5);
+        Vector3 randDirection = Random.insideUnitSphere * (dist + 8);
 
         randDirection += origin;
 

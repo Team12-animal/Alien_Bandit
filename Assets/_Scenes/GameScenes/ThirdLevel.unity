@@ -29770,22 +29770,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_fRadius: 2.3
   m_eState: -1
---- !u!208 &1469222578
-NavMeshObstacle:
+--- !u!65 &1469222579
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1469222575}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 6, y: 5.5, z: 6}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  serializedVersion: 2
+  m_Size: {x: 10, y: 3, z: 10}
+  m_Center: {x: 0, y: 8, z: 0}
 --- !u!1001 &1471837623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55026,51 +55023,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[0].x
-      value: 23.490185
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[0].y
-      value: 0.003238678
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[0].z
-      value: 45.63
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[1].x
-      value: 21.5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[1].y
-      value: 0.003238678
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[1].z
-      value: 44.01
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[2].x
-      value: 25.64
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[2].y
-      value: 0.003238678
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[2].z
-      value: 42.64
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[3].x
-      value: 22.1
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[3].y
-      value: 0.0032424927
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070582, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: raccoonPos.Array.data[3].z
-      value: 47.66
+      value: 47.5
       objectReference: {fileID: 0}
     - target: {fileID: 5085700705902070583, guid: 779cbf7e92523ef418a8f3b30eea9e1b, type: 3}
       propertyPath: m_RootOrder
