@@ -48,14 +48,23 @@ public class BoxController : MonoBehaviour
             Debug.Log($"box on trgger enter dist{dist}");
             if (dist <= 3.5f)
             {
+                if (targetAnimal.tag == "Rabbit")
+                {
+                    if(targetAnimal.GetComponent<RabbitAI>().m_Data.isBited == true)
+                    {
+                        return;
+                    }
+                }
                 targetAnimal = other.gameObject;
                 targetAnimal.transform.parent = contentSpot.gameObject.transform;
                 targetAnimal.transform.localEulerAngles = contentSpot.transform.eulerAngles;
 
                 if (targetAnimal.tag == "Rabbit")
                 {
-                    targetAnimal.GetComponent<RabbitAI>().m_Data.isTargeted = true;
-                    targetAnimal.GetComponent<RabbitAI>().m_Data.isCatched = true;
+                    RabbitAIData data = targetAnimal.GetComponent<RabbitAI>().m_Data;
+
+                    data.isTargeted = true;
+                    data.isCatched = true;
                     Debug.Log($"box is catched");
                 }
 
