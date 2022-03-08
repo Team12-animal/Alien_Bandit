@@ -63,7 +63,7 @@ public class Fox_BehaviourTree : MonoBehaviour
     AStar aStar;
 
     //target UI
-    public bool targetLocking = true;
+    public bool targetLocking = false;
 
     //destroy target effect
     public GameObject destroyEffect;
@@ -125,7 +125,7 @@ public class Fox_BehaviourTree : MonoBehaviour
         arriveTarget = false;
         arriveHomeArea = false;
         pAttact = false;
-        targetLocking = true;
+        targetLocking = false;
     }
 
     private void PlayerInit()
@@ -181,8 +181,6 @@ public class Fox_BehaviourTree : MonoBehaviour
             {
                 data.m_vTarget = target.transform.position;
             }
-
-            targetLocking = false;
         }
 
         if (UpdateTargetPosition() == true || aStarPerfoming == false)
@@ -197,7 +195,15 @@ public class Fox_BehaviourTree : MonoBehaviour
             target = data.birthPos;
             missionComplete = true;
             status = (int)FoxAIData.FoxStatus.Home;
+        }
+
+        if (target == data.birthPos)
+        {
             targetLocking = false;
+        }
+        else
+        {
+            targetLocking = true;
         }
 
         if (status == (int)FoxAIData.FoxStatus.Attacked)

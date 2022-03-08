@@ -48,7 +48,7 @@ public class PigAnimatorController : MonoBehaviour
             animator.SetTrigger(state);
         }
 
-        if (state == spin || state == idle)
+        if (state == spin || state == idle || state == shake)
         {
             animator.SetFloat(turnForceHash, turnForce);
             animator.SetFloat(moveForceHash, moveForce);

@@ -43,16 +43,13 @@ public class WPTerrain
 
     public void LoadWP(string txtName)
     {
-        StreamReader sr = new StreamReader($"Assets/{txtName}.txt");
-        if (sr == null)
-        {
-            return;
-        }
-
-        sr.Close();
-
         string path = $"/{txtName}.txt";
         string all = File.ReadAllText(Application.streamingAssetsPath + path);
+
+        if (all == null)
+        {
+            all = (Resources.Load(txtName) as TextAsset).text;
+        }
 
         Debug.Log($"wp load {all == null}");
 

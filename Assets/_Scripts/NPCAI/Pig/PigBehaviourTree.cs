@@ -96,6 +96,7 @@ public class PigBehaviourTree : MonoBehaviour
         bumpedP = false;
         nearestPlayer = null;
         audioPlayed = false;
+        beCatched = false;
 
         if (mesh.activeSelf == false)
         {
