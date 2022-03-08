@@ -58,6 +58,7 @@ public class BagController : MonoBehaviour
             }
 
             animalCatched = true;
+            ChangeColor();
         }
     }
 
@@ -67,6 +68,15 @@ public class BagController : MonoBehaviour
         {
             beUsing = false;
             physicStart = false;
+        }
+    }
+
+    public Material color2;
+    private void ChangeColor()
+    {
+        if (animalCatched == true)
+        {
+            this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = color2;
         }
     }
 }
