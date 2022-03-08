@@ -378,7 +378,7 @@ public class RabbitAI : MonoBehaviour
                 }
                 else
                 {
-                    m_Data.m_fMaxSpeed = 0.2f;
+                    m_Data.m_fMaxSpeed = 0.1f;
                     float dist = (transform.position - attackWood.transform.position).magnitude;
                     if (dist < 1.5f)
                     {
