@@ -40,8 +40,8 @@ public class LevelControl : MonoBehaviour
         scoreList.Add(littleRaccoon, 125);
         scoreList.Add(pig, 70);
         scoreList.Add(elephant, -1);
-        scoreList.Add(fox, -5);
-        scoreList.Add(wolf, -10);
+        scoreList.Add(fox, -3);
+        scoreList.Add(wolf, -5);
         scoreList.Add(river, -1);
     }
 
