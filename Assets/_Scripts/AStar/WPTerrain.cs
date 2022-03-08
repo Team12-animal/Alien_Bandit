@@ -46,12 +46,15 @@ public class WPTerrain
         string path = $"/{txtName}.txt";
         string all = File.ReadAllText(Application.streamingAssetsPath + path);
 
+        Debug.Log($"wp load with io {all == null}");
+
         if (all == null)
         {
             all = (Resources.Load(txtName) as TextAsset).text;
+            Debug.Log($"wp load resources.load {all == null}");
         }
 
-        Debug.Log($"wp load {all == null}");
+        Debug.Log($"wp load result{all == null}");
 
         string[] lines = all.Split('\n');
         int lineAmt = lines.Length;
