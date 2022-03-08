@@ -26,7 +26,7 @@ public class WolfController : MonoBehaviour
     }
     IEnumerator ActiveWolf()
     {
-        yield return new WaitForSeconds(waitForStart);
+        yield return new WaitForSecondsRealtime(waitForStart);
 
         while (true)
         {
@@ -37,7 +37,7 @@ public class WolfController : MonoBehaviour
                 GenWolf(preys);
             }
 
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSecondsRealtime(delay);
         }
     }
 
