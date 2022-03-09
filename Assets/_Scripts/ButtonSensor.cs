@@ -71,7 +71,7 @@ public class ButtonSensor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && pressed == true)
         {
             playerOnButton -= 1;
 

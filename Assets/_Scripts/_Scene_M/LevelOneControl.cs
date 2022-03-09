@@ -342,7 +342,6 @@ public class LevelOneControl : LevelControl
                     if (!levelUI.activeInHierarchy)
                     {
                         OpenLevelUI();
-                        DestroyObjectOnDontDestroyOnLoadOnjects();
                     }
                 }
                 break;
@@ -353,7 +352,6 @@ public class LevelOneControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
-                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -363,7 +361,6 @@ public class LevelOneControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
-                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -373,7 +370,6 @@ public class LevelOneControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
-                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -385,7 +381,6 @@ public class LevelOneControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
-                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -395,7 +390,6 @@ public class LevelOneControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
-                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -405,7 +399,6 @@ public class LevelOneControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
-                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -417,7 +410,6 @@ public class LevelOneControl : LevelControl
                     //SceneController.instance.LoadLevel(0);
                     if (!levelUI.activeInHierarchy)
                     {
-                        DestroyObjectOnDontDestroyOnLoadOnjects();
                         OpenLevelUI();
                     }
                 }
@@ -562,7 +554,7 @@ public class LevelOneControl : LevelControl
         SceneController.instance.LoadLevel(sceneIndex);
         levelUI.SetActive(false);
     }
-    private static void DestroyObjectOnDontDestroyOnLoadOnjects()
+    public void DestroyObjectOnDontDestroyOnLoadOnjects()
     {
         var go = new GameObject("Sacrificial Lamb");
         DontDestroyOnLoad(go);

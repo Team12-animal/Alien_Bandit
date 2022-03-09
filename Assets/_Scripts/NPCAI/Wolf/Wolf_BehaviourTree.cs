@@ -363,7 +363,6 @@ public class Wolf_BehaviourTree : MonoBehaviour
         }
         else
         {
-            Debug.LogError("wolf target null");
             targetPosChanged = false;
         }
         
@@ -430,6 +429,11 @@ public class Wolf_BehaviourTree : MonoBehaviour
 
     private void CatchTarget()
     {
+        if (target == null)
+        {
+            return;
+        }
+
         if (target.tag == "Rabbit")
         {
             target.GetComponent<RabbitAI>().m_Data.isTargeted = true;
