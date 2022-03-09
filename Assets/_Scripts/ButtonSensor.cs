@@ -60,6 +60,8 @@ public class ButtonSensor : MonoBehaviour
                 goalTrigger.enabled = true;
                 pressed = true;
             }
+
+            Debug.Log($"p on button enter{playerOnButton}");
         }
     }
 
@@ -69,7 +71,7 @@ public class ButtonSensor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player" && pressed == true)
+        if (other.gameObject.tag == "Player")
         {
             playerOnButton -= 1;
 
@@ -82,6 +84,8 @@ public class ButtonSensor : MonoBehaviour
                 }
             }
         }
+
+        Debug.Log($"p on button exit{playerOnButton}");
     }
 
     private bool Countdown(float startTime, float waitTime)
