@@ -41,30 +41,37 @@ public class BagController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log($"bag on trgger enter{other.gameObject.name}");
+
         if (beUsing == true && (other.gameObject.tag == "Raccoon" || other.gameObject.tag == "Pig")&& targetAnimal == null)
         {
-            targetAnimal = other.gameObject;
-            targetAnimal.transform.up = contentSpot.transform.up;
-            targetAnimal.transform.parent = contentSpot.gameObject.transform;
-
-            if (targetAnimal.tag == "Raccoon")
+            float dist = (other.transform.position - this.transform.position).magnitude;
+            Debug.Log($"bag on trgger enter dist{dist}");
+            if (dist <= 3.5f)
             {
-                targetAnimal.GetComponent<RaccoonAI>().m_Data.isCatched = true;
-            }
+                targetAnimal = other.gameObject;
+                targetAnimal.transform.parent = contentSpot.gameObject.transform;
+                targetAnimal.transform.localEulerAngles = contentSpot.transform.eulerAngles;
 
-            if (targetAnimal.tag == "Pig")
-            {
-                targetAnimal.GetComponent<PigBehaviourTree>().SetCatchedStatus(this.gameObject);
-            }
+                if (targetAnimal.tag == "Raccoon")
+                {
+                    targetAnimal.GetComponent<RaccoonAI>().m_Data.isCatched = true;
+                }
 
-            animalCatched = true;
-            ChangeColor();
+                if (targetAnimal.tag == "Pig")
+                {
+                    targetAnimal.GetComponent<PigBehaviourTree>().SetCatchedStatus(this.gameObject);
+                }
+
+                animalCatched = true;
+                ChangeColor();
+            }
         }
     }
 
     private void TurnBeUsingToFalse()
     {
-        if (rb.velocity.magnitude <= 0.18f && touchingGround)
+        if (rb.velocity == Vector3.zero)
         {
             beUsing = false;
             physicStart = false;

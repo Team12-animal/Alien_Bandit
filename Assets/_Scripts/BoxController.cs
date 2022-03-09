@@ -40,8 +40,6 @@ public class BoxController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"box on trgger enter{other.gameObject.name}");
-
         if (beUsing == true && (other.gameObject.tag == "Rabbit" || other.gameObject.tag == "Pig") && targetAnimal == null)
         {
             if (other.gameObject.tag == "Rabbit")
@@ -54,7 +52,6 @@ public class BoxController : MonoBehaviour
             }
 
             float dist = (other.transform.position - this.transform.position).magnitude;
-            Debug.Log($"box on trgger enter dist{dist}");
             if (dist <= 3.5f)
             {
                 targetAnimal = other.gameObject;
@@ -67,7 +64,6 @@ public class BoxController : MonoBehaviour
 
                     data.isTargeted = true;
                     data.isCatched = true;
-                    Debug.Log($"box is catched");
                 }
 
                 if (targetAnimal.tag == "Pig")

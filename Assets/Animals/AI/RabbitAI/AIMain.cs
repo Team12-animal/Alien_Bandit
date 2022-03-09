@@ -163,7 +163,10 @@ public class AIMain : MonoBehaviour
         }
         Destroy(go);
         m_SceneRaccoon.Remove(go);
-        StartCoroutine(WaitTimeAddRaccoon());
+        if (go.name == "RaccoonAI(Clone)")
+        {
+            StartCoroutine(WaitTimeAddRaccoon());
+        }
     }
 
     private void RandomArray()
