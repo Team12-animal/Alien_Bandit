@@ -106,6 +106,11 @@ public class PigBehaviourTree : MonoBehaviour
 
     private void Update()
     {
+        if (beCatched == true && catcher.tag == "Box")
+        {
+            this.transform.localPosition = new Vector3(0.2f, 0, 0);
+            this.transform.localRotation = Quaternion.Euler(new Vector3(0, -90, 0));
+        }
         if (nearestPlayer == null)
         {
             FindNearestPlayer();
@@ -184,6 +189,7 @@ public class PigBehaviourTree : MonoBehaviour
     {
         if (beCatched == true && catcher != null)
         {
+            Debug.Log($"pig box catcher{catcher} becatched");
             status = (int)PigAIData.PigStatus.Catched;
         }
         else if (nearestPlayer != null && bumpedP == false)
@@ -431,8 +437,10 @@ public class PigBehaviourTree : MonoBehaviour
         if (catcher.tag == "Box")
         {
             this.transform.localPosition = new Vector3(0.2f, 0, 0f);
+            this.transform.localRotation = Quaternion.Euler(new Vector3(0, -90, 0));
             //gameObject.transform.Rotate(new Vector3(0, rotateAmt, 0));
             pAC.ChangeAndPlayAnimation(pAC.shake, 0, 0);
+            Debug.Log($"pig box stay still {this.transform.localPosition}");
         }
 
         if (catcher.tag == "Bag")

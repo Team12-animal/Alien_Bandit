@@ -56,7 +56,6 @@ public class BoxController : MonoBehaviour
             {
                 targetAnimal = other.gameObject;
                 targetAnimal.transform.parent = contentSpot.gameObject.transform;
-                targetAnimal.transform.localEulerAngles = contentSpot.transform.eulerAngles;
 
                 if (targetAnimal.tag == "Rabbit")
                 {
@@ -69,6 +68,7 @@ public class BoxController : MonoBehaviour
                 if (targetAnimal.tag == "Pig")
                 {
                     targetAnimal.GetComponent<PigBehaviourTree>().SetCatchedStatus(this.gameObject);
+                    Debug.Log($"pig box set status {targetAnimal.transform.localPosition}");
                 }
                 
                 animalCatched = true;

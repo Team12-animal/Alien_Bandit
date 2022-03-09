@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
@@ -25,6 +26,12 @@ public class InputController : MonoBehaviour
     [SerializeField] float pressedTime;
     [SerializeField] bool inTreeArea;
 
+    //UI
+    public GameObject throwSlider;
+    private Slider slider;
+    public bool showArrow = false;
+    Vector3 sliderPos;
+
     private void Awake()
     {
         anim = GetComponent<AnimatorController>();
@@ -39,6 +46,19 @@ public class InputController : MonoBehaviour
     {
         setDashTime = pm.setDashTime;
         pid = data.pid;
+
+        throwSlider = GameObject.Find("ThrowSlider" + pid);
+        if (throwSlider != null)
+        {
+            slider = throwSlider.GetComponent<Slider>();
+            slider.value = 0f;
+
+            sliderPos = new Vector3(0f, 0.2f, 0f);
+            throwSlider.transform.position = this.transform.position + sliderPos;
+            throwSlider.transform.right = this.transform.right;
+            throwSlider.transform.up = this.transform.forward;
+            throwSlider.transform.Rotate(new Vector3(0, 0, 90));
+        }
     }
 
     bool takePressDown;
@@ -115,16 +135,40 @@ public class InputController : MonoBehaviour
         if(Input.GetButtonDown("Take" + pid) && isDash == false)
         {
             takePressDown = true;
+            
+            if ((data.item != null && (data.item.tag == "RockModel" || data.item.tag == "Box" || data.item.tag == "Bag")))
+            {
+                showArrow = true;
+            }
         }
 
         if(Input.GetButtonUp("Take" + pid) && isDash == false)
         {
             takePressDown = false;
+            showArrow = false;
+            slider.value = 0;
         }
 
         if(takePressDown == true)
         {
             takePressTimer += Time.deltaTime;
+
+            if (showArrow == true)
+            {
+                float sliderValue = takePressTimer * 1000;
+
+                if (sliderValue > 5000.0f)
+                {
+                    sliderValue = 5000f;
+                }
+
+                if (sliderValue < 1800f)
+                {
+                    sliderValue = 1800f;
+                }
+
+                slider.value = sliderValue * 0.031f;
+            }
         }
 
         if(Input.GetButtonUp("Take" + pid) && isDash == false)
@@ -170,11 +214,6 @@ public class InputController : MonoBehaviour
 
             pressTimeSaver = takePressTimer;
             takePressTimer = 0.0f;
-        }
-        else
-        {
-            //anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
-            //anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
         }
 
         
@@ -253,6 +292,14 @@ public class InputController : MonoBehaviour
     public Vector3 GetPlayerPos()
     {
         return this.gameObject.transform.position;
+    }
+
+    //force slider arrow
+    private void LateUpdate()
+    {
+        throwSlider.transform.position = this.transform.position + sliderPos;
+        throwSlider.transform.forward = this.transform.right;
+        throwSlider.transform.up = this.transform.forward;
     }
 
 }
