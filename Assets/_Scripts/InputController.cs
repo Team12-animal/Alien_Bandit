@@ -28,7 +28,7 @@ public class InputController : MonoBehaviour
 
     //UI
     public GameObject throwSlider;
-    private Slider slider;
+    public Slider slider;
     public bool showArrow = false;
 
     private void Awake()
@@ -45,26 +45,33 @@ public class InputController : MonoBehaviour
     {
         setDashTime = pm.setDashTime;
         pid = data.pid;
-
-        throwSlider = GameObject.Find("ThrowSlider" + pid);
-        if (throwSlider != null)
-        {
-            slider = throwSlider.GetComponent<Slider>();
-            slider.value = 0f;
-
-            throwSlider.transform.position = this.transform.position + this.transform.forward;
-            throwSlider.transform.position += new Vector3(0, 0.5f, 0);
-            throwSlider.transform.forward = this.transform.forward;
-            throwSlider.transform.localRotation *= Quaternion.Euler(90, 0, 0);
-        }
     }
 
-    bool takePressDown;
+    public bool takePressDown;
     float takePressTimer;
     public float pressTimeSaver = 0.0f;
 
     void Update()
     {
+        if (throwSlider == null)
+        {
+            throwSlider = GameObject.Find("ThrowSlider" + pid);
+            if (throwSlider != null)
+            {
+                slider = throwSlider.GetComponent<Slider>();
+                slider.value = 0f;
+
+                throwSlider.transform.position = this.transform.position + this.transform.forward;
+                throwSlider.transform.position += new Vector3(0, 0.5f, 0);
+                throwSlider.transform.forward = this.transform.forward;
+                throwSlider.transform.localRotation *= Quaternion.Euler(90, 0, 0);
+            }
+        }
+        else
+        {
+            Debug.Log($"slider input {pid} value {slider.value}");
+        }
+
         inTreeArea = data.inTree;
 
         string aniClip = "none";
@@ -283,11 +290,14 @@ public class InputController : MonoBehaviour
     //force slider arrow
     private void LateUpdate()
     {
-        Vector3 temp = this.transform.position + this.transform.forward;
-        temp.y += 0.5f;
-        throwSlider.transform.position = temp;
-        throwSlider.transform.forward = this.transform.forward;
-        throwSlider.transform.localRotation *= Quaternion.Euler(90, 0, 0);
+        if (throwSlider != null)
+        {
+            Vector3 temp = this.transform.position + this.transform.forward;
+            temp.y += 0.5f;
+            throwSlider.transform.position = temp;
+            throwSlider.transform.forward = this.transform.forward;
+            throwSlider.transform.localRotation *= Quaternion.Euler(90, 0, 0);
+        }
     }
 
 }

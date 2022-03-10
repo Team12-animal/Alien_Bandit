@@ -5,7 +5,6 @@ using UnityEngine;
 public class ButtonSensor : MonoBehaviour
 {
     public GameObject goalDoor;
-    private GameObject player;
     private GameObject button;
     private NewDoorController dc;
     private Collider doorCollider;
@@ -28,13 +27,12 @@ public class ButtonSensor : MonoBehaviour
         {
             waitingEnd = Countdown(startTime, 5);
 
-            if (waitingEnd == true)
+            if (waitingEnd == true && waiting)
             {
                 Vector3 bPos = button.transform.position;
                 bPos.y += 0.2f;
                 button.transform.position = bPos;
                 dc.ToggleDoor();
-                player = null;
                 doorCollider.enabled = true;
                 goalTrigger.enabled = false;
                 pressed = false;
@@ -49,9 +47,8 @@ public class ButtonSensor : MonoBehaviour
         {
             playerOnButton += 1;
 
-            if(pressed == false)
+            if (pressed == false)
             {
-                player = other.gameObject;
                 Vector3 bPos = button.transform.position;
                 bPos.y -= 0.2f;
                 button.transform.position = bPos;
@@ -59,6 +56,10 @@ public class ButtonSensor : MonoBehaviour
                 doorCollider.enabled = false;
                 goalTrigger.enabled = true;
                 pressed = true;
+            }
+            else
+            {
+                waiting = false;
             }
 
             Debug.Log($"p on button enter{playerOnButton}");
@@ -71,7 +72,7 @@ public class ButtonSensor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player" && pressed == true)
+        if (other.gameObject.tag == "Player")
         {
             playerOnButton -= 1;
 
