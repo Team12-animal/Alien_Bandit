@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectInWaterController : MonoBehaviour
 {
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         Debug.Log($"drop into water{other.gameObject.name}");
         if (other.tag == "Box" || other.tag == "Bag")

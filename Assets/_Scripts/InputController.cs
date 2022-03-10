@@ -30,7 +30,7 @@ public class InputController : MonoBehaviour
     public GameObject throwSlider;
     private Slider slider;
     public bool showArrow = false;
-    Vector3 sliderPos;
+    [SerializeField] private GameObject image;
 
     private void Awake()
     {
@@ -53,11 +53,11 @@ public class InputController : MonoBehaviour
             slider = throwSlider.GetComponent<Slider>();
             slider.value = 0f;
 
-            sliderPos = new Vector3(0f, 0.2f, 0f);
-            throwSlider.transform.position = this.transform.position + sliderPos;
-            throwSlider.transform.right = this.transform.right;
-            throwSlider.transform.up = this.transform.forward;
-            throwSlider.transform.Rotate(new Vector3(0, 0, 90));
+            throwSlider.transform.position = this.transform.position + this.transform.forward * 1.5f;
+            throwSlider.transform.position += new Vector3(0, 1, 0);
+            throwSlider.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            image = throwSlider.transform.GetChild(0).transform.GetChild(0).gameObject;
+            image.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 0));
         }
     }
 
@@ -160,11 +160,6 @@ public class InputController : MonoBehaviour
                 if (sliderValue > 5000.0f)
                 {
                     sliderValue = 5000f;
-                }
-
-                if (sliderValue < 1800f)
-                {
-                    sliderValue = 1800f;
                 }
 
                 slider.value = sliderValue * 0.031f;
@@ -297,9 +292,12 @@ public class InputController : MonoBehaviour
     //force slider arrow
     private void LateUpdate()
     {
-        throwSlider.transform.position = this.transform.position + sliderPos;
-        throwSlider.transform.forward = this.transform.right;
-        throwSlider.transform.up = this.transform.forward;
+        Vector3 temp = this.transform.position + this.transform.forward * 2.5f;
+        temp.y += 1f;
+        throwSlider.transform.position = temp;
+        throwSlider.transform.forward = this.transform.forward;
+
+        Debug.Log($"arrow lateUpdat temp {temp} pos {throwSlider.transform.position}");
     }
 
 }
