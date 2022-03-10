@@ -157,7 +157,7 @@ public class AIMain : MonoBehaviour
 
     public void RemoveRaccoon(GameObject go)
     {
-        if ((catcher.collectRaccoons%3)==0)
+        if (catcher.collectRaccoons > 0 && (catcher.collectRaccoons%3)==0)
         {
             AddRaccoon(raccoonBadygo, 3);
         }

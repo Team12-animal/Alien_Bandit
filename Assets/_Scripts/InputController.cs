@@ -30,7 +30,6 @@ public class InputController : MonoBehaviour
     public GameObject throwSlider;
     private Slider slider;
     public bool showArrow = false;
-    [SerializeField] private GameObject image;
 
     private void Awake()
     {
@@ -53,11 +52,10 @@ public class InputController : MonoBehaviour
             slider = throwSlider.GetComponent<Slider>();
             slider.value = 0f;
 
-            throwSlider.transform.position = this.transform.position + this.transform.forward * 1.5f;
-            throwSlider.transform.position += new Vector3(0, 1, 0);
-            throwSlider.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-            image = throwSlider.transform.GetChild(0).transform.GetChild(0).gameObject;
-            image.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 0));
+            throwSlider.transform.position = this.transform.position + this.transform.forward;
+            throwSlider.transform.position += new Vector3(0, 0.5f, 0);
+            throwSlider.transform.forward = this.transform.forward;
+            throwSlider.transform.localRotation *= Quaternion.Euler(90, 0, 0);
         }
     }
 
@@ -155,14 +153,7 @@ public class InputController : MonoBehaviour
 
             if (showArrow == true)
             {
-                float sliderValue = takePressTimer * 1000;
-
-                if (sliderValue > 5000.0f)
-                {
-                    sliderValue = 5000f;
-                }
-
-                slider.value = sliderValue * 0.031f;
+                slider.value = Mathf.Pow(takePressTimer * 2f, 5f);
             }
         }
 
@@ -292,12 +283,11 @@ public class InputController : MonoBehaviour
     //force slider arrow
     private void LateUpdate()
     {
-        Vector3 temp = this.transform.position + this.transform.forward * 2.5f;
-        temp.y += 1f;
+        Vector3 temp = this.transform.position + this.transform.forward;
+        temp.y += 0.5f;
         throwSlider.transform.position = temp;
         throwSlider.transform.forward = this.transform.forward;
-
-        Debug.Log($"arrow lateUpdat temp {temp} pos {throwSlider.transform.position}");
+        throwSlider.transform.localRotation *= Quaternion.Euler(90, 0, 0);
     }
 
 }
