@@ -477,53 +477,6 @@ public class PlayerMovement : MonoBehaviour
    }
 
 
-    ////holding bucket > ctrl press1: get water; press2: pourwater; press3: drop
-    //bool bucketFilled = false;
-    //public string UseBucket()
-    //{
-    //    if (triggerItem != null)
-    //    {
-    //        targetItem = triggerItem;
-    //    }
-
-    //    string aniClip;
-
-    //    if (bucketFilled == false)
-    //    {
-    //        if (targetItem != null && targetItem.tag == "Water")
-    //        {
-    //            aniClip = GetWater();
-    //        }
-    //        else
-    //        {
-    //            aniClip = Drop();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        aniClip = PourWater();
-    //    }
-
-    //    return aniClip;
-    //}
-
-    //private string GetWater()
-    //{
-    //    string aniName = "GetWater";
-    //    bucketFilled = true;
-
-    //    //add put out fire function
-
-    //    return aniName;
-    //}
-
-    //private string PourWater()
-    //{
-    //    string aniName = "PourWater";
-    //    bucketFilled = false;
-    //    return aniName;
-    //}
-
     public string Drop()
     {
         if(usingTable)
@@ -543,8 +496,6 @@ public class PlayerMovement : MonoBehaviour
     {
         string aniClip = "none";
 
-        //check animation status
-        //remove child
         if (itemInhand != null && (itemInhand.tag == "RockModel" || itemInhand.tag == "Box" || itemInhand.tag == "Bag"))
         {
             aniClip = "ThrowRock";

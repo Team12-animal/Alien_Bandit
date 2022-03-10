@@ -53,6 +53,7 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log($"take {pid} {Input.GetButton("Take" + pid)}");
         if (throwSlider == null)
         {
             throwSlider = GameObject.Find("ThrowSlider" + pid);
@@ -125,11 +126,6 @@ public class InputController : MonoBehaviour
                 anim.ChangeAnimationState(aniClip, transAmt, rotAmt);
             }
         }
-        //else if (!moved)
-        //{
-        //    anim.animator.SetFloat(anim.animHorizontalHash, 0.0f);
-        //    anim.animator.SetFloat(anim.animVerticalHash, 0.0f);
-        //}
 
         if(Input.GetAxis("Vertical" + pid) == 0 && Input.GetAxis("Horizontal" + pid) == 0)
         {
@@ -144,6 +140,10 @@ public class InputController : MonoBehaviour
             if ((data.item != null && (data.item.tag == "RockModel" || data.item.tag == "Box" || data.item.tag == "Bag")))
             {
                 showArrow = true;
+            }
+            else
+            {
+                showArrow = false;
             }
         }
 
@@ -162,14 +162,19 @@ public class InputController : MonoBehaviour
             {
                 slider.value = Mathf.Pow(takePressTimer * 2f, 5f);
             }
+            else
+            {
+                slider.value = 0;
+            }
         }
 
         if(Input.GetButtonUp("Take" + pid) && isDash == false)
         {
+            Debug.Log($"take item {pid} item{data.item == null}");
             if (holdingItem == false)
             {
                 aniClip = pm.Take();
-
+                Debug.Log($"take in function");
                 if (aniClip == "none")
                 {
                     return;
@@ -199,6 +204,8 @@ public class InputController : MonoBehaviour
                     else
                     {
                         aniClip = pm.Drop();
+
+                        Debug.Log($"take in function2");
                     }
                 }
 

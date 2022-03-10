@@ -166,6 +166,7 @@ public class PInWaterController : MonoBehaviour
                     ani.Play("Idle");
                 }
                 ICs[index].slider.value = 0;
+                ICs[index].showArrow = false;
                 ICs[index].takePressDown = false;
                 Debug.Log($"slider pinw {index + 1} value {ICs[index].slider.value}");
                 ICs[index].enabled = false;
